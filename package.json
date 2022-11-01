@@ -1,0 +1,16 @@
+{
+  "name": "pdsdb",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "backend": "cd backend && yarn run start",
+    "frontend": "cd frontend && yarn run start",
+    "devBackend": "cd backend && yarn run devStart",
+    "start": "concurrently \"yarn run frontend\" \"yarn run backend\"",
+    "devStart": "concurrently \"yarn run frontend\" \"yarn run devBackend\""
+  },
+  "dependencies": {
+    "concurrently": "^7.5.0"
+  }
+}
