@@ -5,7 +5,7 @@ CREATE TABLE `pdsdb`.`in_class_inst` (
   `inst_drivers_licence_exp_date` DATE NOT NULL,
   `first_name` VARCHAR(75) NOT NULL,
   `last_name` VARCHAR(75) NOT NULL
-  );
+);
 
 
 # In Car Instructors
@@ -22,7 +22,7 @@ CREATE TABLE `pdsdb`.`in_car_inst` (
 # Products
 
 CREATE TABLE `pdsdb`.`products` (
-  `id` INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
+  `id` INT PRIMARY KEY NOT NULL UNIQUE,
   `name` VARCHAR(250) NOT NULL UNIQUE,
   `price` DECIMAL(6,2) NOT NULL
 );
@@ -49,6 +49,8 @@ CREATE TABLE `pdsdb`.`students` (
   `date_of_birth` DATE NOT NULL,
   `gender` BIT NULL,
   `address` VARCHAR(150) NOT NULL,
+  `address_city` VARCHAR(150) NOT NULL,
+  `address_postal_code` VARCHAR(20) NOT NULL,
   `cell_phone_number` VARCHAR(20) NOT NULL,
   `home_phone_number` VARCHAR(20) NOT NULL,
   `drivers_licence_id` VARCHAR(100) NULL UNIQUE,
@@ -56,18 +58,6 @@ CREATE TABLE `pdsdb`.`students` (
   `drivers_licence_exp_date` DATE NULL,
   `registered_course` INT NOT NULL,
   `purchased_product` INT NOT NULL,
-  FOREIGN KEY(address) REFERENCES addresses(address),
   FOREIGN KEY(registered_course) REFERENCES courses(id),
   FOREIGN KEY(purchased_product) REFERENCES products(id)
 );
-
-# Addresses
-
-CREATE TABLE `pdsdb`.`addresses` (
-  `address` VARCHAR(150) PRIMARY KEY NOT NULL UNIQUE,
-  `city` VARCHAR(150) NOT NULL,
-  `postal code` VARCHAR(20) NOT NULL
-);
-
-
-
