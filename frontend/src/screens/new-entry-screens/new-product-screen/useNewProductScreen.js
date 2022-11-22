@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 import isDateValid from "../../../components/helpers/isDateValid";
+import axios from "axios";
 
 const useNewProductScreen = () => {
   /******************/
@@ -98,21 +99,27 @@ const useNewProductScreen = () => {
    * Updates the subscript to mailing list option.
    */
   const handleAddNewProductEntry = () => {
-    // TODO - axios call to node backend that adds new course entry
-    console.log(`axios call to backend, not implemented yet but button works!
-    values:
-    ${isLoading}
-    ${_setIsLoading}
-    pid ${productId}
-    ${typeof productId}
-    ${isProductIdError}
-    pn ${productName}
-    ${typeof productName}
-    ${isProductNameError}
-    pp ${productPrice}
-    ${typeof productPrice}
-    ${isProductPriceError}
-    `);
+    axios.post(`http://localhost:4400/product/add`, {
+      productId,
+      productName,
+      productPrice,
+    });
+
+    // // TODO - axios call to node backend that adds new course entry
+    // console.log(`axios call to backend, not implemented yet but button works!
+    // values:
+    // ${isLoading}
+    // ${_setIsLoading}
+    // pid ${productId}
+    // ${typeof productId}
+    // ${isProductIdError}
+    // pn ${productName}
+    // ${typeof productName}
+    // ${isProductNameError}
+    // pp ${productPrice}
+    // ${typeof productPrice}
+    // ${isProductPriceError}
+    // `);
   };
 
   /******************************/

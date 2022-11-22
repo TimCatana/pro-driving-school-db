@@ -39,7 +39,7 @@ const NewProductScreen = () => {
       ></TextInput>{" "}
       {/* - TODO need to limit how many characters can be inputted */}
       <TextInput
-        type="text"
+        type="number"
         value={productPrice}
         onChange={handleProductPriceChange}
       ></TextInput>

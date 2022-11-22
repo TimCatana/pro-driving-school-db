@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 import isDateValid from "../../../components/helpers/isDateValid";
+import axios from "axios";
 
 const useNewCourseScreen = () => {
   /******************/
@@ -60,7 +61,9 @@ const useNewCourseScreen = () => {
    * @dependent courseEndDate
    */
   useEffect(() => {
-    courseEndDate != null ? _setIsCourseEndDateError(false) : _setIsCourseEndDateError(true);
+    courseEndDate != null
+      ? _setIsCourseEndDateError(false)
+      : _setIsCourseEndDateError(true);
     _setIsCourseEndDateError(!isDateValid(courseEndDate));
   }, [courseEndDate]);
 
@@ -165,28 +168,37 @@ const useNewCourseScreen = () => {
    */
   const handleAddNewCourseEntry = () => {
     // TODO - axios call to node backend that adds new course entry
-    console.log(`axios call to backend, not implemented yet but button works!
-    values:
-    il ${isLoading}
-    ${_setIsLoading}
-    cid ${courseId}
-    ${typeof courseId}
-    ${isCourseIdError}
-    csd ${courseStartDate}
-    ${typeof courseStartDate}
-    ${isCourseStartDateError}
-    ced ${courseEndDate}
-    ${typeof courseEndDate}
-    ${isCourseEndDateError}
-    cd ${_isCourseDigital}
-    ${typeof _isCourseDigital}
-    ${isCourseDigitalError}
-    cc ${courseCapacity}
-    ${typeof courseCapacity}
-    ${isCourseCapacityError}
-    ${_courseInClassInstructor}
-    ${isCourseInClassInstructorError}
-    `);
+    // console.log(`axios call to backend, not implemented yet but button works!
+    // values:
+    // il ${isLoading}
+    // ${_setIsLoading}
+    // cid ${courseId}
+    // ${typeof courseId}
+    // ${isCourseIdError}
+    // csd ${courseStartDate}
+    // ${typeof courseStartDate}
+    // ${isCourseStartDateError}
+    // ced ${courseEndDate}
+    // ${typeof courseEndDate}
+    // ${isCourseEndDateError}
+    // cd ${_isCourseDigital}
+    // ${typeof _isCourseDigital}
+    // ${isCourseDigitalError}
+    // cc ${courseCapacity}
+    // ${typeof courseCapacity}
+    // ${isCourseCapacityError}
+    // ${_courseInClassInstructor}
+    // ${isCourseInClassInstructorError}
+    // `);
+
+    axios.post(`http://localhost:4400/course/add`, {
+      courseId,
+      courseStartDate,
+      courseEndDate,
+      _isCourseDigital,
+      courseCapacity,
+      _courseInClassInstructor,
+    });
   };
 
   /******************************/

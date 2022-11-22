@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 import isDateValid from "../../../components/helpers/isDateValid";
+import axios from "axios"
 
 const useNewInClassInstScreen = () => {
   /******************/
@@ -133,24 +134,31 @@ const useNewInClassInstScreen = () => {
    * Updates the subscript to mailing list option.
    */
   const handleAddNewInClassInstructor = () => {
-    // TODO - axios call to node backend that adds new course entry
-    console.log(`axios call to backend, not implemented yet but button works!
-    values:
-    il ${isLoading}
-    ${_setIsLoading}
-    icifn  ${inClassInstFirstName}
-    ${typeof inClassInstFirstName}
-    ${isInClassInstFirstNameError}
-    iciln ${inClassInstLastName}
-    ${typeof inClassInstLastName}
-    ${isInClassInstLastNameError}
-    icidl ${inClassInstDriversLicense}
-    ${typeof inClassInstDriversLicense}
-    ${isInClassInstDriversLicenseError}
-    icidled ${inClassInstDriversLicenseExpDate}
-    ${typeof inClassInstDriversLicenseExpDate}
-    ${isInClassInstDriversLicenseExpDateError}
-    `);
+    axios.post(`http://localhost:4400/in-class-inst/add`, {
+      inClassInstFirstName,
+      inClassInstLastName,
+      inClassInstDriversLicense,
+      inClassInstDriversLicenseExpDate,
+    });
+
+    // // TODO - axios call to node backend that adds new course entry
+    // console.log(`axios call to backend, not implemented yet but button works!
+    // values:
+    // il ${isLoading}
+    // ${_setIsLoading}
+    // icifn  ${inClassInstFirstName}
+    // ${typeof inClassInstFirstName}
+    // ${isInClassInstFirstNameError}
+    // iciln ${inClassInstLastName}
+    // ${typeof inClassInstLastName}
+    // ${isInClassInstLastNameError}
+    // icidl ${inClassInstDriversLicense}
+    // ${typeof inClassInstDriversLicense}
+    // ${isInClassInstDriversLicenseError}
+    // icidled ${inClassInstDriversLicenseExpDate}
+    // ${typeof inClassInstDriversLicenseExpDate}
+    // ${isInClassInstDriversLicenseExpDateError}
+    // `);
   };
 
   /******************************/

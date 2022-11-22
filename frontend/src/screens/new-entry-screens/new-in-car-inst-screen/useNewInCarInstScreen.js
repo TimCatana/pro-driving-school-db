@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 import isDateValid from "../../../components/helpers/isDateValid";
+import axios from "axios";
 
 const useNewInCarInstScreen = () => {
   /******************/
@@ -173,30 +174,39 @@ const useNewInCarInstScreen = () => {
    * Updates the subscript to mailing list option.
    */
   const handleAddNewInCarInstructor = () => {
-    // TODO - axios call to node backend that adds new course entry
-    console.log(`axios call to backend, not implemented yet but button works!
-    values:
-    il ${isLoading}
-    ${_setIsLoading}
-    icifn  ${inCarInstFirstName}
-    ${typeof inCarInstFirstName}
-    ${isInCarInstFirstNameError}
-    csd ${inCarInstLastName}
-    ${typeof inCarInstLastName}
-    ${isInCarInstLastNameError}
-    dl ${inCarInstDriversLicense}
-    ${typeof inCarInstDriversLicense}
-    ${isInCarInstDriversLicenseError}
-    dled ${inCarInstDriversLicenseExpDate}
-    ${typeof inCarInstDriversLicenseExpDate}
-    ${isInCarInstDriversLicenseExpDateError}
-    gl ${inCarInstGLicense}
-    ${typeof inCarInstGLicense}
-    ${isInCarInstGLicenseError}
-    gled ${inCarInstGLicenseExpDate}
-    ${typeof inCarInstGLicenseExpDate}
-    ${isInCarInstGLicenseExpDateError}
-    `);
+    axios.post(`http://localhost:4400/in-car-inst/add`, {
+      inCarInstFirstName,
+      inCarInstLastName,
+      inCarInstDriversLicense,
+      inCarInstDriversLicenseExpDate,
+      inCarInstGLicense,
+      inCarInstGLicenseExpDate,
+    });
+
+    // // TODO - axios call to node backend that adds new course entry
+    // console.log(`axios call to backend, not implemented yet but button works!
+    // values:
+    // il ${isLoading}
+    // ${_setIsLoading}
+    // icifn  ${inCarInstFirstName}
+    // ${typeof inCarInstFirstName}
+    // ${isInCarInstFirstNameError}
+    // csd ${inCarInstLastName}
+    // ${typeof inCarInstLastName}
+    // ${isInCarInstLastNameError}
+    // dl ${inCarInstDriversLicense}
+    // ${typeof inCarInstDriversLicense}
+    // ${isInCarInstDriversLicenseError}
+    // dled ${inCarInstDriversLicenseExpDate}
+    // ${typeof inCarInstDriversLicenseExpDate}
+    // ${isInCarInstDriversLicenseExpDateError}
+    // gl ${inCarInstGLicense}
+    // ${typeof inCarInstGLicense}
+    // ${isInCarInstGLicenseError}
+    // gled ${inCarInstGLicenseExpDate}
+    // ${typeof inCarInstGLicenseExpDate}
+    // ${isInCarInstGLicenseExpDateError}
+    // `);
   };
 
   /******************************/
@@ -236,7 +246,7 @@ const useNewInCarInstScreen = () => {
     inCarInstGLicenseExpDate,
     isInCarInstGLicenseExpDateError,
     handleInCarInstGLicenseExpDateChange,
-    handleAddNewInCarInstructor
+    handleAddNewInCarInstructor,
   };
 };
 

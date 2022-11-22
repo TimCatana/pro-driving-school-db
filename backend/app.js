@@ -13,8 +13,12 @@ dotenv.config();
  * Route setup.
  * Order of precedence matters
  */
-app.use("/courses", require("./routes/courses"));
-app.use("/products", require("./routes/products"));
+app.use("/in-class-inst", require("./routes/inClassInstructor"));
+app.use("/product", require("./routes/product"));
+app.use("/in-car-inst", require("./routes/inCarInstructor"));
+app.use("/course", require("./routes/course"));
+app.use("/student", require("./routes/student"));
+
 app.use("/db", require("./routes/db"));
 
 app.use("/", (req, res) => {
