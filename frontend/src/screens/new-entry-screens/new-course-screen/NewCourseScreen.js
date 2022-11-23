@@ -27,6 +27,7 @@ const NewCourseScreen = () => {
     handleInClassInstructorChange,
     isCourseInClassInstructorError,
     handleAddNewCourseEntry,
+    handleEditCourseEntry
   } = useNewCourseScreen();
 
   return (
@@ -63,6 +64,7 @@ const NewCourseScreen = () => {
       <TextInput type="text"></TextInput>
       {/* should be a dropdown list of all available instructors*/}
       <ConfirmButton onClick={handleAddNewCourseEntry}> Save </ConfirmButton>
+      <ConfirmButton onClick={handleEditCourseEntry}> Modify </ConfirmButton>
     </div>
   );
 };

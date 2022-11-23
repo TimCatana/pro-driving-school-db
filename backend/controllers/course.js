@@ -16,7 +16,7 @@ const db = mysql.createPool(config);
  * @param {*} res
  */
 exports.addEntry = async (req, res) => {
-  const command = `INSERT INTO courses (id, start_date, end_date, is_digital, capacity, in_class_instructor_id) VALUES (?, ?, ?, ?, ?, ?);`;
+  const command = `INSERT INTO courses (courseId, start_date, end_date, is_digital, capacity, in_class_instructor_id) VALUES (?, ?, ?, ?, ?, ?);`;
 
   db.query(
     command,
@@ -26,11 +26,11 @@ exports.addEntry = async (req, res) => {
       req.body.courseEndDate,
       1, // req.body._isCourseDigital, // should be 1 or 0, need to do some type changing beforehand
       parseInt(req.body.courseCapacity),
-      "123-456-7890-gda", // req.body._courseInClassInstructor, // needs to be a valid in class inst drivers id that is in the in class inst table
+      "abc", // req.body._courseInClassInstructor, // needs to be a valid in class inst drivers id that is in the in class inst table
     ],
     (err, result) => {
-      console.log(err);
       if (err) {
+        console.log(err);
         res.send(500);
       } else {
         res.send(200);
@@ -39,14 +39,67 @@ exports.addEntry = async (req, res) => {
   );
 };
 
-exports.editEntry = async (req, res) => {
-  console.log("edited");
-};
+exports.editOneEntry = async (req, res) => {
+  const command = `UPDATE courses SET courseId = ?, start_date = ?, end_date = ?, is_digital = ?, capacity = ?, in_class_instructor_id = ? WHERE id = ${req.params.primary_key};`;
 
-exports.deleteEntry = async (req, res) => {
-  console.log("deleted");
+  db.query(
+    command,
+    [
+      parseInt(req.body.courseId),
+      req.body.courseStartDate,
+      req.body.courseEndDate,
+      1, // req.body._isCourseDigital, // should be 1 or 0, need to do some type changing beforehand
+      parseInt(req.body.courseCapacity),
+      "abc", // req.body._courseInClassInstructor, // needs to be a valid in class inst drivers id that is in the in class inst table
+      req.params.primary_key,
+    ],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send({ status: 500 });
+      } else {
+        res.send({ status: 200 });
+      }
+    }
+  );
 };
 
 exports.getAllEntries = async (req, res) => {
-  console.log("deleted");
+  const command = `SELECT * FROM courses;`;
+
+  db.query(command, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send({ status: 500, query: null });
+    } else {
+      res.send({ status: 200, query: result });
+    }
+  });
+};
+
+exports.getOneEntry = async (req, res) => {
+  const command = `SELECT * FROM courses WHERE id = ?;`;
+
+  db.query(command, [req.params.primary_key], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send({ status: 500, query: null });
+    } else {
+      res.send({ status: 200, query: result });
+    }
+  });
+};
+
+exports.deleteOneEntry = async (req, res) => {
+  const command = `DELETE FROM courses WHERE id = ?;`;
+
+  db.query(command, [req.params.primary_key], (err, result) => {
+    if (err) {
+      res.send({ status: 500 });
+    } else {
+      result.affectedRows == 0
+        ? res.send({ status: 501 })
+        : res.send({ status: 200 });
+    }
+  });
 };

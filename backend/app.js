@@ -19,10 +19,8 @@ app.use("/in-car-inst", require("./routes/inCarInstructor"));
 app.use("/course", require("./routes/course"));
 app.use("/student", require("./routes/student"));
 
-app.use("/db", require("./routes/db"));
-
 app.use("/", (req, res) => {
-  console.log("root");
+  console.log("root, something probably went wrong in backend routing");
   res.send();
 });
 

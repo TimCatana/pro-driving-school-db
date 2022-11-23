@@ -1,7 +1,8 @@
 # In Class Instructors
 
 CREATE TABLE `pdsdb`.`in_class_inst` (
-  `inst_drivers_license_id` VARCHAR(100) PRIMARY KEY NOT NULL UNIQUE,
+  `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
+  `inst_drivers_license_id` VARCHAR(100) NOT NULL UNIQUE,
   `inst_drivers_license_exp_date` DATE NOT NULL,
   `first_name` VARCHAR(75) NOT NULL,
   `last_name` VARCHAR(75) NOT NULL
@@ -11,7 +12,8 @@ CREATE TABLE `pdsdb`.`in_class_inst` (
 # In Car Instructors
 
 CREATE TABLE `pdsdb`.`in_car_inst` (
-  `inst_drivers_license_id` VARCHAR(100) PRIMARY KEY NOT NULL UNIQUE,
+  `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
+  `inst_drivers_license_id` VARCHAR(100) NOT NULL UNIQUE,
   `inst_drivers_license_exp_date` DATE NOT NULL,
   `first_name` VARCHAR(75) NOT NULL,
   `last_name` VARCHAR(75) NOT NULL,
@@ -22,7 +24,8 @@ CREATE TABLE `pdsdb`.`in_car_inst` (
 # Products
 
 CREATE TABLE `pdsdb`.`products` (
-  `id` INT PRIMARY KEY NOT NULL UNIQUE,
+  `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
+  `productId` INT NOT NULL UNIQUE,
   `name` VARCHAR(250) NOT NULL UNIQUE,
   `price` DECIMAL(6,2) NOT NULL
 );
@@ -30,7 +33,8 @@ CREATE TABLE `pdsdb`.`products` (
 # Courses
 
 CREATE TABLE `pdsdb`.`courses` (
-  `id` INT PRIMARY KEY NOT NULL UNIQUE,
+  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT UNIQUE,
+  `courseId` INT NOT NULL UNIQUE,
   `start_date` DATE NOT NULL,
   `end_date` DATE NOT NULL,
   `is_digital` BIT NOT NULL,
@@ -42,7 +46,7 @@ CREATE TABLE `pdsdb`.`courses` (
 # Students
 
 CREATE TABLE `pdsdb`.`students` (
-  `id` INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
+  `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
   `first_name` VARCHAR(75) NOT NULL,
   `middle_name` VARCHAR(75) NULL,
   `last_name` VARCHAR(75) NOT NULL,
@@ -53,7 +57,7 @@ CREATE TABLE `pdsdb`.`students` (
   `address_postal_code` VARCHAR(20) NOT NULL,
   `cell_phone_number` VARCHAR(20) NOT NULL,
   `home_phone_number` VARCHAR(20) NOT NULL,
-  `drivers_license_id` VARCHAR(100) NULL UNIQUE,
+  `drivers_license_id` VARCHAR(100) NOT NULL UNIQUE,
   `drivers_license_date_issued` DATE NULL,
   `drivers_license_exp_date` DATE NULL,
   `registered_course` INT NOT NULL,
@@ -67,6 +71,7 @@ CREATE TABLE `pdsdb`.`students` (
 ```
 DROP TABLE students;
 DROP TABLE in_car_inst;
+DROP TABLE in_class_inst;
 DROP TABLE products;
 DROP TABLE courses;
 DROP TABLE in_class_inst;
@@ -77,20 +82,23 @@ DROP TABLE in_class_inst;
 
 ```
 CREATE TABLE `pdsdb`.`in_class_inst` (
-  `inst_drivers_license_id` VARCHAR(100) PRIMARY KEY NOT NULL UNIQUE,
+  `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
+  `inst_drivers_license_id` VARCHAR(100) NOT NULL UNIQUE,
   `inst_drivers_license_exp_date` DATE NOT NULL,
   `first_name` VARCHAR(75) NOT NULL,
   `last_name` VARCHAR(75) NOT NULL
 );
 
 CREATE TABLE `pdsdb`.`products` (
-  `id` INT PRIMARY KEY NOT NULL UNIQUE,
+  `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
+  `productId` INT NOT NULL UNIQUE,
   `name` VARCHAR(250) NOT NULL UNIQUE,
   `price` DECIMAL(6,2) NOT NULL
 );
 
 CREATE TABLE `pdsdb`.`in_car_inst` (
-  `inst_drivers_license_id` VARCHAR(100) PRIMARY KEY NOT NULL UNIQUE,
+  `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
+  `inst_drivers_license_id` VARCHAR(100) NOT NULL UNIQUE,
   `inst_drivers_license_exp_date` DATE NOT NULL,
   `first_name` VARCHAR(75) NOT NULL,
   `last_name` VARCHAR(75) NOT NULL,
@@ -99,7 +107,8 @@ CREATE TABLE `pdsdb`.`in_car_inst` (
   );
 
 CREATE TABLE `pdsdb`.`courses` (
-  `id` INT PRIMARY KEY NOT NULL UNIQUE,
+  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT UNIQUE,
+  `courseId` INT NOT NULL UNIQUE,
   `start_date` DATE NOT NULL,
   `end_date` DATE NOT NULL,
   `is_digital` BIT NOT NULL,
@@ -110,7 +119,7 @@ CREATE TABLE `pdsdb`.`courses` (
 
 
 CREATE TABLE `pdsdb`.`students` (
-  `id` INT PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
+  `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
   `first_name` VARCHAR(75) NOT NULL,
   `middle_name` VARCHAR(75) NULL,
   `last_name` VARCHAR(75) NOT NULL,
@@ -121,7 +130,7 @@ CREATE TABLE `pdsdb`.`students` (
   `address_postal_code` VARCHAR(20) NOT NULL,
   `cell_phone_number` VARCHAR(20) NOT NULL,
   `home_phone_number` VARCHAR(20) NOT NULL,
-  `drivers_license_id` VARCHAR(100) NULL UNIQUE,
+  `drivers_license_id` VARCHAR(100) NOT NULL UNIQUE,
   `drivers_license_date_issued` DATE NULL,
   `drivers_license_exp_date` DATE NULL,
   `registered_course` INT NOT NULL,

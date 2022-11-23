@@ -39,14 +39,67 @@ exports.addEntry = async (req, res) => {
   );
 };
 
-exports.editEntry = async (req, res) => {
-  console.log("edited");
-};
+exports.editOneEntry = async (req, res) => {
+  const command = `UPDATE in_car_inst SET inst_drivers_license_id=?, inst_drivers_license_exp_date=?, first_name=?, last_name=?, g_drivers_license_id=?, g_drivers_license_exp_date=? WHERE id = ?`;
 
-exports.deleteEntry = async (req, res) => {
-  console.log("deleted");
+  db.query(
+    command,
+    [
+      req.body.inCarInstDriversLicense,
+      req.body.inCarInstDriversLicenseExpDate,
+      req.body.inCarInstFirstName,
+      req.body.inCarInstLastName,
+      req.body.inCarInstGLicense,
+      req.body.inCarInstGLicenseExpDate,
+      req.params.primary_key,
+    ],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send({ status: 500 });
+      } else {
+        res.send({ status: 200 });
+      }
+    }
+  );
 };
 
 exports.getAllEntries = async (req, res) => {
-  console.log("deleted");
+  const command = `SELECT * FROM in_car_inst;`;
+
+  db.query(command, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send({ status: 500, query: null });
+    } else {
+      res.send({ status: 200, query: result });
+    }
+  });
+};
+
+exports.getOneEntry = async (req, res) => {
+  const command = `SELECT * FROM in_car_inst WHERE inst_drivers_license_id = ?;`;
+
+  db.query(command, [req.params.primary_key], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send({ status: 500, query: null });
+    } else {
+      res.send({ status: 200, query: result });
+    }
+  });
+};
+
+exports.deleteOneEntry = async (req, res) => {
+  const command = `DELETE FROM in_car_inst WHERE inst_drivers_license_id = ?;`;
+
+  db.query(command, [req.params.primary_key], (err, result) => {
+    if (err) {
+      res.send({ status: 500 });
+    } else {
+      result.affectedRows == 0
+        ? res.send({ status: 501 })
+        : res.send({ status: 200 });
+    }
+  });
 };

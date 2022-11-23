@@ -1,9 +1,11 @@
 const router = require("express").Router();
 const inCarInstructorControllers = require("../controllers/inCarInstructor");
 
-// router.get("/get", inCarInstructorControllers.addEntry);
+
+router.get("/getAll", inCarInstructorControllers.getAllEntries);
+router.get("/getOne/:primary_key", inCarInstructorControllers.getOneEntry);
 router.post("/add", inCarInstructorControllers.addEntry);
-router.put("/edit", inCarInstructorControllers.editEntry);
-router.delete("/delete", inCarInstructorControllers.deleteEntry);
+router.put("/edit/:primary_key", inCarInstructorControllers.editOneEntry);
+router.delete("/delete/:primary_key", inCarInstructorControllers.deleteOneEntry);
 
 module.exports = router;

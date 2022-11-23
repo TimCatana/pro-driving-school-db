@@ -201,6 +201,20 @@ const useNewCourseScreen = () => {
     });
   };
 
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleEditCourseEntry = () => {
+    axios.put(`http://localhost:4400/course/edit/1`, {
+      courseId,
+      courseStartDate,
+      courseEndDate,
+      _isCourseDigital,
+      courseCapacity,
+      _courseInClassInstructor,
+    });
+  };
+
   /******************************/
   /***** NAVIGATION HELPERS *****/
   /******************************/
@@ -237,6 +251,7 @@ const useNewCourseScreen = () => {
     handleInClassInstructorChange,
     isCourseInClassInstructorError,
     handleAddNewCourseEntry,
+    handleEditCourseEntry,
   };
 };
 
