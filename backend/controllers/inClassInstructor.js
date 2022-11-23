@@ -35,8 +35,27 @@ exports.addEntry = async (req, res) => {
   );
 };
 
-exports.editEntry = async (req, res) => {
-  console.log("edited");
+exports.editOneEntry = async (req, res) => {
+  const command = `UPDATE in_class_inst SET inst_drivers_license_id=?, inst_drivers_license_exp_date=?, first_name=?, last_name=? WHERE id = ?`;
+
+  db.query(
+    command,
+    [
+      req.body.inClassInstDriversLicense,
+      req.body.inClassInstDriversLicenseExpDate,
+      req.body.inClassInstFirstName,
+      req.body.inClassInstLastName,
+      req.params.primary_key,
+    ],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send({ status: 500 });
+      } else {
+        res.send({ status: 200 });
+      }
+    }
+  );
 };
 
 exports.getAllEntries = async (req, res) => {

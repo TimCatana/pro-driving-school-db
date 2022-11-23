@@ -20,6 +20,7 @@ const NewProductScreen = () => {
     isProductPriceError,
     handleProductPriceChange,
     handleAddNewProductEntry,
+    handleEditProductEntry,
   } = useNewProductScreen();
 
   return (
@@ -45,6 +46,7 @@ const NewProductScreen = () => {
       ></TextInput>
       {/* should be a dropdown list of all available instructors*/}
       <ConfirmButton onClick={handleAddNewProductEntry}> Save </ConfirmButton>
+      <ConfirmButton onClick={handleEditProductEntry}> Modify </ConfirmButton>
     </div>
   );
 };

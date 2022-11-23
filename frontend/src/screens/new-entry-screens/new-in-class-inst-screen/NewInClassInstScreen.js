@@ -23,6 +23,7 @@ const NewInClassInstScreen = () => {
     isInClassInstDriversLicenseExpDateError,
     handleInClassInstDriversLicenseExpDateChange,
     handleAddNewInClassInstructor,
+    handleEditInClassInstEntry
   } = useNewInClassInstScreen();
 
   return (
@@ -50,6 +51,7 @@ const NewInClassInstScreen = () => {
         onChange={handleInClassInstDriversLicenseExpDateChange}
       />
       <ConfirmButton onClick={handleAddNewInClassInstructor}> Save </ConfirmButton>
+      <ConfirmButton onClick={handleEditInClassInstEntry}> Modify </ConfirmButton>
     </div>
   );
 };

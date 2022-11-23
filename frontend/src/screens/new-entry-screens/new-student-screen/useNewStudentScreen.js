@@ -476,6 +476,29 @@ const useNewStudentScreen = () => {
     // `);
   };
 
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleEditStudentEntry = () => {
+    axios.put(`http://localhost:4400/student/edit/3`, {
+      studentFirstName,
+      studentMiddleName,
+      studentLastName,
+      studentDateOfBirth,
+      studentGender,
+      studentCellPhoneNumber,
+      studentHomePhoneNumber,
+      studentAddress,
+      studentAddressCity,
+      studentAddressPostalCode,
+      studentDriversLicenseNumber,
+      studentDriversLicenseNumberIssuedDate,
+      studentDriversLicenseNumberExpDate,
+      studentRegisteredCourseId,
+      studentRegisteredProductId,
+    });
+  };
+
   /******************************/
   /***** NAVIGATION HELPERS *****/
   /******************************/
@@ -557,6 +580,7 @@ const useNewStudentScreen = () => {
     handleStudentRegisteredProductId,
 
     handleAddNewStudentEntry,
+    handleEditStudentEntry
   };
 };
 

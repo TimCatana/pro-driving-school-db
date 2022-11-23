@@ -26,7 +26,7 @@ exports.addEntry = async (req, res) => {
       req.body.courseEndDate,
       1, // req.body._isCourseDigital, // should be 1 or 0, need to do some type changing beforehand
       parseInt(req.body.courseCapacity),
-      "abc", // req.body._courseInClassInstructor, // needs to be a valid in class inst drivers id that is in the in class inst table
+      1, // req.body._courseInClassInstructor, // needs to be a valid in class inst drivers id that is in the in class inst table
     ],
     (err, result) => {
       if (err) {
@@ -40,7 +40,7 @@ exports.addEntry = async (req, res) => {
 };
 
 exports.editOneEntry = async (req, res) => {
-  const command = `UPDATE courses SET courseId = ?, start_date = ?, end_date = ?, is_digital = ?, capacity = ?, in_class_instructor_id = ? WHERE id = ${req.params.primary_key};`;
+  const command = `UPDATE courses SET courseId = ?, start_date = ?, end_date = ?, is_digital = ?, capacity = ?, in_class_instructor_id = ? WHERE id = ?`;
 
   db.query(
     command,
@@ -50,7 +50,7 @@ exports.editOneEntry = async (req, res) => {
       req.body.courseEndDate,
       1, // req.body._isCourseDigital, // should be 1 or 0, need to do some type changing beforehand
       parseInt(req.body.courseCapacity),
-      "abc", // req.body._courseInClassInstructor, // needs to be a valid in class inst drivers id that is in the in class inst table
+      1, // req.body._courseInClassInstructor, // needs to be a valid in class inst drivers id that is in the in class inst table
       req.params.primary_key,
     ],
     (err, result) => {

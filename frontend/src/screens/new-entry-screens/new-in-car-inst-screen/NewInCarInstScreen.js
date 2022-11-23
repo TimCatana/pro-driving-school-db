@@ -29,6 +29,7 @@ const NewInCarInstScreen = () => {
     isInCarInstGLicenseExpDateError,
     handleInCarInstGLicenseExpDateChange,
     handleAddNewInCarInstructor,
+    handleEditInCarInstEntry,
   } = useNewInCarInstScreen();
 
   return (
@@ -67,6 +68,7 @@ const NewInCarInstScreen = () => {
         onChange={handleInCarInstGLicenseExpDateChange}
       />
       <ConfirmButton onClick={handleAddNewInCarInstructor}>Save</ConfirmButton>
+      <ConfirmButton onClick={handleEditInCarInstEntry}>Modify</ConfirmButton>
     </div>
   );
 };

@@ -209,19 +209,19 @@ const useNewInCarInstScreen = () => {
     // `);
   };
 
-    /**
+  /**
    * Updates the subscript to mailing list option.
    */
-     const handleEditInCarInstEntry = () => {
-      axios.put(`http://localhost:4400/in-car-inst/edit/1`, {
-        inCarInstFirstName,
-        inCarInstLastName,
-        inCarInstDriversLicense,
-        inCarInstDriversLicenseExpDate,
-        inCarInstGLicense,
-        inCarInstGLicenseExpDate,
-      });
-    };
+  const handleEditInCarInstEntry = () => {
+    axios.put(`http://localhost:4400/in-car-inst/edit/1`, {
+      inCarInstFirstName,
+      inCarInstLastName,
+      inCarInstDriversLicense,
+      inCarInstDriversLicenseExpDate,
+      inCarInstGLicense,
+      inCarInstGLicenseExpDate,
+    });
+  };
 
   /******************************/
   /***** NAVIGATION HELPERS *****/
@@ -261,6 +261,7 @@ const useNewInCarInstScreen = () => {
     isInCarInstGLicenseExpDateError,
     handleInCarInstGLicenseExpDateChange,
     handleAddNewInCarInstructor,
+    handleEditInCarInstEntry,
   };
 };
 

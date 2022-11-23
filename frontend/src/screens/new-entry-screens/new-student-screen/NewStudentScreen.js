@@ -71,7 +71,8 @@ const NewStudentScreen = () => {
     isStudentRegisteredProductIdError,
     handleStudentRegisteredProductId,
 
-    handleAddNewStudentEntry
+    handleAddNewStudentEntry,
+    handleEditStudentEntry,
   } = useNewStudentScreen();
 
   return (
@@ -168,6 +169,7 @@ const NewStudentScreen = () => {
 
       {/* should be a dropdown list of all available instructors*/}
       <ConfirmButton onClick={handleAddNewStudentEntry}> Save </ConfirmButton>
+      <ConfirmButton onClick={handleEditStudentEntry}>Modify</ConfirmButton>
     </div>
   );
 };

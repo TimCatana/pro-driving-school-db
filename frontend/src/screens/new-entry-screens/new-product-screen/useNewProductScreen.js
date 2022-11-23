@@ -122,6 +122,17 @@ const useNewProductScreen = () => {
     // `);
   };
 
+   /**
+   * Updates the subscript to mailing list option.
+   */
+    const handleEditProductEntry = () => {
+      axios.put(`http://localhost:4400/product/edit/1`, {
+        productId,
+      productName,
+      productPrice,
+      });
+    };
+
   /******************************/
   /***** NAVIGATION HELPERS *****/
   /******************************/
@@ -151,6 +162,7 @@ const useNewProductScreen = () => {
     isProductPriceError,
     handleProductPriceChange,
     handleAddNewProductEntry,
+    handleEditProductEntry
   };
 };
 

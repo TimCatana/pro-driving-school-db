@@ -161,6 +161,20 @@ const useNewInClassInstScreen = () => {
     // `);
   };
 
+
+
+   /**
+   * Updates the subscript to mailing list option.
+   */
+    const handleEditInClassInstEntry = () => {
+      axios.put(`http://localhost:4400/in-class-inst/edit/1`, {
+        inClassInstFirstName,
+        inClassInstLastName,
+        inClassInstDriversLicense,
+        inClassInstDriversLicenseExpDate,
+      });
+    };
+
   /******************************/
   /***** NAVIGATION HELPERS *****/
   /******************************/
@@ -193,6 +207,7 @@ const useNewInClassInstScreen = () => {
     isInClassInstDriversLicenseExpDateError,
     handleInClassInstDriversLicenseExpDateChange,
     handleAddNewInClassInstructor,
+    handleEditInClassInstEntry
   };
 };
 

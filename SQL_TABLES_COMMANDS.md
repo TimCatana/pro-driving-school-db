@@ -39,9 +39,10 @@ CREATE TABLE `pdsdb`.`courses` (
   `end_date` DATE NOT NULL,
   `is_digital` BIT NOT NULL,
   `capacity` INT NOT NULL,
-  `in_class_instructor_id` VARCHAR(100) NOT NULL,
-  FOREIGN KEY(in_class_instructor_id) REFERENCES in_class_inst(inst_drivers_license_id)
+  `in_class_instructor_id` INT NOT NULL,
+  FOREIGN KEY(in_class_instructor_id) REFERENCES in_class_inst(id)
 );
+
 
 # Students
 
@@ -70,10 +71,9 @@ CREATE TABLE `pdsdb`.`students` (
 
 ```
 DROP TABLE students;
-DROP TABLE in_car_inst;
-DROP TABLE in_class_inst;
 DROP TABLE products;
 DROP TABLE courses;
+DROP TABLE in_car_inst;
 DROP TABLE in_class_inst;
 ```
 
@@ -113,10 +113,9 @@ CREATE TABLE `pdsdb`.`courses` (
   `end_date` DATE NOT NULL,
   `is_digital` BIT NOT NULL,
   `capacity` INT NOT NULL,
-  `in_class_instructor_id` VARCHAR(100) NOT NULL,
-  FOREIGN KEY(in_class_instructor_id) REFERENCES in_class_inst(inst_drivers_license_id)
+  `in_class_instructor_id` INT NOT NULL,
+  FOREIGN KEY(in_class_instructor_id) REFERENCES in_class_inst(id)
 );
-
 
 CREATE TABLE `pdsdb`.`students` (
   `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,

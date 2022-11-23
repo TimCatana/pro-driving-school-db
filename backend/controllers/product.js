@@ -13,7 +13,7 @@ const db = mysql.createPool(config);
  * @param {*} res
  */
 exports.addEntry = async (req, res) => {
-  const command = `INSERT INTO products (id, name, price) VALUES (?, ?, ?);`;
+  const command = `INSERT INTO products (productId, name, price) VALUES (?, ?, ?);`;
 
   db.query(
     command,
@@ -33,12 +33,26 @@ exports.addEntry = async (req, res) => {
   );
 };
 
-exports.editEntry = async (req, res) => {
-  console.log("edited");
-};
+exports.editOneEntry = async (req, res) => {
+  const command = `UPDATE products SET productId=?, name=?, price=? WHERE id = ?`;
 
-exports.deleteEntry = async (req, res) => {
-  console.log("deleted");
+  db.query(
+    command,
+    [
+      parseInt(req.body.productId),
+      req.body.productName,
+      parseFloat(req.body.productPrice).toFixed(2),
+      req.params.primary_key,
+    ],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send({ status: 500 });
+      } else {
+        res.send({ status: 200 });
+      }
+    }
+  );
 };
 
 exports.getAllEntries = async (req, res) => {
