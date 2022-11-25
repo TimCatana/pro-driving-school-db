@@ -24,47 +24,73 @@ const NewCourseScreen = () => {
     courseCapacity,
     handleCourseCapacityChange,
     isCourseCapacityError,
+    courseInClassInstructor,
     handleInClassInstructorChange,
     isCourseInClassInstructorError,
     handleAddNewCourseEntry,
-    handleEditCourseEntry
+    handleEditCourseEntry,
+    inClassInstructors,
   } = useNewCourseScreen();
 
   return (
     <div>
       <h1>NewCourseScreen</h1>
-      <TextInput
-        type="number"
-        min="0"
-        value={courseId}
-        onChange={handleCourseIdChange}
-      ></TextInput>
-      {/* add min date field and use script to get todays date */}
-      <TextInput
-        type="date"
-        value={courseStartDate}
-        onChange={handleCourseStartDateChange}
-      ></TextInput>
-      {/* add min date field and use script to get todays date */}
-      <TextInput
-        type="date"
-        value={courseEndDate}
-        onChange={handleCourseEndDateChange}
-      ></TextInput>
-      <DropdownList name="isDigitalList" onChange={handleIsCourseDigitalChange}>
-        <ListOption value={true}>Digital</ListOption>
-        <ListOption value={false}>In Person</ListOption>
-      </DropdownList>
-      <TextInput
-        type="number"
-        min="0"
-        value={courseCapacity}
-        onChange={handleCourseCapacityChange}
-      ></TextInput>
-      <TextInput type="text"></TextInput>
-      {/* should be a dropdown list of all available instructors*/}
-      <ConfirmButton onClick={handleAddNewCourseEntry}> Save </ConfirmButton>
-      <ConfirmButton onClick={handleEditCourseEntry}> Modify </ConfirmButton>
+
+      {!isLoading && (
+        <>
+          <TextInput
+            type="number"
+            min="0"
+            value={courseId}
+            onChange={handleCourseIdChange}
+          ></TextInput>
+          {/* add min date field and use script to get todays date */}
+          <TextInput
+            type="date"
+            value={courseStartDate}
+            onChange={handleCourseStartDateChange}
+          ></TextInput>
+          {/* add min date field and use script to get todays date */}
+          <TextInput
+            type="date"
+            value={courseEndDate}
+            onChange={handleCourseEndDateChange}
+          ></TextInput>
+          <DropdownList
+            name="isDigitalList"
+            defaultValue={0}
+            onChange={handleIsCourseDigitalChange}
+          >
+            <ListOption value={0}>Digital</ListOption>
+            <ListOption value={1}>In Person</ListOption>
+          </DropdownList>
+          <TextInput
+            type="number"
+            min="0"
+            value={courseCapacity}
+            onChange={handleCourseCapacityChange}
+          ></TextInput>
+
+          <DropdownList
+            name="inClassInstList"
+            defaultValue={inClassInstructors[0].id}
+            onChange={handleInClassInstructorChange}
+          >
+            {inClassInstructors.map((data) => (
+              <ListOption value={data.id}>{data.first_name}</ListOption>
+            ))}
+          </DropdownList>
+
+          <ConfirmButton onClick={handleAddNewCourseEntry}>
+            {" "}
+            Save{" "}
+          </ConfirmButton>
+          <ConfirmButton onClick={handleEditCourseEntry}>
+            {" "}
+            Modify{" "}
+          </ConfirmButton>
+        </>
+      )}
     </div>
   );
 };

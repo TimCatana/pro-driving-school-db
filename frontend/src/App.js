@@ -14,11 +14,17 @@ const App = () => {
       <Routes>
         <Route path="/" element={<AuthScreen />} />
         <Route path="/home" element={<HomeScreen />} />
-        <Route path="/course" element={<NewCourseScreen />} />
-        <Route path="/product" element={<NewProductScreen />} />
-        <Route path="/student" element={<NewStudentScreen />} />
-        <Route path="/in-class-inst" element={<NewInClassInstScreen />} />
-        <Route path="/in-car-inst" element={<NewInCarInstScreen />} />
+        <Route path="/course/:primary_key" element={<NewCourseScreen />} />
+        <Route path="/product/:primary_key" element={<NewProductScreen />} />
+        <Route path="/student/:primary_key" element={<NewStudentScreen />} />
+        <Route
+          path="/in-class-inst/:primary_key"
+          element={<NewInClassInstScreen />}
+        />
+        <Route
+          path="/in-car-inst/:primary_key"
+          element={<NewInCarInstScreen />}
+        />
       </Routes>
     </div>
   );

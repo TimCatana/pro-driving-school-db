@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
-import isDateValid from "../../../components/helpers/isDateValid";
+import isDateValid from "../../../components/helpers/validators/isDateValid";
 import axios from "axios"
 
 const useNewInClassInstScreen = () => {
@@ -174,6 +174,21 @@ const useNewInClassInstScreen = () => {
         inClassInstDriversLicenseExpDate,
       });
     };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+   const handleDeleteInClassInst = async () => {
+    const result = await axios.delete(
+      `http://localhost:4400/in-class-inst/delete/dfsdfsd`
+    );
+
+    if (result.data.status != 200) {
+      console.log("failed to delete item");
+    } else {
+      console.log("successfully deleted item");
+    }
+  };
 
   /******************************/
   /***** NAVIGATION HELPERS *****/

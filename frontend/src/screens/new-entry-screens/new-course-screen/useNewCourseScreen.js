@@ -1,15 +1,22 @@
 import { useState, useEffect } from "react";
-// import { useHistory } from "react-router-dom";
-import isDateValid from "../../../components/helpers/isDateValid";
+import { useNavigate, useParams } from "react-router-dom";
+import isDateValid from "../../../components/helpers/validators/isDateValid";
 import axios from "axios";
 
 const useNewCourseScreen = () => {
   /******************/
   /***** STATES *****/
   /******************/
-  // let history = useHistory();
+  const CourseTypes = {
+    DIGITAL: "0",
+    IN_PERSON: "1",
+  };
 
-  const [isLoading, _setIsLoading] = useState(false);
+  const navigation = useNavigate();
+  const { primary_key } = useParams();
+  const [inClassInstructors, _setInClassInstructors] = useState(false);
+
+  const [isLoading, _setIsLoading] = useState(true);
 
   const [courseId, _setCourseId] = useState("");
   const [isCourseIdError, _setIsCourseIdError] = useState(true);
@@ -20,19 +27,31 @@ const useNewCourseScreen = () => {
   const [courseEndDate, _setCourseEndDate] = useState("");
   const [isCourseEndDateError, _setIsCourseEndDateError] = useState(true);
 
-  const [_isCourseDigital, _setIsCourseDigital] = useState("");
+  const [_isCourseDigital, _setIsCourseDigital] = useState(CourseTypes.DIGITAL);
   const [isCourseDigitalError, _setIsCourseDigitalError] = useState(true);
 
   const [courseCapacity, _setCourseCapacity] = useState("");
   const [isCourseCapacityError, _setIsCourseCapacityError] = useState(true);
 
-  const [_courseInClassInstructor, _setCourseInClassInstructor] = useState("");
+  const [courseInClassInstructor, _setCourseInClassInstructor] = useState("");
   const [isCourseInClassInstructorError, _setIsCourseInClassInstructorError] =
     useState(true);
 
   /***********************/
   /***** USE EFFECTS *****/
   /***********************/
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   */
+  useEffect(() => {
+    handleGetInClassInstructors();
+    // if no instructors, need to show message saying that instructors need to be added
+
+    if (primary_key != 0) {
+      handleGetSpecificCourse();
+    }
+  }, []);
 
   /**
    * Validates newly inputted courseId
@@ -93,14 +112,65 @@ const useNewCourseScreen = () => {
    * @dependent inClassInstructor
    */
   useEffect(() => {
-    _courseInClassInstructor.length > 0
+    courseInClassInstructor.length > 0
       ? _setIsCourseInClassInstructorError(false)
       : _setIsCourseInClassInstructorError(true);
-  }, [_courseInClassInstructor]);
+
+    console.log(`lol ${courseInClassInstructor}`)
+  }, [courseInClassInstructor]);
 
   /******************************/
   /***** USE EFFECT HELPERS *****/
   /******************************/
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetSpecificCourse = async () => {
+    _setIsLoading(true);
+    const result = await axios.get(
+      `http://localhost:4400/course/getOne/${primary_key}`
+    );
+
+    if (result.data.status == 200) {
+      _setCourseId(result.data.query[0].courseId);
+      _setCourseCapacity(result.data.query[0].capacity);
+      _setCourseStartDate(result.data.query[0].start_date);
+      _setCourseEndDate(result.data.query[0].end_date);
+      // _setIsCourseDigital // TODO - change this to int not bit cause bit returns an array and it gets to messy
+      _setCourseInClassInstructor(result.data.query[0].in_class_instructor_id);
+
+      console.log(result.data.query[0]);
+    } else {
+      console.log(result.data);
+    }
+
+    _setIsLoading(false);
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetInClassInstructors = async () => {
+    _setIsLoading(true);
+    const result = await axios.get(
+      `http://localhost:4400/in-class-inst/getAll`
+    );
+
+    if (result.data.status == 200) {
+      _setInClassInstructors(result.data.query);
+
+      if (primary_key == 0) {
+        _setCourseInClassInstructor(result.data.query[0].id);
+      }
+
+      console.log(result.data.query);
+    } else {
+      console.log(result.data);
+    }
+
+    _setIsLoading(false);
+  };
 
   /***********************/
   /***** TEXT INPUTS *****/
@@ -187,9 +257,16 @@ const useNewCourseScreen = () => {
     // cc ${courseCapacity}
     // ${typeof courseCapacity}
     // ${isCourseCapacityError}
-    // ${_courseInClassInstructor}
+    // ${courseInClassInstructor}
     // ${isCourseInClassInstructorError}
     // `);
+
+    console.log(courseId);
+    console.log(courseStartDate);
+    console.log(courseEndDate);
+    console.log(_isCourseDigital);
+    console.log(courseCapacity);
+    console.log(courseInClassInstructor);
 
     axios.post(`http://localhost:4400/course/add`, {
       courseId,
@@ -197,7 +274,7 @@ const useNewCourseScreen = () => {
       courseEndDate,
       _isCourseDigital,
       courseCapacity,
-      _courseInClassInstructor,
+      courseInClassInstructor,
     });
   };
 
@@ -211,8 +288,25 @@ const useNewCourseScreen = () => {
       courseEndDate,
       _isCourseDigital,
       courseCapacity,
-      _courseInClassInstructor,
+      courseInClassInstructor,
     });
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleDeleteCourse = async () => {
+    const result = await axios.delete(
+      `http://localhost:4400/course/delete/23424`
+    );
+
+    console.log(result.data);
+
+    if (result.data.status != 200) {
+      console.log("failed to delete item");
+    } else {
+      console.log("successfully deleted item");
+    }
   };
 
   /******************************/
@@ -248,10 +342,12 @@ const useNewCourseScreen = () => {
     courseCapacity,
     handleCourseCapacityChange,
     isCourseCapacityError,
+    courseInClassInstructor,
     handleInClassInstructorChange,
     isCourseInClassInstructorError,
     handleAddNewCourseEntry,
     handleEditCourseEntry,
+    inClassInstructors,
   };
 };
 

@@ -11,7 +11,7 @@ const db = mysql.createPool(config);
  *    courseEndDate,
  *    _isCourseDigital,
  *    courseCapacity,
- *    _courseInClassInstructor
+ *    courseInClassInstructor
  * } req
  * @param {*} res
  */
@@ -26,7 +26,7 @@ exports.addEntry = async (req, res) => {
       req.body.courseEndDate,
       1, // req.body._isCourseDigital, // should be 1 or 0, need to do some type changing beforehand
       parseInt(req.body.courseCapacity),
-      1, // req.body._courseInClassInstructor, // needs to be a valid in class inst drivers id that is in the in class inst table
+      parseInt(req.body.courseInClassInstructor), // needs to be a valid in class inst drivers id that is in the in class inst table
     ],
     (err, result) => {
       if (err) {
@@ -50,7 +50,7 @@ exports.editOneEntry = async (req, res) => {
       req.body.courseEndDate,
       1, // req.body._isCourseDigital, // should be 1 or 0, need to do some type changing beforehand
       parseInt(req.body.courseCapacity),
-      1, // req.body._courseInClassInstructor, // needs to be a valid in class inst drivers id that is in the in class inst table
+      parseInt(req.body.courseInClassInstructor), // needs to be a valid in class inst drivers id that is in the in class inst table
       req.params.primary_key,
     ],
     (err, result) => {

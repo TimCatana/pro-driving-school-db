@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
-import isDateValid from "../../../components/helpers/isDateValid";
+import isDateValid from "../../../components/helpers/validators/isDateValid";
 import axios from "axios";
 
 const useNewProductScreen = () => {
@@ -122,16 +122,31 @@ const useNewProductScreen = () => {
     // `);
   };
 
-   /**
+  /**
    * Updates the subscript to mailing list option.
    */
-    const handleEditProductEntry = () => {
-      axios.put(`http://localhost:4400/product/edit/1`, {
-        productId,
+  const handleEditProductEntry = () => {
+    axios.put(`http://localhost:4400/product/edit/1`, {
+      productId,
       productName,
       productPrice,
-      });
-    };
+    });
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleDeleteProduct = async () => {
+    const result = await axios.delete(
+      `http://localhost:4400/product/delete/1212`
+    );
+
+    if (result.data.status != 200) {
+      console.log("failed to delete item");
+    } else {
+      console.log("successfully deleted item");
+    }
+  };
 
   /******************************/
   /***** NAVIGATION HELPERS *****/
@@ -162,7 +177,7 @@ const useNewProductScreen = () => {
     isProductPriceError,
     handleProductPriceChange,
     handleAddNewProductEntry,
-    handleEditProductEntry
+    handleEditProductEntry,
   };
 };
 

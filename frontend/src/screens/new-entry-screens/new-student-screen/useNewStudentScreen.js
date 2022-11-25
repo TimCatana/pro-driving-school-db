@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
-import isDateValid from "../../../components/helpers/isDateValid";
+import isDateValid from "../../../components/helpers/validators/isDateValid";
 import axios from "axios";
 
 const useNewStudentScreen = () => {
@@ -497,6 +497,21 @@ const useNewStudentScreen = () => {
       studentRegisteredCourseId,
       studentRegisteredProductId,
     });
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+   const handleDeleteStudent = async () => {
+    const result = await axios.delete(
+      `http://localhost:4400/student/delete/c`
+    );
+
+    if (result.data.status != 200) {
+      console.log("failed to delete item");
+    } else {
+      console.log("successfully deleted item");
+    }
   };
 
   /******************************/
