@@ -2,14 +2,16 @@ import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 import isDateFormatYYYYMMDD from "../../../components/helpers/validators/isDateFormatYYYYMMDD";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 const useNewInCarInstScreen = () => {
   /******************/
   /***** STATES *****/
   /******************/
-  // let history = useHistory();
+  const navigation = useNavigate();
+  const { primary_key } = useParams();
 
-  const [isLoading, _setIsLoading] = useState(false);
+  const [isLoading, _setIsLoading] = useState(true);
 
   const [inCarInstFirstName, _setInCarInstFirstName] = useState("");
   const [isInCarInstFirstNameError, _setIsInCarInstFirstNameError] =
@@ -41,6 +43,18 @@ const useNewInCarInstScreen = () => {
   /***********************/
   /***** USE EFFECTS *****/
   /***********************/
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   */
+  useEffect(() => {
+    if (primary_key != 0) {
+      handleGetSpecificInCarInst();
+    } else {
+      _setIsLoading(false);
+    }
+  }, []);
 
   /**
    * Validates newly inputted inCarInstFirstName
@@ -104,6 +118,35 @@ const useNewInCarInstScreen = () => {
   /******************************/
   /***** USE EFFECT HELPERS *****/
   /******************************/
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetSpecificInCarInst = async () => {
+    _setIsLoading(true);
+    const result = await axios.get(
+      `http://localhost:4400/in-car-inst/getOne/${primary_key}`
+    );
+
+    if (result.data.status == 200) {
+      _setInCarInstFirstName(result.data.query[0].first_name);
+      _setInCarInstLastName(result.data.query[0].last_name);
+      _setInCarInstDriversLicense(result.data.query[0].inst_drivers_license_id);
+      _setInCarInstDriversLicenseExpDate(
+        result.data.query[0].inst_drivers_license_exp_date
+      );
+      _setInCarInstGLicense(result.data.query[0].g_drivers_license_id);
+      _setInCarInstGLicenseExpDate(
+        result.data.query[0].g_drivers_license_exp_date
+      );
+
+      console.log(result.data.query[0]);
+    } else {
+      console.log(result.data);
+    }
+
+    _setIsLoading(false);
+  };
 
   /***********************/
   /***** TEXT INPUTS *****/
@@ -195,7 +238,6 @@ const useNewInCarInstScreen = () => {
     // ${isInCarInstGLicenseExpDateError}
     // `);
 
-
     if (
       !isInCarInstFirstNameError &&
       !isInCarInstLastNameError &&
@@ -204,14 +246,14 @@ const useNewInCarInstScreen = () => {
       !isInCarInstGLicenseError &&
       !isInCarInstGLicenseExpDateError
     ) {
-    axios.post(`http://localhost:4400/in-car-inst/add`, {
-      inCarInstFirstName,
-      inCarInstLastName,
-      inCarInstDriversLicense,
-      inCarInstDriversLicenseExpDate,
-      inCarInstGLicense,
-      inCarInstGLicenseExpDate,
-    });
+      axios.post(`http://localhost:4400/in-car-inst/add`, {
+        inCarInstFirstName,
+        inCarInstLastName,
+        inCarInstDriversLicense,
+        inCarInstDriversLicenseExpDate,
+        inCarInstGLicense,
+        inCarInstGLicenseExpDate,
+      });
     }
   };
 

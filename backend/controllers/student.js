@@ -35,7 +35,7 @@ exports.addEntry = async (req, res) => {
       req.body.studentMiddleName,
       req.body.studentLastName,
       req.body.studentDateOfBirth,
-      1, // req.body.studentGender // TODO - make this a varchar and have three options m, f and not declared
+      req.body.studentGender, // TODO - make this a varchar and have three options m, f and not declared
       req.body.studentAddress,
       req.body.studentAddressCity,
       req.body.studentAddressPostalCode,
@@ -44,8 +44,8 @@ exports.addEntry = async (req, res) => {
       req.body.studentDriversLicenseNumber,
       req.body.studentDriversLicenseNumberIssuedDate,
       req.body.studentDriversLicenseNumberExpDate,
-      1, // parseInt(req.body.studentRegisteredCourseId), // id needs to exist in courses table
-      1, // parseInt(req.body.studentRegisteredProductId), // id needs to exist in products table
+      parseInt(req.body.studentRegisteredCourseId), // id needs to exist in courses table
+      parseInt(req.body.studentRegisteredProductId), // id needs to exist in products table
     ],
     (err, result) => {
       if (err) {
@@ -69,7 +69,7 @@ exports.editOneEntry = async (req, res) => {
       req.body.studentMiddleName,
       req.body.studentLastName,
       req.body.studentDateOfBirth,
-      1, // req.body.studentGender // TODO - make this a varchar and have three options m, f and not declared
+      req.body.studentGender, // TODO - make this a varchar and have three options m, f and not declared
       req.body.studentAddress,
       req.body.studentAddressCity,
       req.body.studentAddressPostalCode,
@@ -78,8 +78,8 @@ exports.editOneEntry = async (req, res) => {
       req.body.studentDriversLicenseNumber,
       req.body.studentDriversLicenseNumberIssuedDate,
       req.body.studentDriversLicenseNumberExpDate,
-      1, // parseInt(req.body.studentRegisteredCourseId), // id needs to exist in courses table
-      1, // parseInt(req.body.studentRegisteredProductId), // id needs to exist in products table
+      parseInt(req.body.studentRegisteredCourseId), // id needs to exist in courses table
+      parseInt(req.body.studentRegisteredProductId), // id needs to exist in products table
       req.params.primary_key,
     ],
     (err, result) => {
@@ -108,7 +108,7 @@ exports.getAllEntries = async (req, res) => {
 };
 
 exports.getOneEntry = async (req, res) => {
-  const command = `SELECT * FROM students WHERE drivers_license_id = ?;`;
+  const command = `SELECT * FROM students WHERE id = ?;`;
 
   db.query(command, [req.params.primary_key], (err, result) => {
     if (err) {
@@ -121,7 +121,7 @@ exports.getOneEntry = async (req, res) => {
 };
 
 exports.deleteOneEntry = async (req, res) => {
-  const command = `DELETE FROM students WHERE drivers_license_id = ?;`;
+  const command = `DELETE FROM students WHERE id = ?;`;
 
   db.query(command, [req.params.primary_key], (err, result) => {
     if (err) {

@@ -24,7 +24,7 @@ exports.addEntry = async (req, res) => {
       parseInt(req.body.courseId),
       req.body.courseStartDate,
       req.body.courseEndDate,
-      1, // req.body._isCourseDigital, // should be 1 or 0, need to do some type changing beforehand
+      req.body._isCourseDigital,
       parseInt(req.body.courseCapacity),
       parseInt(req.body.courseInClassInstructor), // needs to be a valid in class inst drivers id that is in the in class inst table
     ],
@@ -48,7 +48,7 @@ exports.editOneEntry = async (req, res) => {
       parseInt(req.body.courseId),
       req.body.courseStartDate,
       req.body.courseEndDate,
-      1, // req.body._isCourseDigital, // should be 1 or 0, need to do some type changing beforehand
+      req.body._isCourseDigital,
       parseInt(req.body.courseCapacity),
       parseInt(req.body.courseInClassInstructor), // needs to be a valid in class inst drivers id that is in the in class inst table
       req.params.primary_key,

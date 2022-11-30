@@ -10,6 +10,7 @@ import {
   addYearsToDate,
   formatDateToYYYYMMDD,
 } from "../../../components/helpers/date";
+import { useNavigate, useParams } from "react-router-dom";
 
 const useNewStudentScreen = () => {
   /******************/
@@ -22,6 +23,15 @@ const useNewStudentScreen = () => {
     FEMALE: "Female",
     NOT_DECLARED: "Not Declared",
   };
+
+  const navigation = useNavigate();
+  const { primary_key } = useParams();
+
+  const [selectedGender, _setSelectedGender] = useState("label");
+  const [selectedRegisteredCourse, _setSelectedRegisteredCourse] =
+    useState("label");
+  const [selectedRegisteredProduct, _setSelectedRegisteredProduct] =
+    useState("label");
 
   const [isLoading, _setIsLoading] = useState(true);
 
@@ -106,18 +116,12 @@ const useNewStudentScreen = () => {
   /***********************/
   /***** USE EFFECTS *****/
   /***********************/
-
   /**
    * Validates newly inputted courseId
    * @dependent courseId
    */
   useEffect(() => {
-    handleGetCoursesAndProducts();
-    // if no instructors, need to show message saying that instructors need to be added
-
-    // if (primary_key != 0) {
-    //   handleGetSpecificCourse();
-    // }
+    doRender();
   }, []);
 
   /**
@@ -315,6 +319,57 @@ const useNewStudentScreen = () => {
   /***** USE EFFECT HELPERS *****/
   /******************************/
 
+  const doRender = async () => {
+    _setIsLoading(true);
+    await handleGetCoursesAndProducts();
+    // if no instructors, need to show message saying that instructors need to be added
+
+    if (primary_key != 0) {
+      await handleGetSpecificStudent();
+    }
+
+    _setIsLoading(false);
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetSpecificStudent = async () => {
+    const result = await axios.get(
+      `http://localhost:4400/student/getOne/${primary_key}`
+    );
+
+    if (result.data.status == 200) {
+      _setStudentFirstName(result.data.query[0].first_name);
+      _setStudentMiddleName(result.data.query[0].middle_name);
+      _setStudentLastName(result.data.query[0].last_name);
+      _setStudentDateOfBirth(result.data.query[0].date_of_birth);
+      _setStudentGender(result.data.query[0].gender);
+      _setStudentCellPhoneNumber(result.data.query[0].cell_phone_number);
+      _setStudentHomePhoneNumber(result.data.query[0].home_phone_number);
+      _setStudentAddress(result.data.query[0].address);
+      _setStudentAddressCity(result.data.query[0].address_city);
+      _setStudentAddressPostalCode(result.data.query[0].address_postal_code);
+      _setStudentDriversLicenseNumber(result.data.query[0].drivers_license_id);
+      _setStudentDriversLicenseNumberIssuedDate(
+        result.data.query[0].drivers_license_date_issued
+      );
+      _setStudentDriversLicenseNumberExpDate(
+        result.data.query[0].drivers_license_exp_date
+      );
+      _setStudentRegisteredCourseId(result.data.query[0].registered_course);
+      _setStudentRegisteredProductId(result.data.query[0].purchased_product);
+
+      _setSelectedGender(result.data.query[0].gender);
+      _setSelectedRegisteredCourse(result.data.query[0].registered_course);
+      _setSelectedRegisteredProduct(result.data.query[0].purchased_product);
+
+      console.log(result.data.query[0]);
+    } else {
+      console.log(result.data);
+    }
+  };
+
   /**
    * Updates the subscript to mailing list option.
    */
@@ -344,10 +399,8 @@ const useNewStudentScreen = () => {
   };
 
   const handleGetCoursesAndProducts = async () => {
-    _setIsLoading(true);
     await handleGetCourses();
     await handleGetProducts();
-    _setIsLoading(false);
   };
 
   /***********************/
@@ -706,6 +759,10 @@ const useNewStudentScreen = () => {
     Genders,
     courses,
     products,
+
+    selectedGender,
+    selectedRegisteredCourse,
+    selectedRegisteredProduct,
   };
 };
 

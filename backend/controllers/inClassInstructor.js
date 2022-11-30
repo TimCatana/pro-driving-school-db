@@ -72,7 +72,7 @@ exports.getAllEntries = async (req, res) => {
 };
 
 exports.getOneEntry = async (req, res) => {
-  const command = `SELECT * FROM in_class_inst WHERE inst_drivers_license_id = ?;`;
+  const command = `SELECT * FROM in_class_inst WHERE id = ?;`;
 
   db.query(command, [req.params.primary_key], (err, result) => {
     if (err) {
@@ -85,7 +85,7 @@ exports.getOneEntry = async (req, res) => {
 };
 
 exports.deleteOneEntry = async (req, res) => {
-  const command = `DELETE FROM in_class_inst WHERE inst_drivers_license_id = ?;`;
+  const command = `DELETE FROM in_class_inst WHERE id = ?;`;
 
   db.query(command, [req.params.primary_key], (err, result) => {
     if (err) {

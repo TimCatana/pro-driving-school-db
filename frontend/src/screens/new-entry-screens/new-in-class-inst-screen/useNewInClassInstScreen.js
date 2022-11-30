@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 import isDateFormatYYYYMMDD from "../../../components/helpers/validators/isDateFormatYYYYMMDD";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 const useNewInClassInstScreen = () => {
   /******************/
   /***** STATES *****/
   /******************/
-  // let history = useHistory();
+  const navigation = useNavigate();
+  const { primary_key } = useParams();
 
   const [isLoading, _setIsLoading] = useState(false);
 
@@ -38,6 +40,18 @@ const useNewInClassInstScreen = () => {
   /***********************/
   /***** USE EFFECTS *****/
   /***********************/
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   */
+  useEffect(() => {
+    if (primary_key != 0) {
+      handleGetSpecificInClassInst();
+    } else {
+      _setIsLoading(false);
+    }
+  }, []);
 
   /**
    * Validates newly inputted inClassInstFirstName
@@ -83,6 +97,33 @@ const useNewInClassInstScreen = () => {
   /******************************/
   /***** USE EFFECT HELPERS *****/
   /******************************/
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetSpecificInClassInst = async () => {
+    _setIsLoading(true);
+    const result = await axios.get(
+      `http://localhost:4400/in-class-inst/getOne/${primary_key}`
+    );
+
+    if (result.data.status == 200) {
+      _setInClassInstFirstName(result.data.query[0].first_name);
+      _setInClassInstLastName(result.data.query[0].last_name);
+      _setInClassInstDriversLicense(
+        result.data.query[0].inst_drivers_license_id
+      );
+      _setInClassInstDriversLicenseExpDate(
+        result.data.query[0].inst_drivers_license_exp_date
+      );
+
+      console.log(result.data.query[0]);
+    } else {
+      console.log(result.data);
+    }
+
+    _setIsLoading(false);
+  };
 
   /***********************/
   /***** TEXT INPUTS *****/
@@ -157,12 +198,12 @@ const useNewInClassInstScreen = () => {
       !isInClassInstDriversLicenseError &&
       !isInClassInstDriversLicenseExpDateError
     ) {
-    axios.post(`http://localhost:4400/in-class-inst/add`, {
-      inClassInstFirstName,
-      inClassInstLastName,
-      inClassInstDriversLicense,
-      inClassInstDriversLicenseExpDate,
-    });
+      axios.post(`http://localhost:4400/in-class-inst/add`, {
+        inClassInstFirstName,
+        inClassInstLastName,
+        inClassInstDriversLicense,
+        inClassInstDriversLicenseExpDate,
+      });
     }
   };
 

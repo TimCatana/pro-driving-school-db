@@ -57,6 +57,8 @@ const NewCourseScreen = () => {
     handleEditCourseEntry,
     inClassInstructors,
     CourseTypes,
+    selectedCourseType,
+    selectedInstructor,
   } = useNewCourseScreen();
 
   const [isStartDateFocus, setIsStartDateFocus] = useState(false);
@@ -125,7 +127,7 @@ const NewCourseScreen = () => {
             <SingleRowTextInputDiv>
               <DropDownMenu
                 name="isDigitalList"
-                defaultValue={"label"}
+                defaultValue={selectedCourseType}
                 onChange={handleIsCourseDigitalChange}
               >
                 <ListOption value={"label"} disabled hidden>
@@ -139,7 +141,7 @@ const NewCourseScreen = () => {
             <SingleRowTextInputDiv>
               <DropDownMenu
                 name="inClassInstList"
-                defaultValue={"label"}
+                defaultValue={selectedInstructor}
                 onChange={handleInClassInstructorChange}
               >
                 <ListOption value={"label"} disables hidden>

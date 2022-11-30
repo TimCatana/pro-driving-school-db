@@ -22,6 +22,9 @@ const useNewCourseScreen = () => {
   const { primary_key } = useParams();
   const [inClassInstructors, _setInClassInstructors] = useState("");
 
+  const [selectedCourseType, _setSelectedCourseType] = useState("label");
+  const [selectedInstructor, _setSelectedInstructor] = useState("label");
+
   const [isLoading, _setIsLoading] = useState(true);
 
   const [courseId, _setCourseId] = useState("");
@@ -175,8 +178,11 @@ const useNewCourseScreen = () => {
       _setCourseCapacity(result.data.query[0].capacity);
       _setCourseStartDate(result.data.query[0].start_date);
       _setCourseEndDate(result.data.query[0].end_date);
-      // _setIsCourseDigital // TODO - change this to int not bit cause bit returns an array and it gets to messy
+      _setIsCourseDigital(result.data.query[0].is_digital); // TODO - change this to int not bit cause bit returns an array and it gets to messy
       _setCourseInClassInstructor(result.data.query[0].in_class_instructor_id);
+
+      _setSelectedCourseType(result.data.query[0].is_digital);
+      _setSelectedInstructor(result.data.query[0].in_class_instructor_id);
 
       console.log(result.data.query[0]);
     } else {
@@ -390,6 +396,8 @@ const useNewCourseScreen = () => {
     handleEditCourseEntry,
     inClassInstructors,
     CourseTypes,
+    selectedCourseType,
+    selectedInstructor,
   };
 };
 

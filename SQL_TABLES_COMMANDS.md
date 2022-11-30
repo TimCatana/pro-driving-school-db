@@ -83,10 +83,10 @@ DROP TABLE in_class_inst;
 ```
 CREATE TABLE `pdsdb`.`in_class_inst` (
   `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
-  `inst_drivers_license_id` VARCHAR(100) NOT NULL UNIQUE,
-  `inst_drivers_license_exp_date` DATE NOT NULL,
   `first_name` VARCHAR(75) NOT NULL,
-  `last_name` VARCHAR(75) NOT NULL
+  `last_name` VARCHAR(75) NOT NULL,
+  `inst_drivers_license_id` VARCHAR(100) NOT NULL UNIQUE,
+  `inst_drivers_license_exp_date` DATE NOT NULL
 );
 
 CREATE TABLE `pdsdb`.`products` (
@@ -98,22 +98,22 @@ CREATE TABLE `pdsdb`.`products` (
 
 CREATE TABLE `pdsdb`.`in_car_inst` (
   `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
-  `inst_drivers_license_id` VARCHAR(100) NOT NULL UNIQUE,
-  `inst_drivers_license_exp_date` DATE NOT NULL,
   `first_name` VARCHAR(75) NOT NULL,
   `last_name` VARCHAR(75) NOT NULL,
+  `inst_drivers_license_id` VARCHAR(100) NOT NULL UNIQUE,
+  `inst_drivers_license_exp_date` DATE NOT NULL,
   `g_drivers_license_id` VARCHAR(100) NOT NULL UNIQUE,
   `g_drivers_license_exp_date` DATE NOT NULL
-  );
+);
 
 CREATE TABLE `pdsdb`.`courses` (
   `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT UNIQUE,
   `courseId` INT NOT NULL UNIQUE,
+  `capacity` INT NOT NULL,
+  `is_digital` VARCHAR(15) NOT NULL,
+  `in_class_instructor_id` INT NOT NULL,
   `start_date` DATE NOT NULL,
   `end_date` DATE NOT NULL,
-  `is_digital` INT NOT NULL,
-  `capacity` INT NOT NULL,
-  `in_class_instructor_id` INT NOT NULL,
   FOREIGN KEY(in_class_instructor_id) REFERENCES in_class_inst(id)
 );
 
@@ -123,7 +123,7 @@ CREATE TABLE `pdsdb`.`students` (
   `middle_name` VARCHAR(75) NULL,
   `last_name` VARCHAR(75) NOT NULL,
   `date_of_birth` DATE NOT NULL,
-  `gender` INT NULL,
+  `gender` VARCHAR(15) NULL,
   `address` VARCHAR(150) NOT NULL,
   `address_city` VARCHAR(150) NOT NULL,
   `address_postal_code` VARCHAR(20) NOT NULL,

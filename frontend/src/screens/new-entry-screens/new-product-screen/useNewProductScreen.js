@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 import isDateFormatYYYYMMDD from "../../../components/helpers/validators/isDateFormatYYYYMMDD";
 import axios from "axios";
 import { isNumber } from "../../../components/helpers/validators";
+import { useNavigate, useParams } from "react-router-dom";
 
 const useNewProductScreen = () => {
   /******************/
   /***** STATES *****/
   /******************/
-  // let history = useHistory();
+  const navigation = useNavigate();
+  const { primary_key } = useParams();
 
   const [isLoading, _setIsLoading] = useState(false);
 
@@ -24,6 +26,18 @@ const useNewProductScreen = () => {
   /***********************/
   /***** USE EFFECTS *****/
   /***********************/
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   */
+  useEffect(() => {
+    if (primary_key != 0) {
+      handleGetSpecificInClassInst();
+    } else {
+      _setIsLoading(false);
+    }
+  }, []);
 
   /**
    * Validates newly inputted productId
@@ -66,6 +80,27 @@ const useNewProductScreen = () => {
   /******************************/
   /***** USE EFFECT HELPERS *****/
   /******************************/
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetSpecificInClassInst = async () => {
+    _setIsLoading(true);
+    const result = await axios.get(
+      `http://localhost:4400/product/getOne/${primary_key}`
+    );
+
+    if (result.data.status == 200) {
+      _setProductId(result.data.query[0].productId);
+      _setProductName(result.data.query[0].name);
+      _setProductPrice(result.data.query[0].price);
+      console.log(result.data.query[0]);
+    } else {
+      console.log(result.data);
+    }
+
+    _setIsLoading(false);
+  };
 
   /***********************/
   /***** TEXT INPUTS *****/

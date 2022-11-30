@@ -102,6 +102,10 @@ const NewStudentScreen = () => {
     Genders,
     courses,
     products,
+
+    selectedGender,
+    selectedRegisteredCourse,
+    selectedRegisteredProduct,
   } = useNewStudentScreen();
 
   const [isDateOfBirthFocus, setIsDateOfBirthFocus] = useState(false);
@@ -165,7 +169,7 @@ const NewStudentScreen = () => {
 
               <DropDownMenu
                 name="genderList"
-                defaultValue={"label"}
+                defaultValue={selectedGender}
                 onChange={handleStudentGenderChange}
               >
                 <ListOption value={"label"} disabled hidden>
@@ -255,7 +259,7 @@ const NewStudentScreen = () => {
               {/* get the courses from database and but them in the options */}
               <DropDownMenu
                 name="courseIdList"
-                defaultValue={"label"}
+                defaultValue={selectedRegisteredCourse}
                 onChange={handleStudentRegisteredCourseId}
               >
                 <ListOption value={"label"} disabled hidden>
@@ -273,7 +277,7 @@ const NewStudentScreen = () => {
               {/* get the products from database and but them in the options */}
               <DropDownMenu
                 name="productIdList"
-                defaultValue={"label"}
+                defaultValue={selectedRegisteredProduct}
                 onChange={handleStudentRegisteredProductId}
               >
                 <ListOption value={"label"} disabled hidden>
