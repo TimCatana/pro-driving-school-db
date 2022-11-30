@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
-import isDateValid from "../../../components/helpers/validators/isDateValid";
+import isDateFormatYYYYMMDD from "../../../components/helpers/validators/isDateFormatYYYYMMDD";
 import axios from "axios";
+import { isNumber } from "../../../components/helpers/validators";
 
 const useNewProductScreen = () => {
   /******************/
@@ -29,10 +30,13 @@ const useNewProductScreen = () => {
    * @dependent productId
    */
   useEffect(() => {
-    productId.length > 0
-      ? _setIsProductIdError(false)
-      : _setIsProductIdError(true);
-    // TODO - make sure its a valid number? HTML should take care of that. though I will validate again in the backend.
+    if (isNumber(productId)) {
+      parseInt(productId) > -1
+        ? _setIsProductIdError(false)
+        : _setIsProductIdError(true);
+    } else {
+      _setIsProductIdError(true);
+    }
   }, [productId]);
 
   /**
@@ -40,7 +44,7 @@ const useNewProductScreen = () => {
    * @dependent productName
    */
   useEffect(() => {
-    productName.length > 0
+    productName.length > 0 && productName.length < 250
       ? _setIsProductNameError(false)
       : _setIsProductNameError(true);
   }, [productName]);
@@ -50,10 +54,13 @@ const useNewProductScreen = () => {
    * @dependent productName
    */
   useEffect(() => {
-    productPrice.length > 0
-      ? _setIsProductPriceError(false)
-      : _setIsProductPriceError(true);
-    // TODO - make sure its a valid number? HTML should take care of that. though I will validate again in the backend.
+    if (isNumber(productPrice)) {
+      parseInt(productPrice) > -1
+        ? _setIsProductPriceError(false)
+        : _setIsProductPriceError(true);
+    } else {
+      _setIsProductPriceError(true);
+    }
   }, [productPrice]);
 
   /******************************/
@@ -99,13 +106,7 @@ const useNewProductScreen = () => {
    * Updates the subscript to mailing list option.
    */
   const handleAddNewProductEntry = () => {
-    axios.post(`http://localhost:4400/product/add`, {
-      productId,
-      productName,
-      productPrice,
-    });
-
-    // // TODO - axios call to node backend that adds new course entry
+    // TODO - axios call to node backend that adds new course entry
     // console.log(`axios call to backend, not implemented yet but button works!
     // values:
     // ${isLoading}
@@ -120,6 +121,14 @@ const useNewProductScreen = () => {
     // ${typeof productPrice}
     // ${isProductPriceError}
     // `);
+
+    if (!isProductIdError && !isProductNameError && !isProductPriceError) {
+      axios.post(`http://localhost:4400/product/add`, {
+        productId,
+        productName,
+        productPrice,
+      });
+    }
   };
 
   /**

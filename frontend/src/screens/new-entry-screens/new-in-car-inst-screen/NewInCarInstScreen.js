@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import useNewInCarInstScreen from "./useNewInCarInstScreen";
+import {
+  Button,
+  DropDownMenu,
+  TextInput,
+  SideBySideTextInputsDiv,
+  SingleRowTextInputDiv,
+} from "../../../components/common";
 
-const ConfirmButton = styled.button``;
-const TextInput = styled.input``;
-const DropdownList = styled.select``;
-const ListOption = styled.option``;
+const WrapperDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const ContainerDiv = styled.div``;
+
+const TitleH1 = styled.h1`
+  text-align: center;
+`;
+
+const FormDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ButtonsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+// const ConfirmButton = styled.button``;
+// const TextInput = styled.input``;
+// const DropdownList = styled.select``;
+// const ListOption = styled.option``;
 
 const NewInCarInstScreen = () => {
   const {
@@ -32,44 +60,117 @@ const NewInCarInstScreen = () => {
     handleEditInCarInstEntry,
   } = useNewInCarInstScreen();
 
+  const [isInstDriversLicenseFocus, setIsInstDriversLicenseFocus] =
+    useState(false);
+  const [isGDriversLicenseFocus, setGDriversLicenseFocus] = useState(false);
+
+  const InstDriversLicenseFocusAndBlurHandler = (isFocused) => {
+    setIsInstDriversLicenseFocus(isFocused);
+  };
+  const GDriversLicenseFocusAndBlurHandler = (isFocused) => {
+    setGDriversLicenseFocus(isFocused);
+  };
+
   return (
-    <div>
-      <h1>NewInCarInstScreen</h1>
-      <TextInput
-        type="text"
-        value={inCarInstFirstName}
-        onChange={handleInCarInstFirstNameChange}
-      ></TextInput>
-      <TextInput
-        type="text"
-        value={inCarInstLastName}
-        onChange={handleInCarInstLastNameChange}
-      ></TextInput>
-      <TextInput
-        type="text"
-        value={inCarInstDriversLicense}
-        onChange={handleInCarInstDriversLicenseChange}
-      ></TextInput>
-      {/* add min date field and use script to get todays date */}
-      <TextInput
-        type="date"
-        value={inCarInstDriversLicenseExpDate}
-        onChange={handleInCarInstDriversLicenseExpDateChange}
-      />
-      <TextInput
-        type="text"
-        value={inCarInstGLicense}
-        onChange={handleInCarInstGLicenseChange}
-      ></TextInput>
-      {/* add min date field and use script to get todays date */}
-      <TextInput
-        type="date"
-        value={inCarInstGLicenseExpDate}
-        onChange={handleInCarInstGLicenseExpDateChange}
-      />
-      <ConfirmButton onClick={handleAddNewInCarInstructor}>Save</ConfirmButton>
-      <ConfirmButton onClick={handleEditInCarInstEntry}>Modify</ConfirmButton>
-    </div>
+    <WrapperDiv>
+      <ContainerDiv>
+        <TitleH1>NewInCarInstScreen</TitleH1>
+
+        {!isLoading && (
+          <FormDiv>
+            <SideBySideTextInputsDiv>
+              <TextInput
+                type="text"
+                maxLength={70}
+                value={inCarInstFirstName}
+                onChange={handleInCarInstFirstNameChange}
+                placeholder={"First Name"}
+              />
+              <TextInput
+                type="text"
+                maxLength={70}
+                value={inCarInstLastName}
+                onChange={handleInCarInstLastNameChange}
+                placeholder={"Last Name"}
+              />
+            </SideBySideTextInputsDiv>
+            <SideBySideTextInputsDiv>
+              <TextInput
+                type="text"
+                maxLength={95}
+                value={inCarInstDriversLicense}
+                onChange={handleInCarInstDriversLicenseChange}
+                placeholder={"Instructor Driver's License"}
+              />
+              {/* add min date field and use script to get todays date */}
+              <TextInput
+                type={isInstDriversLicenseFocus ? "date" : "text"}
+                onFocus={() => {
+                  InstDriversLicenseFocusAndBlurHandler(true);
+                }}
+                onBlur={() => {
+                  InstDriversLicenseFocusAndBlurHandler(false);
+                }}
+                value={inCarInstDriversLicenseExpDate}
+                onChange={handleInCarInstDriversLicenseExpDateChange}
+                placeholder={"Instructor Drivers License Expiry Date"}
+              />
+            </SideBySideTextInputsDiv>
+            <SideBySideTextInputsDiv>
+              <TextInput
+                type="text"
+                maxLength={95}
+                value={inCarInstGLicense}
+                onChange={handleInCarInstGLicenseChange}
+                placeholder={"G Driver's License"}
+              />
+              {/* add min date field and use script to get todays date */}
+              <TextInput
+                type={isGDriversLicenseFocus ? "date" : "text"}
+                onFocus={() => {
+                  GDriversLicenseFocusAndBlurHandler(true);
+                }}
+                onBlur={() => {
+                  GDriversLicenseFocusAndBlurHandler(false);
+                }}
+                value={inCarInstGLicenseExpDate}
+                onChange={handleInCarInstGLicenseExpDateChange}
+                placeholder={"G Drivers License Expiry Date"}
+              />
+            </SideBySideTextInputsDiv>
+
+            <ButtonsDiv>
+              <Button
+                disabled={
+                  isInCarInstFirstNameError ||
+                  isInCarInstLastNameError ||
+                  isInCarInstDriversLicenseError ||
+                  isInCarInstDriversLicenseExpDateError ||
+                  isInCarInstGLicenseError ||
+                  isInCarInstGLicenseExpDateError
+                }
+                onClick={handleAddNewInCarInstructor}
+              >
+                Save
+              </Button>
+              <Button
+                disabled={
+                  isInCarInstFirstNameError ||
+                  isInCarInstLastNameError ||
+                  isInCarInstDriversLicenseError ||
+                  isInCarInstDriversLicenseExpDateError ||
+                  isInCarInstGLicenseError ||
+                  isInCarInstGLicenseExpDateError
+                }
+                onClick={handleEditInCarInstEntry}
+              >
+                Modify
+              </Button>
+            </ButtonsDiv>
+          </FormDiv>
+        )}
+      </ContainerDiv>
+    </WrapperDiv>
   );
 };
 

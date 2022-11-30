@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import {
+  Button,
+  DropDownMenu,
+  TextInput,
+  SideBySideTextInputsDiv,
+  SingleRowTextInputDiv,
+} from "../../../components/common";
+
 import useNewCourseScreen from "./useNewCourseScreen";
 
-const ConfirmButton = styled.button``;
-const TextInput = styled.input``;
-const DropdownList = styled.select``;
+const WrapperDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const ContainerDiv = styled.div``;
+
+const TitleH1 = styled.h1`
+  text-align: center;
+`;
+
+const FormDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ButtonsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const ListOption = styled.option``;
 
 const NewCourseScreen = () => {
@@ -30,68 +56,135 @@ const NewCourseScreen = () => {
     handleAddNewCourseEntry,
     handleEditCourseEntry,
     inClassInstructors,
+    CourseTypes,
   } = useNewCourseScreen();
 
+  const [isStartDateFocus, setIsStartDateFocus] = useState(false);
+  const [isEndDateFocus, setIsEndDateFocus] = useState(false);
+
+  const StartDateFocusAndBlurHandler = (isFocused) => {
+    setIsStartDateFocus(isFocused);
+  };
+  const EndDateFocusAndBlurHandler = (isFocused) => {
+    setIsEndDateFocus(isFocused);
+  };
+
   return (
-    <div>
-      <h1>NewCourseScreen</h1>
+    <WrapperDiv>
+      <ContainerDiv>
+        <TitleH1>NewCourseScreen</TitleH1>
 
-      {!isLoading && (
-        <>
-          <TextInput
-            type="number"
-            min="0"
-            value={courseId}
-            onChange={handleCourseIdChange}
-          ></TextInput>
-          {/* add min date field and use script to get todays date */}
-          <TextInput
-            type="date"
-            value={courseStartDate}
-            onChange={handleCourseStartDateChange}
-          ></TextInput>
-          {/* add min date field and use script to get todays date */}
-          <TextInput
-            type="date"
-            value={courseEndDate}
-            onChange={handleCourseEndDateChange}
-          ></TextInput>
-          <DropdownList
-            name="isDigitalList"
-            defaultValue={0}
-            onChange={handleIsCourseDigitalChange}
+        {!isLoading && (
+          <FormDiv>
+            <SideBySideTextInputsDiv>
+              <TextInput
+                type="number"
+                min="0"
+                value={courseId}
+                onChange={handleCourseIdChange}
+                placeholder={"Course ID"}
+              />
+              <TextInput
+                type="number"
+                min="0"
+                value={courseCapacity}
+                onChange={handleCourseCapacityChange}
+                placeholder={"Course Capacity"}
+              />
+            </SideBySideTextInputsDiv>
+
+            <SideBySideTextInputsDiv>
+              {/* add min date field and use script to get todays date */}
+              <TextInput
+                type={isStartDateFocus ? "date" : "text"}
+                onFocus={() => {
+                  StartDateFocusAndBlurHandler(true);
+                }}
+                onBlur={() => {
+                  StartDateFocusAndBlurHandler(false);
+                }}
+                value={courseStartDate}
+                onChange={handleCourseStartDateChange}
+                placeholder={"Start Date"}
+              />
+              {/* add min date field and use script to get todays date */}
+              <TextInput
+                type={isEndDateFocus ? "date" : "text"}
+                onFocus={() => {
+                  EndDateFocusAndBlurHandler(true);
+                }}
+                onBlur={() => {
+                  EndDateFocusAndBlurHandler(false);
+                }}
+                value={courseEndDate}
+                onChange={handleCourseEndDateChange}
+                placeholder={"End Date"}
+              />
+            </SideBySideTextInputsDiv>
+
+            <SingleRowTextInputDiv>
+              <DropDownMenu
+                name="isDigitalList"
+                defaultValue={"label"}
+                onChange={handleIsCourseDigitalChange}
+              >
+                <ListOption value={"label"} disabled hidden>
+                  Please Select Digital/In Person
+                </ListOption>
+                <ListOption value={CourseTypes.DIGITAL}>Digital</ListOption>
+                <ListOption value={CourseTypes.IN_PERSON}>In Person</ListOption>
+              </DropDownMenu>
+            </SingleRowTextInputDiv>
+
+            <SingleRowTextInputDiv>
+              <DropDownMenu
+                name="inClassInstList"
+                defaultValue={"label"}
+                onChange={handleInClassInstructorChange}
+              >
+                <ListOption value={"label"} disables hidden>
+                  Please Select Instructor
+                </ListOption>
+                {inClassInstructors.map((data) => (
+                  <ListOption key={data.id} value={data.id}>
+                    {data.first_name}
+                  </ListOption>
+                ))}
+              </DropDownMenu>
+            </SingleRowTextInputDiv>
+          </FormDiv>
+        )}
+
+        <ButtonsDiv>
+          <Button
+            disabled={
+              isCourseIdError ||
+              isCourseCapacityError ||
+              isCourseStartDateError ||
+              isCourseEndDateError ||
+              isCourseDigitalError ||
+              isCourseInClassInstructorError
+            }
+            onClick={handleAddNewCourseEntry}
           >
-            <ListOption value={0}>Digital</ListOption>
-            <ListOption value={1}>In Person</ListOption>
-          </DropdownList>
-          <TextInput
-            type="number"
-            min="0"
-            value={courseCapacity}
-            onChange={handleCourseCapacityChange}
-          ></TextInput>
-
-          <DropdownList
-            name="inClassInstList"
-            defaultValue={inClassInstructors[0].id}
-            onChange={handleInClassInstructorChange}
+            Save
+          </Button>
+          <Button
+            disabled={
+              isCourseIdError ||
+              isCourseCapacityError ||
+              isCourseStartDateError ||
+              isCourseEndDateError ||
+              isCourseDigitalError ||
+              isCourseInClassInstructorError
+            }
+            onClick={handleEditCourseEntry}
           >
-            {inClassInstructors.map((data) => (
-              <ListOption value={data.id}>{data.first_name}</ListOption>
-            ))}
-          </DropdownList>
-
-          <ConfirmButton onClick={handleAddNewCourseEntry}>
-            {" "}
-            Save{" "}
-          </ConfirmButton>
-          <ConfirmButton onClick={handleEditCourseEntry}>
-            {" "}
-            Modify{" "}
-          </ConfirmButton>
-        </>
-      )}
-    </div>
+            Modify
+          </Button>
+        </ButtonsDiv>
+      </ContainerDiv>
+    </WrapperDiv>
   );
 };
 

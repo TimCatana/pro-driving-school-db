@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
-import isDateValid from "../../../components/helpers/validators/isDateValid";
+import isDateFormatYYYYMMDD from "../../../components/helpers/validators/isDateFormatYYYYMMDD";
 import axios from "axios";
 
 const useNewInCarInstScreen = () => {
@@ -47,7 +47,7 @@ const useNewInCarInstScreen = () => {
    * @dependent inCarInstFirstName
    */
   useEffect(() => {
-    inCarInstFirstName.length > 0
+    inCarInstFirstName.length > 0 && inCarInstFirstName.length < 75
       ? _setIsInCarInstFirstNameError(false)
       : _setIsInCarInstFirstNameError(true);
   }, [inCarInstFirstName]);
@@ -57,7 +57,7 @@ const useNewInCarInstScreen = () => {
    * @dependent inCarInstLastName
    */
   useEffect(() => {
-    inCarInstLastName.length > 0
+    inCarInstLastName.length > 0 && inCarInstLastName.length < 75
       ? _setIsInCarInstLastNameError(false)
       : _setIsInCarInstLastNameError(true);
   }, [inCarInstLastName]);
@@ -67,7 +67,7 @@ const useNewInCarInstScreen = () => {
    * @dependent inCarInstLastName
    */
   useEffect(() => {
-    inCarInstDriversLicense.length > 0
+    inCarInstDriversLicense.length > 0 && inCarInstDriversLicense.length < 100
       ? _setIsInCarInstDriversLicenseError(false)
       : _setIsInCarInstDriversLicenseError(true);
   }, [inCarInstDriversLicense]);
@@ -77,12 +77,9 @@ const useNewInCarInstScreen = () => {
    * @dependent inCarInstLastName
    */
   useEffect(() => {
-    inCarInstDriversLicenseExpDate.length > 0
+    isDateFormatYYYYMMDD(inCarInstDriversLicenseExpDate)
       ? _setIsInCarInstDriversLicenseExpDateError(false)
       : _setIsInCarInstDriversLicenseExpDateError(true);
-    _setIsInCarInstDriversLicenseExpDateError(
-      !isDateValid(inCarInstDriversLicenseExpDate)
-    );
   }, [inCarInstDriversLicenseExpDate]);
 
   /**
@@ -90,7 +87,7 @@ const useNewInCarInstScreen = () => {
    * @dependent inCarInstLastName
    */
   useEffect(() => {
-    inCarInstGLicense.length > 0
+    inCarInstGLicense.length > 0 && inCarInstGLicense.length < 100
       ? _setIsInCarInstGLicenseError(false)
       : _setIsInCarInstGLicenseError(true);
   }, [inCarInstGLicense]);
@@ -100,10 +97,9 @@ const useNewInCarInstScreen = () => {
    * @dependent inCarInstLastName
    */
   useEffect(() => {
-    inCarInstGLicenseExpDate.length > 0
+    isDateFormatYYYYMMDD(inCarInstGLicenseExpDate)
       ? _setIsInCarInstGLicenseExpDateError(false)
       : _setIsInCarInstGLicenseExpDateError(true);
-    _setIsInCarInstGLicenseExpDateError(!isDateValid(inCarInstGLicenseExpDate));
   }, [inCarInstGLicenseExpDate]);
   /******************************/
   /***** USE EFFECT HELPERS *****/
@@ -174,6 +170,40 @@ const useNewInCarInstScreen = () => {
    * Updates the subscript to mailing list option.
    */
   const handleAddNewInCarInstructor = () => {
+    // TODO - axios call to node backend that adds new course entry
+    // console.log(`axios call to backend, not implemented yet but button works!
+    // values:
+    // il ${isLoading}
+    // ${_setIsLoading}
+    // icifn  ${inCarInstFirstName}
+    // ${typeof inCarInstFirstName}
+    // ${isInCarInstFirstNameError}
+    // iniln ${inCarInstLastName}
+    // ${typeof inCarInstLastName}
+    // ${isInCarInstLastNameError}
+    // icidl ${inCarInstDriversLicense}
+    // ${typeof inCarInstDriversLicense}
+    // ${isInCarInstDriversLicenseError}
+    // icidled ${inCarInstDriversLicenseExpDate}
+    // ${typeof inCarInstDriversLicenseExpDate}
+    // ${isInCarInstDriversLicenseExpDateError}
+    // icigl ${inCarInstGLicense}
+    // ${typeof inCarInstGLicense}
+    // ${isInCarInstGLicenseError}
+    // icigled ${inCarInstGLicenseExpDate}
+    // ${typeof inCarInstGLicenseExpDate}
+    // ${isInCarInstGLicenseExpDateError}
+    // `);
+
+
+    if (
+      !isInCarInstFirstNameError &&
+      !isInCarInstLastNameError &&
+      !isInCarInstDriversLicenseError &&
+      !isInCarInstDriversLicenseExpDateError &&
+      !isInCarInstGLicenseError &&
+      !isInCarInstGLicenseExpDateError
+    ) {
     axios.post(`http://localhost:4400/in-car-inst/add`, {
       inCarInstFirstName,
       inCarInstLastName,
@@ -182,31 +212,7 @@ const useNewInCarInstScreen = () => {
       inCarInstGLicense,
       inCarInstGLicenseExpDate,
     });
-
-    // // TODO - axios call to node backend that adds new course entry
-    // console.log(`axios call to backend, not implemented yet but button works!
-    // values:
-    // il ${isLoading}
-    // ${_setIsLoading}
-    // icifn  ${inCarInstFirstName}
-    // ${typeof inCarInstFirstName}
-    // ${isInCarInstFirstNameError}
-    // csd ${inCarInstLastName}
-    // ${typeof inCarInstLastName}
-    // ${isInCarInstLastNameError}
-    // dl ${inCarInstDriversLicense}
-    // ${typeof inCarInstDriversLicense}
-    // ${isInCarInstDriversLicenseError}
-    // dled ${inCarInstDriversLicenseExpDate}
-    // ${typeof inCarInstDriversLicenseExpDate}
-    // ${isInCarInstDriversLicenseExpDateError}
-    // gl ${inCarInstGLicense}
-    // ${typeof inCarInstGLicense}
-    // ${isInCarInstGLicenseError}
-    // gled ${inCarInstGLicenseExpDate}
-    // ${typeof inCarInstGLicenseExpDate}
-    // ${isInCarInstGLicenseExpDateError}
-    // `);
+    }
   };
 
   /**
@@ -226,7 +232,7 @@ const useNewInCarInstScreen = () => {
   /**
    * Updates the subscript to mailing list option.
    */
-   const handleDeleteInCarInst = async () => {
+  const handleDeleteInCarInst = async () => {
     const result = await axios.delete(
       `http://localhost:4400/in-car-inst/delete/a`
     );

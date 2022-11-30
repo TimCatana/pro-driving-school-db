@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
-import isDateValid from "../../../components/helpers/validators/isDateValid";
+import {
+  isDateFormatYYYYMMDD,
+  isNumber,
+} from "../../../components/helpers/validators";
 import axios from "axios";
+import { isDatePast } from "../../../components/helpers/validators";
+import {
+  addYearsToDate,
+  formatDateToYYYYMMDD,
+} from "../../../components/helpers/date";
 
 const useNewStudentScreen = () => {
   /******************/
@@ -9,7 +17,16 @@ const useNewStudentScreen = () => {
   /******************/
   // let history = useHistory();
 
-  const [isLoading, _setIsLoading] = useState(false);
+  const Genders = {
+    MALE: "Male",
+    FEMALE: "Female",
+    NOT_DECLARED: "Not Declared",
+  };
+
+  const [isLoading, _setIsLoading] = useState(true);
+
+  const [courses, _setCourses] = useState(false);
+  const [products, _setProducts] = useState(false);
 
   const [studentFirstName, _setStudentFirstName] = useState("");
   const [isStudentFirstNameError, _setIsStudentFirstNameError] = useState(true);
@@ -95,7 +112,20 @@ const useNewStudentScreen = () => {
    * @dependent courseId
    */
   useEffect(() => {
-    studentFirstName.length > 0
+    handleGetCoursesAndProducts();
+    // if no instructors, need to show message saying that instructors need to be added
+
+    // if (primary_key != 0) {
+    //   handleGetSpecificCourse();
+    // }
+  }, []);
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   */
+  useEffect(() => {
+    studentFirstName.length > 0 && studentFirstName.length < 75
       ? _setIsStudentFirstNameError(false)
       : _setIsStudentFirstNameError(true);
   }, [studentFirstName]);
@@ -105,7 +135,7 @@ const useNewStudentScreen = () => {
    * @dependent courseId
    */
   useEffect(() => {
-    studentMiddleName.length > 0
+    studentMiddleName.length < 75
       ? _setIsStudentMiddleNameError(false)
       : _setIsStudentMiddleNameError(true);
   }, [studentMiddleName]);
@@ -115,7 +145,7 @@ const useNewStudentScreen = () => {
    * @dependent courseId
    */
   useEffect(() => {
-    studentLastName.length > 0
+    studentLastName.length > 0 && studentLastName.length < 75
       ? _setIsStudentLastNameError(false)
       : _setIsStudentLastNameError(true);
   }, [studentLastName]);
@@ -125,10 +155,13 @@ const useNewStudentScreen = () => {
    * @dependent courseEndDate
    */
   useEffect(() => {
-    studentDateOfBirth != null
-      ? _setIsStudentDateOfBirthError(false)
-      : _setIsStudentDateOfBirthError(true);
-    _setIsStudentDateOfBirthError(!isDateValid(studentDateOfBirth));
+    if (isDateFormatYYYYMMDD(studentDateOfBirth)) {
+      isDatePast(studentDateOfBirth)
+        ? _setIsStudentDateOfBirthError(false)
+        : _setIsStudentDateOfBirthError(true);
+    } else {
+      _setIsStudentDateOfBirthError(true);
+    }
   }, [studentDateOfBirth]);
 
   /**
@@ -137,7 +170,9 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    studentGender.length > 0
+    studentGender == Genders.MALE ||
+    studentGender == Genders.FEMALE ||
+    studentGender == Genders.NOT_DECLARED
       ? _setIsStudentGenderError(false)
       : _setIsStudentGenderError(true);
   }, [studentGender]);
@@ -148,7 +183,9 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    studentCellPhoneNumber.length > 0
+    studentCellPhoneNumber.length > 0 &&
+    studentCellPhoneNumber.length < 20 &&
+    isNumber(studentCellPhoneNumber)
       ? _setIsStudentCellPhoneNumberError(false)
       : _setIsStudentCellPhoneNumberError(true);
   }, [studentCellPhoneNumber]);
@@ -159,7 +196,9 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    studentHomePhoneNumber.length > 0
+    studentHomePhoneNumber.length > 0 &&
+    studentHomePhoneNumber.length < 20 &&
+    isNumber(studentHomePhoneNumber)
       ? _setIsStudentHomePhoneNumberError(false)
       : _setIsStudentHomePhoneNumberError(true);
   }, [studentHomePhoneNumber]);
@@ -170,7 +209,7 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    studentAddress.length > 0
+    studentAddress.length > 0 && studentAddress.length < 150
       ? _setIsStudentAddressError(false)
       : _setIsStudentAddressError(true);
   }, [studentAddress]);
@@ -181,7 +220,7 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    studentAddressCity.length > 0
+    studentAddressCity.length > 0 && studentAddressCity.length < 150
       ? _setIsStudentAddressCityError(false)
       : _setIsStudentAddressCityError(true);
   }, [studentAddressCity]);
@@ -192,7 +231,7 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    studentAddressPostalCode.length > 0
+    studentAddressPostalCode.length > 0 && studentAddressPostalCode.length < 20
       ? _setIsStudentAddressPostalCodeError(false)
       : _setIsStudentAddressPostalCodeError(true);
   }, [studentAddressPostalCode]);
@@ -213,12 +252,23 @@ const useNewStudentScreen = () => {
    * @dependent courseEndDate
    */
   useEffect(() => {
-    studentDriversLicenseNumberIssuedDate != null
-      ? _setIsStudentDriversLicenseNumberIssuedDateError(false)
-      : _setIsStudentDriversLicenseNumberIssuedDateError(true);
-    _setIsStudentDriversLicenseNumberIssuedDateError(
-      !isDateValid(studentDriversLicenseNumberIssuedDate)
-    );
+    if (isDateFormatYYYYMMDD(studentDriversLicenseNumberIssuedDate)) {
+      if (isDatePast(studentDriversLicenseNumberIssuedDate)) {
+        _setIsStudentDriversLicenseNumberIssuedDateError(false);
+
+        _setStudentDriversLicenseNumberExpDate(
+          formatDateToYYYYMMDD(
+            addYearsToDate(studentDriversLicenseNumberIssuedDate, 5)
+          )
+        );
+      } else {
+        _setStudentDriversLicenseNumberExpDate("");
+        _setIsStudentDriversLicenseNumberIssuedDateError(true);
+      }
+    } else {
+      _setStudentDriversLicenseNumberExpDate("");
+      _setIsStudentDriversLicenseNumberIssuedDateError(true);
+    }
   }, [studentDriversLicenseNumberIssuedDate]);
 
   /**
@@ -226,12 +276,9 @@ const useNewStudentScreen = () => {
    * @dependent courseEndDate
    */
   useEffect(() => {
-    studentDriversLicenseNumberExpDate != null
+    isDateFormatYYYYMMDD(studentDriversLicenseNumberExpDate)
       ? _setIsStudentDriversLicenseNumberExpDateError(false)
       : _setIsStudentDriversLicenseNumberExpDateError(true);
-    _setIsStudentDriversLicenseNumberExpDateError(
-      !isDateValid(studentDriversLicenseNumberExpDate)
-    );
   }, [studentDriversLicenseNumberExpDate]);
 
   /**
@@ -240,9 +287,13 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    studentRegisteredCourseId.length > 0
-      ? _setIsStudentRegisteredCourseIdError(false)
-      : _setIsStudentRegisteredCourseIdError(true);
+    if (isNumber(studentRegisteredCourseId)) {
+      courses.some((element) => element.id == studentRegisteredCourseId)
+        ? _setIsStudentRegisteredCourseIdError(false)
+        : _setIsStudentRegisteredCourseIdError(true);
+    } else {
+      _setIsStudentRegisteredCourseIdError(true);
+    }
   }, [studentRegisteredCourseId]);
 
   /**
@@ -251,14 +302,53 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    studentRegisteredProductId.length > 0
-      ? _setIsStudentRegisteredProductIdError(false)
-      : _setIsStudentRegisteredProductIdError(true);
+    if (isNumber(studentRegisteredProductId)) {
+      products.some((element) => element.id == studentRegisteredProductId)
+        ? _setIsStudentRegisteredProductIdError(false)
+        : _setIsStudentRegisteredProductIdError(true);
+    } else {
+      _setIsStudentRegisteredProductIdError(true);
+    }
   }, [studentRegisteredProductId]);
 
   /******************************/
   /***** USE EFFECT HELPERS *****/
   /******************************/
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetCourses = async () => {
+    const result = await axios.get(`http://localhost:4400/course/getAll`);
+
+    if (result.data.status == 200) {
+      _setCourses(result.data.query);
+      console.log(result.data.query);
+    } else {
+      console.log(result.data);
+    }
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetProducts = async () => {
+    const result = await axios.get(`http://localhost:4400/product/getAll`);
+
+    if (result.data.status == 200) {
+      _setProducts(result.data.query);
+      console.log(result.data.query);
+    } else {
+      console.log(result.data);
+    }
+  };
+
+  const handleGetCoursesAndProducts = async () => {
+    _setIsLoading(true);
+    await handleGetCourses();
+    await handleGetProducts();
+    _setIsLoading(false);
+  };
 
   /***********************/
   /***** TEXT INPUTS *****/
@@ -406,24 +496,7 @@ const useNewStudentScreen = () => {
    * Updates the subscript to mailing list option.
    */
   const handleAddNewStudentEntry = () => {
-    axios.post(`http://localhost:4400/student/add`, {
-      studentFirstName,
-      studentMiddleName,
-      studentLastName,
-      studentDateOfBirth,
-      studentGender,
-      studentCellPhoneNumber,
-      studentHomePhoneNumber,
-      studentAddress,
-      studentAddressCity,
-      studentAddressPostalCode,
-      studentDriversLicenseNumber,
-      studentDriversLicenseNumberIssuedDate,
-      studentDriversLicenseNumberExpDate,
-      studentRegisteredCourseId,
-      studentRegisteredProductId,
-    });
-    //   // TODO - axios call to node backend that adds new course entry
+    // // TODO - axios call to node backend that adds new course entry
     // console.log(`axios call to backend, not implemented yet but button works!
     // values:
     // il ${isLoading}
@@ -464,7 +537,7 @@ const useNewStudentScreen = () => {
     // sdlid ${studentDriversLicenseNumberIssuedDate}
     // ${typeof studentDriversLicenseNumberIssuedDate}
     // ${isStudentDriversLicenseNumberIssuedDateError}
-    // sg ${studentDriversLicenseNumberExpDate}
+    // sdled ${studentDriversLicenseNumberExpDate}
     // ${typeof studentDriversLicenseNumberExpDate}
     // ${isStudentDriversLicenseNumberExpDateError}
     // src ${studentRegisteredCourseId}
@@ -474,6 +547,42 @@ const useNewStudentScreen = () => {
     // ${typeof studentRegisteredProductId}
     // ${isStudentRegisteredProductIdError}
     // `);
+
+    if (
+      !isStudentFirstNameError &&
+      !isStudentMiddleNameError &&
+      !isStudentLastNameError &&
+      !isStudentDateOfBirthError &&
+      !isStudentGenderError &&
+      !isStudentCellPhoneNumberError &&
+      !isStudentHomePhoneNumberError &&
+      !isStudentAddressError &&
+      !isStudentAddressCityError &&
+      !isStudentAddressPostalCodeError &&
+      !isStudentDriversLicenseNumberError &&
+      !isStudentDriversLicenseNumberIssuedDateError &&
+      !isStudentDriversLicenseNumberExpDateError &&
+      !isStudentRegisteredCourseIdError &&
+      !isStudentRegisteredProductIdError
+    ) {
+      axios.post(`http://localhost:4400/student/add`, {
+        studentFirstName,
+        studentMiddleName,
+        studentLastName,
+        studentDateOfBirth,
+        studentGender,
+        studentCellPhoneNumber,
+        studentHomePhoneNumber,
+        studentAddress,
+        studentAddressCity,
+        studentAddressPostalCode,
+        studentDriversLicenseNumber,
+        studentDriversLicenseNumberIssuedDate,
+        studentDriversLicenseNumberExpDate,
+        studentRegisteredCourseId,
+        studentRegisteredProductId,
+      });
+    }
   };
 
   /**
@@ -502,10 +611,8 @@ const useNewStudentScreen = () => {
   /**
    * Updates the subscript to mailing list option.
    */
-   const handleDeleteStudent = async () => {
-    const result = await axios.delete(
-      `http://localhost:4400/student/delete/c`
-    );
+  const handleDeleteStudent = async () => {
+    const result = await axios.delete(`http://localhost:4400/student/delete/c`);
 
     if (result.data.status != 200) {
       console.log("failed to delete item");
@@ -595,7 +702,10 @@ const useNewStudentScreen = () => {
     handleStudentRegisteredProductId,
 
     handleAddNewStudentEntry,
-    handleEditStudentEntry
+    handleEditStudentEntry,
+    Genders,
+    courses,
+    products,
   };
 };
 

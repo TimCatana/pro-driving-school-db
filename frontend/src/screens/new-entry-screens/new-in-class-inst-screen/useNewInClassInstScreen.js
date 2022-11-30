@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
-import isDateValid from "../../../components/helpers/validators/isDateValid";
-import axios from "axios"
+import isDateFormatYYYYMMDD from "../../../components/helpers/validators/isDateFormatYYYYMMDD";
+import axios from "axios";
 
 const useNewInClassInstScreen = () => {
   /******************/
@@ -44,7 +44,7 @@ const useNewInClassInstScreen = () => {
    * @dependent inClassInstFirstName
    */
   useEffect(() => {
-    inClassInstFirstName.length > 0
+    inClassInstFirstName.length > 0 && inClassInstFirstName.length < 75
       ? _setIsInClassInstFirstNameError(false)
       : _setIsInClassInstFirstNameError(true);
   }, [inClassInstFirstName]);
@@ -54,7 +54,7 @@ const useNewInClassInstScreen = () => {
    * @dependent inClassInstLastName
    */
   useEffect(() => {
-    inClassInstLastName.length > 0
+    inClassInstLastName.length > 0 && inClassInstLastName.length < 75
       ? _setIsInClassInstLastNameError(false)
       : _setIsInClassInstLastNameError(true);
   }, [inClassInstLastName]);
@@ -64,7 +64,8 @@ const useNewInClassInstScreen = () => {
    * @dependent inClassInstLastName
    */
   useEffect(() => {
-    inClassInstDriversLicense.length > 0
+    inClassInstDriversLicense.length > 0 &&
+    inClassInstDriversLicense.length < 100
       ? _setIsInClassInstDriversLicenseError(false)
       : _setIsInClassInstDriversLicenseError(true);
   }, [inClassInstDriversLicense]);
@@ -74,12 +75,9 @@ const useNewInClassInstScreen = () => {
    * @dependent inClassInstLastName
    */
   useEffect(() => {
-    inClassInstDriversLicenseExpDate.length > 0
+    isDateFormatYYYYMMDD(inClassInstDriversLicenseExpDate)
       ? _setIsInClassInstDriversLicenseExpDateError(false)
       : _setIsInClassInstDriversLicenseExpDateError(true);
-    _setIsInClassInstDriversLicenseExpDateError(
-      !isDateValid(inClassInstDriversLicenseExpDate)
-    );
   }, [inClassInstDriversLicenseExpDate]);
 
   /******************************/
@@ -134,14 +132,7 @@ const useNewInClassInstScreen = () => {
    * Updates the subscript to mailing list option.
    */
   const handleAddNewInClassInstructor = () => {
-    axios.post(`http://localhost:4400/in-class-inst/add`, {
-      inClassInstFirstName,
-      inClassInstLastName,
-      inClassInstDriversLicense,
-      inClassInstDriversLicenseExpDate,
-    });
-
-    // // TODO - axios call to node backend that adds new course entry
+    // TODO - axios call to node backend that adds new course entry
     // console.log(`axios call to backend, not implemented yet but button works!
     // values:
     // il ${isLoading}
@@ -159,26 +150,38 @@ const useNewInClassInstScreen = () => {
     // ${typeof inClassInstDriversLicenseExpDate}
     // ${isInClassInstDriversLicenseExpDateError}
     // `);
+
+    if (
+      !isInClassInstFirstNameError &&
+      !isInClassInstLastNameError &&
+      !isInClassInstDriversLicenseError &&
+      !isInClassInstDriversLicenseExpDateError
+    ) {
+    axios.post(`http://localhost:4400/in-class-inst/add`, {
+      inClassInstFirstName,
+      inClassInstLastName,
+      inClassInstDriversLicense,
+      inClassInstDriversLicenseExpDate,
+    });
+    }
   };
-
-
-
-   /**
-   * Updates the subscript to mailing list option.
-   */
-    const handleEditInClassInstEntry = () => {
-      axios.put(`http://localhost:4400/in-class-inst/edit/1`, {
-        inClassInstFirstName,
-        inClassInstLastName,
-        inClassInstDriversLicense,
-        inClassInstDriversLicenseExpDate,
-      });
-    };
 
   /**
    * Updates the subscript to mailing list option.
    */
-   const handleDeleteInClassInst = async () => {
+  const handleEditInClassInstEntry = () => {
+    axios.put(`http://localhost:4400/in-class-inst/edit/1`, {
+      inClassInstFirstName,
+      inClassInstLastName,
+      inClassInstDriversLicense,
+      inClassInstDriversLicenseExpDate,
+    });
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleDeleteInClassInst = async () => {
     const result = await axios.delete(
       `http://localhost:4400/in-class-inst/delete/dfsdfsd`
     );
@@ -222,7 +225,7 @@ const useNewInClassInstScreen = () => {
     isInClassInstDriversLicenseExpDateError,
     handleInClassInstDriversLicenseExpDateChange,
     handleAddNewInClassInstructor,
-    handleEditInClassInstEntry
+    handleEditInClassInstEntry,
   };
 };
 

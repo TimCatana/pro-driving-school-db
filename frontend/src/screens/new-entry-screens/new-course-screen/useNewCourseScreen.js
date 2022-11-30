@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import isDateValid from "../../../components/helpers/validators/isDateValid";
+import {
+  isDateFuture,
+  isDateFormatYYYYMMDD,
+  isNumber,
+  isEndDateFuture,
+  isValidDate,
+} from "../../../components/helpers/validators";
 import axios from "axios";
 
 const useNewCourseScreen = () => {
@@ -8,13 +14,13 @@ const useNewCourseScreen = () => {
   /***** STATES *****/
   /******************/
   const CourseTypes = {
-    DIGITAL: "0",
-    IN_PERSON: "1",
+    DIGITAL: "Digital",
+    IN_PERSON: "In Person",
   };
 
   const navigation = useNavigate();
   const { primary_key } = useParams();
-  const [inClassInstructors, _setInClassInstructors] = useState(false);
+  const [inClassInstructors, _setInClassInstructors] = useState("");
 
   const [isLoading, _setIsLoading] = useState(true);
 
@@ -27,7 +33,7 @@ const useNewCourseScreen = () => {
   const [courseEndDate, _setCourseEndDate] = useState("");
   const [isCourseEndDateError, _setIsCourseEndDateError] = useState(true);
 
-  const [_isCourseDigital, _setIsCourseDigital] = useState(CourseTypes.DIGITAL);
+  const [_isCourseDigital, _setIsCourseDigital] = useState("");
   const [isCourseDigitalError, _setIsCourseDigitalError] = useState(true);
 
   const [courseCapacity, _setCourseCapacity] = useState("");
@@ -58,21 +64,45 @@ const useNewCourseScreen = () => {
    * @dependent courseId
    */
   useEffect(() => {
-    courseId.length > 0
-      ? _setIsCourseIdError(false)
-      : _setIsCourseIdError(true);
-    // TODO - make sure its a valid number? HTML should take care of that. though I will validate again in the backend.
+    if (isNumber(courseId)) {
+      parseInt(courseId) > -1
+        ? _setIsCourseIdError(false)
+        : _setIsCourseIdError(true);
+    } else {
+      _setIsCourseIdError(true);
+    }
   }, [courseId]);
+
+  /**
+   * Validates newly inputted courseCapacity
+   * @dependent courseId
+   */
+  useEffect(() => {
+    if (isNumber(courseCapacity)) {
+      parseInt(courseCapacity) > -1
+        ? _setIsCourseCapacityError(false)
+        : _setIsCourseCapacityError(true);
+    } else {
+      _setIsCourseCapacityError(true);
+    }
+  }, [courseCapacity]);
 
   /**
    * Validates newly selected start date
    * @dependent courseStartDate
    */
   useEffect(() => {
-    courseStartDate != null
-      ? _setIsCourseStartDateError(false)
-      : _setIsCourseStartDateError(true);
-    _setIsCourseStartDateError(!isDateValid(courseStartDate));
+    if (isDateFormatYYYYMMDD(courseStartDate)) {
+      isDateFuture(courseStartDate)
+        ? _setIsCourseStartDateError(false)
+        : _setIsCourseStartDateError(true);
+
+      isEndDateFuture(courseStartDate, courseEndDate) // date validation is done within function therefore is end date isn't selected then should return false
+        ? _setIsCourseEndDateError(false)
+        : _setIsCourseEndDateError(true);
+    } else {
+      _setIsCourseStartDateError(true);
+    }
   }, [courseStartDate]);
 
   /**
@@ -80,10 +110,24 @@ const useNewCourseScreen = () => {
    * @dependent courseEndDate
    */
   useEffect(() => {
-    courseEndDate != null
-      ? _setIsCourseEndDateError(false)
-      : _setIsCourseEndDateError(true);
-    _setIsCourseEndDateError(!isDateValid(courseEndDate));
+    if (isDateFormatYYYYMMDD(courseEndDate)) {
+      if (isValidDate(courseStartDate)) {
+        if (
+          isDateFuture(courseEndDate) &&
+          isEndDateFuture(courseStartDate, courseEndDate)
+        ) {
+          _setIsCourseEndDateError(false);
+        } else {
+          _setIsCourseEndDateError(true);
+        }
+      } else {
+        isDateFuture(courseEndDate)
+          ? _setIsCourseEndDateError(false)
+          : _setIsCourseEndDateError(true);
+      }
+    } else {
+      _setIsCourseEndDateError(true);
+    }
   }, [courseEndDate]);
 
   /**
@@ -91,32 +135,26 @@ const useNewCourseScreen = () => {
    * @dependent isDigital
    */
   useEffect(() => {
-    _isCourseDigital === true || _isCourseDigital === false
+    _isCourseDigital == CourseTypes.DIGITAL ||
+    _isCourseDigital == CourseTypes.IN_PERSON
       ? _setIsCourseDigitalError(false)
       : _setIsCourseDigitalError(true);
   }, [_isCourseDigital]);
-
-  /**
-   * Validates newly inputted courseCapacity
-   * @dependent courseId
-   */
-  useEffect(() => {
-    courseCapacity.length > 0
-      ? _setIsCourseCapacityError(false)
-      : _setIsCourseCapacityError(true);
-    // TODO - make sure its a valid number? HTML should take care of that. though I will validate again in the backend.
-  }, [courseCapacity]);
 
   /**
    * Validates newly selected in class instructor
    * @dependent inClassInstructor
    */
   useEffect(() => {
-    courseInClassInstructor.length > 0
-      ? _setIsCourseInClassInstructorError(false)
-      : _setIsCourseInClassInstructorError(true);
-
-    console.log(`lol ${courseInClassInstructor}`)
+    if (isNumber(courseInClassInstructor)) {
+      inClassInstructors.some(
+        (element) => element.id == courseInClassInstructor
+      )
+        ? _setIsCourseInClassInstructorError(false)
+        : _setIsCourseInClassInstructorError(true);
+    } else {
+      _setIsCourseInClassInstructorError(true);
+    }
   }, [courseInClassInstructor]);
 
   /******************************/
@@ -159,12 +197,6 @@ const useNewCourseScreen = () => {
 
     if (result.data.status == 200) {
       _setInClassInstructors(result.data.query);
-
-      if (primary_key == 0) {
-        _setCourseInClassInstructor(result.data.query[0].id);
-      }
-
-      console.log(result.data.query);
     } else {
       console.log(result.data);
     }
@@ -225,8 +257,8 @@ const useNewCourseScreen = () => {
    * Updates the inClassInstructor to contain the newly selected value
    * @param value (string) The value inputted into the textInput
    */
-  const handleInClassInstructorChange = (value) => {
-    _setCourseInClassInstructor(value);
+  const handleInClassInstructorChange = (e) => {
+    _setCourseInClassInstructor(e.target.value);
   };
 
   /*************************/
@@ -245,6 +277,9 @@ const useNewCourseScreen = () => {
     // cid ${courseId}
     // ${typeof courseId}
     // ${isCourseIdError}
+    // cc ${courseCapacity}
+    // ${typeof courseCapacity}
+    // ${isCourseCapacityError}
     // csd ${courseStartDate}
     // ${typeof courseStartDate}
     // ${isCourseStartDateError}
@@ -254,28 +289,34 @@ const useNewCourseScreen = () => {
     // cd ${_isCourseDigital}
     // ${typeof _isCourseDigital}
     // ${isCourseDigitalError}
-    // cc ${courseCapacity}
-    // ${typeof courseCapacity}
-    // ${isCourseCapacityError}
-    // ${courseInClassInstructor}
+    // cici ${courseInClassInstructor}
     // ${isCourseInClassInstructorError}
     // `);
 
-    console.log(courseId);
-    console.log(courseStartDate);
-    console.log(courseEndDate);
-    console.log(_isCourseDigital);
-    console.log(courseCapacity);
-    console.log(courseInClassInstructor);
+    // console.log(courseId);
+    // console.log(courseStartDate);
+    // console.log(courseEndDate);
+    // console.log(_isCourseDigital);
+    // console.log(courseCapacity);
+    // console.log(courseInClassInstructor);
 
-    axios.post(`http://localhost:4400/course/add`, {
-      courseId,
-      courseStartDate,
-      courseEndDate,
-      _isCourseDigital,
-      courseCapacity,
-      courseInClassInstructor,
-    });
+    if (
+      !isCourseIdError &&
+      !isCourseCapacityError &&
+      !isCourseStartDateError &&
+      !isCourseEndDateError &&
+      !isCourseDigitalError &&
+      !isCourseInClassInstructorError
+    ) {
+      axios.post(`http://localhost:4400/course/add`, {
+        courseId,
+        courseStartDate,
+        courseEndDate,
+        _isCourseDigital,
+        courseCapacity,
+        courseInClassInstructor,
+      });
+    }
   };
 
   /**
@@ -348,6 +389,7 @@ const useNewCourseScreen = () => {
     handleAddNewCourseEntry,
     handleEditCourseEntry,
     inClassInstructors,
+    CourseTypes,
   };
 };
 
