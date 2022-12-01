@@ -95,7 +95,7 @@ const NewProductScreen = () => {
                   Modify
                 </Button>
               )}
-              <Button onClick={() => productState.navigation("/home")}>
+              <Button onClick={() => productState.navigation("/")}>
                 Go Back
               </Button>
             </ButtonsDiv>

@@ -43,7 +43,7 @@ const useNewCourseScreen = () => {
    */
   useEffect(() => {
     if (courseState.courseSaved && !courseState.isLoading) {
-      courseState.navigation("/home");
+      courseState.navigation("/");
     }
   }, [courseState.courseSaved]);
 

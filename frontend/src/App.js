@@ -12,8 +12,7 @@ const App = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<AuthScreen />} />
-        <Route path="/home" element={<HomeScreen />} />
+        <Route path="/" element={<HomeScreen />} />
         <Route path="/course/:primary_key" element={<NewCourseScreen />} />
         <Route path="/product/:primary_key" element={<NewProductScreen />} />
         <Route path="/student/:primary_key" element={<NewStudentScreen />} />

@@ -168,7 +168,7 @@ const NewCourseScreen = () => {
               Modify
             </Button>
           )}
-          <Button onClick={() => courseState.navigation("/home")}>Go Back</Button>
+          <Button onClick={() => courseState.navigation("/")}>Go Back</Button>
         </ButtonsDiv>
       </ContainerDiv>
     </WrapperDiv>

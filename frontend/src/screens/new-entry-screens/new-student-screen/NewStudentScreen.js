@@ -300,7 +300,7 @@ const NewStudentScreen = () => {
                   Modify
                 </Button>
               )}
-              <Button onClick={() => studentState.navigation("/home")}>
+              <Button onClick={() => studentState.navigation("/")}>
                 Go Back
               </Button>
             </ButtonsDiv>

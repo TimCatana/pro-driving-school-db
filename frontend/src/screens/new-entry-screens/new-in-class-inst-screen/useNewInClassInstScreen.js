@@ -43,7 +43,7 @@ const useNewInClassInstScreen = () => {
       inClassInstructorState.inClassInstructorSaved &&
       !inClassInstructorState.isLoading
     ) {
-      inClassInstructorState.navigation("/home");
+      inClassInstructorState.navigation("/");
     }
   }, [inClassInstructorState.inClassInstructorSaved]);
 

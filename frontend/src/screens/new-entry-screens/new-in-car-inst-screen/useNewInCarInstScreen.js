@@ -39,7 +39,7 @@ const useNewInCarInstScreen = () => {
       inCarInstructorState.inCarInstructorSaved &&
       !inCarInstructorState.isLoading
     ) {
-      inCarInstructorState.navigation("/home");
+      inCarInstructorState.navigation("/");
     }
   }, [inCarInstructorState.inCarInstructorSaved]);
 

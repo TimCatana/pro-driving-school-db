@@ -36,7 +36,7 @@ const useNewProductScreen = () => {
    */
   useEffect(() => {
     if (productState.productSaved && !productState.isLoading) {
-      productState.navigation("/home");
+      productState.navigation("/");
     }
   }, [productState.productSaved]);
   /**

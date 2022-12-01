@@ -155,7 +155,7 @@ const NewInClassInstScreen = () => {
               Modify
             </Button>
           )}
-          <Button onClick={() => inClassInstructorState.navigation("/home")}>
+          <Button onClick={() => inClassInstructorState.navigation("/")}>
             Go Back
           </Button>
         </ButtonsDiv>

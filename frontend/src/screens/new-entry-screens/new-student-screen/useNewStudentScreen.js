@@ -42,7 +42,7 @@ const useNewStudentScreen = () => {
    */
   useEffect(() => {
     if (studentState.studentSaved && !studentState.isLoading) {
-      studentState.navigation("/home");
+      studentState.navigation("/");
     }
   }, [studentState.studentSaved]);
 

@@ -191,7 +191,7 @@ const NewInCarInstScreen = () => {
                 </Button>
               )}
 
-              <Button onClick={() => inCarInstructorState.navigation("/home")}>
+              <Button onClick={() => inCarInstructorState.navigation("/")}>
                 Go Back
               </Button>
             </ButtonsDiv>
