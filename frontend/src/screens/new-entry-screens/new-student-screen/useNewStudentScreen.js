@@ -11,107 +11,26 @@ import {
   formatDateToYYYYMMDD,
 } from "../../../components/helpers/date";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  useNewStudentScreenButtonHandlers,
+  useNewStudentScreenChangeHandlers,
+  useNewStudentScreenStates,
+  useNewStudentScreenUseEffectHelpers,
+} from "./components";
 
 const useNewStudentScreen = () => {
   /******************/
   /***** STATES *****/
   /******************/
-  // let history = useHistory();
 
-  const Genders = {
-    MALE: "Male",
-    FEMALE: "Female",
-    NOT_DECLARED: "Not Declared",
-  };
+  const { studentState } = useNewStudentScreenStates();
 
-  const navigation = useNavigate();
-  const { primary_key } = useParams();
-
-  const [selectedGender, _setSelectedGender] = useState("label");
-  const [selectedRegisteredCourse, _setSelectedRegisteredCourse] =
-    useState("label");
-  const [selectedRegisteredProduct, _setSelectedRegisteredProduct] =
-    useState("label");
-
-  const [isLoading, _setIsLoading] = useState(true);
-
-  const [courses, _setCourses] = useState(false);
-  const [products, _setProducts] = useState(false);
-
-  const [studentFirstName, _setStudentFirstName] = useState("");
-  const [isStudentFirstNameError, _setIsStudentFirstNameError] = useState(true);
-
-  const [studentMiddleName, _setStudentMiddleName] = useState("");
-  const [isStudentMiddleNameError, _setIsStudentMiddleNameError] =
-    useState(true);
-
-  const [studentLastName, _setStudentLastName] = useState("");
-  const [isStudentLastNameError, _setIsStudentLastNameError] = useState(true);
-
-  const [studentDateOfBirth, _setStudentDateOfBirth] = useState("");
-  const [isStudentDateOfBirthError, _setIsStudentDateOfBirthError] =
-    useState(true);
-
-  const [studentGender, _setStudentGender] = useState(""); // should be 0 = M, 1 =F, 2 = Not Declared
-  const [isStudentGenderError, _setIsStudentGenderError] = useState(true);
-
-  const [studentCellPhoneNumber, _setStudentCellPhoneNumber] = useState("");
-  const [isStudentCellPhoneNumberError, _setIsStudentCellPhoneNumberError] =
-    useState(true);
-
-  const [studentHomePhoneNumber, _setStudentHomePhoneNumber] = useState("");
-  const [isStudentHomePhoneNumberError, _setIsStudentHomePhoneNumberError] =
-    useState(true);
-
-  const [studentAddress, _setStudentAddress] = useState("");
-  const [isStudentAddressError, _setIsStudentAddressError] = useState(true);
-
-  const [studentAddressCity, _setStudentAddressCity] = useState("");
-  const [isStudentAddressCityError, _setIsStudentAddressCityError] =
-    useState(true);
-
-  const [studentAddressPostalCode, _setStudentAddressPostalCode] = useState("");
-  const [isStudentAddressPostalCodeError, _setIsStudentAddressPostalCodeError] =
-    useState(true);
-
-  const [studentDriversLicenseNumber, _setStudentDriversLicenseNumber] =
-    useState("");
-  const [
-    isStudentDriversLicenseNumberError,
-    _setIsStudentDriversLicenseNumberError,
-  ] = useState(true);
-
-  const [
-    studentDriversLicenseNumberIssuedDate,
-    _setStudentDriversLicenseNumberIssuedDate,
-  ] = useState("");
-  const [
-    isStudentDriversLicenseNumberIssuedDateError,
-    _setIsStudentDriversLicenseNumberIssuedDateError,
-  ] = useState(true);
-
-  const [
-    studentDriversLicenseNumberExpDate,
-    _setStudentDriversLicenseNumberExpDate,
-  ] = useState("");
-  const [
-    isStudentDriversLicenseNumberExpDateError,
-    _setIsStudentDriversLicenseNumberExpDateError,
-  ] = useState(true);
-
-  const [studentRegisteredCourseId, _setStudentRegisteredCourseId] =
-    useState("");
-  const [
-    isStudentRegisteredCourseIdError,
-    _setIsStudentRegisteredCourseIdError,
-  ] = useState(true);
-
-  const [studentRegisteredProductId, _setStudentRegisteredProductId] =
-    useState("");
-  const [
-    isStudentRegisteredProductIdError,
-    _setIsStudentRegisteredProductIdError,
-  ] = useState(true);
+  const { studentChangeHandlers } =
+    useNewStudentScreenChangeHandlers(studentState);
+  const { studentButtonHandlers } =
+    useNewStudentScreenButtonHandlers(studentState);
+  const { studentUseEffectHelpers } =
+    useNewStudentScreenUseEffectHelpers(studentState);
 
   /***********************/
   /***** USE EFFECTS *****/
@@ -121,7 +40,7 @@ const useNewStudentScreen = () => {
    * @dependent courseId
    */
   useEffect(() => {
-    doRender();
+    studentUseEffectHelpers.onRender();
   }, []);
 
   /**
@@ -129,550 +48,367 @@ const useNewStudentScreen = () => {
    * @dependent courseId
    */
   useEffect(() => {
-    studentFirstName.length > 0 && studentFirstName.length < 75
-      ? _setIsStudentFirstNameError(false)
-      : _setIsStudentFirstNameError(true);
-  }, [studentFirstName]);
+    console.log(`axios call to backend, not implemented yet but button works!
+    values:
+    il ${studentState.isLoading}
+    sfn ${studentState.studentObject.studentFirstName}
+    ${typeof studentState.studentObject.studentFirstName}
+    ${studentState.studentObject.isStudentFirstNameError}
+    smn ${studentState.studentObject.studentMiddleName}
+    ${typeof studentState.studentObject.studentMiddleName}
+    ${studentState.studentObject.isStudentMiddleNameError}
+    sln ${studentState.studentObject.studentLastName}
+    ${typeof studentState.studentObject.studentLastName}
+    ${studentState.studentObject.isStudentLastNameError}
+    sdob ${studentState.studentObject.studentDateOfBirth}
+    ${typeof studentState.studentObject.studentDateOfBirth}
+    ${studentState.studentObject.isStudentDateOfBirthError}
+    sg ${studentState.studentObject.studentGender}
+    ${typeof studentState.studentObject.studentGender}
+    ${studentState.studentObject.isStudentGenderError}
+    scp ${studentState.studentObject.studentCellPhoneNumber}
+    ${typeof studentState.studentObject.studentCellPhoneNumber}
+    ${studentState.studentObject.isStudentCellPhoneNumberError}
+    shp ${studentState.studentObject.studentHomePhoneNumber}
+    ${typeof studentState.studentObject.studentHomePhoneNumber}
+    ${studentState.studentObject.isStudentHomePhoneNumberError}
+    sa ${studentState.studentObject.studentAddress}
+    ${typeof studentState.studentObject.studentAddress}
+    ${studentState.studentObject.isStudentAddressError}
+    sac ${studentState.studentObject.studentAddressCity}
+    ${typeof studentState.studentObject.studentAddressCity}
+    ${studentState.studentObject.isStudentAddressCityError}
+    sapc ${studentState.studentObject.studentAddressPostalCode}
+    ${typeof studentState.studentObject.studentAddressPostalCode}
+    ${studentState.studentObject.isStudentAddressPostalCodeError}
+    sdln ${studentState.studentObject.studentDriversLicenseNumber}
+    ${typeof studentState.studentObject.studentDriversLicenseNumber}
+    ${studentState.studentObject.isStudentDriversLicenseNumberError}
+    sdlid ${studentState.studentObject.studentDriversLicenseNumberIssuedDate}
+    ${typeof studentState.studentObject.studentDriversLicenseNumberIssuedDate}
+    ${studentState.studentObject.isStudentDriversLicenseNumberIssuedDateError}
+    sdled ${studentState.studentObject.studentDriversLicenseNumberExpDate}
+    ${typeof studentState.studentObject.studentDriversLicenseNumberExpDate}
+    ${studentState.studentObject.isStudentDriversLicenseNumberExpDateError}
+    src ${studentState.studentObject.studentRegisteredCourseId}
+    ${typeof studentState.studentObject.studentRegisteredCourseId}
+    ${studentState.studentObject.isStudentRegisteredCourseIdError}
+    srp ${studentState.studentObject.studentRegisteredProductId}
+    ${typeof studentState.studentObject.studentRegisteredProductId}
+    ${studentState.studentObject.isStudentRegisteredProductIdError}
+    `);
+
+    studentState.studentObject.studentFirstName.length > 0 &&
+    studentState.studentObject.studentFirstName.length < 75
+      ? studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentFirstNameError: false,
+        })
+      : studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentFirstNameError: true,
+        });
+  }, [studentState.studentObject.studentFirstName]);
 
   /**
    * Validates newly inputted courseId
    * @dependent courseId
    */
   useEffect(() => {
-    studentMiddleName.length < 75
-      ? _setIsStudentMiddleNameError(false)
-      : _setIsStudentMiddleNameError(true);
-  }, [studentMiddleName]);
+    studentState.studentObject.studentMiddleName.length < 75
+      ? studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentMiddleNameError: false,
+        })
+      : studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentMiddleNameError: true,
+        });
+  }, [studentState.studentObject.studentMiddleName]);
 
   /**
    * Validates newly inputted courseId
    * @dependent courseId
    */
   useEffect(() => {
-    studentLastName.length > 0 && studentLastName.length < 75
-      ? _setIsStudentLastNameError(false)
-      : _setIsStudentLastNameError(true);
-  }, [studentLastName]);
+    studentState.studentObject.studentLastName.length > 0 &&
+    studentState.studentObject.studentLastName.length < 75
+      ? studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentLastNameError: false,
+        })
+      : studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentLastNameError: true,
+        });
+  }, [studentState.studentObject.studentLastName]);
 
   /**
    * Validates newly selected end date date
    * @dependent courseEndDate
    */
   useEffect(() => {
-    if (isDateFormatYYYYMMDD(studentDateOfBirth)) {
-      isDatePast(studentDateOfBirth)
-        ? _setIsStudentDateOfBirthError(false)
-        : _setIsStudentDateOfBirthError(true);
+    if (isDateFormatYYYYMMDD(studentState.studentObject.studentDateOfBirth)) {
+      isDatePast(studentState.studentObject.studentDateOfBirth)
+        ? studentState.setStudentObject({
+            ...studentState.studentObject,
+            isStudentDateOfBirthError: false,
+          })
+        : studentState.setStudentObject({
+            ...studentState.studentObject,
+            isStudentDateOfBirthError: true,
+          });
     } else {
-      _setIsStudentDateOfBirthError(true);
-    }
-  }, [studentDateOfBirth]);
-
-  /**
-   * Validates newly inputted courseId
-   * @dependent courseId
-   * 3 options M F Not-Declaring
-   */
-  useEffect(() => {
-    studentGender == Genders.MALE ||
-    studentGender == Genders.FEMALE ||
-    studentGender == Genders.NOT_DECLARED
-      ? _setIsStudentGenderError(false)
-      : _setIsStudentGenderError(true);
-  }, [studentGender]);
-
-  /**
-   * Validates newly inputted courseId
-   * @dependent courseId
-   * 3 options M F Not-Declaring
-   */
-  useEffect(() => {
-    studentCellPhoneNumber.length > 0 &&
-    studentCellPhoneNumber.length < 20 &&
-    isNumber(studentCellPhoneNumber)
-      ? _setIsStudentCellPhoneNumberError(false)
-      : _setIsStudentCellPhoneNumberError(true);
-  }, [studentCellPhoneNumber]);
-
-  /**
-   * Validates newly inputted courseId
-   * @dependent courseId
-   * 3 options M F Not-Declaring
-   */
-  useEffect(() => {
-    studentHomePhoneNumber.length > 0 &&
-    studentHomePhoneNumber.length < 20 &&
-    isNumber(studentHomePhoneNumber)
-      ? _setIsStudentHomePhoneNumberError(false)
-      : _setIsStudentHomePhoneNumberError(true);
-  }, [studentHomePhoneNumber]);
-
-  /**
-   * Validates newly inputted courseId
-   * @dependent courseId
-   * 3 options M F Not-Declaring
-   */
-  useEffect(() => {
-    studentAddress.length > 0 && studentAddress.length < 150
-      ? _setIsStudentAddressError(false)
-      : _setIsStudentAddressError(true);
-  }, [studentAddress]);
-
-  /**
-   * Validates newly inputted courseId
-   * @dependent courseId
-   * 3 options M F Not-Declaring
-   */
-  useEffect(() => {
-    studentAddressCity.length > 0 && studentAddressCity.length < 150
-      ? _setIsStudentAddressCityError(false)
-      : _setIsStudentAddressCityError(true);
-  }, [studentAddressCity]);
-
-  /**
-   * Validates newly inputted courseId
-   * @dependent courseId
-   * 3 options M F Not-Declaring
-   */
-  useEffect(() => {
-    studentAddressPostalCode.length > 0 && studentAddressPostalCode.length < 20
-      ? _setIsStudentAddressPostalCodeError(false)
-      : _setIsStudentAddressPostalCodeError(true);
-  }, [studentAddressPostalCode]);
-
-  /**
-   * Validates newly inputted courseId
-   * @dependent courseId
-   * 3 options M F Not-Declaring
-   */
-  useEffect(() => {
-    studentDriversLicenseNumber.length > 0
-      ? _setIsStudentDriversLicenseNumberError(false)
-      : _setIsStudentDriversLicenseNumberError(true);
-  }, [studentDriversLicenseNumber]);
-
-  /**
-   * Validates newly selected end date date
-   * @dependent courseEndDate
-   */
-  useEffect(() => {
-    if (isDateFormatYYYYMMDD(studentDriversLicenseNumberIssuedDate)) {
-      if (isDatePast(studentDriversLicenseNumberIssuedDate)) {
-        _setIsStudentDriversLicenseNumberIssuedDateError(false);
-
-        _setStudentDriversLicenseNumberExpDate(
-          formatDateToYYYYMMDD(
-            addYearsToDate(studentDriversLicenseNumberIssuedDate, 5)
-          )
-        );
-      } else {
-        _setStudentDriversLicenseNumberExpDate("");
-        _setIsStudentDriversLicenseNumberIssuedDateError(true);
-      }
-    } else {
-      _setStudentDriversLicenseNumberExpDate("");
-      _setIsStudentDriversLicenseNumberIssuedDateError(true);
-    }
-  }, [studentDriversLicenseNumberIssuedDate]);
-
-  /**
-   * Validates newly selected end date date
-   * @dependent courseEndDate
-   */
-  useEffect(() => {
-    isDateFormatYYYYMMDD(studentDriversLicenseNumberExpDate)
-      ? _setIsStudentDriversLicenseNumberExpDateError(false)
-      : _setIsStudentDriversLicenseNumberExpDateError(true);
-  }, [studentDriversLicenseNumberExpDate]);
-
-  /**
-   * Validates newly inputted courseId
-   * @dependent courseId
-   * 3 options M F Not-Declaring
-   */
-  useEffect(() => {
-    if (isNumber(studentRegisteredCourseId)) {
-      courses.some((element) => element.id == studentRegisteredCourseId)
-        ? _setIsStudentRegisteredCourseIdError(false)
-        : _setIsStudentRegisteredCourseIdError(true);
-    } else {
-      _setIsStudentRegisteredCourseIdError(true);
-    }
-  }, [studentRegisteredCourseId]);
-
-  /**
-   * Validates newly inputted courseId
-   * @dependent courseId
-   * 3 options M F Not-Declaring
-   */
-  useEffect(() => {
-    if (isNumber(studentRegisteredProductId)) {
-      products.some((element) => element.id == studentRegisteredProductId)
-        ? _setIsStudentRegisteredProductIdError(false)
-        : _setIsStudentRegisteredProductIdError(true);
-    } else {
-      _setIsStudentRegisteredProductIdError(true);
-    }
-  }, [studentRegisteredProductId]);
-
-  /******************************/
-  /***** USE EFFECT HELPERS *****/
-  /******************************/
-
-  const doRender = async () => {
-    _setIsLoading(true);
-    await handleGetCoursesAndProducts();
-    // if no instructors, need to show message saying that instructors need to be added
-
-    if (primary_key != 0) {
-      await handleGetSpecificStudent();
-    }
-
-    _setIsLoading(false);
-  };
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleGetSpecificStudent = async () => {
-    const result = await axios.get(
-      `http://localhost:4400/student/getOne/${primary_key}`
-    );
-
-    if (result.data.status == 200) {
-      _setStudentFirstName(result.data.query[0].first_name);
-      _setStudentMiddleName(result.data.query[0].middle_name);
-      _setStudentLastName(result.data.query[0].last_name);
-      _setStudentDateOfBirth(result.data.query[0].date_of_birth);
-      _setStudentGender(result.data.query[0].gender);
-      _setStudentCellPhoneNumber(result.data.query[0].cell_phone_number);
-      _setStudentHomePhoneNumber(result.data.query[0].home_phone_number);
-      _setStudentAddress(result.data.query[0].address);
-      _setStudentAddressCity(result.data.query[0].address_city);
-      _setStudentAddressPostalCode(result.data.query[0].address_postal_code);
-      _setStudentDriversLicenseNumber(result.data.query[0].drivers_license_id);
-      _setStudentDriversLicenseNumberIssuedDate(
-        result.data.query[0].drivers_license_date_issued
-      );
-      _setStudentDriversLicenseNumberExpDate(
-        result.data.query[0].drivers_license_exp_date
-      );
-      _setStudentRegisteredCourseId(result.data.query[0].registered_course);
-      _setStudentRegisteredProductId(result.data.query[0].purchased_product);
-
-      _setSelectedGender(result.data.query[0].gender);
-      _setSelectedRegisteredCourse(result.data.query[0].registered_course);
-      _setSelectedRegisteredProduct(result.data.query[0].purchased_product);
-
-      console.log(result.data.query[0]);
-    } else {
-      console.log(result.data);
-    }
-  };
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleGetCourses = async () => {
-    const result = await axios.get(`http://localhost:4400/course/getAll`);
-
-    if (result.data.status == 200) {
-      _setCourses(result.data.query);
-      console.log(result.data.query);
-    } else {
-      console.log(result.data);
-    }
-  };
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleGetProducts = async () => {
-    const result = await axios.get(`http://localhost:4400/product/getAll`);
-
-    if (result.data.status == 200) {
-      _setProducts(result.data.query);
-      console.log(result.data.query);
-    } else {
-      console.log(result.data);
-    }
-  };
-
-  const handleGetCoursesAndProducts = async () => {
-    await handleGetCourses();
-    await handleGetProducts();
-  };
-
-  /***********************/
-  /***** TEXT INPUTS *****/
-  /***********************/
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentFirstNameChange = (e) => {
-    e.preventDefault();
-    _setStudentFirstName(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentMiddleNameChange = (e) => {
-    e.preventDefault();
-    _setStudentMiddleName(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentLastNameChange = (e) => {
-    e.preventDefault();
-    _setStudentLastName(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentDateOfBirthChange = (e) => {
-    e.preventDefault();
-    _setStudentDateOfBirth(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentGenderChange = (e) => {
-    e.preventDefault();
-    _setStudentGender(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentCellPhoneNumberChange = (e) => {
-    e.preventDefault();
-    _setStudentCellPhoneNumber(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentHomePhoneNumberChange = (e) => {
-    e.preventDefault();
-    _setStudentHomePhoneNumber(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentAddressChange = (e) => {
-    e.preventDefault();
-    _setStudentAddress(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentAddressCityChange = (e) => {
-    e.preventDefault();
-    _setStudentAddressCity(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentAddressPostalCodeChange = (e) => {
-    e.preventDefault();
-    _setStudentAddressPostalCode(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentDriversLicenseNumberChange = (e) => {
-    e.preventDefault();
-    _setStudentDriversLicenseNumber(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentDriversLicenseNumberIssuedDateChange = (e) => {
-    e.preventDefault();
-    _setStudentDriversLicenseNumberIssuedDate(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentDriversLicenseNumberExpDateChange = (e) => {
-    e.preventDefault();
-    _setStudentDriversLicenseNumberExpDate(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentRegisteredCourseId = (e) => {
-    e.preventDefault();
-    _setStudentRegisteredCourseId(e.target.value);
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentRegisteredProductId = (e) => {
-    e.preventDefault();
-    _setStudentRegisteredProductId(e.target.value);
-  };
-
-  /*************************/
-  /***** BUTTON CLICKS *****/
-  /*************************/
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleAddNewStudentEntry = () => {
-    // // TODO - axios call to node backend that adds new course entry
-    // console.log(`axios call to backend, not implemented yet but button works!
-    // values:
-    // il ${isLoading}
-    // ${_setIsLoading}
-    // sfn ${studentFirstName}
-    // ${typeof studentFirstName}
-    // ${isStudentFirstNameError}
-    // smn ${studentMiddleName}
-    // ${typeof studentMiddleName}
-    // ${isStudentMiddleNameError}
-    // sln ${studentLastName}
-    // ${typeof studentLastName}
-    // ${isStudentLastNameError}
-    // sdob ${studentDateOfBirth}
-    // ${typeof studentDateOfBirth}
-    // ${isStudentDateOfBirthError}
-    // sg ${studentGender}
-    // ${typeof studentGender}
-    // ${isStudentGenderError}
-    // scp ${studentCellPhoneNumber}
-    // ${typeof studentCellPhoneNumber}
-    // ${isStudentCellPhoneNumberError}
-    // shp ${studentHomePhoneNumber}
-    // ${typeof studentHomePhoneNumber}
-    // ${isStudentHomePhoneNumberError}
-    // sa ${studentAddress}
-    // ${typeof studentAddress}
-    // ${isStudentAddressError}
-    // sac ${studentAddressCity}
-    // ${typeof studentAddressCity}
-    // ${isStudentAddressCityError}
-    // sapc ${studentAddressPostalCode}
-    // ${typeof studentAddressPostalCode}
-    // ${isStudentAddressPostalCodeError}
-    // sdln ${studentDriversLicenseNumber}
-    // ${typeof studentDriversLicenseNumber}
-    // ${isStudentDriversLicenseNumberError}
-    // sdlid ${studentDriversLicenseNumberIssuedDate}
-    // ${typeof studentDriversLicenseNumberIssuedDate}
-    // ${isStudentDriversLicenseNumberIssuedDateError}
-    // sdled ${studentDriversLicenseNumberExpDate}
-    // ${typeof studentDriversLicenseNumberExpDate}
-    // ${isStudentDriversLicenseNumberExpDateError}
-    // src ${studentRegisteredCourseId}
-    // ${typeof studentRegisteredCourseId}
-    // ${isStudentRegisteredCourseIdError}
-    // srp ${studentRegisteredProductId}
-    // ${typeof studentRegisteredProductId}
-    // ${isStudentRegisteredProductIdError}
-    // `);
-
-    if (
-      !isStudentFirstNameError &&
-      !isStudentMiddleNameError &&
-      !isStudentLastNameError &&
-      !isStudentDateOfBirthError &&
-      !isStudentGenderError &&
-      !isStudentCellPhoneNumberError &&
-      !isStudentHomePhoneNumberError &&
-      !isStudentAddressError &&
-      !isStudentAddressCityError &&
-      !isStudentAddressPostalCodeError &&
-      !isStudentDriversLicenseNumberError &&
-      !isStudentDriversLicenseNumberIssuedDateError &&
-      !isStudentDriversLicenseNumberExpDateError &&
-      !isStudentRegisteredCourseIdError &&
-      !isStudentRegisteredProductIdError
-    ) {
-      axios.post(`http://localhost:4400/student/add`, {
-        studentFirstName,
-        studentMiddleName,
-        studentLastName,
-        studentDateOfBirth,
-        studentGender,
-        studentCellPhoneNumber,
-        studentHomePhoneNumber,
-        studentAddress,
-        studentAddressCity,
-        studentAddressPostalCode,
-        studentDriversLicenseNumber,
-        studentDriversLicenseNumberIssuedDate,
-        studentDriversLicenseNumberExpDate,
-        studentRegisteredCourseId,
-        studentRegisteredProductId,
+      studentState.setStudentObject({
+        ...studentState.studentObject,
+        isStudentDateOfBirthError: true,
       });
     }
-  };
+  }, [studentState.studentObject.studentDateOfBirth]);
 
   /**
-   * Updates the subscript to mailing list option.
+   * Validates newly inputted courseId
+   * @dependent courseId
+   * 3 options M F Not-Declaring
    */
-  const handleEditStudentEntry = () => {
-    axios.put(`http://localhost:4400/student/edit/3`, {
-      studentFirstName,
-      studentMiddleName,
-      studentLastName,
-      studentDateOfBirth,
-      studentGender,
-      studentCellPhoneNumber,
-      studentHomePhoneNumber,
-      studentAddress,
-      studentAddressCity,
-      studentAddressPostalCode,
-      studentDriversLicenseNumber,
-      studentDriversLicenseNumberIssuedDate,
-      studentDriversLicenseNumberExpDate,
-      studentRegisteredCourseId,
-      studentRegisteredProductId,
-    });
-  };
+  useEffect(() => {
+    studentState.studentObject.studentGender == studentState.Genders.MALE ||
+    studentState.studentObject.studentGender == studentState.Genders.FEMALE ||
+    studentState.studentObject.studentGender ==
+      studentState.Genders.NOT_DECLARED
+      ? studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentGenderError: false,
+        })
+      : studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentGenderError: true,
+        });
+  }, [studentState.studentObject.studentGender]);
 
   /**
-   * Updates the subscript to mailing list option.
+   * Validates newly inputted courseId
+   * @dependent courseId
+   * 3 options M F Not-Declaring
    */
-  const handleDeleteStudent = async () => {
-    const result = await axios.delete(`http://localhost:4400/student/delete/c`);
+  useEffect(() => {
+    studentState.studentObject.studentCellPhoneNumber.length > 0 &&
+    studentState.studentObject.studentCellPhoneNumber.length < 20 &&
+    isNumber(studentState.studentObject.studentCellPhoneNumber)
+      ? studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentCellPhoneNumberError: false,
+        })
+      : studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentCellPhoneNumberError: true,
+        });
+  }, [studentState.studentObject.studentCellPhoneNumber]);
 
-    if (result.data.status != 200) {
-      console.log("failed to delete item");
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   * 3 options M F Not-Declaring
+   */
+  useEffect(() => {
+    studentState.studentObject.studentHomePhoneNumber.length > 0 &&
+    studentState.studentObject.studentHomePhoneNumber.length < 20 &&
+    isNumber(studentState.studentObject.studentHomePhoneNumber)
+      ? studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentHomePhoneNumberError: false,
+        })
+      : studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentHomePhoneNumberError: true,
+        });
+  }, [studentState.studentObject.studentHomePhoneNumber]);
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   * 3 options M F Not-Declaring
+   */
+  useEffect(() => {
+    studentState.studentObject.studentAddress.length > 0 &&
+    studentState.studentObject.studentAddress.length < 150
+      ? studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentAddressError: false,
+        })
+      : studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentAddressError: true,
+        });
+  }, [studentState.studentObject.studentAddress]);
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   * 3 options M F Not-Declaring
+   */
+  useEffect(() => {
+    studentState.studentObject.studentAddressCity.length > 0 &&
+    studentState.studentObject.studentAddressCity.length < 150
+      ? studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentAddressCityError: false,
+        })
+      : studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentAddressCityError: true,
+        });
+  }, [studentState.studentObject.studentAddressCity]);
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   * 3 options M F Not-Declaring
+   */
+  useEffect(() => {
+    studentState.studentObject.studentAddressPostalCode.length > 0 &&
+    studentState.studentObject.studentAddressPostalCode.length < 20
+      ? studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentAddressPostalCodeError: false,
+        })
+      : studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentAddressPostalCodeError: true,
+        });
+  }, [studentState.studentObject.studentAddressPostalCode]);
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   * 3 options M F Not-Declaring
+   */
+  useEffect(() => {
+    studentState.studentObject.studentDriversLicenseNumber.length > 0 &&
+    studentState.studentObject.studentDriversLicenseNumber.length < 95
+      ? studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentDriversLicenseNumberError: false,
+        })
+      : studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentDriversLicenseNumberError: true,
+        });
+  }, [studentState.studentObject.studentDriversLicenseNumber]);
+
+  /**
+   * Validates newly selected end date date
+   * @dependent courseEndDate
+   */
+  useEffect(() => {
+    if (
+      isDateFormatYYYYMMDD(
+        studentState.studentObject.studentDriversLicenseNumberIssuedDate
+      )
+    ) {
+      if (
+        isDatePast(
+          studentState.studentObject.studentDriversLicenseNumberIssuedDate
+        )
+      ) {
+        studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentDriversLicenseNumberIssuedDateError: false,
+          // below gets the expiry date by adding 5 years to issued date and then formats it to yyyy-mm-dd
+          studentDriversLicenseNumberExpDate: formatDateToYYYYMMDD(
+            addYearsToDate(
+              studentState.studentObject.studentDriversLicenseNumberIssuedDate,
+              5
+            )
+          ),
+        });
+      } else {
+        studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentDriversLicenseNumberIssuedDateError: true,
+          studentDriversLicenseNumberExpDate: "",
+        });
+      }
     } else {
-      console.log("successfully deleted item");
+      studentState.setStudentObject({
+        ...studentState.studentObject,
+        isStudentDriversLicenseNumberIssuedDateError: true,
+        studentDriversLicenseNumberExpDate: "",
+      });
     }
-  };
+  }, [studentState.studentObject.studentDriversLicenseNumberIssuedDate]);
+
+  /**
+   * Validates newly selected end date date
+   * @dependent courseEndDate
+   */
+  useEffect(() => {
+    isDateFormatYYYYMMDD(
+      studentState.studentObject.studentDriversLicenseNumberExpDate
+    )
+      ? studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentDriversLicenseNumberExpDateError: false,
+        })
+      : studentState.setStudentObject({
+          ...studentState.studentObject,
+          isStudentDriversLicenseNumberExpDateError: true,
+        });
+  }, [studentState.studentObject.studentDriversLicenseNumberExpDate]);
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   * 3 options M F Not-Declaring
+   */
+  useEffect(() => {
+    if (isNumber(studentState.studentObject.studentRegisteredCourseId)) {
+      studentState.courses.some(
+        (element) =>
+          element.id == studentState.studentObject.studentRegisteredCourseId
+      )
+        ? studentState.setStudentObject({
+            ...studentState.studentObject,
+            isStudentRegisteredCourseIdError: false,
+          })
+        : studentState.setStudentObject({
+            ...studentState.studentObject,
+            isStudentRegisteredCourseIdError: true,
+          });
+    } else {
+      studentState.setStudentObject({
+        ...studentState.studentObject,
+        isStudentRegisteredCourseIdError: true,
+      });
+    }
+  }, [studentState.studentObject.studentRegisteredCourseId]);
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   * 3 options M F Not-Declaring
+   */
+  useEffect(() => {
+    if (isNumber(studentState.studentObject.studentRegisteredProductId)) {
+      studentState.products.some(
+        (element) =>
+          element.id == studentState.studentObject.studentRegisteredProductId
+      )
+        ? studentState.setStudentObject({
+            ...studentState.studentObject,
+            isStudentRegisteredProductIdError: false,
+          })
+        : studentState.setStudentObject({
+            ...studentState.studentObject,
+            isStudentRegisteredProductIdError: true,
+          });
+    } else {
+      studentState.setStudentObject({
+        ...studentState.studentObject,
+        isStudentRegisteredProductIdError: true,
+      });
+    }
+  }, [studentState.studentObject.studentRegisteredProductId]);
 
   /******************************/
   /***** NAVIGATION HELPERS *****/
@@ -692,77 +428,9 @@ const useNewStudentScreen = () => {
   /*******************/
 
   return {
-    isLoading,
-
-    studentFirstName,
-    isStudentFirstNameError,
-    handleStudentFirstNameChange,
-
-    studentMiddleName,
-    isStudentMiddleNameError,
-    handleStudentMiddleNameChange,
-
-    studentLastName,
-    isStudentLastNameError,
-    handleStudentLastNameChange,
-
-    studentDateOfBirth,
-    isStudentDateOfBirthError,
-    handleStudentDateOfBirthChange,
-
-    studentGender,
-    isStudentGenderError,
-    handleStudentGenderChange,
-
-    studentCellPhoneNumber,
-    isStudentCellPhoneNumberError,
-    handleStudentCellPhoneNumberChange,
-
-    studentHomePhoneNumber,
-    isStudentHomePhoneNumberError,
-    handleStudentHomePhoneNumberChange,
-
-    studentAddress,
-    isStudentAddressError,
-    handleStudentAddressChange,
-
-    studentAddressCity,
-    isStudentAddressCityError,
-    handleStudentAddressCityChange,
-
-    studentAddressPostalCode,
-    isStudentAddressPostalCodeError,
-    handleStudentAddressPostalCodeChange,
-
-    studentDriversLicenseNumber,
-    isStudentDriversLicenseNumberError,
-    handleStudentDriversLicenseNumberChange,
-
-    studentDriversLicenseNumberIssuedDate,
-    isStudentDriversLicenseNumberIssuedDateError,
-    handleStudentDriversLicenseNumberIssuedDateChange,
-
-    studentDriversLicenseNumberExpDate,
-    isStudentDriversLicenseNumberExpDateError,
-    handleStudentDriversLicenseNumberExpDateChange,
-
-    studentRegisteredCourseId,
-    isStudentRegisteredCourseIdError,
-    handleStudentRegisteredCourseId,
-
-    studentRegisteredProductId,
-    isStudentRegisteredProductIdError,
-    handleStudentRegisteredProductId,
-
-    handleAddNewStudentEntry,
-    handleEditStudentEntry,
-    Genders,
-    courses,
-    products,
-
-    selectedGender,
-    selectedRegisteredCourse,
-    selectedRegisteredProduct,
+    studentState,
+    studentChangeHandlers,
+    studentButtonHandlers,
   };
 };
 

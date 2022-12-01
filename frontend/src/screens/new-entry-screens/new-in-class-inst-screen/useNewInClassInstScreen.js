@@ -3,40 +3,26 @@ import { useState, useEffect } from "react";
 import isDateFormatYYYYMMDD from "../../../components/helpers/validators/isDateFormatYYYYMMDD";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  useNewInClassInstructorScreenButtonHandlers,
+  useNewInClassInstructorScreenChangeHandlers,
+  useNewInClassInstructorScreenStates,
+  useNewInClassInstructorScreenUseEffectHelpers,
+} from "./components";
 
 const useNewInClassInstScreen = () => {
   /******************/
   /***** STATES *****/
   /******************/
-  const navigation = useNavigate();
-  const { primary_key } = useParams();
 
-  const [isLoading, _setIsLoading] = useState(false);
+  const { inClassInstructorState } = useNewInClassInstructorScreenStates();
 
-  const [inClassInstFirstName, _setInClassInstFirstName] = useState("");
-  const [isInClassInstFirstNameError, _setIsInClassInstFirstNameError] =
-    useState(true);
-
-  const [inClassInstLastName, _setInClassInstLastName] = useState("");
-  const [isInClassInstLastNameError, _setIsInClassInstLastNameError] =
-    useState(true);
-
-  const [inClassInstDriversLicense, _setInClassInstDriversLicense] =
-    useState("");
-  const [
-    isInClassInstDriversLicenseError,
-    _setIsInClassInstDriversLicenseError,
-  ] = useState(true);
-
-  const [
-    inClassInstDriversLicenseExpDate,
-    _setInClassInstDriversLicenseExpDate,
-  ] = useState("");
-  const [
-    isInClassInstDriversLicenseExpDateError,
-    _setIsInClassInstDriversLicenseExpDateError,
-  ] = useState(true);
-
+  const { InClassInstructorChangeHandlers } =
+    useNewInClassInstructorScreenChangeHandlers(inClassInstructorState);
+  const { inClassInstructorButtonHandlers } =
+    useNewInClassInstructorScreenButtonHandlers(inClassInstructorState);
+  const { inClassInstructorUseEffectHelpers } =
+    useNewInClassInstructorScreenUseEffectHelpers(inClassInstructorState);
   /***********************/
   /***** USE EFFECTS *****/
   /***********************/
@@ -46,11 +32,7 @@ const useNewInClassInstScreen = () => {
    * @dependent courseId
    */
   useEffect(() => {
-    if (primary_key != 0) {
-      handleGetSpecificInClassInst();
-    } else {
-      _setIsLoading(false);
-    }
+    inClassInstructorUseEffectHelpers.onRender();
   }, []);
 
   /**
@@ -58,181 +40,71 @@ const useNewInClassInstScreen = () => {
    * @dependent inClassInstFirstName
    */
   useEffect(() => {
-    inClassInstFirstName.length > 0 && inClassInstFirstName.length < 75
-      ? _setIsInClassInstFirstNameError(false)
-      : _setIsInClassInstFirstNameError(true);
-  }, [inClassInstFirstName]);
+    inClassInstructorState.inClassInstructorObject.iciFirstName.length > 0 &&
+    inClassInstructorState.inClassInstructorObject.iciFirstName.length < 75
+      ? inClassInstructorState.setInClassInstructorObject({
+          ...inClassInstructorState.inClassInstructorObject,
+          isICIFirstNameError: false,
+        })
+      : inClassInstructorState.setInClassInstructorObject({
+          ...inClassInstructorState.inClassInstructorObject,
+          isICIFirstNameError: true,
+        });
+  }, [inClassInstructorState.inClassInstructorObject.iciFirstName]);
 
   /**
    * Validates newly inputted inClassInstLastName
    * @dependent inClassInstLastName
    */
   useEffect(() => {
-    inClassInstLastName.length > 0 && inClassInstLastName.length < 75
-      ? _setIsInClassInstLastNameError(false)
-      : _setIsInClassInstLastNameError(true);
-  }, [inClassInstLastName]);
+    inClassInstructorState.inClassInstructorObject.iciLastName.length > 0 &&
+    inClassInstructorState.inClassInstructorObject.iciLastName.length < 75
+      ? inClassInstructorState.setInClassInstructorObject({
+          ...inClassInstructorState.inClassInstructorObject,
+          isICILastNameError: false,
+        })
+      : inClassInstructorState.setInClassInstructorObject({
+          ...inClassInstructorState.inClassInstructorObject,
+          isICILastNameError: true,
+        });
+  }, [inClassInstructorState.inClassInstructorObject.iciLastName]);
 
   /**
    * Validates newly inputted inClassInstLastName
    * @dependent inClassInstLastName
    */
   useEffect(() => {
-    inClassInstDriversLicense.length > 0 &&
-    inClassInstDriversLicense.length < 100
-      ? _setIsInClassInstDriversLicenseError(false)
-      : _setIsInClassInstDriversLicenseError(true);
-  }, [inClassInstDriversLicense]);
+    inClassInstructorState.inClassInstructorObject.iciDriversLicenseNum.length >
+      0 &&
+    inClassInstructorState.inClassInstructorObject.iciDriversLicenseNum.length <
+      100
+      ? inClassInstructorState.setInClassInstructorObject({
+          ...inClassInstructorState.inClassInstructorObject,
+          isICIDriversLicenseNumError: false,
+        })
+      : inClassInstructorState.setInClassInstructorObject({
+          ...inClassInstructorState.inClassInstructorObject,
+          isICIDriversLicenseNumError: true,
+        });
+  }, [inClassInstructorState.inClassInstructorObject.iciDriversLicenseNum]);
 
   /**
    * Validates newly inputted inClassInstLastName
    * @dependent inClassInstLastName
    */
   useEffect(() => {
-    isDateFormatYYYYMMDD(inClassInstDriversLicenseExpDate)
-      ? _setIsInClassInstDriversLicenseExpDateError(false)
-      : _setIsInClassInstDriversLicenseExpDateError(true);
-  }, [inClassInstDriversLicenseExpDate]);
-
-  /******************************/
-  /***** USE EFFECT HELPERS *****/
-  /******************************/
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleGetSpecificInClassInst = async () => {
-    _setIsLoading(true);
-    const result = await axios.get(
-      `http://localhost:4400/in-class-inst/getOne/${primary_key}`
-    );
-
-    if (result.data.status == 200) {
-      _setInClassInstFirstName(result.data.query[0].first_name);
-      _setInClassInstLastName(result.data.query[0].last_name);
-      _setInClassInstDriversLicense(
-        result.data.query[0].inst_drivers_license_id
-      );
-      _setInClassInstDriversLicenseExpDate(
-        result.data.query[0].inst_drivers_license_exp_date
-      );
-
-      console.log(result.data.query[0]);
-    } else {
-      console.log(result.data);
-    }
-
-    _setIsLoading(false);
-  };
-
-  /***********************/
-  /***** TEXT INPUTS *****/
-  /***********************/
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleInClassInstFirstNameChange = (e) => {
-    e.preventDefault();
-    _setInClassInstFirstName(e.target.value);
-  };
-
-  /**
-   * Updates the start date variable to contain the newly selected value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleInClassInstLastNameChange = (e) => {
-    e.preventDefault();
-    _setInClassInstLastName(e.target.value);
-  };
-
-  /**
-   * Updates the end date variable to contain the newly selected value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleInClassInstDriversLicenseChange = (e) => {
-    e.preventDefault();
-    _setInClassInstDriversLicense(e.target.value);
-  };
-
-  /**
-   * Updates the isDigital variable to contain the newly selected value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleInClassInstDriversLicenseExpDateChange = (e) => {
-    e.preventDefault();
-    _setInClassInstDriversLicenseExpDate(e.target.value);
-  };
-
-  /*************************/
-  /***** BUTTON CLICKS *****/
-  /*************************/
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleAddNewInClassInstructor = () => {
-    // TODO - axios call to node backend that adds new course entry
-    // console.log(`axios call to backend, not implemented yet but button works!
-    // values:
-    // il ${isLoading}
-    // ${_setIsLoading}
-    // icifn  ${inClassInstFirstName}
-    // ${typeof inClassInstFirstName}
-    // ${isInClassInstFirstNameError}
-    // iciln ${inClassInstLastName}
-    // ${typeof inClassInstLastName}
-    // ${isInClassInstLastNameError}
-    // icidl ${inClassInstDriversLicense}
-    // ${typeof inClassInstDriversLicense}
-    // ${isInClassInstDriversLicenseError}
-    // icidled ${inClassInstDriversLicenseExpDate}
-    // ${typeof inClassInstDriversLicenseExpDate}
-    // ${isInClassInstDriversLicenseExpDateError}
-    // `);
-
-    if (
-      !isInClassInstFirstNameError &&
-      !isInClassInstLastNameError &&
-      !isInClassInstDriversLicenseError &&
-      !isInClassInstDriversLicenseExpDateError
-    ) {
-      axios.post(`http://localhost:4400/in-class-inst/add`, {
-        inClassInstFirstName,
-        inClassInstLastName,
-        inClassInstDriversLicense,
-        inClassInstDriversLicenseExpDate,
-      });
-    }
-  };
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleEditInClassInstEntry = () => {
-    axios.put(`http://localhost:4400/in-class-inst/edit/1`, {
-      inClassInstFirstName,
-      inClassInstLastName,
-      inClassInstDriversLicense,
-      inClassInstDriversLicenseExpDate,
-    });
-  };
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleDeleteInClassInst = async () => {
-    const result = await axios.delete(
-      `http://localhost:4400/in-class-inst/delete/dfsdfsd`
-    );
-
-    if (result.data.status != 200) {
-      console.log("failed to delete item");
-    } else {
-      console.log("successfully deleted item");
-    }
-  };
+    isDateFormatYYYYMMDD(
+      inClassInstructorState.inClassInstructorObject.iciDriversLicenseExpDate
+    )
+      ? inClassInstructorState.setInClassInstructorObject({
+          ...inClassInstructorState.inClassInstructorObject,
+          isICIDriversLicenseExpDateError: false,
+        })
+      : inClassInstructorState.setInClassInstructorObject({
+          ...inClassInstructorState.inClassInstructorObject,
+          isICIDriversLicenseExpDateError: true,
+        });
+  }, [inClassInstructorState.inClassInstructorObject.iciDriversLicenseExpDate]);
 
   /******************************/
   /***** NAVIGATION HELPERS *****/
@@ -252,21 +124,9 @@ const useNewInClassInstScreen = () => {
   /*******************/
 
   return {
-    isLoading,
-    inClassInstFirstName,
-    isInClassInstFirstNameError,
-    handleInClassInstFirstNameChange,
-    inClassInstLastName,
-    isInClassInstLastNameError,
-    handleInClassInstLastNameChange,
-    inClassInstDriversLicense,
-    isInClassInstDriversLicenseError,
-    handleInClassInstDriversLicenseChange,
-    inClassInstDriversLicenseExpDate,
-    isInClassInstDriversLicenseExpDateError,
-    handleInClassInstDriversLicenseExpDateChange,
-    handleAddNewInClassInstructor,
-    handleEditInClassInstEntry,
+    inClassInstructorState,
+    InClassInstructorChangeHandlers,
+    inClassInstructorButtonHandlers,
   };
 };
 

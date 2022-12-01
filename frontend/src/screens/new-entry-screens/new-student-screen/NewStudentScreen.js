@@ -34,150 +34,69 @@ const ButtonsDiv = styled.div`
 const ListOption = styled.option``;
 
 const NewStudentScreen = () => {
-  const {
-    isLoading,
+  const { studentState, studentChangeHandlers, studentButtonHandlers } =
+    useNewStudentScreen();
 
-    studentFirstName,
-    isStudentFirstNameError,
-    handleStudentFirstNameChange,
-
-    studentMiddleName,
-    isStudentMiddleNameError,
-    handleStudentMiddleNameChange,
-
-    studentLastName,
-    isStudentLastNameError,
-    handleStudentLastNameChange,
-
-    studentDateOfBirth,
-    isStudentDateOfBirthError,
-    handleStudentDateOfBirthChange,
-
-    studentGender,
-    isStudentGenderError,
-    handleStudentGenderChange,
-
-    studentCellPhoneNumber,
-    isStudentCellPhoneNumberError,
-    handleStudentCellPhoneNumberChange,
-
-    studentHomePhoneNumber,
-    isStudentHomePhoneNumberError,
-    handleStudentHomePhoneNumberChange,
-
-    studentAddress,
-    isStudentAddressError,
-    handleStudentAddressChange,
-
-    studentAddressCity,
-    isStudentAddressCityError,
-    handleStudentAddressCityChange,
-
-    studentAddressPostalCode,
-    isStudentAddressPostalCodeError,
-    handleStudentAddressPostalCodeChange,
-
-    studentDriversLicenseNumber,
-    isStudentDriversLicenseNumberError,
-    handleStudentDriversLicenseNumberChange,
-
-    studentDriversLicenseNumberIssuedDate,
-    isStudentDriversLicenseNumberIssuedDateError,
-    handleStudentDriversLicenseNumberIssuedDateChange,
-
-    studentDriversLicenseNumberExpDate,
-    isStudentDriversLicenseNumberExpDateError,
-    handleStudentDriversLicenseNumberExpDateChange,
-
-    studentRegisteredCourseId,
-    isStudentRegisteredCourseIdError,
-    handleStudentRegisteredCourseId,
-
-    studentRegisteredProductId,
-    isStudentRegisteredProductIdError,
-    handleStudentRegisteredProductId,
-
-    handleAddNewStudentEntry,
-    handleEditStudentEntry,
-    Genders,
-    courses,
-    products,
-
-    selectedGender,
-    selectedRegisteredCourse,
-    selectedRegisteredProduct,
-  } = useNewStudentScreen();
-
-  const [isDateOfBirthFocus, setIsDateOfBirthFocus] = useState(false);
-  const [
-    isStudentDriversLicenseIssuedDateFocus,
-    setIsStudentDriversLicenseIssuedDateFocus,
-  ] = useState(false);
-  // const [isDateOfBirthFocus, setIsDateOfBirthFocus] = useState(false);
-
-  const dateOfBirthFocusAndBlurHandler = (isFocused) => {
-    setIsDateOfBirthFocus(isFocused);
-  };
-  const studentDriversLicenseIssuedDateFocusAndBlurHandler = (isFocused) => {
-    setIsStudentDriversLicenseIssuedDateFocus(isFocused);
-  };
+ 
 
   return (
     <WrapperDiv>
       <ContainerDiv>
         <TitleH1>NewStudentScreen</TitleH1>
 
-        {!isLoading && (
+        {!studentState.isLoading && (
           <FormDiv>
             <SideBySideTextInputsDiv>
               <TextInput
                 type="text"
                 maxLength={70}
-                value={studentFirstName}
-                onChange={handleStudentFirstNameChange}
+                value={studentState.studentObject.studentFirstName}
+                onChange={studentChangeHandlers.handleStudentFirstNameChange}
                 placeholder={"First Name"}
               />
               <TextInput
                 type="text"
                 maxLength={70}
-                value={studentMiddleName}
-                onChange={handleStudentMiddleNameChange}
+                value={studentState.studentObject.studentMiddleName}
+                onChange={studentChangeHandlers.handleStudentMiddleNameChange}
                 placeholder={"Middle Name (Optional)"}
               />
               <TextInput
                 type="text"
                 maxLength={70}
-                value={studentLastName}
-                onChange={handleStudentLastNameChange}
+                value={studentState.studentObject.studentLastName}
+                onChange={studentChangeHandlers.handleStudentLastNameChange}
                 placeholder={"Last Name"}
               />
             </SideBySideTextInputsDiv>
 
             <SideBySideTextInputsDiv>
               <TextInput
-                type={isDateOfBirthFocus ? "date" : "text"}
+                type={studentState.isDateOfBirthFocus ? "date" : "text"}
                 onFocus={() => {
-                  dateOfBirthFocusAndBlurHandler(true);
+                  studentChangeHandlers.handleStudentDateOfBirthFocusAndBlurHandler(true);
                 }}
                 onBlur={() => {
-                  dateOfBirthFocusAndBlurHandler(false);
+                  studentChangeHandlers.handleStudentDateOfBirthFocusAndBlurHandler(false);
                 }}
-                value={studentDateOfBirth}
-                onChange={handleStudentDateOfBirthChange}
+                value={studentState.studentObject.studentDateOfBirth}
+                onChange={studentChangeHandlers.handleStudentDateOfBirthChange}
                 placeholder={"Date Of Birth"}
               />
 
               <DropDownMenu
                 name="genderList"
-                defaultValue={selectedGender}
-                onChange={handleStudentGenderChange}
+                defaultValue={studentState.selectedGender}
+                onChange={studentChangeHandlers.handleStudentGenderChange}
               >
                 <ListOption value={"label"} disabled hidden>
                   Please Select Gender
                 </ListOption>
-                <ListOption value={Genders.MALE}>Male</ListOption>
-                <ListOption value={Genders.FEMALE}>Female</ListOption>
-                <ListOption value={Genders.NOT_DECLARED}>
+                <ListOption value={studentState.Genders.MALE}>Male</ListOption>
+                <ListOption value={studentState.Genders.FEMALE}>
+                  Female
+                </ListOption>
+                <ListOption value={studentState.Genders.NOT_DECLARED}>
                   Not Declared
                 </ListOption>
               </DropDownMenu>
@@ -188,37 +107,43 @@ const NewStudentScreen = () => {
                 type="text"
                 maxLength={18}
                 placeholder="Cell Phone (Format: 5194567890)"
-                value={studentCellPhoneNumber}
-                onChange={handleStudentCellPhoneNumberChange}
+                value={studentState.studentObject.studentCellPhoneNumber}
+                onChange={
+                  studentChangeHandlers.handleStudentCellPhoneNumberChange
+                }
               />
               <TextInput
                 type="text"
                 maxLength={18}
                 placeholder="Home Phone (Format: 5194567890)"
-                value={studentHomePhoneNumber}
-                onChange={handleStudentHomePhoneNumberChange}
+                value={studentState.studentObject.studentHomePhoneNumber}
+                onChange={
+                  studentChangeHandlers.handleStudentHomePhoneNumberChange
+                }
               />
             </SideBySideTextInputsDiv>
             <SideBySideTextInputsDiv>
               <TextInput
                 type="text"
                 maxLength={145}
-                value={studentAddress}
-                onChange={handleStudentAddressChange}
+                value={studentState.studentObject.studentAddress}
+                onChange={studentChangeHandlers.handleStudentAddressChange}
                 placeholder={"Address (Ex. 123 main st)"}
               />
               <TextInput
                 type="text"
                 maxLength={145}
-                value={studentAddressCity}
-                onChange={handleStudentAddressCityChange}
+                value={studentState.studentObject.studentAddressCity}
+                onChange={studentChangeHandlers.handleStudentAddressCityChange}
                 placeholder={"City"}
               />
               <TextInput
                 type="text"
                 maxLength={18}
-                value={studentAddressPostalCode}
-                onChange={handleStudentAddressPostalCodeChange}
+                value={studentState.studentObject.studentAddressPostalCode}
+                onChange={
+                  studentChangeHandlers.handleStudentAddressPostalCodeChange
+                }
                 placeholder={"Postal Code"}
               />
             </SideBySideTextInputsDiv>
@@ -226,22 +151,37 @@ const NewStudentScreen = () => {
             <SideBySideTextInputsDiv>
               <TextInput
                 type="text"
-                value={studentDriversLicenseNumber}
-                onChange={handleStudentDriversLicenseNumberChange}
+                value={studentState.studentObject.studentDriversLicenseNumber}
+                onChange={
+                  studentChangeHandlers.handleStudentDriversLicenseNumberChange
+                }
                 placeholder={"Driver's License Number"}
               />
 
               {/* add min date field and use script to get todays date */}
               <TextInput
-                type={isStudentDriversLicenseIssuedDateFocus ? "date" : "text"}
+                type={
+                  studentState.isStudentDriversLicenseIssuedDateFocus
+                    ? "date"
+                    : "text"
+                }
                 onFocus={() => {
-                  studentDriversLicenseIssuedDateFocusAndBlurHandler(true);
+                  studentChangeHandlers.handleStudentDriversLicenseIssuedDateFocusAndBlurHandler(
+                    true
+                  );
                 }}
                 onBlur={() => {
-                  studentDriversLicenseIssuedDateFocusAndBlurHandler(false);
+                  studentChangeHandlers.handleStudentDriversLicenseIssuedDateFocusAndBlurHandler(
+                    false
+                  );
                 }}
-                value={studentDriversLicenseNumberIssuedDate}
-                onChange={handleStudentDriversLicenseNumberIssuedDateChange}
+                value={
+                  studentState.studentObject
+                    .studentDriversLicenseNumberIssuedDate
+                }
+                onChange={
+                  studentChangeHandlers.handleStudentDriversLicenseNumberIssuedDateChange
+                }
                 placeholder={"Driver's License Issued Date"}
               />
 
@@ -249,8 +189,12 @@ const NewStudentScreen = () => {
               <TextInput
                 type="text"
                 disabled
-                value={studentDriversLicenseNumberExpDate}
-                onChange={handleStudentDriversLicenseNumberExpDateChange}
+                value={
+                  studentState.studentObject.studentDriversLicenseNumberExpDate
+                }
+                onChange={
+                  studentChangeHandlers.handleStudentDriversLicenseNumberExpDateChange
+                }
                 placeholder={"Driver's License Expiry Date"}
               />
             </SideBySideTextInputsDiv>
@@ -259,13 +203,13 @@ const NewStudentScreen = () => {
               {/* get the courses from database and but them in the options */}
               <DropDownMenu
                 name="courseIdList"
-                defaultValue={selectedRegisteredCourse}
-                onChange={handleStudentRegisteredCourseId}
+                defaultValue={studentState.selectedRegisteredCourse}
+                onChange={studentChangeHandlers.handleStudentRegisteredCourseId}
               >
                 <ListOption value={"label"} disabled hidden>
                   Which Course Is The Student Registered?
                 </ListOption>
-                {courses.map((data) => (
+                {studentState.courses.map((data) => (
                   <ListOption key={data.id} value={data.id}>
                     {data.courseId}
                   </ListOption>
@@ -277,13 +221,15 @@ const NewStudentScreen = () => {
               {/* get the products from database and but them in the options */}
               <DropDownMenu
                 name="productIdList"
-                defaultValue={selectedRegisteredProduct}
-                onChange={handleStudentRegisteredProductId}
+                defaultValue={studentState.selectedRegisteredProduct}
+                onChange={
+                  studentChangeHandlers.handleStudentRegisteredProductId
+                }
               >
                 <ListOption value={"label"} disabled hidden>
                   Which Product Is The Student Registered?
                 </ListOption>
-                {products.map((data) => (
+                {studentState.products.map((data) => (
                   <ListOption key={data.id} value={data.id}>
                     {data.productId}
                   </ListOption>
@@ -293,47 +239,57 @@ const NewStudentScreen = () => {
 
             {/* should be a dropdown list of all available instructors*/}
             <ButtonsDiv>
+              {studentState.showAddButton && (
+                <Button
+                  disabled={
+                    studentState.studentObject.isStudentFirstNameError ||
+                    studentState.studentObject.isStudentMiddleNameError ||
+                    studentState.studentObject.isStudentLastNameError ||
+                    studentState.studentObject.isStudentDateOfBirthError ||
+                    studentState.studentObject.isStudentGenderError ||
+                    studentState.studentObject.isStudentCellPhoneNumberError ||
+                    studentState.studentObject.isStudentHomePhoneNumberError ||
+                    studentState.studentObject.isStudentAddressError ||
+                    studentState.studentObject.isStudentAddressCityError ||
+                    studentState.studentObject
+                      .isStudentAddressPostalCodeError ||
+                    studentState.studentObject
+                      .isStudentDriversLicenseNumberError ||
+                    studentState.studentObject
+                      .isStudentDriversLicenseNumberIssuedDateError ||
+                    studentState.studentObject
+                      .isStudentDriversLicenseNumberExpDateError ||
+                    studentState.studentObject
+                      .isStudentRegisteredCourseIdError ||
+                    studentState.studentObject.isStudentRegisteredProductIdError
+                  }
+                  onClick={studentButtonHandlers.handleAddNewStudentEntry}
+                >
+                  Save
+                </Button>
+              )}
               <Button
                 disabled={
-                  isStudentFirstNameError ||
-                  isStudentMiddleNameError ||
-                  isStudentLastNameError ||
-                  isStudentDateOfBirthError ||
-                  isStudentGenderError ||
-                  isStudentCellPhoneNumberError ||
-                  isStudentHomePhoneNumberError ||
-                  isStudentAddressError ||
-                  isStudentAddressCityError ||
-                  isStudentAddressPostalCodeError ||
-                  isStudentDriversLicenseNumberError ||
-                  isStudentDriversLicenseNumberIssuedDateError ||
-                  isStudentDriversLicenseNumberExpDateError ||
-                  isStudentRegisteredCourseIdError ||
-                  isStudentRegisteredProductIdError
+                  studentState.studentObject.isStudentFirstNameError ||
+                  studentState.studentObject.isStudentMiddleNameError ||
+                  studentState.studentObject.isStudentLastNameError ||
+                  studentState.studentObject.isStudentDateOfBirthError ||
+                  studentState.studentObject.isStudentGenderError ||
+                  studentState.studentObject.isStudentCellPhoneNumberError ||
+                  studentState.studentObject.isStudentHomePhoneNumberError ||
+                  studentState.studentObject.isStudentAddressError ||
+                  studentState.studentObject.isStudentAddressCityError ||
+                  studentState.studentObject.isStudentAddressPostalCodeError ||
+                  studentState.studentObject
+                    .isStudentDriversLicenseNumberError ||
+                  studentState.studentObject
+                    .isStudentDriversLicenseNumberIssuedDateError ||
+                  studentState.studentObject
+                    .isStudentDriversLicenseNumberExpDateError ||
+                  studentState.studentObject.isStudentRegisteredCourseIdError ||
+                  studentState.studentObject.isStudentRegisteredProductIdError
                 }
-                onClick={handleAddNewStudentEntry}
-              >
-                Save
-              </Button>
-              <Button
-                disabled={
-                  isStudentFirstNameError ||
-                  isStudentMiddleNameError ||
-                  isStudentLastNameError ||
-                  isStudentDateOfBirthError ||
-                  isStudentGenderError ||
-                  isStudentCellPhoneNumberError ||
-                  isStudentHomePhoneNumberError ||
-                  isStudentAddressError ||
-                  isStudentAddressCityError ||
-                  isStudentAddressPostalCodeError ||
-                  isStudentDriversLicenseNumberError ||
-                  isStudentDriversLicenseNumberIssuedDateError ||
-                  isStudentDriversLicenseNumberExpDateError ||
-                  isStudentRegisteredCourseIdError ||
-                  isStudentRegisteredProductIdError
-                }
-                onClick={handleEditStudentEntry}
+                onClick={studentButtonHandlers.handleEditStudentEntry}
               >
                 Modify
               </Button>

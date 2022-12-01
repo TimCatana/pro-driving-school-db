@@ -21,12 +21,12 @@ exports.addEntry = async (req, res) => {
   db.query(
     command,
     [
-      req.body.inCarInstDriversLicense,
-      req.body.inCarInstDriversLicenseExpDate,
-      req.body.inCarInstFirstName,
-      req.body.inCarInstLastName,
-      req.body.inCarInstGLicense,
-      req.body.inCarInstGLicenseExpDate,
+      req.body.iciDriversLicenseNum,
+      req.body.iciDriversLicenseExpDate,
+      req.body.iciFirstName,
+      req.body.iciLastName,
+      req.body.iciGLicenseNum,
+      req.body.iciGLicenseExpDate,
     ],
     (err, result) => {
       if (err) {
@@ -45,12 +45,12 @@ exports.editOneEntry = async (req, res) => {
   db.query(
     command,
     [
-      req.body.inCarInstDriversLicense,
-      req.body.inCarInstDriversLicenseExpDate,
-      req.body.inCarInstFirstName,
-      req.body.inCarInstLastName,
-      req.body.inCarInstGLicense,
-      req.body.inCarInstGLicenseExpDate,
+      req.body.iciDriversLicenseNum,
+      req.body.iciDriversLicenseExpDate,
+      req.body.iciFirstName,
+      req.body.iciLastName,
+      req.body.iciGLicenseNum,
+      req.body.iciGLicenseExpDate,
       req.params.primary_key,
     ],
     (err, result) => {

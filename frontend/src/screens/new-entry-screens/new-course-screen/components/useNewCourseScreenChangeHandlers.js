@@ -75,7 +75,7 @@ const useNewCourseScreenChangeHandlers = (courseState) => {
    *
    * @param {*} isFocused
    */
-  const StartDateFocusAndBlurHandler = (isFocused) => {
+  const handleStartDateFocusAndBlurHandler = (isFocused) => {
     courseState.setIsStartDateFocus(isFocused);
   };
 
@@ -83,7 +83,7 @@ const useNewCourseScreenChangeHandlers = (courseState) => {
    *
    * @param {*} isFocused
    */
-  const EndDateFocusAndBlurHandler = (isFocused) => {
+  const handleEndDateFocusAndBlurHandler = (isFocused) => {
     courseState.setIsEndDateFocus(isFocused);
   };
 
@@ -98,8 +98,8 @@ const useNewCourseScreenChangeHandlers = (courseState) => {
     handleCourseEndDateChange,
     handleIsCourseDigitalChange,
     handleInClassInstructorChange,
-    StartDateFocusAndBlurHandler,
-    EndDateFocusAndBlurHandler,
+    handleStartDateFocusAndBlurHandler,
+    handleEndDateFocusAndBlurHandler,
   };
 
   /*******************/

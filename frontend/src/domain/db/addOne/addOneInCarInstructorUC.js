@@ -1,14 +1,13 @@
 import axios from "axios";
 
-// TODO - object goes in parameter
-const addOneInCarInstructorUC = () => {
-  axios.post(`http://localhost:4400/in-car-inst/add`, {
-    inCarInstFirstName,
-    inCarInstLastName,
-    inCarInstDriversLicense,
-    inCarInstDriversLicenseExpDate,
-    inCarInstGLicense,
-    inCarInstGLicenseExpDate,
+const addOneInCarInstructorUC = async (inCarInstructorObject) => {
+  return await axios.post(`http://localhost:4400/in-car-inst/add`, {
+    iciFirstName: inCarInstructorObject.iciFirstName,
+    iciLastName: inCarInstructorObject.iciLastName,
+    iciDriversLicenseNum: inCarInstructorObject.iciDriversLicenseNum,
+    iciDriversLicenseExpDate: inCarInstructorObject.iciDriversLicenseExpDate,
+    iciGLicenseNum: inCarInstructorObject.iciGLicenseNum,
+    iciGLicenseExpDate: inCarInstructorObject.iciGLicenseExpDate,
   });
 };
 

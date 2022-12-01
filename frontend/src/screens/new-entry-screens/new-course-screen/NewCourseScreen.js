@@ -69,10 +69,10 @@ const NewCourseScreen = () => {
               <TextInput
                 type={courseState.isStartDateFocus ? "date" : "text"}
                 onFocus={() => {
-                  courseChangeHandlers.StartDateFocusAndBlurHandler(true);
+                  courseChangeHandlers.handleStartDateFocusAndBlurHandler(true);
                 }}
                 onBlur={() => {
-                  courseChangeHandlers.StartDateFocusAndBlurHandler(false);
+                  courseChangeHandlers.handleStartDateFocusAndBlurHandler(false);
                 }}
                 value={courseState.courseObject.courseStartDate}
                 onChange={courseChangeHandlers.handleCourseStartDateChange}
@@ -82,10 +82,10 @@ const NewCourseScreen = () => {
               <TextInput
                 type={courseState.isEndDateFocus ? "date" : "text"}
                 onFocus={() => {
-                  courseChangeHandlers.EndDateFocusAndBlurHandler(true);
+                  courseChangeHandlers.handleEndDateFocusAndBlurHandler(true);
                 }}
                 onBlur={() => {
-                  courseChangeHandlers.EndDateFocusAndBlurHandler(false);
+                  courseChangeHandlers.handleEndDateFocusAndBlurHandler(false);
                 }}
                 value={courseState.courseObject.courseEndDate}
                 onChange={courseChangeHandlers.handleCourseEndDateChange}

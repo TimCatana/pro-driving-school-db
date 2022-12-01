@@ -19,10 +19,10 @@ exports.addEntry = async (req, res) => {
   db.query(
     command,
     [
-      req.body.inClassInstDriversLicense,
-      req.body.inClassInstDriversLicenseExpDate,
-      req.body.inClassInstFirstName,
-      req.body.inClassInstLastName,
+      req.body.iciDriversLicenseNum,
+      req.body.iciDriversLicenseExpDate,
+      req.body.iciFirstName,
+      req.body.iciLastName,
     ],
     (err, result) => {
       if (err) {
@@ -41,10 +41,10 @@ exports.editOneEntry = async (req, res) => {
   db.query(
     command,
     [
-      req.body.inClassInstDriversLicense,
-      req.body.inClassInstDriversLicenseExpDate,
-      req.body.inClassInstFirstName,
-      req.body.inClassInstLastName,
+      req.body.iciDriversLicenseNum,
+      req.body.iciDriversLicenseExpDate,
+      req.body.iciFirstName,
+      req.body.iciLastName,
       req.params.primary_key,
     ],
     (err, result) => {

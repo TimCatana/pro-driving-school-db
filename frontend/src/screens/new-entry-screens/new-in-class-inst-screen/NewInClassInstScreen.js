@@ -37,50 +37,39 @@ const ButtonsDiv = styled.div`
 
 const NewInClassInstScreen = () => {
   const {
-    isLoading,
-    inClassInstFirstName,
-    isInClassInstFirstNameError,
-    handleInClassInstFirstNameChange,
-    inClassInstLastName,
-    isInClassInstLastNameError,
-    handleInClassInstLastNameChange,
-    inClassInstDriversLicense,
-    isInClassInstDriversLicenseError,
-    handleInClassInstDriversLicenseChange,
-    inClassInstDriversLicenseExpDate,
-    isInClassInstDriversLicenseExpDateError,
-    handleInClassInstDriversLicenseExpDateChange,
-    handleAddNewInClassInstructor,
-    handleEditInClassInstEntry,
+    inClassInstructorState,
+    InClassInstructorChangeHandlers,
+    inClassInstructorButtonHandlers,
   } = useNewInClassInstScreen();
-
-  const [isInstDriversLicenseFocus, setIsInstDriversLicenseFocus] =
-    useState(false);
-
-  const InstDriversLicenseFocusAndBlurHandler = (isFocused) => {
-    setIsInstDriversLicenseFocus(isFocused);
-  };
 
   return (
     <WrapperDiv>
       <ContainerDiv>
         <TitleH1>NewInClassInstScreen</TitleH1>
 
-        {!isLoading && (
+        {!inClassInstructorState.isLoading && (
           <FormDiv>
             <SideBySideTextInputsDiv>
               <TextInput
                 type="text"
                 maxLength={70}
-                value={inClassInstFirstName}
-                onChange={handleInClassInstFirstNameChange}
+                value={
+                  inClassInstructorState.inClassInstructorObject.iciFirstName
+                }
+                onChange={
+                  InClassInstructorChangeHandlers.handleInClassInstFirstNameChange
+                }
                 placeholder={"First Name"}
               />
               <TextInput
                 type="text"
                 maxLength={70}
-                value={inClassInstLastName}
-                onChange={handleInClassInstLastNameChange}
+                value={
+                  inClassInstructorState.inClassInstructorObject.iciLastName
+                }
+                onChange={
+                  InClassInstructorChangeHandlers.handleInClassInstLastNameChange
+                }
                 placeholder={"Last Name"}
               />
             </SideBySideTextInputsDiv>
@@ -88,21 +77,39 @@ const NewInClassInstScreen = () => {
               <TextInput
                 type="text"
                 maxLength={95}
-                value={inClassInstDriversLicense}
-                onChange={handleInClassInstDriversLicenseChange}
+                value={
+                  inClassInstructorState.inClassInstructorObject
+                    .iciDriversLicenseNum
+                }
+                onChange={
+                  InClassInstructorChangeHandlers.handleInClassInstDriversLicenseNumChange
+                }
                 placeholder={"Instructor Driver's License"}
               />
               {/* add min date field and use script to get todays date */}
               <TextInput
-                type={isInstDriversLicenseFocus ? "date" : "text"}
+                type={
+                  inClassInstructorState.isICIDriversLicenseFocus
+                    ? "date"
+                    : "text"
+                }
                 onFocus={() => {
-                  InstDriversLicenseFocusAndBlurHandler(true);
+                  InClassInstructorChangeHandlers.handleICIDriversLicenseFocusAndBlurHandler(
+                    true
+                  );
                 }}
                 onBlur={() => {
-                  InstDriversLicenseFocusAndBlurHandler(false);
+                  InClassInstructorChangeHandlers.handleICIDriversLicenseFocusAndBlurHandler(
+                    false
+                  );
                 }}
-                value={inClassInstDriversLicenseExpDate}
-                onChange={handleInClassInstDriversLicenseExpDateChange}
+                value={
+                  inClassInstructorState.inClassInstructorObject
+                    .iciDriversLicenseExpDate
+                }
+                onChange={
+                  InClassInstructorChangeHandlers.handleInClassInstDriversLicenseExpDateChange
+                }
                 placeholder={"Instructor Drivers License Expiry Date"}
               />
             </SideBySideTextInputsDiv>
@@ -110,25 +117,37 @@ const NewInClassInstScreen = () => {
         )}
 
         <ButtonsDiv>
+          {inClassInstructorState.showAddButton && (
+            <Button
+              disabled={
+                inClassInstructorState.inClassInstructorObject
+                  .isICIFirstNameError ||
+                inClassInstructorState.inClassInstructorObject
+                  .isICILastNameError ||
+                inClassInstructorState.inClassInstructorObject
+                  .isICIDriversLicenseNumError ||
+                inClassInstructorState.inClassInstructorObject
+                  .isICIDriversLicenseExpDateError
+              }
+              onClick={
+                inClassInstructorButtonHandlers.handleAddNewInClassInstructor
+              }
+            >
+              Save
+            </Button>
+          )}
           <Button
             disabled={
-              isInClassInstFirstNameError ||
-              isInClassInstLastNameError ||
-              isInClassInstDriversLicenseError ||
-              isInClassInstDriversLicenseExpDateError
+              inClassInstructorState.inClassInstructorObject
+                .isICIFirstNameError ||
+              inClassInstructorState.inClassInstructorObject
+                .isICILastNameError ||
+              inClassInstructorState.inClassInstructorObject
+                .isICIDriversLicenseNumError ||
+              inClassInstructorState.inClassInstructorObject
+                .isICIDriversLicenseExpDateError
             }
-            onClick={handleAddNewInClassInstructor}
-          >
-            Save
-          </Button>
-          <Button
-            disabled={
-              isInClassInstFirstNameError ||
-              isInClassInstLastNameError ||
-              isInClassInstDriversLicenseError ||
-              isInClassInstDriversLicenseExpDateError
-            }
-            onClick={handleEditInClassInstEntry}
+            onClick={inClassInstructorButtonHandlers.handleEditInClassInstEntry}
           >
             Modify
           </Button>
