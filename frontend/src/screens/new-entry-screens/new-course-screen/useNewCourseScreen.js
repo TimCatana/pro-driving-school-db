@@ -1,65 +1,41 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 import {
-  isDateFuture,
   isDateFormatYYYYMMDD,
   isNumber,
   isEndDateFuture,
   isValidDate,
 } from "../../../components/helpers/validators";
-import axios from "axios";
+import {
+  useNewCourseScreenUseEffectHelpers,
+  useNewCourseScreenChangeHandlers,
+  useNewCourseScreenButtonHandlers,
+  useNewCourseScreenStates,
+} from "./components";
 
 const useNewCourseScreen = () => {
   /******************/
   /***** STATES *****/
   /******************/
-  const CourseTypes = {
-    DIGITAL: "Digital",
-    IN_PERSON: "In Person",
-  };
 
-  const navigation = useNavigate();
-  const { primary_key } = useParams();
-  const [inClassInstructors, _setInClassInstructors] = useState("");
+  const { courseState } = useNewCourseScreenStates();
 
-  const [selectedCourseType, _setSelectedCourseType] = useState("label");
-  const [selectedInstructor, _setSelectedInstructor] = useState("label");
-
-  const [isLoading, _setIsLoading] = useState(true);
-
-  const [courseId, _setCourseId] = useState("");
-  const [isCourseIdError, _setIsCourseIdError] = useState(true);
-
-  const [courseStartDate, _setCourseStartDate] = useState("");
-  const [isCourseStartDateError, _setIsCourseStartDateError] = useState(true);
-
-  const [courseEndDate, _setCourseEndDate] = useState("");
-  const [isCourseEndDateError, _setIsCourseEndDateError] = useState(true);
-
-  const [_isCourseDigital, _setIsCourseDigital] = useState("");
-  const [isCourseDigitalError, _setIsCourseDigitalError] = useState(true);
-
-  const [courseCapacity, _setCourseCapacity] = useState("");
-  const [isCourseCapacityError, _setIsCourseCapacityError] = useState(true);
-
-  const [courseInClassInstructor, _setCourseInClassInstructor] = useState("");
-  const [isCourseInClassInstructorError, _setIsCourseInClassInstructorError] =
-    useState(true);
+  const { courseChangeHandlers } =
+    useNewCourseScreenChangeHandlers(courseState);
+  const { courseButtonHandlers } =
+    useNewCourseScreenButtonHandlers(courseState);
+  const { courseUseEffectHelpers } =
+    useNewCourseScreenUseEffectHelpers(courseState);
 
   /***********************/
   /***** USE EFFECTS *****/
   /***********************/
+
   /**
    * Validates newly inputted courseId
    * @dependent courseId
    */
   useEffect(() => {
-    handleGetInClassInstructors();
-    // if no instructors, need to show message saying that instructors need to be added
-
-    if (primary_key != 0) {
-      handleGetSpecificCourse();
-    }
+    courseUseEffectHelpers.onRender();
   }, []);
 
   /**
@@ -67,295 +43,165 @@ const useNewCourseScreen = () => {
    * @dependent courseId
    */
   useEffect(() => {
-    if (isNumber(courseId)) {
-      parseInt(courseId) > -1
-        ? _setIsCourseIdError(false)
-        : _setIsCourseIdError(true);
+    if (isNumber(courseState.courseObject.courseId)) {
+      parseInt(courseState.courseObject.courseId) > -1
+        ? courseState.setCourseObject({
+            ...courseState.courseObject,
+            isCourseIdError: false,
+          })
+        : courseState.setCourseObject({
+            ...courseState.courseObject,
+            isCourseIdError: true,
+          });
     } else {
-      _setIsCourseIdError(true);
+      courseState.setCourseObject({
+        ...courseState.courseObject,
+        isCourseIdError: true,
+      });
     }
-  }, [courseId]);
+  }, [courseState.courseObject.courseId]);
 
   /**
    * Validates newly inputted courseCapacity
    * @dependent courseId
    */
   useEffect(() => {
-    if (isNumber(courseCapacity)) {
-      parseInt(courseCapacity) > -1
-        ? _setIsCourseCapacityError(false)
-        : _setIsCourseCapacityError(true);
+    if (isNumber(courseState.courseObject.courseCapacity)) {
+      parseInt(courseState.courseObject.courseCapacity) > -1
+        ? courseState.setCourseObject({
+            ...courseState.courseObject,
+            isCourseCapacityError: false,
+          })
+        : courseState.setCourseObject({
+            ...courseState.courseObject,
+            isCourseCapacityError: true,
+          });
     } else {
-      _setIsCourseCapacityError(true);
+      courseState.setCourseObject({
+        ...courseState.courseObject,
+        isCourseCapacityError: true,
+      });
     }
-  }, [courseCapacity]);
+  }, [courseState.courseObject.courseCapacity]);
 
   /**
    * Validates newly selected start date
    * @dependent courseStartDate
    */
   useEffect(() => {
-    if (isDateFormatYYYYMMDD(courseStartDate)) {
-      isDateFuture(courseStartDate)
-        ? _setIsCourseStartDateError(false)
-        : _setIsCourseStartDateError(true);
+    if (isDateFormatYYYYMMDD(courseState.courseObject.courseStartDate)) {
+      courseState.setCourseObject({
+        ...courseState.courseObject,
+        isCourseStartDateError: false,
+      });
 
-      isEndDateFuture(courseStartDate, courseEndDate) // date validation is done within function therefore is end date isn't selected then should return false
-        ? _setIsCourseEndDateError(false)
-        : _setIsCourseEndDateError(true);
+      isEndDateFuture(
+        courseState.courseObject.courseStartDate,
+        courseState.courseObject.courseEndDate
+      ) // date validation is done within function therefore is end date isn't selected then should return false
+        ? courseState.setCourseObject({
+            ...courseState.courseObject,
+            isCourseEndDateError: false,
+          })
+        : courseState.setCourseObject({
+            ...courseState.courseObject,
+            isCourseEndDateError: true,
+          });
     } else {
-      _setIsCourseStartDateError(true);
+      courseState.setCourseObject({
+        ...courseState.courseObject,
+        isCourseStartDateError: true,
+      });
     }
-  }, [courseStartDate]);
+  }, [courseState.courseObject.courseStartDate]);
 
   /**
    * Validates newly selected end date date
    * @dependent courseEndDate
    */
   useEffect(() => {
-    if (isDateFormatYYYYMMDD(courseEndDate)) {
-      if (isValidDate(courseStartDate)) {
-        if (
-          isDateFuture(courseEndDate) &&
-          isEndDateFuture(courseStartDate, courseEndDate)
-        ) {
-          _setIsCourseEndDateError(false);
-        } else {
-          _setIsCourseEndDateError(true);
-        }
+    if (isDateFormatYYYYMMDD(courseState.courseObject.courseEndDate)) {
+      if (isValidDate(courseState.courseObject.courseStartDate)) {
+        isEndDateFuture(
+          courseState.courseObject.courseStartDate,
+          courseState.courseObject.courseEndDate
+        )
+          ? courseState.setCourseObject({
+              ...courseState.courseObject,
+              isCourseEndDateError: false,
+            })
+          : courseState.setCourseObject({
+              ...courseState.courseObject,
+              isCourseEndDateError: true,
+            });
       } else {
-        isDateFuture(courseEndDate)
-          ? _setIsCourseEndDateError(false)
-          : _setIsCourseEndDateError(true);
+        courseState.setCourseObject({
+          ...courseState.courseObject,
+          isCourseEndDateError: false,
+        });
       }
     } else {
-      _setIsCourseEndDateError(true);
+      courseState.setCourseObject({
+        ...courseState.courseObject,
+        isCourseEndDateError: true,
+      });
     }
-  }, [courseEndDate]);
+  }, [courseState.courseObject.courseEndDate]);
 
   /**
    * Validates newly selected is class digital or in person option
    * @dependent isDigital
    */
   useEffect(() => {
-    _isCourseDigital == CourseTypes.DIGITAL ||
-    _isCourseDigital == CourseTypes.IN_PERSON
-      ? _setIsCourseDigitalError(false)
-      : _setIsCourseDigitalError(true);
-  }, [_isCourseDigital]);
+    courseState.courseObject.courseIsDigital ==
+      courseState.CourseTypes.DIGITAL ||
+    courseState.courseObject.courseIsDigital ==
+      courseState.CourseTypes.IN_PERSON
+      ? courseState.setCourseObject({
+          ...courseState.courseObject,
+          isCourseIsDigitalError: false,
+        })
+      : courseState.setCourseObject({
+          ...courseState.courseObject,
+          isCourseIsDigitalError: true,
+        });
+  }, [courseState.courseObject.courseIsDigital]);
 
   /**
    * Validates newly selected in class instructor
    * @dependent inClassInstructor
    */
   useEffect(() => {
-    if (isNumber(courseInClassInstructor)) {
-      inClassInstructors.some(
-        (element) => element.id == courseInClassInstructor
+    if (isNumber(courseState.courseObject.courseInClassInstructor)) {
+      courseState.inClassInstructors.some(
+        (element) =>
+          element.id == courseState.courseObject.courseInClassInstructor
       )
-        ? _setIsCourseInClassInstructorError(false)
-        : _setIsCourseInClassInstructorError(true);
+        ? courseState.setCourseObject({
+            ...courseState.courseObject,
+            isCourseInClassInstructorError: false,
+          })
+        : courseState.setCourseObject({
+            ...courseState.courseObject,
+            isCourseInClassInstructorError: true,
+          });
     } else {
-      _setIsCourseInClassInstructorError(true);
-    }
-  }, [courseInClassInstructor]);
-
-  /******************************/
-  /***** USE EFFECT HELPERS *****/
-  /******************************/
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleGetSpecificCourse = async () => {
-    _setIsLoading(true);
-    const result = await axios.get(
-      `http://localhost:4400/course/getOne/${primary_key}`
-    );
-
-    if (result.data.status == 200) {
-      _setCourseId(result.data.query[0].courseId);
-      _setCourseCapacity(result.data.query[0].capacity);
-      _setCourseStartDate(result.data.query[0].start_date);
-      _setCourseEndDate(result.data.query[0].end_date);
-      _setIsCourseDigital(result.data.query[0].is_digital); // TODO - change this to int not bit cause bit returns an array and it gets to messy
-      _setCourseInClassInstructor(result.data.query[0].in_class_instructor_id);
-
-      _setSelectedCourseType(result.data.query[0].is_digital);
-      _setSelectedInstructor(result.data.query[0].in_class_instructor_id);
-
-      console.log(result.data.query[0]);
-    } else {
-      console.log(result.data);
-    }
-
-    _setIsLoading(false);
-  };
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleGetInClassInstructors = async () => {
-    _setIsLoading(true);
-    const result = await axios.get(
-      `http://localhost:4400/in-class-inst/getAll`
-    );
-
-    if (result.data.status == 200) {
-      _setInClassInstructors(result.data.query);
-    } else {
-      console.log(result.data);
-    }
-
-    _setIsLoading(false);
-  };
-
-  /***********************/
-  /***** TEXT INPUTS *****/
-  /***********************/
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleCourseIdChange = (e) => {
-    e.preventDefault();
-    _setCourseId(e.target.value);
-  };
-
-  /**
-   * Updates the start date variable to contain the newly selected value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleCourseStartDateChange = (e) => {
-    e.preventDefault();
-    _setCourseStartDate(e.target.value);
-  };
-
-  /**
-   * Updates the end date variable to contain the newly selected value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleCourseEndDateChange = (e) => {
-    e.preventDefault();
-    _setCourseEndDate(e.target.value);
-  };
-
-  /**
-   * Updates the isDigital variable to contain the newly selected value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleIsCourseDigitalChange = (e) => {
-    e.preventDefault();
-    _setIsCourseDigital(e.target.value);
-  };
-
-  /**
-   * Updates the courseCapacity to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleCourseCapacityChange = (e) => {
-    e.preventDefault();
-    _setCourseCapacity(e.target.value);
-  };
-
-  /**
-   * Updates the inClassInstructor to contain the newly selected value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleInClassInstructorChange = (e) => {
-    _setCourseInClassInstructor(e.target.value);
-  };
-
-  /*************************/
-  /***** BUTTON CLICKS *****/
-  /*************************/
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleAddNewCourseEntry = () => {
-    // TODO - axios call to node backend that adds new course entry
-    // console.log(`axios call to backend, not implemented yet but button works!
-    // values:
-    // il ${isLoading}
-    // ${_setIsLoading}
-    // cid ${courseId}
-    // ${typeof courseId}
-    // ${isCourseIdError}
-    // cc ${courseCapacity}
-    // ${typeof courseCapacity}
-    // ${isCourseCapacityError}
-    // csd ${courseStartDate}
-    // ${typeof courseStartDate}
-    // ${isCourseStartDateError}
-    // ced ${courseEndDate}
-    // ${typeof courseEndDate}
-    // ${isCourseEndDateError}
-    // cd ${_isCourseDigital}
-    // ${typeof _isCourseDigital}
-    // ${isCourseDigitalError}
-    // cici ${courseInClassInstructor}
-    // ${isCourseInClassInstructorError}
-    // `);
-
-    // console.log(courseId);
-    // console.log(courseStartDate);
-    // console.log(courseEndDate);
-    // console.log(_isCourseDigital);
-    // console.log(courseCapacity);
-    // console.log(courseInClassInstructor);
-
-    if (
-      !isCourseIdError &&
-      !isCourseCapacityError &&
-      !isCourseStartDateError &&
-      !isCourseEndDateError &&
-      !isCourseDigitalError &&
-      !isCourseInClassInstructorError
-    ) {
-      axios.post(`http://localhost:4400/course/add`, {
-        courseId,
-        courseStartDate,
-        courseEndDate,
-        _isCourseDigital,
-        courseCapacity,
-        courseInClassInstructor,
+      courseState.setCourseObject({
+        ...courseState.courseObject,
+        isCourseInClassInstructorError: true,
       });
     }
-  };
+  }, [courseState.courseObject.courseInClassInstructor]);
 
   /**
-   * Updates the subscript to mailing list option.
+   * Validates newly selected in class instructor
+   * @dependent inClassInstructor
    */
-  const handleEditCourseEntry = () => {
-    axios.put(`http://localhost:4400/course/edit/1`, {
-      courseId,
-      courseStartDate,
-      courseEndDate,
-      _isCourseDigital,
-      courseCapacity,
-      courseInClassInstructor,
-    });
-  };
+  useEffect(() => {
+    console.log(courseState.courseObject);
+  }, [courseState.courseObject]);
 
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleDeleteCourse = async () => {
-    const result = await axios.delete(
-      `http://localhost:4400/course/delete/23424`
-    );
-
-    console.log(result.data);
-
-    if (result.data.status != 200) {
-      console.log("failed to delete item");
-    } else {
-      console.log("successfully deleted item");
-    }
-  };
-
+ 
   /******************************/
   /***** NAVIGATION HELPERS *****/
   /******************************/
@@ -374,30 +220,9 @@ const useNewCourseScreen = () => {
   /*******************/
 
   return {
-    isLoading,
-    courseId,
-    handleCourseIdChange,
-    isCourseIdError,
-    courseStartDate,
-    handleCourseStartDateChange,
-    isCourseStartDateError,
-    courseEndDate,
-    handleCourseEndDateChange,
-    isCourseEndDateError,
-    handleIsCourseDigitalChange,
-    isCourseDigitalError,
-    courseCapacity,
-    handleCourseCapacityChange,
-    isCourseCapacityError,
-    courseInClassInstructor,
-    handleInClassInstructorChange,
-    isCourseInClassInstructorError,
-    handleAddNewCourseEntry,
-    handleEditCourseEntry,
-    inClassInstructors,
-    CourseTypes,
-    selectedCourseType,
-    selectedInstructor,
+    courseState,
+    courseChangeHandlers,
+    courseButtonHandlers,
   };
 };
 

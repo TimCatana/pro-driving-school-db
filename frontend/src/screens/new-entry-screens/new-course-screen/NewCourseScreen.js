@@ -34,120 +34,97 @@ const ButtonsDiv = styled.div`
 const ListOption = styled.option``;
 
 const NewCourseScreen = () => {
-  const {
-    isLoading,
-    courseId,
-    handleCourseIdChange,
-    isCourseIdError,
-    courseStartDate,
-    handleCourseStartDateChange,
-    isCourseStartDateError,
-    courseEndDate,
-    handleCourseEndDateChange,
-    isCourseEndDateError,
-    handleIsCourseDigitalChange,
-    isCourseDigitalError,
-    courseCapacity,
-    handleCourseCapacityChange,
-    isCourseCapacityError,
-    courseInClassInstructor,
-    handleInClassInstructorChange,
-    isCourseInClassInstructorError,
-    handleAddNewCourseEntry,
-    handleEditCourseEntry,
-    inClassInstructors,
-    CourseTypes,
-    selectedCourseType,
-    selectedInstructor,
-  } = useNewCourseScreen();
-
-  const [isStartDateFocus, setIsStartDateFocus] = useState(false);
-  const [isEndDateFocus, setIsEndDateFocus] = useState(false);
-
-  const StartDateFocusAndBlurHandler = (isFocused) => {
-    setIsStartDateFocus(isFocused);
-  };
-  const EndDateFocusAndBlurHandler = (isFocused) => {
-    setIsEndDateFocus(isFocused);
-  };
+  const { courseState, courseChangeHandlers, courseButtonHandlers } =
+    useNewCourseScreen();
 
   return (
     <WrapperDiv>
       <ContainerDiv>
         <TitleH1>NewCourseScreen</TitleH1>
 
-        {!isLoading && (
+        {!courseState.isLoading && (
           <FormDiv>
             <SideBySideTextInputsDiv>
               <TextInput
                 type="number"
                 min="0"
-                value={courseId}
-                onChange={handleCourseIdChange}
+                value={courseState.courseObject.courseId}
+                onChange={courseChangeHandlers.handleCourseIdChange}
                 placeholder={"Course ID"}
               />
+
               <TextInput
                 type="number"
                 min="0"
-                value={courseCapacity}
-                onChange={handleCourseCapacityChange}
+                value={courseState.courseObject.courseCapacity}
+                onChange={courseChangeHandlers.handleCourseCapacityChange}
                 placeholder={"Course Capacity"}
               />
             </SideBySideTextInputsDiv>
 
+            {/*  */}
+
             <SideBySideTextInputsDiv>
               {/* add min date field and use script to get todays date */}
               <TextInput
-                type={isStartDateFocus ? "date" : "text"}
+                type={courseState.isStartDateFocus ? "date" : "text"}
                 onFocus={() => {
-                  StartDateFocusAndBlurHandler(true);
+                  courseChangeHandlers.StartDateFocusAndBlurHandler(true);
                 }}
                 onBlur={() => {
-                  StartDateFocusAndBlurHandler(false);
+                  courseChangeHandlers.StartDateFocusAndBlurHandler(false);
                 }}
-                value={courseStartDate}
-                onChange={handleCourseStartDateChange}
+                value={courseState.courseObject.courseStartDate}
+                onChange={courseChangeHandlers.handleCourseStartDateChange}
                 placeholder={"Start Date"}
               />
               {/* add min date field and use script to get todays date */}
               <TextInput
-                type={isEndDateFocus ? "date" : "text"}
+                type={courseState.isEndDateFocus ? "date" : "text"}
                 onFocus={() => {
-                  EndDateFocusAndBlurHandler(true);
+                  courseChangeHandlers.EndDateFocusAndBlurHandler(true);
                 }}
                 onBlur={() => {
-                  EndDateFocusAndBlurHandler(false);
+                  courseChangeHandlers.EndDateFocusAndBlurHandler(false);
                 }}
-                value={courseEndDate}
-                onChange={handleCourseEndDateChange}
+                value={courseState.courseObject.courseEndDate}
+                onChange={courseChangeHandlers.handleCourseEndDateChange}
                 placeholder={"End Date"}
               />
             </SideBySideTextInputsDiv>
 
+            {/*  */}
+
             <SingleRowTextInputDiv>
               <DropDownMenu
                 name="isDigitalList"
-                defaultValue={selectedCourseType}
-                onChange={handleIsCourseDigitalChange}
+                defaultValue={courseState.selectedCourseType}
+                onChange={courseChangeHandlers.handleIsCourseDigitalChange}
               >
                 <ListOption value={"label"} disabled hidden>
                   Please Select Digital/In Person
                 </ListOption>
-                <ListOption value={CourseTypes.DIGITAL}>Digital</ListOption>
-                <ListOption value={CourseTypes.IN_PERSON}>In Person</ListOption>
+                <ListOption value={courseState.CourseTypes.DIGITAL}>
+                  Digital
+                </ListOption>
+                <ListOption value={courseState.CourseTypes.IN_PERSON}>
+                  In Person
+                </ListOption>
               </DropDownMenu>
             </SingleRowTextInputDiv>
+
+            {/*  */}
 
             <SingleRowTextInputDiv>
               <DropDownMenu
                 name="inClassInstList"
-                defaultValue={selectedInstructor}
-                onChange={handleInClassInstructorChange}
+                defaultValue={courseState.selectedInstructor}
+                onChange={courseChangeHandlers.handleInClassInstructorChange}
               >
                 <ListOption value={"label"} disables hidden>
                   Please Select Instructor
                 </ListOption>
-                {inClassInstructors.map((data) => (
+                {courseState.inClassInstructors.map((data) => (
                   <ListOption key={data.id} value={data.id}>
                     {data.first_name}
                   </ListOption>
@@ -158,29 +135,31 @@ const NewCourseScreen = () => {
         )}
 
         <ButtonsDiv>
+          {courseState.showAddButton && (
+            <Button
+              disabled={
+                courseState.courseObject.isCourseIdError ||
+                courseState.courseObject.isCourseCapacityError ||
+                courseState.courseObject.isCourseStartDateError ||
+                courseState.courseObject.isCourseEndDateError ||
+                courseState.courseObject.isCourseDigitalError ||
+                courseState.courseObject.isCourseInClassInstructorError
+              }
+              onClick={courseButtonHandlers.handleAddNewCourseEntry}
+            >
+              Save
+            </Button>
+          )}
           <Button
             disabled={
-              isCourseIdError ||
-              isCourseCapacityError ||
-              isCourseStartDateError ||
-              isCourseEndDateError ||
-              isCourseDigitalError ||
-              isCourseInClassInstructorError
+              courseState.courseObject.isCourseIdError ||
+              courseState.courseObject.isCourseCapacityError ||
+              courseState.courseObject.isCourseStartDateError ||
+              courseState.courseObject.isCourseEndDateError ||
+              courseState.courseObject.isCourseDigitalError ||
+              courseState.courseObject.isCourseInClassInstructorError
             }
-            onClick={handleAddNewCourseEntry}
-          >
-            Save
-          </Button>
-          <Button
-            disabled={
-              isCourseIdError ||
-              isCourseCapacityError ||
-              isCourseStartDateError ||
-              isCourseEndDateError ||
-              isCourseDigitalError ||
-              isCourseInClassInstructorError
-            }
-            onClick={handleEditCourseEntry}
+            onClick={courseButtonHandlers.handleEditCourseEntry}
           >
             Modify
           </Button>

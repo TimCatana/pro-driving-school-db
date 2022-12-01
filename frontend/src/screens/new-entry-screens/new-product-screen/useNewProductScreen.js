@@ -4,39 +4,35 @@ import isDateFormatYYYYMMDD from "../../../components/helpers/validators/isDateF
 import axios from "axios";
 import { isNumber } from "../../../components/helpers/validators";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  useNewProductScreenButtonHandlers,
+  useNewProductScreenChangeHandlers,
+  useNewProductScreenStates,
+  useNewProductScreenUseEffectHelpers,
+} from "./components";
 
 const useNewProductScreen = () => {
   /******************/
   /***** STATES *****/
   /******************/
-  const navigation = useNavigate();
-  const { primary_key } = useParams();
+  const { productState } = useNewProductScreenStates();
 
-  const [isLoading, _setIsLoading] = useState(false);
-
-  const [productId, _setProductId] = useState("");
-  const [isProductIdError, _setIsProductIdError] = useState(true);
-
-  const [productName, _setProductName] = useState("");
-  const [isProductNameError, _setIsProductNameError] = useState(true);
-
-  const [productPrice, _setProductPrice] = useState("");
-  const [isProductPriceError, _setIsProductPriceError] = useState(true);
+  const { productChangeHandlers } =
+    useNewProductScreenChangeHandlers(productState);
+  const { productButtonHandlers } =
+    useNewProductScreenButtonHandlers(productState);
+  const { productUseEffectHelpers } =
+    useNewProductScreenUseEffectHelpers(productState);
 
   /***********************/
   /***** USE EFFECTS *****/
   /***********************/
 
   /**
-   * Validates newly inputted courseId
-   * @dependent courseId
+   *
    */
   useEffect(() => {
-    if (primary_key != 0) {
-      handleGetSpecificInClassInst();
-    } else {
-      _setIsLoading(false);
-    }
+    productUseEffectHelpers.onRender();
   }, []);
 
   /**
@@ -44,153 +40,75 @@ const useNewProductScreen = () => {
    * @dependent productId
    */
   useEffect(() => {
-    if (isNumber(productId)) {
-      parseInt(productId) > -1
-        ? _setIsProductIdError(false)
-        : _setIsProductIdError(true);
+    if (isNumber(productState.productObject.productId)) {
+      parseInt(productState.productObject.productId) > -1
+        ? productState.setProductObject({
+            ...productState.productObject,
+            isProductIdError: false,
+          })
+        : productState.setProductObject({
+            ...productState.productObject,
+            isProductIdError: true,
+          });
     } else {
-      _setIsProductIdError(true);
+      productState.setProductObject({
+        ...productState.productObject,
+        isProductIdError: true,
+      });
     }
-  }, [productId]);
+  }, [productState.productObject.productId]);
 
   /**
    * Validates newly inputted productName
    * @dependent productName
    */
   useEffect(() => {
-    productName.length > 0 && productName.length < 250
-      ? _setIsProductNameError(false)
-      : _setIsProductNameError(true);
-  }, [productName]);
+    productState.productObject.productName.length > 0 &&
+    productState.productObject.productName.length < 250
+      ? productState.setProductObject({
+          ...productState.productObject,
+          isProductNameError: false,
+        })
+      : productState.setProductObject({
+          ...productState.productObject,
+          isProductNameError: true,
+        });
+  }, [productState.productObject.productName]);
 
   /**
    * Validates newly inputted productName
    * @dependent productName
    */
   useEffect(() => {
-    if (isNumber(productPrice)) {
-      parseInt(productPrice) > -1
-        ? _setIsProductPriceError(false)
-        : _setIsProductPriceError(true);
+    if (isNumber(productState.productObject.productPrice)) {
+      parseInt(productState.productObject.productPrice) > -1
+        ? productState.setProductObject({
+            ...productState.productObject,
+            isProductPriceError: false,
+          })
+        : productState.setProductObject({
+            ...productState.productObject,
+            isProductPriceError: true,
+          });
     } else {
-      _setIsProductPriceError(true);
+      productState.setProductObject({
+        ...productState.productObject,
+        isProductPriceError: true,
+      });
     }
-  }, [productPrice]);
+  }, [productState.productObject.productPrice]);
 
   /******************************/
   /***** USE EFFECT HELPERS *****/
   /******************************/
 
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleGetSpecificInClassInst = async () => {
-    _setIsLoading(true);
-    const result = await axios.get(
-      `http://localhost:4400/product/getOne/${primary_key}`
-    );
-
-    if (result.data.status == 200) {
-      _setProductId(result.data.query[0].productId);
-      _setProductName(result.data.query[0].name);
-      _setProductPrice(result.data.query[0].price);
-      console.log(result.data.query[0]);
-    } else {
-      console.log(result.data);
-    }
-
-    _setIsLoading(false);
-  };
-
   /***********************/
   /***** TEXT INPUTS *****/
   /***********************/
 
-  /**
-   * Updates the productId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleProductIdChange = (e) => {
-    e.preventDefault();
-    _setProductId(e.target.value);
-  };
-
-  /**
-   * Updates the productName variable to contain the newly selected value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleProductNameChange = (e) => {
-    e.preventDefault();
-    _setProductName(e.target.value);
-  };
-
-  /**
-   * Updates the productPrice variable to contain the newly selected value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleProductPriceChange = (e) => {
-    e.preventDefault();
-    _setProductPrice(e.target.value);
-  };
-
   /*************************/
   /***** BUTTON CLICKS *****/
   /*************************/
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleAddNewProductEntry = () => {
-    // TODO - axios call to node backend that adds new course entry
-    // console.log(`axios call to backend, not implemented yet but button works!
-    // values:
-    // ${isLoading}
-    // ${_setIsLoading}
-    // pid ${productId}
-    // ${typeof productId}
-    // ${isProductIdError}
-    // pn ${productName}
-    // ${typeof productName}
-    // ${isProductNameError}
-    // pp ${productPrice}
-    // ${typeof productPrice}
-    // ${isProductPriceError}
-    // `);
-
-    if (!isProductIdError && !isProductNameError && !isProductPriceError) {
-      axios.post(`http://localhost:4400/product/add`, {
-        productId,
-        productName,
-        productPrice,
-      });
-    }
-  };
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleEditProductEntry = () => {
-    axios.put(`http://localhost:4400/product/edit/1`, {
-      productId,
-      productName,
-      productPrice,
-    });
-  };
-
-  /**
-   * Updates the subscript to mailing list option.
-   */
-  const handleDeleteProduct = async () => {
-    const result = await axios.delete(
-      `http://localhost:4400/product/delete/1212`
-    );
-
-    if (result.data.status != 200) {
-      console.log("failed to delete item");
-    } else {
-      console.log("successfully deleted item");
-    }
-  };
 
   /******************************/
   /***** NAVIGATION HELPERS *****/
@@ -210,18 +128,9 @@ const useNewProductScreen = () => {
   /*******************/
 
   return {
-    isLoading,
-    productId,
-    isProductIdError,
-    handleProductIdChange,
-    productName,
-    isProductNameError,
-    handleProductNameChange,
-    productPrice,
-    isProductPriceError,
-    handleProductPriceChange,
-    handleAddNewProductEntry,
-    handleEditProductEntry,
+    productState,
+    productChangeHandlers,
+    productButtonHandlers,
   };
 };
 

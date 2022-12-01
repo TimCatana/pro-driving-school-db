@@ -29,40 +29,23 @@ const ButtonsDiv = styled.div`
   flex-direction: column;
 `;
 
-// const ConfirmButton = styled.button``;
-// const TextInput = styled.input``;
-// const DropdownList = styled.select``;
-// const ListOption = styled.option``;
-
 const NewProductScreen = () => {
-  const {
-    isLoading,
-    productId,
-    isProductIdError,
-    handleProductIdChange,
-    productName,
-    isProductNameError,
-    handleProductNameChange,
-    productPrice,
-    isProductPriceError,
-    handleProductPriceChange,
-    handleAddNewProductEntry,
-    handleEditProductEntry,
-  } = useNewProductScreen();
+  const { productState, productChangeHandlers, productButtonHandlers } =
+    useNewProductScreen();
 
   return (
     <WrapperDiv>
       <ContainerDiv>
         <TitleH1>NewProductScreen</TitleH1>
 
-        {!isLoading && (
+        {!productState.isLoading && (
           <FormDiv>
             <SingleRowTextInputDiv>
               <TextInput
                 type="number"
                 min="0"
-                value={productId}
-                onChange={handleProductIdChange}
+                value={productState.productObject.productId}
+                onChange={productChangeHandlers.handleProductIdChange}
                 placeholder={"Product ID"}
               />
             </SingleRowTextInputDiv>
@@ -71,8 +54,8 @@ const NewProductScreen = () => {
               <TextInput
                 type="text"
                 maxLength={245}
-                value={productName}
-                onChange={handleProductNameChange}
+                value={productState.productObject.productName}
+                onChange={productChangeHandlers.handleProductNameChange}
                 placeholder={"Product Name"}
               />
             </SingleRowTextInputDiv>
@@ -80,26 +63,32 @@ const NewProductScreen = () => {
             <SingleRowTextInputDiv>
               <TextInput
                 type="number"
-                value={productPrice}
-                onChange={handleProductPriceChange}
+                value={productState.productObject.productPrice}
+                onChange={productChangeHandlers.handleProductPriceChange}
                 placeholder={"Product Price"}
               />
             </SingleRowTextInputDiv>
             {/* should be a dropdown list of all available instructors*/}
             <ButtonsDiv>
+              {productState.showAddButton && (
+                <Button
+                  disabled={
+                    productState.productObject.isProductIdError ||
+                    productState.productObject.isProductNameError ||
+                    productState.productObject.isProductPriceError
+                  }
+                  onClick={productButtonHandlers.handleAddNewProductEntry}
+                >
+                  Save
+                </Button>
+              )}
               <Button
                 disabled={
-                  isProductIdError || isProductNameError || isProductPriceError
+                  productState.productObject.isProductIdError ||
+                  productState.productObject.isProductNameError ||
+                  productState.productObject.isProductPriceError
                 }
-                onClick={handleAddNewProductEntry}
-              >
-                Save
-              </Button>
-              <Button
-                disabled={
-                  isProductIdError || isProductNameError || isProductPriceError
-                }
-                onClick={handleEditProductEntry}
+                onClick={productButtonHandlers.handleEditProductEntry}
               >
                 Modify
               </Button>
