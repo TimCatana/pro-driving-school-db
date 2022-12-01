@@ -11,13 +11,15 @@ const useNewCourseScreenStates = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [inClassInstructors, setInClassInstructors] = useState("");
-  const [showAddButton, setShowAddButton] = useState(true);
+  const [isNewEntry, setIsNewEntry] = useState(true);
 
   const [selectedCourseType, setSelectedCourseType] = useState("label");
   const [selectedInstructor, setSelectedInstructor] = useState("label");
 
   const [isStartDateFocus, setIsStartDateFocus] = useState(false);
   const [isEndDateFocus, setIsEndDateFocus] = useState(false);
+
+  const [courseSaved, setCourseSaved] = useState(false);
 
   const CourseTypes = {
     DIGITAL: "Digital",
@@ -47,14 +49,14 @@ const useNewCourseScreenStates = () => {
   const courseState = {
     navigation,
     primary_key,
-    
+
     isLoading,
     setIsLoading,
     inClassInstructors,
     setInClassInstructors,
-    showAddButton,
-    setShowAddButton,
-    
+    isNewEntry,
+    setIsNewEntry,
+
     selectedCourseType,
     setSelectedCourseType,
     selectedInstructor,
@@ -64,9 +66,12 @@ const useNewCourseScreenStates = () => {
     setIsStartDateFocus,
     isEndDateFocus,
     setIsEndDateFocus,
-    
+
+    courseSaved,
+    setCourseSaved,
+
     CourseTypes,
-    
+
     courseObject,
     setCourseObject,
   };

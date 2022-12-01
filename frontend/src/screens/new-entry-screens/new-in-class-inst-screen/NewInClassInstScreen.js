@@ -117,7 +117,7 @@ const NewInClassInstScreen = () => {
         )}
 
         <ButtonsDiv>
-          {inClassInstructorState.showAddButton && (
+          {inClassInstructorState.isNewEntry && (
             <Button
               disabled={
                 inClassInstructorState.inClassInstructorObject
@@ -136,20 +136,27 @@ const NewInClassInstScreen = () => {
               Save
             </Button>
           )}
-          <Button
-            disabled={
-              inClassInstructorState.inClassInstructorObject
-                .isICIFirstNameError ||
-              inClassInstructorState.inClassInstructorObject
-                .isICILastNameError ||
-              inClassInstructorState.inClassInstructorObject
-                .isICIDriversLicenseNumError ||
-              inClassInstructorState.inClassInstructorObject
-                .isICIDriversLicenseExpDateError
-            }
-            onClick={inClassInstructorButtonHandlers.handleEditInClassInstEntry}
-          >
-            Modify
+          {!inClassInstructorState.isNewEntry && (
+            <Button
+              disabled={
+                inClassInstructorState.inClassInstructorObject
+                  .isICIFirstNameError ||
+                inClassInstructorState.inClassInstructorObject
+                  .isICILastNameError ||
+                inClassInstructorState.inClassInstructorObject
+                  .isICIDriversLicenseNumError ||
+                inClassInstructorState.inClassInstructorObject
+                  .isICIDriversLicenseExpDateError
+              }
+              onClick={
+                inClassInstructorButtonHandlers.handleEditInClassInstEntry
+              }
+            >
+              Modify
+            </Button>
+          )}
+          <Button onClick={() => inClassInstructorState.navigation("/home")}>
+            Go Back
           </Button>
         </ButtonsDiv>
       </ContainerDiv>

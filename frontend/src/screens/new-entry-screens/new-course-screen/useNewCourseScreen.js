@@ -4,7 +4,7 @@ import {
   isNumber,
   isEndDateFuture,
   isValidDate,
-} from "../../../components/helpers/validators";
+} from "../../../domain/validators";
 import {
   useNewCourseScreenUseEffectHelpers,
   useNewCourseScreenChangeHandlers,
@@ -37,6 +37,15 @@ const useNewCourseScreen = () => {
   useEffect(() => {
     courseUseEffectHelpers.onRender();
   }, []);
+
+  /**
+   *
+   */
+  useEffect(() => {
+    if (courseState.courseSaved && !courseState.isLoading) {
+      courseState.navigation("/home");
+    }
+  }, [courseState.courseSaved]);
 
   /**
    * Validates newly inputted courseId
@@ -90,21 +99,18 @@ const useNewCourseScreen = () => {
    */
   useEffect(() => {
     if (isDateFormatYYYYMMDD(courseState.courseObject.courseStartDate)) {
-      courseState.setCourseObject({
-        ...courseState.courseObject,
-        isCourseStartDateError: false,
-      });
-
       isEndDateFuture(
         courseState.courseObject.courseStartDate,
         courseState.courseObject.courseEndDate
       ) // date validation is done within function therefore is end date isn't selected then should return false
         ? courseState.setCourseObject({
             ...courseState.courseObject,
+            isCourseStartDateError: false,
             isCourseEndDateError: false,
           })
         : courseState.setCourseObject({
             ...courseState.courseObject,
+            isCourseStartDateError: false,
             isCourseEndDateError: true,
           });
     } else {
@@ -201,19 +207,9 @@ const useNewCourseScreen = () => {
     console.log(courseState.courseObject);
   }, [courseState.courseObject]);
 
- 
   /******************************/
   /***** NAVIGATION HELPERS *****/
   /******************************/
-
-  // /**
-  //  *  Navigates back to the login screen if no process is currently running.
-  //  */
-  // const _navigateBack = () => {
-  //   if (!isLoading) {
-  //     history.goBack();
-  //   }
-  // };
 
   /*******************/
   /***** RETURNS *****/

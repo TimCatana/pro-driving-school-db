@@ -13,7 +13,7 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
 
     if (courseState.primary_key != 0) {
       await handleGetSpecificCourse();
-      courseState.setShowAddButton(false);
+      courseState.setIsNewEntry(false);
     }
 
     courseState.setIsLoading(false);

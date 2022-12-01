@@ -10,7 +10,9 @@ const useNewInClassInstructorScreenStates = () => {
   const { primary_key } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [showAddButton, setShowAddButton] = useState(true);
+  const [isNewEntry, setIsNewEntry] = useState(true);
+
+  const [inClassInstructorSaved, setInClassInstructorSaved] = useState(false);
 
   const [isICIDriversLicenseFocus, setIsICIDriversLicenseFocus] =
     useState(false);
@@ -35,8 +37,11 @@ const useNewInClassInstructorScreenStates = () => {
 
     isLoading,
     setIsLoading,
-    showAddButton,
-    setShowAddButton,
+    isNewEntry,
+    setIsNewEntry,
+
+    inClassInstructorSaved,
+    setInClassInstructorSaved,
 
     isICIDriversLicenseFocus,
     setIsICIDriversLicenseFocus,

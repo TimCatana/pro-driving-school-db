@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import {
   Button,
@@ -72,7 +72,9 @@ const NewCourseScreen = () => {
                   courseChangeHandlers.handleStartDateFocusAndBlurHandler(true);
                 }}
                 onBlur={() => {
-                  courseChangeHandlers.handleStartDateFocusAndBlurHandler(false);
+                  courseChangeHandlers.handleStartDateFocusAndBlurHandler(
+                    false
+                  );
                 }}
                 value={courseState.courseObject.courseStartDate}
                 onChange={courseChangeHandlers.handleCourseStartDateChange}
@@ -135,7 +137,7 @@ const NewCourseScreen = () => {
         )}
 
         <ButtonsDiv>
-          {courseState.showAddButton && (
+          {courseState.isNewEntry && (
             <Button
               disabled={
                 courseState.courseObject.isCourseIdError ||
@@ -150,19 +152,23 @@ const NewCourseScreen = () => {
               Save
             </Button>
           )}
-          <Button
-            disabled={
-              courseState.courseObject.isCourseIdError ||
-              courseState.courseObject.isCourseCapacityError ||
-              courseState.courseObject.isCourseStartDateError ||
-              courseState.courseObject.isCourseEndDateError ||
-              courseState.courseObject.isCourseDigitalError ||
-              courseState.courseObject.isCourseInClassInstructorError
-            }
-            onClick={courseButtonHandlers.handleEditCourseEntry}
-          >
-            Modify
-          </Button>
+
+          {!courseState.isNewEntry && (
+            <Button
+              disabled={
+                courseState.courseObject.isCourseIdError ||
+                courseState.courseObject.isCourseCapacityError ||
+                courseState.courseObject.isCourseStartDateError ||
+                courseState.courseObject.isCourseEndDateError ||
+                courseState.courseObject.isCourseDigitalError ||
+                courseState.courseObject.isCourseInClassInstructorError
+              }
+              onClick={courseButtonHandlers.handleEditCourseEntry}
+            >
+              Modify
+            </Button>
+          )}
+          <Button onClick={() => courseState.navigation("/home")}>Go Back</Button>
         </ButtonsDiv>
       </ContainerDiv>
     </WrapperDiv>

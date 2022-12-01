@@ -144,7 +144,7 @@ const NewInCarInstScreen = () => {
             </SideBySideTextInputsDiv>
 
             <ButtonsDiv>
-              {inCarInstructorState.showAddButton && (
+              {inCarInstructorState.isNewEntry && (
                 <Button
                   disabled={
                     inCarInstructorState.inCarInstructorObject
@@ -167,26 +167,32 @@ const NewInCarInstScreen = () => {
                   Save
                 </Button>
               )}
-              <Button
-                disabled={
-                  inCarInstructorState.inCarInstructorObject
-                    .isICIFirstNameError ||
-                  inCarInstructorState.inCarInstructorObject
-                    .isICILastNameError ||
-                  inCarInstructorState.inCarInstructorObject
-                    .isICIDriversLicenseNumError ||
-                  inCarInstructorState.inCarInstructorObject
-                    .isICIDriversLicenseExpDate ||
-                  inCarInstructorState.inCarInstructorObject
-                    .isICIGLicenseNumError ||
-                  inCarInstructorState.inCarInstructorObject
-                    .isICIGLicenseExpDateError
-                }
-                onClick={
-                  inCarInstructorButtonHandlers.handleEditInCarInstructor
-                }
-              >
-                Modify
+              {!inCarInstructorState.isNewEntry && (
+                <Button
+                  disabled={
+                    inCarInstructorState.inCarInstructorObject
+                      .isICIFirstNameError ||
+                    inCarInstructorState.inCarInstructorObject
+                      .isICILastNameError ||
+                    inCarInstructorState.inCarInstructorObject
+                      .isICIDriversLicenseNumError ||
+                    inCarInstructorState.inCarInstructorObject
+                      .isICIDriversLicenseExpDate ||
+                    inCarInstructorState.inCarInstructorObject
+                      .isICIGLicenseNumError ||
+                    inCarInstructorState.inCarInstructorObject
+                      .isICIGLicenseExpDateError
+                  }
+                  onClick={
+                    inCarInstructorButtonHandlers.handleEditInCarInstructor
+                  }
+                >
+                  Modify
+                </Button>
+              )}
+
+              <Button onClick={() => inCarInstructorState.navigation("/home")}>
+                Go Back
               </Button>
             </ButtonsDiv>
           </FormDiv>

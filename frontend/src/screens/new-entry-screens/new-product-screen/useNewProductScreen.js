@@ -1,9 +1,5 @@
-import { useState, useEffect } from "react";
-// import { useHistory } from "react-router-dom";
-import isDateFormatYYYYMMDD from "../../../components/helpers/validators/isDateFormatYYYYMMDD";
-import axios from "axios";
-import { isNumber } from "../../../components/helpers/validators";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { isNumber } from "../../../domain/validators";
 import {
   useNewProductScreenButtonHandlers,
   useNewProductScreenChangeHandlers,
@@ -35,6 +31,14 @@ const useNewProductScreen = () => {
     productUseEffectHelpers.onRender();
   }, []);
 
+  /**
+   *
+   */
+  useEffect(() => {
+    if (productState.productSaved && !productState.isLoading) {
+      productState.navigation("/home");
+    }
+  }, [productState.productSaved]);
   /**
    * Validates newly inputted productId
    * @dependent productId

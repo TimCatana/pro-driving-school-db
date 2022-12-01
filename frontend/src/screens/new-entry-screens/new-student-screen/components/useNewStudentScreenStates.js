@@ -10,9 +10,11 @@ const useNewStudentScreenStates = () => {
   const { primary_key } = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [showAddButton, setShowAddButton] = useState(true);
+  const [isNewEntry, setIsNewEntry] = useState(true);
   const [courses, setCourses] = useState(false);
   const [products, setProducts] = useState(false);
+
+  const [studentSaved, setStudentSaved] = useState(false);
 
   const [isDateOfBirthFocus, setIsDateOfBirthFocus] = useState(false);
   const [
@@ -87,13 +89,16 @@ const useNewStudentScreenStates = () => {
 
     isLoading,
     setIsLoading,
-    showAddButton,
-    setShowAddButton,
+    isNewEntry,
+    setIsNewEntry,
     courses,
     setCourses,
     products,
     setProducts,
-    
+
+    studentSaved,
+    setStudentSaved,
+
     isDateOfBirthFocus,
     setIsDateOfBirthFocus,
     isStudentDriversLicenseIssuedDateFocus,

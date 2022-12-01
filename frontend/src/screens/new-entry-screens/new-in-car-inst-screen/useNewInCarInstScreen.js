@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import isDateFormatYYYYMMDD from "../../../components/helpers/validators/isDateFormatYYYYMMDD";
+import { isDateFormatYYYYMMDD } from "../../../domain/validators";
 import {
   useNewInCarInstructorScreenButtonHandlers,
   useNewInCarInstructorScreenChangeHandlers,
@@ -30,6 +30,18 @@ const useNewInCarInstScreen = () => {
   useEffect(() => {
     inCarInstructorUseEffectHelpers.onRender();
   }, []);
+
+  /**
+   *
+   */
+  useEffect(() => {
+    if (
+      inCarInstructorState.inCarInstructorSaved &&
+      !inCarInstructorState.isLoading
+    ) {
+      inCarInstructorState.navigation("/home");
+    }
+  }, [inCarInstructorState.inCarInstructorSaved]);
 
   /**
    * Validates newly inputted inCarInstFirstName

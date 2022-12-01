@@ -9,7 +9,7 @@ const useNewProductScreenUseEffectHelpers = (productState) => {
 
     if (productState.primary_key != 0) {
       await handleGetSpecificProduct();
-      productState.setShowAddButton(false);
+      productState.setIsNewEntry(false);
     }
 
     productState.setIsLoading(false);

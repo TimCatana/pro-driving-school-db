@@ -37,8 +37,6 @@ const NewStudentScreen = () => {
   const { studentState, studentChangeHandlers, studentButtonHandlers } =
     useNewStudentScreen();
 
- 
-
   return (
     <WrapperDiv>
       <ContainerDiv>
@@ -74,10 +72,14 @@ const NewStudentScreen = () => {
               <TextInput
                 type={studentState.isDateOfBirthFocus ? "date" : "text"}
                 onFocus={() => {
-                  studentChangeHandlers.handleStudentDateOfBirthFocusAndBlurHandler(true);
+                  studentChangeHandlers.handleStudentDateOfBirthFocusAndBlurHandler(
+                    true
+                  );
                 }}
                 onBlur={() => {
-                  studentChangeHandlers.handleStudentDateOfBirthFocusAndBlurHandler(false);
+                  studentChangeHandlers.handleStudentDateOfBirthFocusAndBlurHandler(
+                    false
+                  );
                 }}
                 value={studentState.studentObject.studentDateOfBirth}
                 onChange={studentChangeHandlers.handleStudentDateOfBirthChange}
@@ -239,7 +241,7 @@ const NewStudentScreen = () => {
 
             {/* should be a dropdown list of all available instructors*/}
             <ButtonsDiv>
-              {studentState.showAddButton && (
+              {studentState.isNewEntry && (
                 <Button
                   disabled={
                     studentState.studentObject.isStudentFirstNameError ||
@@ -268,30 +270,38 @@ const NewStudentScreen = () => {
                   Save
                 </Button>
               )}
-              <Button
-                disabled={
-                  studentState.studentObject.isStudentFirstNameError ||
-                  studentState.studentObject.isStudentMiddleNameError ||
-                  studentState.studentObject.isStudentLastNameError ||
-                  studentState.studentObject.isStudentDateOfBirthError ||
-                  studentState.studentObject.isStudentGenderError ||
-                  studentState.studentObject.isStudentCellPhoneNumberError ||
-                  studentState.studentObject.isStudentHomePhoneNumberError ||
-                  studentState.studentObject.isStudentAddressError ||
-                  studentState.studentObject.isStudentAddressCityError ||
-                  studentState.studentObject.isStudentAddressPostalCodeError ||
-                  studentState.studentObject
-                    .isStudentDriversLicenseNumberError ||
-                  studentState.studentObject
-                    .isStudentDriversLicenseNumberIssuedDateError ||
-                  studentState.studentObject
-                    .isStudentDriversLicenseNumberExpDateError ||
-                  studentState.studentObject.isStudentRegisteredCourseIdError ||
-                  studentState.studentObject.isStudentRegisteredProductIdError
-                }
-                onClick={studentButtonHandlers.handleEditStudentEntry}
-              >
-                Modify
+
+              {!studentState.isNewEntry && (
+                <Button
+                  disabled={
+                    studentState.studentObject.isStudentFirstNameError ||
+                    studentState.studentObject.isStudentMiddleNameError ||
+                    studentState.studentObject.isStudentLastNameError ||
+                    studentState.studentObject.isStudentDateOfBirthError ||
+                    studentState.studentObject.isStudentGenderError ||
+                    studentState.studentObject.isStudentCellPhoneNumberError ||
+                    studentState.studentObject.isStudentHomePhoneNumberError ||
+                    studentState.studentObject.isStudentAddressError ||
+                    studentState.studentObject.isStudentAddressCityError ||
+                    studentState.studentObject
+                      .isStudentAddressPostalCodeError ||
+                    studentState.studentObject
+                      .isStudentDriversLicenseNumberError ||
+                    studentState.studentObject
+                      .isStudentDriversLicenseNumberIssuedDateError ||
+                    studentState.studentObject
+                      .isStudentDriversLicenseNumberExpDateError ||
+                    studentState.studentObject
+                      .isStudentRegisteredCourseIdError ||
+                    studentState.studentObject.isStudentRegisteredProductIdError
+                  }
+                  onClick={studentButtonHandlers.handleEditStudentEntry}
+                >
+                  Modify
+                </Button>
+              )}
+              <Button onClick={() => studentState.navigation("/home")}>
+                Go Back
               </Button>
             </ButtonsDiv>
           </FormDiv>

@@ -12,7 +12,7 @@ const useNewStudentScreenUseEffectHelpers = (studentState) => {
 
     if (studentState.primary_key != 0) {
       await handleGetSpecificStudent();
-      studentState.setShowAddButton(false);
+      studentState.setIsNewEntry(false);
     }
 
     studentState.setIsLoading(false);

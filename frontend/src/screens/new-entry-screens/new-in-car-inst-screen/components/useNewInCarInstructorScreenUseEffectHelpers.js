@@ -6,7 +6,7 @@ const useNewInCarInstructorScreenUseEffectHelpers = (inCarInstructorState) => {
 
     if (inCarInstructorState.primary_key != 0) {
       await handleGetSpecificInCarInstructor();
-      inCarInstructorState.setShowAddButton(false);
+      inCarInstructorState.setIsNewEntry(false);
     }
 
     inCarInstructorState.setIsLoading(false);

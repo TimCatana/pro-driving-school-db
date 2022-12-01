@@ -70,7 +70,7 @@ const NewProductScreen = () => {
             </SingleRowTextInputDiv>
             {/* should be a dropdown list of all available instructors*/}
             <ButtonsDiv>
-              {productState.showAddButton && (
+              {productState.isNewEntry && (
                 <Button
                   disabled={
                     productState.productObject.isProductIdError ||
@@ -82,15 +82,21 @@ const NewProductScreen = () => {
                   Save
                 </Button>
               )}
-              <Button
-                disabled={
-                  productState.productObject.isProductIdError ||
-                  productState.productObject.isProductNameError ||
-                  productState.productObject.isProductPriceError
-                }
-                onClick={productButtonHandlers.handleEditProductEntry}
-              >
-                Modify
+
+              {!productState.isNewEntry && (
+                <Button
+                  disabled={
+                    productState.productObject.isProductIdError ||
+                    productState.productObject.isProductNameError ||
+                    productState.productObject.isProductPriceError
+                  }
+                  onClick={productButtonHandlers.handleEditProductEntry}
+                >
+                  Modify
+                </Button>
+              )}
+              <Button onClick={() => productState.navigation("/home")}>
+                Go Back
               </Button>
             </ButtonsDiv>
           </FormDiv>

@@ -37,6 +37,7 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
     //     ${inCarInstructorState.inCarInstructorObject.iciGLicenseExpDate}
     // `);
 
+    inCarInstructorState.setIsLoading(true);
     if (
       !inCarInstructorState.inCarInstructorObject.isICIFirstNameError &&
       !inCarInstructorState.inCarInstructorObject.isICILastNameError &&
@@ -47,12 +48,16 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
     ) {
       await addOneInCarInstructorUC(inCarInstructorState.inCarInstructorObject);
     }
+    inCarInstructorState.setIsLoading(false);
+    inCarInstructorState.setInCarInstructorSaved(true);
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
   const handleEditInCarInstructor = async () => {
+    inCarInstructorState.setIsLoading(true);
+
     if (
       !inCarInstructorState.inCarInstructorObject.isICIFirstNameError &&
       !inCarInstructorState.inCarInstructorObject.isICILastNameError &&
@@ -66,6 +71,7 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
         inCarInstructorState.primary_key
       );
     }
+    inCarInstructorState.setIsLoading(false);
   };
 
   /**

@@ -10,7 +10,9 @@ const useNewProductScreenStates = () => {
   const { primary_key } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [showAddButton, setShowAddButton] = useState(true);
+  const [isNewEntry, setIsNewEntry] = useState(true);
+
+  const [productSaved, setProductSaved] = useState(false);
 
   const [productObject, setProductObject] = useState({
     productId: "",
@@ -29,8 +31,11 @@ const useNewProductScreenStates = () => {
 
     isLoading,
     setIsLoading,
-    showAddButton,
-    setShowAddButton,
+    isNewEntry,
+    setIsNewEntry,
+
+    productSaved,
+    setProductSaved,
 
     productObject,
     setProductObject,

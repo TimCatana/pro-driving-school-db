@@ -8,7 +8,7 @@ const useNewInClassInstructorScreenUseEffectHelpers = (
 
     if (inClassInstructorState.primary_key != 0) {
       await handleGetSpecificInClassInst();
-      inClassInstructorState.setShowAddButton(false);
+      inClassInstructorState.setIsNewEntry(false);
     }
 
     inClassInstructorState.setIsLoading(false);

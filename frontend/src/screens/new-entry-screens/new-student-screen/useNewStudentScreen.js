@@ -1,16 +1,10 @@
-import { useState, useEffect } from "react";
-// import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 import {
   isDateFormatYYYYMMDD,
   isNumber,
-} from "../../../components/helpers/validators";
-import axios from "axios";
-import { isDatePast } from "../../../components/helpers/validators";
-import {
-  addYearsToDate,
-  formatDateToYYYYMMDD,
-} from "../../../components/helpers/date";
-import { useNavigate, useParams } from "react-router-dom";
+  isDatePast,
+} from "../../../domain/validators";
+import { addYearsToDate, formatDateToYYYYMMDD } from "../../../domain/date";
 import {
   useNewStudentScreenButtonHandlers,
   useNewStudentScreenChangeHandlers,
@@ -44,60 +38,19 @@ const useNewStudentScreen = () => {
   }, []);
 
   /**
+   *
+   */
+  useEffect(() => {
+    if (studentState.studentSaved && !studentState.isLoading) {
+      studentState.navigation("/home");
+    }
+  }, [studentState.studentSaved]);
+
+  /**
    * Validates newly inputted courseId
    * @dependent courseId
    */
   useEffect(() => {
-    console.log(`axios call to backend, not implemented yet but button works!
-    values:
-    il ${studentState.isLoading}
-    sfn ${studentState.studentObject.studentFirstName}
-    ${typeof studentState.studentObject.studentFirstName}
-    ${studentState.studentObject.isStudentFirstNameError}
-    smn ${studentState.studentObject.studentMiddleName}
-    ${typeof studentState.studentObject.studentMiddleName}
-    ${studentState.studentObject.isStudentMiddleNameError}
-    sln ${studentState.studentObject.studentLastName}
-    ${typeof studentState.studentObject.studentLastName}
-    ${studentState.studentObject.isStudentLastNameError}
-    sdob ${studentState.studentObject.studentDateOfBirth}
-    ${typeof studentState.studentObject.studentDateOfBirth}
-    ${studentState.studentObject.isStudentDateOfBirthError}
-    sg ${studentState.studentObject.studentGender}
-    ${typeof studentState.studentObject.studentGender}
-    ${studentState.studentObject.isStudentGenderError}
-    scp ${studentState.studentObject.studentCellPhoneNumber}
-    ${typeof studentState.studentObject.studentCellPhoneNumber}
-    ${studentState.studentObject.isStudentCellPhoneNumberError}
-    shp ${studentState.studentObject.studentHomePhoneNumber}
-    ${typeof studentState.studentObject.studentHomePhoneNumber}
-    ${studentState.studentObject.isStudentHomePhoneNumberError}
-    sa ${studentState.studentObject.studentAddress}
-    ${typeof studentState.studentObject.studentAddress}
-    ${studentState.studentObject.isStudentAddressError}
-    sac ${studentState.studentObject.studentAddressCity}
-    ${typeof studentState.studentObject.studentAddressCity}
-    ${studentState.studentObject.isStudentAddressCityError}
-    sapc ${studentState.studentObject.studentAddressPostalCode}
-    ${typeof studentState.studentObject.studentAddressPostalCode}
-    ${studentState.studentObject.isStudentAddressPostalCodeError}
-    sdln ${studentState.studentObject.studentDriversLicenseNumber}
-    ${typeof studentState.studentObject.studentDriversLicenseNumber}
-    ${studentState.studentObject.isStudentDriversLicenseNumberError}
-    sdlid ${studentState.studentObject.studentDriversLicenseNumberIssuedDate}
-    ${typeof studentState.studentObject.studentDriversLicenseNumberIssuedDate}
-    ${studentState.studentObject.isStudentDriversLicenseNumberIssuedDateError}
-    sdled ${studentState.studentObject.studentDriversLicenseNumberExpDate}
-    ${typeof studentState.studentObject.studentDriversLicenseNumberExpDate}
-    ${studentState.studentObject.isStudentDriversLicenseNumberExpDateError}
-    src ${studentState.studentObject.studentRegisteredCourseId}
-    ${typeof studentState.studentObject.studentRegisteredCourseId}
-    ${studentState.studentObject.isStudentRegisteredCourseIdError}
-    srp ${studentState.studentObject.studentRegisteredProductId}
-    ${typeof studentState.studentObject.studentRegisteredProductId}
-    ${studentState.studentObject.isStudentRegisteredProductIdError}
-    `);
-
     studentState.studentObject.studentFirstName.length > 0 &&
     studentState.studentObject.studentFirstName.length < 75
       ? studentState.setStudentObject({

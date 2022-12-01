@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import isDateFormatYYYYMMDD from "../../../components/helpers/validators/isDateFormatYYYYMMDD";
+import isDateFormatYYYYMMDD from "../../../domain/validators";
 import axios from "axios";
 
 const useHomeScreen = () => {

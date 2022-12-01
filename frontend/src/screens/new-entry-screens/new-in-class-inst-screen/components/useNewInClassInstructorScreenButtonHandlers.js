@@ -46,6 +46,7 @@ const useNewInClassInstructorScreenButtonHandlers = (
     //       }
     // `);
 
+    inClassInstructorState.setIsLoading(true);
     if (
       !inClassInstructorState.inClassInstructorObject.isICIFirstNameError &&
       !inClassInstructorState.inClassInstructorObject.isICILastNameError &&
@@ -58,6 +59,9 @@ const useNewInClassInstructorScreenButtonHandlers = (
         inClassInstructorState.inClassInstructorObject
       );
     }
+
+    inClassInstructorState.setIsLoading(false);
+    inClassInstructorState.setInClassInstructorSaved(true);
   };
 
   /**

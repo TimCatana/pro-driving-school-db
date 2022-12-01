@@ -24,6 +24,7 @@ const useNewProductScreenButtonHandlers = (productState) => {
     ${productState.productObject.isProductPriceError}
     `);
 
+    productState.setIsLoading(true);
     if (
       !productState.productObject.isProductIdError &&
       !productState.productObject.isProductNameError &&
@@ -31,6 +32,8 @@ const useNewProductScreenButtonHandlers = (productState) => {
     ) {
       await addOneProductUC(productState.productObject);
     }
+    productState.setIsLoading(false);
+    productState.setProductSaved(true);
   };
 
   /**
@@ -42,7 +45,10 @@ const useNewProductScreenButtonHandlers = (productState) => {
       !productState.productObject.isProductNameError &&
       !productState.productObject.isProductPriceError
     ) {
-      await editOneProductUC(productState.productObject, productState.primary_key);
+      await editOneProductUC(
+        productState.productObject,
+        productState.primary_key
+      );
     }
   };
 
