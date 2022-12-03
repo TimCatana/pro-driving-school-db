@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import useNewProductScreen from "./useNewProductScreen";
+import { useNewProductScreen } from "./hooks";
 import {
   Button,
   DropDownMenu,
   TextInput,
   SingleRowTextInputDiv,
-} from "../../../components/common";
+} from "../../../components";
 
 const WrapperDiv = styled.div`
   display: flex;

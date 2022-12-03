@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import useNewStudentScreen from "./useNewStudentScreen";
+import { useNewStudentScreen } from "./hooks";
 
 import {
   Button,
@@ -8,7 +8,7 @@ import {
   TextInput,
   SideBySideTextInputsDiv,
   SingleRowTextInputDiv,
-} from "../../../components/common";
+} from "../../../components";
 
 const WrapperDiv = styled.div`
   display: flex;
@@ -300,6 +300,9 @@ const NewStudentScreen = () => {
                   Modify
                 </Button>
               )}
+              <Button onClick={studentButtonHandlers.handleGetFilledStudentPdf}>
+                Get PDF
+              </Button>
               <Button onClick={() => studentState.navigation("/")}>
                 Go Back
               </Button>

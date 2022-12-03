@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import useNewInClassInstScreen from "./useNewInClassInstScreen";
+import { useNewInClassInstScreen } from "./hooks";
+
 import {
   Button,
   DropDownMenu,
   TextInput,
   SideBySideTextInputsDiv,
   SingleRowTextInputDiv,
-} from "../../../components/common";
+} from "../../../components";
 
 const WrapperDiv = styled.div`
   display: flex;

@@ -6,9 +6,9 @@ import {
   TextInput,
   SideBySideTextInputsDiv,
   SingleRowTextInputDiv,
-} from "../../../components/common";
+} from "../../../components";
 
-import useNewCourseScreen from "./useNewCourseScreen";
+import { useNewCourseScreen } from "./hooks";
 
 const WrapperDiv = styled.div`
   display: flex;
