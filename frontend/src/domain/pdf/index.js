@@ -1,3 +1,4 @@
-import getStudentRecordPdf from "./getStudentSecordPdfUC";
+import getStudentPdf from "./getStudentPdf";
+import getCoursePdf from "./getCoursePdf";
 
-export { getStudentRecordPdf };
+export { getStudentPdf, getCoursePdf };

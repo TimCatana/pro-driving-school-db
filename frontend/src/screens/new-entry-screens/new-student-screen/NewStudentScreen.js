@@ -300,9 +300,14 @@ const NewStudentScreen = () => {
                   Modify
                 </Button>
               )}
-              <Button onClick={studentButtonHandlers.handleGetFilledStudentPdf}>
-                Get PDF
-              </Button>
+
+              {!studentState.isNewEntry && (
+                <Button
+                  onClick={studentButtonHandlers.handleGetFilledStudentPdf}
+                >
+                  Get PDF
+                </Button>
+              )}
               <Button onClick={() => studentState.navigation("/")}>
                 Go Back
               </Button>

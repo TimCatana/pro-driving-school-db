@@ -3,6 +3,7 @@ import {
   deleteOneCourseUC,
   editOneCourseUC,
 } from "../../../../domain/db";
+import { getCoursePdf } from "../../../../domain/pdf";
 
 const useNewCourseScreenButtonHandlers = (courseState) => {
   /**
@@ -74,10 +75,18 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
     courseState.setIsLoading(false);
   };
 
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetFilledCoursePdf = async () => {
+    const result = await getCoursePdf(1);
+  };
+
   const courseButtonHandlers = {
     handleAddNewCourseEntry,
     handleEditCourseEntry,
     handleDeleteCourse,
+    handleGetFilledCoursePdf,
   };
 
   /*******************/

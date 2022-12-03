@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { useHomeScreen } from "./hooks";
 import { Button, Title } from "../../../components";
 import {
+  HomeScreenAddNewButton,
   HomeScreenButtons,
   HomeScreenCourseTable,
   HomeScreenInCarInstructorTable,
   HomeScreenInClassInstructorTable,
   HomeScreenProductTable,
+  HomeScreenSelectButtons,
   HomeScreenStudentTable,
   HomeScreenTitles,
 } from "./components";
@@ -19,44 +21,15 @@ const WrapperDiv = styled.div`
 
 const ContainerDiv = styled.div``;
 
-const ButtonsDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 50px;
-`;
-
 const FormDiv = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const TableDiv = styled.div`
+const ButtonsDiv = styled.div`
   display: flex;
-`;
-
-const Table = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-`;
-
-const TD = styled.td`
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-`;
-const TH = styled.th`
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-`;
-const TR = styled.tr`
-  border: 1px solid #dddddd;
-  text-align: center;
-  padding: 8px;
-
-  &:nth-child(even) {
-    background-color: #dddddd;
-  }
+  justify-content: center;
+  margin-bottom: 50px;
 `;
 
 const HomeScreen = () => {
@@ -68,7 +41,17 @@ const HomeScreen = () => {
         <HomeScreenTitles homeState={homeState} />
 
         <ButtonsDiv>
-          <HomeScreenButtons homeButtonHandlers={homeButtonHandlers} />
+          <HomeScreenSelectButtons
+            homeState={homeState}
+            homeButtonHandlers={homeButtonHandlers}
+          />
+        </ButtonsDiv>
+
+        <ButtonsDiv>
+          <HomeScreenAddNewButton
+            homeState={homeState}
+            homeButtonHandlers={homeButtonHandlers}
+          />
         </ButtonsDiv>
 
         <FormDiv>

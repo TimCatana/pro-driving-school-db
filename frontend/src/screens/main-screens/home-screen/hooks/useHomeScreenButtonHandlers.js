@@ -232,7 +232,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
    *  Navigates back to the login screen if no process is currently running.
    */
   const navToInCarInst = (primaryKey) => {
-    if (!homeState.homeState.isLoading) {
+    if (!homeState.isLoading) {
       homeState.navigation(`/in-car-inst/${primaryKey}`);
     }
   };

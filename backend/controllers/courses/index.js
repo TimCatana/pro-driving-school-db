@@ -3,6 +3,7 @@ const deleteOneEntry = require("./deleteOneEntry");
 const editOneEntry = require("./editOneEntry");
 const getAllEntries = require("./getAllEntries");
 const getOneEntry = require("./getOneEntry");
+const getFilledPdf = require("./getFilledPdf");
 
 module.exports = {
   getAllEntries,
@@ -10,4 +11,5 @@ module.exports = {
   addOneEntry,
   editOneEntry,
   deleteOneEntry,
+  getFilledPdf,
 };

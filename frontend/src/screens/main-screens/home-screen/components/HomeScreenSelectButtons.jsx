@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "../../../../components";
 
-const HomeScreenButtons = (props) => {
+const HomeScreenSelectButtons = (props) => {
   return (
     <>
       <Button onClick={props.homeButtonHandlers.handleGetCourses}>
@@ -23,4 +23,4 @@ const HomeScreenButtons = (props) => {
   );
 };
 
-export default HomeScreenButtons;
+export default HomeScreenSelectButtons;

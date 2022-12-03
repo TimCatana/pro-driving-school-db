@@ -168,6 +168,13 @@ const NewCourseScreen = () => {
               Modify
             </Button>
           )}
+
+          {!courseState.isNewEntry && (
+            <Button onClick={courseButtonHandlers.handleGetFilledCoursePdf}>
+              Get PDF
+            </Button>
+          )}
+          
           <Button onClick={() => courseState.navigation("/")}>Go Back</Button>
         </ButtonsDiv>
       </ContainerDiv>

@@ -3,7 +3,7 @@ import {
   deleteOneStudentUC,
   editOneStudentUC,
 } from "../../../../domain/db";
-import { getStudentRecordPdf } from "../../../../domain/pdf";
+import { getStudentPdf } from "../../../../domain/pdf";
 
 const useNewStudentScreenButtonHandlers = (studentState) => {
   /**
@@ -131,7 +131,7 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
    * Updates the subscript to mailing list option.
    */
   const handleGetFilledStudentPdf = async () => {
-    const result = await getStudentRecordPdf();
+    const result = await getStudentPdf();
   };
 
   const studentButtonHandlers = {

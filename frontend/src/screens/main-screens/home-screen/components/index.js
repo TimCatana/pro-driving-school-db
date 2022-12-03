@@ -1,17 +1,19 @@
-import HomeScreenButtons from "./HomeScreenButtons";
+import HomeScreenSelectButtons from "./HomeScreenSelectButtons";
 import HomeScreenTitles from "./HomeScreenTitles";
 import HomeScreenCourseTable from "./HomeScreenCourseTable";
 import HomeScreenProductTable from "./HomeScreenProductTable";
 import HomeScreenStudentTable from "./HomeScreenStudentTable";
 import HomeScreenInClassInstructorTable from "./HomeScreenInClassInstructorTable";
 import HomeScreenInCarInstructorTable from "./HomeScreenInCarInstructorTable";
+import HomeScreenAddNewButton from "./HomeScreenAddNewButton";
 
 export {
   HomeScreenTitles,
-  HomeScreenButtons,
+  HomeScreenSelectButtons,
   HomeScreenCourseTable,
   HomeScreenProductTable,
   HomeScreenStudentTable,
   HomeScreenInClassInstructorTable,
   HomeScreenInCarInstructorTable,
+  HomeScreenAddNewButton,
 };
