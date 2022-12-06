@@ -33,6 +33,9 @@ const HomeScreenCourseTable = (props) => {
             <TDHome>{data.in_class_instructor_id}</TDHome>
             <TDHome>
               <Button
+                height="2rem"
+                padding="0 0.5rem"
+                backgroundColor="green"
                 onClick={() => {
                   props.homeButtonHandlers.navToCourse(data.id);
                 }}
@@ -42,6 +45,9 @@ const HomeScreenCourseTable = (props) => {
             </TDHome>
             <TDHome>
               <Button
+                height="2rem"
+                padding="0 0.5rem"
+                backgroundColor="red"
                 onClick={() => {
                   props.homeButtonHandlers.handleDeleteCourse(data.id);
                 }}

@@ -1,40 +1,18 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React from "react";
 import { useNewInClassInstScreen } from "./hooks";
 
 import {
   Button,
-  DropDownMenu,
   TextInput,
   SideBySideTextInputsDiv,
-  SingleRowTextInputDiv,
+  Title,
 } from "../../../components";
-
-const WrapperDiv = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const ContainerDiv = styled.div``;
-
-const TitleH1 = styled.h1`
-  text-align: center;
-`;
-
-const FormDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ButtonsDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-// const ConfirmButton = styled.button``;
-// const TextInput = styled.input``;
-// const DropdownList = styled.select``;
-// const ListOption = styled.option``;
+import {
+  WrapperDiv,
+  ContainerDiv,
+  FormDiv,
+  ButtonsDiv,
+} from "../common/components/styled";
 
 const NewInClassInstScreen = () => {
   const {
@@ -46,7 +24,7 @@ const NewInClassInstScreen = () => {
   return (
     <WrapperDiv>
       <ContainerDiv>
-        <TitleH1>NewInClassInstScreen</TitleH1>
+        <Title>NewInClassInstScreen</Title>
 
         {!inClassInstructorState.isLoading && (
           <FormDiv>
@@ -63,6 +41,7 @@ const NewInClassInstScreen = () => {
                 placeholder={"First Name"}
               />
               <TextInput
+                isLast
                 type="text"
                 maxLength={70}
                 value={
@@ -87,8 +66,8 @@ const NewInClassInstScreen = () => {
                 }
                 placeholder={"Instructor Driver's License"}
               />
-              {/* add min date field and use script to get todays date */}
               <TextInput
+                isLast
                 type={
                   inClassInstructorState.isICIDriversLicenseFocus
                     ? "date"

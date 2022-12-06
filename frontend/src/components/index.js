@@ -8,6 +8,7 @@ import TRHome from "./styled/TRHome";
 import TDHome from "./styled/TDHome";
 import THHome from "./styled/THHome";
 import TableHome from "./styled/TableHome";
+import ListOption from "./styled/ListOption";
 
 export {
   Button,
@@ -20,4 +21,5 @@ export {
   THHome,
   TRHome,
   TableHome,
+  ListOption,
 };

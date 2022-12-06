@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { useNewStudentScreen } from "./hooks";
 
 import {
@@ -8,30 +7,15 @@ import {
   TextInput,
   SideBySideTextInputsDiv,
   SingleRowTextInputDiv,
+  ListOption,
+  Title,
 } from "../../../components";
-
-const WrapperDiv = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const ContainerDiv = styled.div``;
-
-const TitleH1 = styled.h1`
-  text-align: center;
-`;
-
-const FormDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ButtonsDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ListOption = styled.option``;
+import {
+  WrapperDiv,
+  ContainerDiv,
+  FormDiv,
+  ButtonsDiv,
+} from "../common/components/styled";
 
 const NewStudentScreen = () => {
   const { studentState, studentChangeHandlers, studentButtonHandlers } =
@@ -40,7 +24,7 @@ const NewStudentScreen = () => {
   return (
     <WrapperDiv>
       <ContainerDiv>
-        <TitleH1>NewStudentScreen</TitleH1>
+        <Title>NewStudentScreen</Title>
 
         {!studentState.isLoading && (
           <FormDiv>
@@ -60,6 +44,7 @@ const NewStudentScreen = () => {
                 placeholder={"Middle Name (Optional)"}
               />
               <TextInput
+                isLast
                 type="text"
                 maxLength={70}
                 value={studentState.studentObject.studentLastName}
@@ -87,6 +72,7 @@ const NewStudentScreen = () => {
               />
 
               <DropDownMenu
+                isLast
                 name="genderList"
                 defaultValue={studentState.selectedGender}
                 onChange={studentChangeHandlers.handleStudentGenderChange}
@@ -115,6 +101,7 @@ const NewStudentScreen = () => {
                 }
               />
               <TextInput
+                isLast
                 type="text"
                 maxLength={18}
                 placeholder="Home Phone (Format: 5194567890)"
@@ -140,6 +127,7 @@ const NewStudentScreen = () => {
                 placeholder={"City"}
               />
               <TextInput
+                isLast
                 type="text"
                 maxLength={18}
                 value={studentState.studentObject.studentAddressPostalCode}
@@ -160,7 +148,6 @@ const NewStudentScreen = () => {
                 placeholder={"Driver's License Number"}
               />
 
-              {/* add min date field and use script to get todays date */}
               <TextInput
                 type={
                   studentState.isStudentDriversLicenseIssuedDateFocus
@@ -187,8 +174,8 @@ const NewStudentScreen = () => {
                 placeholder={"Driver's License Issued Date"}
               />
 
-              {/* should be auto populated as 5 years after the */}
               <TextInput
+                isLast
                 type="text"
                 disabled
                 value={
@@ -204,6 +191,7 @@ const NewStudentScreen = () => {
             <SingleRowTextInputDiv>
               {/* get the courses from database and but them in the options */}
               <DropDownMenu
+                isLast
                 name="courseIdList"
                 defaultValue={studentState.selectedRegisteredCourse}
                 onChange={studentChangeHandlers.handleStudentRegisteredCourseId}
@@ -222,6 +210,7 @@ const NewStudentScreen = () => {
             <SingleRowTextInputDiv>
               {/* get the products from database and but them in the options */}
               <DropDownMenu
+                isLast
                 name="productIdList"
                 defaultValue={studentState.selectedRegisteredProduct}
                 onChange={

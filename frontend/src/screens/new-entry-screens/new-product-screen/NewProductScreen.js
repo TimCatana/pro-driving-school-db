@@ -6,28 +6,14 @@ import {
   DropDownMenu,
   TextInput,
   SingleRowTextInputDiv,
+  Title,
 } from "../../../components";
-
-const WrapperDiv = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const ContainerDiv = styled.div``;
-
-const TitleH1 = styled.h1`
-  text-align: center;
-`;
-
-const FormDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ButtonsDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+import {
+  WrapperDiv,
+  ContainerDiv,
+  FormDiv,
+  ButtonsDiv,
+} from "../common/components/styled";
 
 const NewProductScreen = () => {
   const { productState, productChangeHandlers, productButtonHandlers } =
@@ -36,12 +22,13 @@ const NewProductScreen = () => {
   return (
     <WrapperDiv>
       <ContainerDiv>
-        <TitleH1>NewProductScreen</TitleH1>
+        <Title>NewProductScreen</Title>
 
         {!productState.isLoading && (
           <FormDiv>
             <SingleRowTextInputDiv>
               <TextInput
+                isLast
                 type="number"
                 min="0"
                 value={productState.productObject.productId}
@@ -52,6 +39,7 @@ const NewProductScreen = () => {
             {/* add min date field and use script to get todays date */}
             <SingleRowTextInputDiv>
               <TextInput
+                isLast
                 type="text"
                 maxLength={245}
                 value={productState.productObject.productName}
@@ -62,6 +50,7 @@ const NewProductScreen = () => {
             {/* - TODO need to limit how many characters can be inputted */}
             <SingleRowTextInputDiv>
               <TextInput
+                isLast
                 type="number"
                 value={productState.productObject.productPrice}
                 onChange={productChangeHandlers.handleProductPriceChange}

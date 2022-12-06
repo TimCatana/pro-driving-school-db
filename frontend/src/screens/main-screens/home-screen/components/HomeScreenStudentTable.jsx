@@ -22,11 +22,11 @@ const HomeScreenStudentTable = (props) => {
           <THHome>Address</THHome>
           <THHome>City</THHome>
           <THHome>Postal Code</THHome>
-          <THHome>Driver's License Number</THHome>
-          <THHome>Driver's License Issued Date</THHome>
-          <THHome>Product Driver's License Expiry Date</THHome>
-          <THHome>Product Registered Course</THHome>
-          <THHome>Product Registered Product</THHome>
+          <THHome>License Number</THHome>
+          <THHome>License Issued Date</THHome>
+          <THHome>License Expiry Date</THHome>
+          <THHome>Registered Course</THHome>
+          <THHome>Registered Product</THHome>
           <THHome>Edit</THHome>
           <THHome>Delete</THHome>
         </TRHome>
@@ -51,6 +51,9 @@ const HomeScreenStudentTable = (props) => {
             <TDHome>{data.purchased_product}</TDHome>
             <TDHome>
               <Button
+                height="2rem"
+                padding="0 0.5rem"
+                backgroundColor="green"
                 onClick={() => {
                   props.homeButtonHandlers.navToStudent(data.id);
                 }}
@@ -60,6 +63,9 @@ const HomeScreenStudentTable = (props) => {
             </TDHome>
             <TDHome>
               <Button
+                height="2rem"
+                padding="0 0.5rem"
+                backgroundColor="red"
                 onClick={() => {
                   props.homeButtonHandlers.handleDeleteStudent(data.id);
                 }}

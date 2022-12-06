@@ -6,32 +6,17 @@ import {
   TextInput,
   SideBySideTextInputsDiv,
   SingleRowTextInputDiv,
+  Title,
+  ListOption,
 } from "../../../components";
+import {
+  ContainerDiv,
+  FormDiv,
+  WrapperDiv,
+  ButtonsDiv,
+} from "../common/components/styled";
 
 import { useNewCourseScreen } from "./hooks";
-
-const WrapperDiv = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const ContainerDiv = styled.div``;
-
-const TitleH1 = styled.h1`
-  text-align: center;
-`;
-
-const FormDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ButtonsDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ListOption = styled.option``;
 
 const NewCourseScreen = () => {
   const { courseState, courseChangeHandlers, courseButtonHandlers } =
@@ -40,7 +25,7 @@ const NewCourseScreen = () => {
   return (
     <WrapperDiv>
       <ContainerDiv>
-        <TitleH1>NewCourseScreen</TitleH1>
+        <Title>NewCourseScreen</Title>
 
         {!courseState.isLoading && (
           <FormDiv>
@@ -54,6 +39,7 @@ const NewCourseScreen = () => {
               />
 
               <TextInput
+                isLast
                 type="number"
                 min="0"
                 value={courseState.courseObject.courseCapacity}
@@ -82,6 +68,7 @@ const NewCourseScreen = () => {
               />
               {/* add min date field and use script to get todays date */}
               <TextInput
+                isLast
                 type={courseState.isEndDateFocus ? "date" : "text"}
                 onFocus={() => {
                   courseChangeHandlers.handleEndDateFocusAndBlurHandler(true);
@@ -99,6 +86,7 @@ const NewCourseScreen = () => {
 
             <SingleRowTextInputDiv>
               <DropDownMenu
+                isLast
                 name="isDigitalList"
                 defaultValue={courseState.selectedCourseType}
                 onChange={courseChangeHandlers.handleIsCourseDigitalChange}
@@ -119,6 +107,7 @@ const NewCourseScreen = () => {
 
             <SingleRowTextInputDiv>
               <DropDownMenu
+                isLast
                 name="inClassInstList"
                 defaultValue={courseState.selectedInstructor}
                 onChange={courseChangeHandlers.handleInClassInstructorChange}
@@ -174,7 +163,7 @@ const NewCourseScreen = () => {
               Get PDF
             </Button>
           )}
-          
+
           <Button onClick={() => courseState.navigation("/")}>Go Back</Button>
         </ButtonsDiv>
       </ContainerDiv>

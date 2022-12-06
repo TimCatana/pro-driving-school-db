@@ -27,6 +27,9 @@ const HomeScreenProductTable = (props) => {
             <TDHome>{data.price}</TDHome>
             <TDHome>
               <Button
+                height="2rem"
+                padding="0 0.5rem"
+                backgroundColor="green"
                 onClick={() => {
                   props.homeButtonHandlers.navToProduct(data.id);
                 }}
@@ -36,6 +39,9 @@ const HomeScreenProductTable = (props) => {
             </TDHome>
             <TDHome>
               <Button
+                height="2rem"
+                padding="0 0.5rem"
+                backgroundColor="red"
                 onClick={() => {
                   props.homeButtonHandlers.handleDeleteProduct(data.id);
                 }}

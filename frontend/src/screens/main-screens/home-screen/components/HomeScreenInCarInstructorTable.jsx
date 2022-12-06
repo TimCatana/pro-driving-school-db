@@ -33,6 +33,9 @@ const HomeScreenInCarInstructorTable = (props) => {
             <TDHome>{data.g_drivers_license_exp_date}</TDHome>
             <TDHome>
               <Button
+                height="2rem"
+                padding="0 0.5rem"
+                backgroundColor="green"
                 onClick={() => {
                   props.homeButtonHandlers.navToInCarInst(data.id);
                 }}
@@ -42,6 +45,9 @@ const HomeScreenInCarInstructorTable = (props) => {
             </TDHome>
             <TDHome>
               <Button
+                height="2rem"
+                padding="0 0.5rem"
+                backgroundColor="red"
                 onClick={() => {
                   props.homeButtonHandlers.handleDeleteInCarInst(data.id);
                 }}

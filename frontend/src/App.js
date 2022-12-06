@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import GlobalStyle from "./GlobalStyles";
 import AuthScreen from "./screens/main-screens/auth-screen/AuthScreen";
 import HomeScreen from "./screens/main-screens/home-screen/HomeScreen";
 import NewCourseScreen from "./screens/new-entry-screens/new-course-screen/NewCourseScreen";
@@ -8,9 +9,11 @@ import NewInClassInstScreen from "./screens/new-entry-screens/new-in-class-inst-
 import NewProductScreen from "./screens/new-entry-screens/new-product-screen/NewProductScreen";
 import NewStudentScreen from "./screens/new-entry-screens/new-student-screen/NewStudentScreen";
 
+
 const App = () => {
   return (
     <div>
+      <GlobalStyle/>
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/course/:primary_key" element={<NewCourseScreen />} />

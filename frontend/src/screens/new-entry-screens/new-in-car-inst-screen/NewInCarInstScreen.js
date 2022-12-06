@@ -7,28 +7,14 @@ import {
   TextInput,
   SideBySideTextInputsDiv,
   SingleRowTextInputDiv,
+  Title,
 } from "../../../components";
-
-const WrapperDiv = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const ContainerDiv = styled.div``;
-
-const TitleH1 = styled.h1`
-  text-align: center;
-`;
-
-const FormDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ButtonsDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+import {
+  WrapperDiv,
+  ContainerDiv,
+  FormDiv,
+  ButtonsDiv,
+} from "../common/components/styled";
 
 const NewInCarInstScreen = () => {
   const {
@@ -40,7 +26,7 @@ const NewInCarInstScreen = () => {
   return (
     <WrapperDiv>
       <ContainerDiv>
-        <TitleH1>NewInCarInstScreen</TitleH1>
+        <Title>NewInCarInstScreen</Title>
 
         {!inCarInstructorState.isLoading && (
           <FormDiv>
