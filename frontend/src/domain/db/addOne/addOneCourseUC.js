@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const addOneCourseUC = async (courseObject) => {
+  console.log(courseObject);
   return await axios.post(`http://localhost:4400/course/add`, {
     courseId: courseObject.courseId,
     courseCapacity: courseObject.courseCapacity,

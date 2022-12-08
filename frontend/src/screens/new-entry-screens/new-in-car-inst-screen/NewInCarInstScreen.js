@@ -32,6 +32,12 @@ const NewInCarInstScreen = () => {
           <FormDiv>
             <SideBySideTextInputsDiv>
               <TextInput
+                isError={
+                  inCarInstructorState.inCarInstructorObject
+                    .isICIFirstNameError &&
+                  inCarInstructorState.inCarInstructorObject.iciFirstName
+                    .length > 0
+                }
                 type="text"
                 maxLength={70}
                 value={inCarInstructorState.inCarInstructorObject.iciFirstName}
@@ -41,6 +47,12 @@ const NewInCarInstScreen = () => {
                 placeholder={"First Name"}
               />
               <TextInput
+                isError={
+                  inCarInstructorState.inCarInstructorObject
+                    .isICILastNameError &&
+                  inCarInstructorState.inCarInstructorObject.iciLastName
+                    .length > 0
+                }
                 type="text"
                 maxLength={70}
                 value={inCarInstructorState.inCarInstructorObject.iciLastName}
@@ -52,6 +64,12 @@ const NewInCarInstScreen = () => {
             </SideBySideTextInputsDiv>
             <SideBySideTextInputsDiv>
               <TextInput
+                isError={
+                  inCarInstructorState.inCarInstructorObject
+                    .isICIDriversLicenseNumError &&
+                  inCarInstructorState.inCarInstructorObject
+                    .iciDriversLicenseNum.length > 0
+                }
                 type="text"
                 maxLength={95}
                 value={
@@ -65,6 +83,12 @@ const NewInCarInstScreen = () => {
               />
               {/* add min date field and use script to get todays date */}
               <TextInput
+                isError={
+                  inCarInstructorState.inCarInstructorObject
+                    .isICIDriversLicenseExpDateError &&
+                  inCarInstructorState.inCarInstructorObject
+                    .iciDriversLicenseExpDate.length > 0
+                }
                 type={
                   inCarInstructorState.isICIInstDriversLicenseFocus
                     ? "date"
@@ -92,6 +116,12 @@ const NewInCarInstScreen = () => {
             </SideBySideTextInputsDiv>
             <SideBySideTextInputsDiv>
               <TextInput
+                isError={
+                  inCarInstructorState.inCarInstructorObject
+                    .isICIGLicenseNumError &&
+                  inCarInstructorState.inCarInstructorObject.iciGLicenseNum
+                    .length > 0
+                }
                 type="text"
                 maxLength={95}
                 value={
@@ -104,6 +134,12 @@ const NewInCarInstScreen = () => {
               />
               {/* add min date field and use script to get todays date */}
               <TextInput
+                isError={
+                  inCarInstructorState.inCarInstructorObject
+                    .isICIGLicenseExpDateError &&
+                  inCarInstructorState.inCarInstructorObject.iciGLicenseExpDate
+                    .length > 0
+                }
                 type={
                   inCarInstructorState.isICIGDriversLicenseFocus
                     ? "date"
@@ -140,7 +176,7 @@ const NewInCarInstScreen = () => {
                     inCarInstructorState.inCarInstructorObject
                       .isICIDriversLicenseNumError ||
                     inCarInstructorState.inCarInstructorObject
-                      .isICIDriversLicenseExpDate ||
+                      .isICIDriversLicenseExpDateError ||
                     inCarInstructorState.inCarInstructorObject
                       .isICIGLicenseNumError ||
                     inCarInstructorState.inCarInstructorObject
@@ -163,7 +199,7 @@ const NewInCarInstScreen = () => {
                     inCarInstructorState.inCarInstructorObject
                       .isICIDriversLicenseNumError ||
                     inCarInstructorState.inCarInstructorObject
-                      .isICIDriversLicenseExpDate ||
+                      .isICIDriversLicenseExpDateError ||
                     inCarInstructorState.inCarInstructorObject
                       .isICIGLicenseNumError ||
                     inCarInstructorState.inCarInstructorObject

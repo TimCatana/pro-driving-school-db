@@ -6,6 +6,7 @@ import {
   THHome,
   TRHome,
 } from "../../../../components";
+import { inClassInstTableHeadings } from "../../../../domain/constants/dbConstants";
 
 const HomeScreenInClassInstructorTable = (props) => {
   return (
@@ -22,18 +23,22 @@ const HomeScreenInClassInstructorTable = (props) => {
       </thead>
       <tbody>
         {props.homeState.displayData.map((data) => (
-          <TRHome key={data.id}>
-            <TDHome>{data.first_name}</TDHome>
-            <TDHome>{data.last_name}</TDHome>
-            <TDHome>{data.inst_drivers_license_id}</TDHome>
-            <TDHome>{data.inst_drivers_license_exp_date}</TDHome>
+          <TRHome key={data[inClassInstTableHeadings.id]}>
+            <TDHome>{data[inClassInstTableHeadings.firstName]}</TDHome>
+            <TDHome>{data[inClassInstTableHeadings.lastName]}</TDHome>
+            <TDHome>{data[inClassInstTableHeadings.driversLicenseId]}</TDHome>
+            <TDHome>
+              {data[inClassInstTableHeadings.driversLicenseExpDate]}
+            </TDHome>
             <TDHome>
               <Button
                 height="2rem"
                 padding="0 0.5rem"
                 backgroundColor="green"
                 onClick={() => {
-                  props.homeButtonHandlers.navToInClassInst(data.id);
+                  props.homeButtonHandlers.navToInClassInst(
+                    data[inClassInstTableHeadings.id]
+                  );
                 }}
               >
                 edit
@@ -45,7 +50,9 @@ const HomeScreenInClassInstructorTable = (props) => {
                 padding="0 0.5rem"
                 backgroundColor="red"
                 onClick={() => {
-                  props.homeButtonHandlers.handleDeleteInClassInst(data.id);
+                  props.homeButtonHandlers.handleDeleteInClassInst(
+                    data[inClassInstTableHeadings.id]
+                  );
                 }}
               >
                 delete

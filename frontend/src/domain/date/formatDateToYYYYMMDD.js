@@ -7,8 +7,6 @@
 
 const formatDateToYYYYMMDD = (date) => {
   let _date = new Date(date);
-  // const offset = _date.getTimezoneOffset();
-  // _date = new Date(_date.getTime() - offset * 60 * 1000);
   return _date.toISOString().split("T")[0];
 };
 

@@ -1,7 +1,20 @@
 const makeDb = require("../../util/makeDb");
+const { courseTableHeadings } = require("../../constants/dbConstants");
 
 const editOneEntry = async (req, res) => {
-  const sql = `UPDATE courses SET courseId = ?, start_date = ?, end_date = ?, is_digital = ?, capacity = ?, in_class_instructor_id = ? WHERE id = ?`;
+  const sql = `
+  UPDATE 
+    ${courseTableHeadings.tableName} 
+  SET 
+    ${courseTableHeadings.courseId} = ?, 
+    ${courseTableHeadings.capacity} = ?,
+    ${courseTableHeadings.isDigital} = ?, 
+    ${courseTableHeadings.startDate} = ?, 
+    ${courseTableHeadings.endDate} = ?,  
+    ${courseTableHeadings.inClassInstructorId} = ? 
+  WHERE 
+    ${courseTableHeadings.id} = ?;`;
+
   let returnVal;
 
   const db = makeDb();
@@ -9,11 +22,11 @@ const editOneEntry = async (req, res) => {
   try {
     const rows = await db.query(sql, [
       parseInt(req.body.courseId),
+      parseInt(req.body.courseCapacity),
+      req.body.courseIsDigital,
       req.body.courseStartDate,
       req.body.courseEndDate,
-      req.body.courseIsDigital,
-      parseInt(req.body.courseCapacity),
-      parseInt(req.body.courseInClassInstructor),
+      req.body.courseInClassInstructor,
       req.params.primary_key,
     ]);
 

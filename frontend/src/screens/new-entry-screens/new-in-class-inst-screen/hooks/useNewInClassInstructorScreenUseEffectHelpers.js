@@ -1,3 +1,4 @@
+import { inClassInstTableHeadings } from "../../../../domain/constants/dbConstants";
 import { getOneInClassInstructorUC } from "../../../../domain/db";
 
 const useNewInClassInstructorScreenUseEffectHelpers = (
@@ -25,14 +26,15 @@ const useNewInClassInstructorScreenUseEffectHelpers = (
     if (result.data.status == 200) {
       inClassInstructorState.setInClassInstructorObject({
         ...inClassInstructorState.inClassInstructorObject,
-        iciFirstName: result.data.query[0].first_name,
+        iciFirstName: result.data.query[0][inClassInstTableHeadings.firstName],
         isICIFirstNameError: false,
-        iciLastName: result.data.query[0].last_name,
+        iciLastName: result.data.query[0][inClassInstTableHeadings.lastName],
         isICILastNameError: false,
-        iciDriversLicenseNum: result.data.query[0].inst_drivers_license_id,
+        iciDriversLicenseNum:
+          result.data.query[0][inClassInstTableHeadings.driversLicenseId],
         isICIDriversLicenseNumError: false,
         iciDriversLicenseExpDate:
-          result.data.query[0].inst_drivers_license_exp_date,
+          result.data.query[0][inClassInstTableHeadings.driversLicenseExpDate],
         isICIDriversLicenseExpDateError: false,
       });
 

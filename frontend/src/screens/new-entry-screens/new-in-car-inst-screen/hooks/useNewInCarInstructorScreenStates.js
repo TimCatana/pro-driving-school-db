@@ -30,7 +30,7 @@ const useNewInCarInstructorScreenStates = () => {
     isICIDriversLicenseNumError: true,
 
     iciDriversLicenseExpDate: "",
-    isICIDriversLicenseExpDate: true,
+    isICIDriversLicenseExpDateError: true,
 
     iciGLicenseNum: "",
     isICIGLicenseNumError: true,

@@ -1,7 +1,31 @@
+const { studentTableHeadings } = require("../../constants/dbConstants");
 const makeDb = require("../../util/makeDb");
 
 const editOneEntry = async (req, res) => {
-  const sql = `UPDATE students SET first_name=?, middle_name=?, last_name=?, date_of_birth=?, gender=?, address=?, address_city=?, address_postal_code=?, cell_phone_number=?, home_phone_number=?, drivers_license_id=?, drivers_license_date_issued=?, drivers_license_exp_date=?, registered_course=?, purchased_product=? WHERE id = ?`;
+  const sql = `
+  UPDATE 
+    ${studentTableHeadings.tableName} 
+  SET 
+    ${studentTableHeadings.firstName} = ?,
+    ${studentTableHeadings.middleName} = ?, 
+    ${studentTableHeadings.lastName} = ?, 
+    ${studentTableHeadings.dateOfBirth} = ?, 
+    ${studentTableHeadings.gender} = ?, 
+    ${studentTableHeadings.height} = ?, 
+    ${studentTableHeadings.address} = ?, 
+    ${studentTableHeadings.addressAptNum} = ?, 
+    ${studentTableHeadings.addressCity} = ?, 
+    ${studentTableHeadings.addressPostalCode} = ?, 
+    ${studentTableHeadings.cellPhoneNumber} = ?, 
+    ${studentTableHeadings.homePhoneNumber} = ?, 
+    ${studentTableHeadings.driversLicenseId} = ?, 
+    ${studentTableHeadings.driversLicenseClass} = ?, 
+    ${studentTableHeadings.driversLicenseIssuedDate} = ?, 
+    ${studentTableHeadings.driversLicenseExpDate} = ?, 
+    ${studentTableHeadings.registeredCourse} = ?, 
+    ${studentTableHeadings.purchasedProduct} = ?
+  WHERE 
+    ${studentTableHeadings.id} = ?;`;
   let returnVal;
 
   const db = makeDb();
@@ -13,12 +37,15 @@ const editOneEntry = async (req, res) => {
       req.body.studentLastName,
       req.body.studentDateOfBirth,
       req.body.studentGender,
+      req.body.studentHeight,
       req.body.studentAddress,
+      req.body.studentAddressAptNumber,
       req.body.studentAddressCity,
       req.body.studentAddressPostalCode,
       req.body.studentCellPhoneNumber,
       req.body.studentHomePhoneNumber,
       req.body.studentDriversLicenseNumber,
+      req.body.studentDriversLicenseClass,
       req.body.studentDriversLicenseNumberIssuedDate,
       req.body.studentDriversLicenseNumberExpDate,
       parseInt(req.body.studentRegisteredCourseId),

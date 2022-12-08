@@ -1,3 +1,4 @@
+const { courseTableHeadings } = require("../../constants/dbConstants");
 const makeDb = require("../../util/makeDb");
 
 /**
@@ -6,8 +7,13 @@ const makeDb = require("../../util/makeDb");
  * @param {*} res
  */
 const getAllEntries = async (req, res) => {
-  const sql = `SELECT * FROM courses;`;
-  let returnVal;
+  const sql = `
+  SELECT 
+    * 
+  FROM 
+   ${courseTableHeadings.tableName};`;
+  
+   let returnVal;
 
   const db = makeDb();
 

@@ -18,7 +18,7 @@ const TextInput = styled.input`
   background: var(--input-background);
   color: var(--input-color);
 
-  border: 0.1rem solid var(--input-border);
+  border:   ${(props) => (props.isError ? "0.1rem solid var(--input-border-error)" : "0.1rem solid var(--input-border)")}; 
   border-radius: 0.4rem;
 
   transition: border 0.3s ease;

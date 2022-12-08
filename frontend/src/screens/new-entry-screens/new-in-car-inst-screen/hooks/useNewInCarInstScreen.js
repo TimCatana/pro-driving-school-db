@@ -105,11 +105,11 @@ const useNewInCarInstScreen = () => {
     )
       ? inCarInstructorState.setInCarInstructorObject({
           ...inCarInstructorState.inCarInstructorObject,
-          isICIDriversLicenseExpDate: false,
+          isICIDriversLicenseExpDateError: false,
         })
       : inCarInstructorState.setInCarInstructorObject({
           ...inCarInstructorState.inCarInstructorObject,
-          isICIDriversLicenseExpDate: true,
+          isICIDriversLicenseExpDateError: true,
         });
   }, [inCarInstructorState.inCarInstructorObject.iciDriversLicenseExpDate]);
 

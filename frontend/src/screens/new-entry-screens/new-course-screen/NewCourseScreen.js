@@ -9,6 +9,7 @@ import {
   Title,
   ListOption,
 } from "../../../components";
+import { inClassInstTableHeadings } from "../../../domain/constants/dbConstants";
 import {
   ContainerDiv,
   FormDiv,
@@ -31,6 +32,10 @@ const NewCourseScreen = () => {
           <FormDiv>
             <SideBySideTextInputsDiv>
               <TextInput
+                isError={
+                  courseState.courseObject.isCourseIdError &&
+                  courseState.courseObject.courseId.length > 0
+                }
                 type="number"
                 min="0"
                 value={courseState.courseObject.courseId}
@@ -39,6 +44,10 @@ const NewCourseScreen = () => {
               />
 
               <TextInput
+                isError={
+                  courseState.courseObject.isCourseCapacityError &&
+                  courseState.courseObject.courseCapacity.length > 0
+                }
                 isLast
                 type="number"
                 min="0"
@@ -53,6 +62,10 @@ const NewCourseScreen = () => {
             <SideBySideTextInputsDiv>
               {/* add min date field and use script to get todays date */}
               <TextInput
+                isError={
+                  courseState.courseObject.isCourseStartDateError &&
+                  courseState.courseObject.courseStartDate.length > 0
+                }
                 type={courseState.isStartDateFocus ? "date" : "text"}
                 onFocus={() => {
                   courseChangeHandlers.handleStartDateFocusAndBlurHandler(true);
@@ -68,6 +81,10 @@ const NewCourseScreen = () => {
               />
               {/* add min date field and use script to get todays date */}
               <TextInput
+                isError={
+                  courseState.courseObject.isCourseEndDateError &&
+                  courseState.courseObject.courseEndDate.length > 0
+                }
                 isLast
                 type={courseState.isEndDateFocus ? "date" : "text"}
                 onFocus={() => {
@@ -86,6 +103,10 @@ const NewCourseScreen = () => {
 
             <SingleRowTextInputDiv>
               <DropDownMenu
+                isError={
+                  courseState.courseObject.isCourseIsDigitalError &&
+                  courseState.courseObject.courseIsDigital.length > 0
+                }
                 isLast
                 name="isDigitalList"
                 defaultValue={courseState.selectedCourseType}
@@ -107,6 +128,10 @@ const NewCourseScreen = () => {
 
             <SingleRowTextInputDiv>
               <DropDownMenu
+                isError={
+                  courseState.courseObject.isCourseInClassInstructorError &&
+                  courseState.courseObject.courseInClassInstructor.length > 0
+                }
                 isLast
                 name="inClassInstList"
                 defaultValue={courseState.selectedInstructor}
@@ -116,8 +141,12 @@ const NewCourseScreen = () => {
                   Please Select Instructor
                 </ListOption>
                 {courseState.inClassInstructors.map((data) => (
-                  <ListOption key={data.id} value={data.id}>
-                    {data.first_name}
+                  <ListOption
+                    key={data[inClassInstTableHeadings.id]}
+                    value={data[inClassInstTableHeadings.driversLicenseId]}
+                  >
+                    {data[inClassInstTableHeadings.firstName]}{" "}
+                    {data[inClassInstTableHeadings.lastName]}
                   </ListOption>
                 ))}
               </DropDownMenu>
@@ -159,8 +188,11 @@ const NewCourseScreen = () => {
           )}
 
           {!courseState.isNewEntry && (
-            <Button onClick={courseButtonHandlers.handleGetFilledCoursePdf}>
-              Get PDF
+            <Button
+              backgroundColor="blue"
+              onClick={courseButtonHandlers.handleGetFilledCoursePdf}
+            >
+              Get Course Enrollment PDF
             </Button>
           )}
 

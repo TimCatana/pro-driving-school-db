@@ -1,3 +1,4 @@
+import { productTableHeadings } from "../../../../domain/constants/dbConstants";
 import { getOneProductUC } from "../../../../domain/db";
 
 const useNewProductScreenUseEffectHelpers = (productState) => {
@@ -24,17 +25,15 @@ const useNewProductScreenUseEffectHelpers = (productState) => {
     if (result.data.status == 200) {
       productState.setProductObject({
         ...productState.productObject,
-        productId: result.data.query[0].productId,
+        productId: result.data.query[0][productTableHeadings.productId],
         isProductIdError: false,
 
-        productName: result.data.query[0].name,
+        productName: result.data.query[0][productTableHeadings.name],
         isProductNameError: false,
 
-        productPrice: result.data.query[0].price,
+        productPrice: result.data.query[0][productTableHeadings.price],
         isProductPriceError: false,
       });
-
-      console.log(result.data.query[0]);
     } else {
       console.log(result.data);
     }

@@ -30,6 +30,12 @@ const NewInClassInstScreen = () => {
           <FormDiv>
             <SideBySideTextInputsDiv>
               <TextInput
+                isError={
+                  inClassInstructorState.inClassInstructorObject
+                    .isICIFirstNameError &&
+                  inClassInstructorState.inClassInstructorObject.iciFirstName
+                    .length > 0
+                }
                 type="text"
                 maxLength={70}
                 value={
@@ -41,6 +47,12 @@ const NewInClassInstScreen = () => {
                 placeholder={"First Name"}
               />
               <TextInput
+                isError={
+                  inClassInstructorState.inClassInstructorObject
+                    .isICILastNameError &&
+                  inClassInstructorState.inClassInstructorObject.iciLastName
+                    .length > 0
+                }
                 isLast
                 type="text"
                 maxLength={70}
@@ -55,6 +67,12 @@ const NewInClassInstScreen = () => {
             </SideBySideTextInputsDiv>
             <SideBySideTextInputsDiv>
               <TextInput
+                isError={
+                  inClassInstructorState.inClassInstructorObject
+                    .isICIDriversLicenseNumError &&
+                  inClassInstructorState.inClassInstructorObject
+                    .iciDriversLicenseNum.length > 0
+                }
                 type="text"
                 maxLength={95}
                 value={
@@ -67,6 +85,12 @@ const NewInClassInstScreen = () => {
                 placeholder={"Instructor Driver's License"}
               />
               <TextInput
+                isError={
+                  inClassInstructorState.inClassInstructorObject
+                    .isICIDriversLicenseExpDateError &&
+                  inClassInstructorState.inClassInstructorObject
+                    .iciDriversLicenseExpDate.length > 0
+                }
                 isLast
                 type={
                   inClassInstructorState.isICIDriversLicenseFocus

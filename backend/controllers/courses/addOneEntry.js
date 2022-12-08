@@ -1,19 +1,20 @@
+const { courseTableHeadings } = require("../../constants/dbConstants");
 const makeDb = require("../../util/makeDb");
 
 /**
  *
  * @param {
- *    courseId,
- *    courseStartDate,
- *    courseEndDate,
- *    _isCourseDigital,
- *    courseCapacity,
- *    courseInClassInstructor
+ *
  * } req
  * @param {*} res
  */
 const addOneEntry = async (req, res) => {
-  const sql = `INSERT INTO courses (courseId, start_date, end_date, is_digital, capacity, in_class_instructor_id) VALUES (?, ?, ?, ?, ?, ?);`;
+  const sql = `
+  INSERT INTO 
+    ${courseTableHeadings.tableName} 
+  (${courseTableHeadings.courseId},  ${courseTableHeadings.capacity}, ${courseTableHeadings.isDigital}, ${courseTableHeadings.startDate}, ${courseTableHeadings.endDate}, ${courseTableHeadings.inClassInstructorId}
+  ) 
+  VALUES (?, ?, ?, ?, ?, ?);`;
   let returnVal;
 
   const db = makeDb();
@@ -21,11 +22,11 @@ const addOneEntry = async (req, res) => {
   try {
     const rows = await db.query(sql, [
       parseInt(req.body.courseId),
+      parseInt(req.body.courseCapacity),
+      req.body.courseIsDigital,
       req.body.courseStartDate,
       req.body.courseEndDate,
-      req.body.courseIsDigital,
-      parseInt(req.body.courseCapacity),
-      parseInt(req.body.courseInClassInstructor),
+      req.body.courseInClassInstructor,
     ]);
 
     returnVal = { status: 200, query: rows };

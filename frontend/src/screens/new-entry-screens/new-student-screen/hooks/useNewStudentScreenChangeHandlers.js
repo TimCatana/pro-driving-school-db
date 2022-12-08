@@ -63,6 +63,18 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    * Updates the courseId variable to contain the newly inputted value
    * @param value (string) The value inputted into the textInput
    */
+  const handleStudentHeightChange = (e) => {
+    e.preventDefault();
+    studentState.setStudentObject({
+      ...studentState.studentObject,
+      studentHeight: e.target.value,
+    });
+  };
+
+  /**
+   * Updates the courseId variable to contain the newly inputted value
+   * @param value (string) The value inputted into the textInput
+   */
   const handleStudentCellPhoneNumberChange = (e) => {
     e.preventDefault();
     studentState.setStudentObject({
@@ -92,6 +104,18 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
     studentState.setStudentObject({
       ...studentState.studentObject,
       studentAddress: e.target.value,
+    });
+  };
+
+  /**
+   * Updates the courseId variable to contain the newly inputted value
+   * @param value (string) The value inputted into the textInput
+   */
+  const handleStudentAddressApartmentNumberChange = (e) => {
+    e.preventDefault();
+    studentState.setStudentObject({
+      ...studentState.studentObject,
+      studentAddressApartmentNumber: e.target.value,
     });
   };
 
@@ -130,6 +154,18 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
       studentDriversLicenseNumber: e.target.value,
     });
   };
+
+    /**
+   * Updates the courseId variable to contain the newly inputted value
+   * @param value (string) The value inputted into the textInput
+   */
+     const handleStudentDriversLicenseClassChange = (e) => {
+      e.preventDefault();
+      studentState.setStudentObject({
+        ...studentState.studentObject,
+        studentDriversLicenseClass: e.target.value,
+      });
+    };
 
   /**
    * Updates the courseId variable to contain the newly inputted value
@@ -207,12 +243,15 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
     handleStudentLastNameChange,
     handleStudentDateOfBirthChange,
     handleStudentGenderChange,
+    handleStudentHeightChange,
     handleStudentCellPhoneNumberChange,
     handleStudentHomePhoneNumberChange,
     handleStudentAddressChange,
+    handleStudentAddressApartmentNumberChange,
     handleStudentAddressCityChange,
     handleStudentAddressPostalCodeChange,
     handleStudentDriversLicenseNumberChange,
+    handleStudentDriversLicenseClassChange,
     handleStudentDriversLicenseNumberIssuedDateChange,
     handleStudentDriversLicenseNumberExpDateChange,
     handleStudentRegisteredCourseId,

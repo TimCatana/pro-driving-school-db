@@ -1,7 +1,17 @@
+const { productTableHeadings } = require("../../constants/dbConstants");
 const makeDb = require("../../util/makeDb");
 
 const editOneEntry = async (req, res) => {
-  const sql = `UPDATE products SET productId=?, name=?, price=? WHERE id = ?`;
+  const sql = `
+  UPDATE 
+    ${productTableHeadings.tableName} 
+  SET 
+    ${productTableHeadings.productId} = ?, 
+    ${productTableHeadings.name} = ?, 
+    ${productTableHeadings.price} = ? 
+  WHERE 
+    ${productTableHeadings.id} = ?`;
+
   let returnVal;
 
   const db = makeDb();

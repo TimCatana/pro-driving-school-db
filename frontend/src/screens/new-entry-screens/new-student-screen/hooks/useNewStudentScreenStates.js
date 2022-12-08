@@ -23,6 +23,7 @@ const useNewStudentScreenStates = () => {
   ] = useState(false);
 
   const [selectedGender, setSelectedGender] = useState("label");
+  const [selectedLicenseClass, setSelectedLicenseClass] = useState("label");
   const [selectedRegisteredCourse, setSelectedRegisteredCourse] =
     useState("label");
   const [selectedRegisteredProduct, setSelectedRegisteredProduct] =
@@ -32,6 +33,14 @@ const useNewStudentScreenStates = () => {
     MALE: "Male",
     FEMALE: "Female",
     NOT_DECLARED: "Not Declared",
+  };
+
+  const LicenseClasses = {
+    G1: "G1",
+    G2: "G2",
+    G: "G",
+    M1: "M1",
+    M2: "M2",
   };
 
   const [studentObject, setStudentObject] = useState({
@@ -50,6 +59,9 @@ const useNewStudentScreenStates = () => {
     studentGender: "",
     isStudentGenderError: true,
 
+    studentHeight: "",
+    isStudentHeightError: false,
+
     studentCellPhoneNumber: "",
     isStudentCellPhoneNumberError: true,
 
@@ -59,6 +71,9 @@ const useNewStudentScreenStates = () => {
     studentAddress: "",
     isStudentAddressError: true,
 
+    studentAddressApartmentNumber: "",
+    isStudentAddressApartmentNumberError: false,
+
     studentAddressCity: "",
     isStudentAddressCityError: true,
 
@@ -67,6 +82,9 @@ const useNewStudentScreenStates = () => {
 
     studentDriversLicenseNumber: "",
     isStudentDriversLicenseNumberError: true,
+
+    studentDriversLicenseClass: "",
+    isStudentDriversLicenseClassError: true,
 
     studentDriversLicenseNumberIssuedDate: "",
     isStudentDriversLicenseNumberIssuedDateError: true,
@@ -106,12 +124,15 @@ const useNewStudentScreenStates = () => {
 
     selectedGender,
     setSelectedGender,
+    selectedLicenseClass,
+    setSelectedLicenseClass,
     selectedRegisteredCourse,
     setSelectedRegisteredCourse,
     selectedRegisteredProduct,
     setSelectedRegisteredProduct,
 
     Genders,
+    LicenseClasses,
 
     studentObject,
     setStudentObject,

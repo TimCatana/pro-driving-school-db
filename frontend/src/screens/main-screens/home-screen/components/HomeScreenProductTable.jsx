@@ -6,6 +6,7 @@ import {
   THHome,
   TRHome,
 } from "../../../../components";
+import { productTableHeadings } from "../../../../domain/constants/dbConstants";
 
 const HomeScreenProductTable = (props) => {
   return (
@@ -21,17 +22,19 @@ const HomeScreenProductTable = (props) => {
       </thead>
       <tbody>
         {props.homeState.displayData.map((data) => (
-          <TRHome key={data.id}>
-            <TDHome>{data.productId}</TDHome>
-            <TDHome>{data.name}</TDHome>
-            <TDHome>{data.price}</TDHome>
+          <TRHome key={data[productTableHeadings.id]}>
+            <TDHome>{data[productTableHeadings.productId]}</TDHome>
+            <TDHome>{data[productTableHeadings.name]}</TDHome>
+            <TDHome>{data[productTableHeadings.price]}</TDHome>
             <TDHome>
               <Button
                 height="2rem"
                 padding="0 0.5rem"
                 backgroundColor="green"
                 onClick={() => {
-                  props.homeButtonHandlers.navToProduct(data.id);
+                  props.homeButtonHandlers.navToProduct(
+                    data[productTableHeadings.id]
+                  );
                 }}
               >
                 edit
@@ -43,7 +46,9 @@ const HomeScreenProductTable = (props) => {
                 padding="0 0.5rem"
                 backgroundColor="red"
                 onClick={() => {
-                  props.homeButtonHandlers.handleDeleteProduct(data.id);
+                  props.homeButtonHandlers.handleDeleteProduct(
+                    data[productTableHeadings.id]
+                  );
                 }}
               >
                 delete

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { courseTableHeadings } from "../../../../domain/constants/dbConstants";
 import { getOneCourseUC } from "../../../../domain/db";
 import getAllInClassInstructorsUC from "../../../../domain/db/getAll/getAllInClassInstructorsUC";
 
@@ -41,23 +42,26 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
     if (result.data.status == 200) {
       courseState.setCourseObject({
         ...courseState.courseObject,
-        courseId: result.data.query[0].courseId,
+        courseId: result.data.query[0][courseTableHeadings.courseId],
         isCourseIdError: false,
-        courseCapacity: result.data.query[0].capacity,
+        courseCapacity: result.data.query[0][courseTableHeadings.capacity],
         isCourseCapacityError: false,
-        courseStartDate: result.data.query[0].start_date,
+        courseStartDate: result.data.query[0][courseTableHeadings.startDate],
         isCourseStartDateError: false,
-        courseEndDate: result.data.query[0].end_date,
+        courseEndDate: result.data.query[0][courseTableHeadings.endDate],
         isCourseEndDateError: false,
-        courseIsDigital: result.data.query[0].is_digital,
+        courseIsDigital: result.data.query[0][courseTableHeadings.isDigital],
         isCourseIsDigitalError: false,
-        courseInClassInstructor: result.data.query[0].in_class_instructor_id,
+        courseInClassInstructor:
+          result.data.query[0][courseTableHeadings.inClassInstructorId],
         isCourseInClassInstructorError: false,
       });
 
-      courseState.setSelectedCourseType(result.data.query[0].is_digital);
+      courseState.setSelectedCourseType(
+        result.data.query[0][courseTableHeadings.isDigital]
+      );
       courseState.setSelectedInstructor(
-        result.data.query[0].in_class_instructor_id
+        result.data.query[0][courseTableHeadings.inClassInstructorId]
       );
 
       console.log(result.data.query[0]);
@@ -67,7 +71,7 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
   };
 
   /**
-   * 
+   *
    */
   const courseUseEffectHelpers = {
     onRender,

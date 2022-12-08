@@ -7,12 +7,15 @@ const addOneStudentUC = async (studentObject) => {
     studentLastName: studentObject.studentLastName,
     studentDateOfBirth: studentObject.studentDateOfBirth,
     studentGender: studentObject.studentGender,
+    studentHeight: studentObject.studentHeight,
     studentCellPhoneNumber: studentObject.studentCellPhoneNumber,
     studentHomePhoneNumber: studentObject.studentHomePhoneNumber,
     studentAddress: studentObject.studentAddress,
+    studentAddressAptNumber: studentObject.studentAddressApartmentNumber,
     studentAddressCity: studentObject.studentAddressCity,
     studentAddressPostalCode: studentObject.studentAddressPostalCode,
     studentDriversLicenseNumber: studentObject.studentDriversLicenseNumber,
+    studentDriversLicenseClass: studentObject.studentDriversLicenseClass,
     studentDriversLicenseNumberIssuedDate:
       studentObject.studentDriversLicenseNumberIssuedDate,
     studentDriversLicenseNumberExpDate:

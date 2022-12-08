@@ -102,30 +102,6 @@ const useNewProductScreen = () => {
     }
   }, [productState.productObject.productPrice]);
 
-  /******************************/
-  /***** USE EFFECT HELPERS *****/
-  /******************************/
-
-  /***********************/
-  /***** TEXT INPUTS *****/
-  /***********************/
-
-  /*************************/
-  /***** BUTTON CLICKS *****/
-  /*************************/
-
-  /******************************/
-  /***** NAVIGATION HELPERS *****/
-  /******************************/
-
-  // /**
-  //  *  Navigates back to the login screen if no process is currently running.
-  //  */
-  // const _navigateBack = () => {
-  //   if (!isLoading) {
-  //     history.goBack();
-  //   }
-  // };
 
   /*******************/
   /***** RETURNS *****/

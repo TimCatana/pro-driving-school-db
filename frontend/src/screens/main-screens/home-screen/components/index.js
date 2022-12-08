@@ -6,7 +6,7 @@ import HomeScreenStudentTable from "./HomeScreenStudentTable";
 import HomeScreenInClassInstructorTable from "./HomeScreenInClassInstructorTable";
 import HomeScreenInCarInstructorTable from "./HomeScreenInCarInstructorTable";
 import HomeScreenAddNewButton from "./HomeScreenAddNewButton";
-
+import HomeScreenNothingToDisplayTitles from "./HomeScreenNothingToDisplayTitles";
 export {
   HomeScreenTitles,
   HomeScreenSelectButtons,
@@ -16,4 +16,5 @@ export {
   HomeScreenInClassInstructorTable,
   HomeScreenInCarInstructorTable,
   HomeScreenAddNewButton,
+  HomeScreenNothingToDisplayTitles,
 };

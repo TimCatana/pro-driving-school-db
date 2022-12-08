@@ -3,14 +3,13 @@ import {
   deleteOneCourseUC,
   editOneCourseUC,
 } from "../../../../domain/db";
-import { getCoursePdf } from "../../../../domain/pdf";
+import { getFilledCourseEnrollmentPdfUC } from "../../../../domain/pdf";
 
 const useNewCourseScreenButtonHandlers = (courseState) => {
   /**
    *
    */
   const handleAddNewCourseEntry = async () => {
-    // TODO - axios call to node backend that adds new course entry
     // console.log(`axios call to backend, not implemented yet but button works!
     // values:
     // il ${courseState.isLoading}
@@ -79,7 +78,7 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
    * Updates the subscript to mailing list option.
    */
   const handleGetFilledCoursePdf = async () => {
-    const result = await getCoursePdf(1);
+    const result = await getFilledCourseEnrollmentPdfUC(courseState.primary_key);
   };
 
   const courseButtonHandlers = {

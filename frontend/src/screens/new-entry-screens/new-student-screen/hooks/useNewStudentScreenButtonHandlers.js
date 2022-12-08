@@ -3,7 +3,13 @@ import {
   deleteOneStudentUC,
   editOneStudentUC,
 } from "../../../../domain/db";
-import { getStudentPdf } from "../../../../domain/pdf";
+import {
+  getFilledStudentApplicationFormPdfUC,
+  getFilledStudentInCarEvaluationPdfUC,
+  getFilledStudentInCarRecordPdfUC,
+  getFilledStudentInvoicePdfUC,
+  getFilledStudentRecordPdfUC,
+F} from "../../../../domain/pdf";
 
 const useNewStudentScreenButtonHandlers = (studentState) => {
   /**
@@ -130,15 +136,45 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
   /**
    * Updates the subscript to mailing list option.
    */
-  const handleGetFilledStudentPdf = async () => {
-    const result = await getStudentPdf();
+  const handleGetFilledStudentApplicationFormPdf = async () => {
+    const result = await getFilledStudentApplicationFormPdfUC();
+  };
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetFilledStudentInCarEvaluationPdf = async () => {
+    const result = await getFilledStudentInCarEvaluationPdfUC();
+  };
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetFilledStudentInCarRecordPdf = async () => {
+    const result = await getFilledStudentInCarRecordPdfUC();
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetFilledStudentInvoicePdfUC = async () => {
+    const result = await getFilledStudentInvoicePdfUC();
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleGetFilledStudentRecordPdf = async () => {
+    const result = await getFilledStudentRecordPdfUC();
   };
 
   const studentButtonHandlers = {
     handleAddNewStudentEntry,
     handleEditStudentEntry,
     handleDeleteStudent,
-    handleGetFilledStudentPdf,
+    handleGetFilledStudentApplicationFormPdf,
+    handleGetFilledStudentInCarEvaluationPdf,
+    handleGetFilledStudentInCarRecordPdf,
+    handleGetFilledStudentInvoicePdfUC,
+    handleGetFilledStudentRecordPdf,
   };
 
   /*******************/

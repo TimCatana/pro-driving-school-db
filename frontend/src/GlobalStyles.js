@@ -17,11 +17,14 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px; 
 
   --input-color: #99A3BA;
+
+
   --input-border: #CDD9ED;
   --input-background: #fff;
   --input-placeholder: #CBD1DC;
-
+  
   --input-border-focus: #275EFE;
+  --input-border-error: #ff9494;
 
   --group-color: var(--input-color);
   --group-border: var(--input-border);

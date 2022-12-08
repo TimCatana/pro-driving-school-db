@@ -1,18 +1,20 @@
+const fillStudentRecordPdf = require("./utils/pdf/fillStudentRecordPdf");
+
 /**
  *
  * @param {*} req
  * @param {*} res
  */
-const getFilledPdf = async (req, res) => {
+const getFilledStudentRecordPdf = async (req, res) => {
   // get student data from database
 
   // pass student data to functions below
-  console.log("Stub - getting filled course pdf")
+  await fillStudentRecordPdf();
 
   // if error, need to do something (try catch individually, if one fails, the other can work)
 
   // send result
-  res.send("")
+  res.send("");
 };
 
-module.exports = getFilledPdf;
+module.exports = getFilledStudentRecordPdf;

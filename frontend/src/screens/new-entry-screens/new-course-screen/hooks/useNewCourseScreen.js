@@ -11,6 +11,7 @@ import {
   useNewCourseScreenButtonHandlers,
   useNewCourseScreenStates,
 } from ".";
+import { inClassInstTableHeadings } from "../../../../domain/constants/dbConstants";
 
 const useNewCourseScreen = () => {
   /******************/
@@ -178,10 +179,11 @@ const useNewCourseScreen = () => {
    * @dependent inClassInstructor
    */
   useEffect(() => {
-    if (isNumber(courseState.courseObject.courseInClassInstructor)) {
+    if (courseState.courseObject.courseInClassInstructor.length > 0) {
       courseState.inClassInstructors.some(
         (element) =>
-          element.id == courseState.courseObject.courseInClassInstructor
+          element[inClassInstTableHeadings.driversLicenseId] ==
+          courseState.courseObject.courseInClassInstructor
       )
         ? courseState.setCourseObject({
             ...courseState.courseObject,
@@ -198,14 +200,6 @@ const useNewCourseScreen = () => {
       });
     }
   }, [courseState.courseObject.courseInClassInstructor]);
-
-  /**
-   * Validates newly selected in class instructor
-   * @dependent inClassInstructor
-   */
-  useEffect(() => {
-    console.log(courseState.courseObject);
-  }, [courseState.courseObject]);
 
   /******************************/
   /***** NAVIGATION HELPERS *****/

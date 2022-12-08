@@ -8,6 +8,7 @@ import {
   HomeScreenCourseTable,
   HomeScreenInCarInstructorTable,
   HomeScreenInClassInstructorTable,
+  HomeScreenNothingToDisplayTitles,
   HomeScreenProductTable,
   HomeScreenSelectButtons,
   HomeScreenStudentTable,
@@ -56,6 +57,7 @@ const HomeScreen = () => {
 
         <FormDiv>
           {!homeState.isLoading &&
+            homeState.displayData.length > 0 &&
             homeState.displaying === homeState.Data.COURSES && (
               <HomeScreenCourseTable
                 homeState={homeState}
@@ -64,6 +66,7 @@ const HomeScreen = () => {
             )}
 
           {!homeState.isLoading &&
+            homeState.displayData.length > 0 &&
             homeState.displaying === homeState.Data.PRODUCTS && (
               <HomeScreenProductTable
                 homeState={homeState}
@@ -72,6 +75,7 @@ const HomeScreen = () => {
             )}
 
           {!homeState.isLoading &&
+            homeState.displayData.length > 0 &&
             homeState.displaying === homeState.Data.STUDENTS && (
               <HomeScreenStudentTable
                 homeState={homeState}
@@ -80,6 +84,7 @@ const HomeScreen = () => {
             )}
 
           {!homeState.isLoading &&
+            homeState.displayData.length > 0 &&
             homeState.displaying === homeState.Data.IN_CLASS_INST && (
               <HomeScreenInClassInstructorTable
                 homeState={homeState}
@@ -88,12 +93,17 @@ const HomeScreen = () => {
             )}
 
           {!homeState.isLoading &&
+            homeState.displayData.length > 0 &&
             homeState.displaying === homeState.Data.IN_CAR_INST && (
               <HomeScreenInCarInstructorTable
                 homeState={homeState}
                 homeButtonHandlers={homeButtonHandlers}
               />
             )}
+
+          {homeState.displayData.length == 0 && (
+            <HomeScreenNothingToDisplayTitles homeState={homeState} />
+          )}
         </FormDiv>
       </ContainerDiv>
     </WrapperDiv>

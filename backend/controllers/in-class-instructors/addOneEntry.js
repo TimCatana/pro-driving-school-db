@@ -1,3 +1,4 @@
+const { inClassInstTableHeadings } = require("../../constants/dbConstants");
 const makeDb = require("../../util/makeDb");
 
 /**
@@ -13,17 +14,27 @@ const makeDb = require("../../util/makeDb");
  * @param {*} res
  */
 const addOneEntry = async (req, res) => {
-  const sql = `INSERT INTO in_class_inst (inst_drivers_license_id, inst_drivers_license_exp_date, first_name, last_name) VALUES (?, ?, ?, ?);`;
+  const sql = `
+  INSERT INTO 
+    ${inClassInstTableHeadings.tableName} 
+  (
+    ${inClassInstTableHeadings.firstName}, 
+    ${inClassInstTableHeadings.lastName}, 
+    ${inClassInstTableHeadings.driversLicenseId}, 
+    ${inClassInstTableHeadings.driversLicenseExpDate}
+  ) 
+  VALUES (?, ?, ?, ?);`;
+
   let returnVal;
 
   const db = makeDb();
 
   try {
     const rows = await db.query(sql, [
-      req.body.iciDriversLicenseNum,
-      req.body.iciDriversLicenseExpDate,
       req.body.iciFirstName,
       req.body.iciLastName,
+      req.body.iciDriversLicenseNum,
+      req.body.iciDriversLicenseExpDate,
     ]);
 
     returnVal = { status: 200, query: rows };

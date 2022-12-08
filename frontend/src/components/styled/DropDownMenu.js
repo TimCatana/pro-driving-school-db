@@ -16,7 +16,7 @@ const DropDownMenu = styled.select`
   line-height: 1.5rem;
   
   border-radius: 6px;
-  border: 1px solid var(--input-border);
+  border:   ${(props) => (props.isError ? "0.1rem solid var(--input-border-error)" : "0.1rem solid var(--input-border)")}; 
   background: var(--input-background);
   
   color: var(--input-color);

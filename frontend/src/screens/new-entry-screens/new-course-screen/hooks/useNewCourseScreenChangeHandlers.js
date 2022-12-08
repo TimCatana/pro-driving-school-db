@@ -5,6 +5,7 @@ const useNewCourseScreenChangeHandlers = (courseState) => {
    */
   const handleCourseIdChange = (e) => {
     e.preventDefault();
+    console.log(courseState.courseObject.courseId);
     courseState.setCourseObject({
       ...courseState.courseObject,
       courseId: e.target.value,

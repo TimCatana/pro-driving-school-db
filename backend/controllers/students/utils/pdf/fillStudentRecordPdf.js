@@ -1,7 +1,7 @@
 const { PDFDocument } = require("pdf-lib");
 const { readFile, writeFile } = require("fs/promises");
 
-const getFilledStudentRecordPdf = async () => {
+const fillStudentRecordPdf = async () => {
   const pdfDoc = await PDFDocument.load(
     await readFile("./data/pdf/inputs/student_record.pdf")
   );
@@ -27,4 +27,4 @@ const getFilledStudentRecordPdf = async () => {
   await writeFile("./data/pdf/outputs/student_record_output.pdf", pdfBytes);
 };
 
-module.exports = getFilledStudentRecordPdf;
+module.exports = fillStudentRecordPdf;

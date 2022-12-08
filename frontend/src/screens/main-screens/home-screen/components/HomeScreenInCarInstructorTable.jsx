@@ -6,6 +6,7 @@ import {
   THHome,
   TRHome,
 } from "../../../../components";
+import { inCarInstTableHeadings } from "../../../../domain/constants/dbConstants";
 
 const HomeScreenInCarInstructorTable = (props) => {
   return (
@@ -24,20 +25,26 @@ const HomeScreenInCarInstructorTable = (props) => {
       </thead>
       <tbody>
         {props.homeState.displayData.map((data) => (
-          <TRHome key={data.id}>
-            <TDHome>{data.first_name}</TDHome>
-            <TDHome>{data.last_name}</TDHome>
-            <TDHome>{data.inst_drivers_license_id}</TDHome>
-            <TDHome>{data.inst_drivers_license_exp_date}</TDHome>
-            <TDHome>{data.g_drivers_license_id}</TDHome>
-            <TDHome>{data.g_drivers_license_exp_date}</TDHome>
+          <TRHome key={data[inCarInstTableHeadings.id]}>
+            <TDHome>{data[inCarInstTableHeadings.firstName]}</TDHome>
+            <TDHome>{data[inCarInstTableHeadings.lastName]}</TDHome>
+            <TDHome>{data[inCarInstTableHeadings.driversLicenseId]}</TDHome>
+            <TDHome>
+              {data[inCarInstTableHeadings.driversLicenseExpDate]}
+            </TDHome>
+            <TDHome>{data[inCarInstTableHeadings.gDriversLicenseId]}</TDHome>
+            <TDHome>
+              {data[inCarInstTableHeadings.driversLicenseExpDate]}
+            </TDHome>
             <TDHome>
               <Button
                 height="2rem"
                 padding="0 0.5rem"
                 backgroundColor="green"
                 onClick={() => {
-                  props.homeButtonHandlers.navToInCarInst(data.id);
+                  props.homeButtonHandlers.navToInCarInst(
+                    data[inCarInstTableHeadings.id]
+                  );
                 }}
               >
                 edit
@@ -49,7 +56,9 @@ const HomeScreenInCarInstructorTable = (props) => {
                 padding="0 0.5rem"
                 backgroundColor="red"
                 onClick={() => {
-                  props.homeButtonHandlers.handleDeleteInCarInst(data.id);
+                  props.homeButtonHandlers.handleDeleteInCarInst(
+                    data[inCarInstTableHeadings.id]
+                  );
                 }}
               >
                 delete

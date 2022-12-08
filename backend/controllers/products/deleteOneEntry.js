@@ -1,7 +1,13 @@
+const { productTableHeadings } = require("../../constants/dbConstants");
 const makeDb = require("../../util/makeDb");
 
 const deleteOneEntry = async (req, res) => {
-  const sql = `DELETE FROM products WHERE id = ?;`;
+  const sql = `
+  DELETE FROM 
+    ${productTableHeadings.tableName} 
+  WHERE 
+    ${productTableHeadings.id} = ?;`;
+
   let returnVal;
 
   const db = makeDb();

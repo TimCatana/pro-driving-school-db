@@ -1,3 +1,4 @@
+const { productTableHeadings } = require("../../constants/dbConstants");
 const makeDb = require("../../util/makeDb");
 
 /**
@@ -8,7 +9,16 @@ const makeDb = require("../../util/makeDb");
  * @param {*} res
  */
 const addOneEntry = async (req, res) => {
-  const sql = `INSERT INTO products (productId, name, price) VALUES (?, ?, ?);`;
+  const sql = `
+  INSERT INTO 
+    ${productTableHeadings.tableName} 
+  (
+    ${productTableHeadings.productId}, 
+    ${productTableHeadings.name}, 
+    ${productTableHeadings.price}
+  ) 
+  VALUES (?, ?, ?);`;
+  
   let returnVal;
 
   const db = makeDb();

@@ -6,6 +6,7 @@ import {
   THHome,
   TRHome,
 } from "../../../../components";
+import { courseTableHeadings } from "../../../../domain/constants/dbConstants";
 
 const HomeScreenCourseTable = (props) => {
   return (
@@ -24,20 +25,22 @@ const HomeScreenCourseTable = (props) => {
       </thead>
       <tbody>
         {props.homeState.displayData.map((data) => (
-          <TRHome key={data.id}>
-            <TDHome>{data.courseId}</TDHome>
-            <TDHome>{data.capacity}</TDHome>
-            <TDHome>{data.start_date}</TDHome>
-            <TDHome>{data.end_date}</TDHome>
-            <TDHome>{data.is_digital}</TDHome>
-            <TDHome>{data.in_class_instructor_id}</TDHome>
+          <TRHome key={data[courseTableHeadings.id]}>
+            <TDHome>{data[courseTableHeadings.courseId]}</TDHome>
+            <TDHome>{data[courseTableHeadings.capacity]}</TDHome>
+            <TDHome>{data[courseTableHeadings.startDate]}</TDHome>
+            <TDHome>{data[courseTableHeadings.endDate]}</TDHome>
+            <TDHome>{data[courseTableHeadings.isDigital]}</TDHome>
+            <TDHome>{data[courseTableHeadings.inClassInstructorId]}</TDHome>
             <TDHome>
               <Button
                 height="2rem"
                 padding="0 0.5rem"
                 backgroundColor="green"
                 onClick={() => {
-                  props.homeButtonHandlers.navToCourse(data.id);
+                  props.homeButtonHandlers.navToCourse(
+                    data[courseTableHeadings.id]
+                  );
                 }}
               >
                 edit
@@ -49,7 +52,9 @@ const HomeScreenCourseTable = (props) => {
                 padding="0 0.5rem"
                 backgroundColor="red"
                 onClick={() => {
-                  props.homeButtonHandlers.handleDeleteCourse(data.id);
+                  props.homeButtonHandlers.handleDeleteCourse(
+                    data[courseTableHeadings.id]
+                  );
                 }}
               >
                 delete

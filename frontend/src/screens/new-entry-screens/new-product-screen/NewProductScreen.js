@@ -28,6 +28,10 @@ const NewProductScreen = () => {
           <FormDiv>
             <SingleRowTextInputDiv>
               <TextInput
+                isError={
+                  productState.productObject.isProductIdError &&
+                  productState.productObject.productId.length > 0
+                }
                 isLast
                 type="number"
                 min="0"
@@ -39,6 +43,10 @@ const NewProductScreen = () => {
             {/* add min date field and use script to get todays date */}
             <SingleRowTextInputDiv>
               <TextInput
+                isError={
+                  productState.productObject.isProductNameError &&
+                  productState.productObject.productName.length > 0
+                }
                 isLast
                 type="text"
                 maxLength={245}
@@ -50,6 +58,10 @@ const NewProductScreen = () => {
             {/* - TODO need to limit how many characters can be inputted */}
             <SingleRowTextInputDiv>
               <TextInput
+                isError={
+                  productState.productObject.isProductPriceError &&
+                  productState.productObject.productPrice.length > 0
+                }
                 isLast
                 type="number"
                 value={productState.productObject.productPrice}

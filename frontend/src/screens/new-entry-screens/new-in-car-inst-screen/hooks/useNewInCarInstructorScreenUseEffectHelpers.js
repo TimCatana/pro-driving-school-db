@@ -1,3 +1,4 @@
+import { inCarInstTableHeadings } from "../../../../domain/constants/dbConstants";
 import { getOneInCarInstructorUC } from "../../../../domain/db";
 
 const useNewInCarInstructorScreenUseEffectHelpers = (inCarInstructorState) => {
@@ -23,22 +24,23 @@ const useNewInCarInstructorScreenUseEffectHelpers = (inCarInstructorState) => {
     if (result.data.status == 200) {
       inCarInstructorState.setInCarInstructorObject({
         ...inCarInstructorState.inCarInstructorObject,
-        iciFirstName: result.data.query[0].first_name,
+        iciFirstName: result.data.query[0][inCarInstTableHeadings.firstName],
         isICIFirstNameError: false,
-        iciLastName: result.data.query[0].last_name,
+        iciLastName: result.data.query[0][inCarInstTableHeadings.lastName],
         isICILastNameError: false,
-        iciDriversLicenseNum: result.data.query[0].inst_drivers_license_id,
+        iciDriversLicenseNum:
+          result.data.query[0][inCarInstTableHeadings.driversLicenseId],
         isICIDriversLicenseNumError: false,
         iciDriversLicenseExpDate:
-          result.data.query[0].inst_drivers_license_exp_date,
-        isICIDriversLicenseExpDate: false,
-        iciGLicenseNum: result.data.query[0].g_drivers_license_id,
+          result.data.query[0][inCarInstTableHeadings.driversLicenseExpDate],
+        isICIDriversLicenseExpDateError: false,
+        iciGLicenseNum:
+          result.data.query[0][inCarInstTableHeadings.gDriversLicenseId],
         isICIGLicenseNumError: false,
-        iciGLicenseExpDate: result.data.query[0].g_drivers_license_exp_date,
+        iciGLicenseExpDate:
+          result.data.query[0][inCarInstTableHeadings.gDriversLicenseExpDate],
         isICIGLicenseExpDateError: false,
       });
-
-      console.log(result.data.query[0]);
     } else {
       console.log(result.data);
     }

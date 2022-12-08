@@ -1,3 +1,4 @@
+const { inCarInstTableHeadings } = require("../../constants/dbConstants");
 const makeDb = require("../../util/makeDb");
 
 /**
@@ -13,17 +14,27 @@ const makeDb = require("../../util/makeDb");
  * @param {*} res
  */
 const addOneEntry = async (req, res) => {
-  const sql = `INSERT INTO in_car_inst (inst_drivers_license_id, inst_drivers_license_exp_date, first_name, last_name, g_drivers_license_id, g_drivers_license_exp_date) VALUES (?, ?, ?, ?, ?, ?);`;
+  const sql = `
+  INSERT INTO 
+    ${inCarInstTableHeadings.tableName} 
+  (
+    ${inCarInstTableHeadings.firstName}, 
+    ${inCarInstTableHeadings.lastName}, 
+    ${inCarInstTableHeadings.driversLicenseId}, 
+    ${inCarInstTableHeadings.driversLicenseExpDate}, 
+    ${inCarInstTableHeadings.gDriversLicenseId}, 
+    ${inCarInstTableHeadings.gDriversLicenseExpDate}) 
+  VALUES (?, ?, ?, ?, ?, ?);`;
   let returnVal;
 
   const db = makeDb();
 
   try {
     const rows = await db.query(sql, [
-      req.body.iciDriversLicenseNum,
-      req.body.iciDriversLicenseExpDate,
       req.body.iciFirstName,
       req.body.iciLastName,
+      req.body.iciDriversLicenseNum,
+      req.body.iciDriversLicenseExpDate,
       req.body.iciGLicenseNum,
       req.body.iciGLicenseExpDate,
     ]);

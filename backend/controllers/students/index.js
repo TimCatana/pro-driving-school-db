@@ -3,7 +3,11 @@ const deleteOneEntry = require("./deleteOneEntry");
 const editOneEntry = require("./editOneEntry");
 const getAllEntries = require("./getAllEntries");
 const getOneEntry = require("./getOneEntry");
-const getFilledPdf = require("./getFilledPdf");
+const getFilledStudentApplicationFormPdf = require("./getFilledStudentApplicationFormPdf");
+const getFilledStudentInCarEvaluationPdf = require("./getFilledStudentInCarEvaluationPdf");
+const getFilledStudentInCarRecordPdf = require("./getFilledStudentInCarRecordPdf");
+const getFilledStudentInvoicePdf = require("./getFilledStudentInvoicePdf");
+const getFilledStudentRecordPdf = require("./getFilledStudentRecordPdf");
 
 module.exports = {
   getAllEntries,
@@ -11,5 +15,9 @@ module.exports = {
   addOneEntry,
   editOneEntry,
   deleteOneEntry,
-  getFilledPdf,
+  getFilledStudentApplicationFormPdf,
+  getFilledStudentInCarEvaluationPdf,
+  getFilledStudentInCarRecordPdf,
+  getFilledStudentInvoicePdf,
+  getFilledStudentRecordPdf,
 };

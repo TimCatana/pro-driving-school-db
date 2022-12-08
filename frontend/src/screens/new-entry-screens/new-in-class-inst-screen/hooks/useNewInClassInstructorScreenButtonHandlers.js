@@ -14,7 +14,6 @@ const useNewInClassInstructorScreenButtonHandlers = (
    * Updates the subscript to mailing list option.
    */
   const handleAddNewInClassInstructor = async () => {
-    // TODO - axios call to node backend that adds new course entry
     // console.log(`axios call to backend, not implemented yet but button works!
     //     values:
     //     il ${isLoading}

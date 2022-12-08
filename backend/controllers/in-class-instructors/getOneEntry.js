@@ -1,3 +1,4 @@
+const { inClassInstTableHeadings } = require("../../constants/dbConstants");
 const makeDb = require("../../util/makeDb");
 
 /**
@@ -6,7 +7,14 @@ const makeDb = require("../../util/makeDb");
  * @param {*} res
  */
 const getOneEntry = async (req, res) => {
-  const sql = `SELECT * FROM in_class_inst WHERE id = ?;`;
+  const sql = `
+  SELECT 
+    * 
+  FROM 
+    ${inClassInstTableHeadings.tableName} 
+  WHERE 
+    ${inClassInstTableHeadings.id} = ?;`;
+
   let returnVal;
 
   const db = makeDb();

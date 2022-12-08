@@ -28,7 +28,7 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
     //     }
     //     ${typeof inCarInstructorState.inCarInstructorObject
     //       .iciDriversLicenseExpDate}
-    //     ${inCarInstructorState.inCarInstructorObject.isICIDriversLicenseExpDate}
+    //     ${inCarInstructorState.inCarInstructorObject.isICIDriversLicenseExpDateError}
     //     icigl ${inCarInstructorState.inCarInstructorObject.iciGLicenseNum}
     //     ${typeof inCarInstructorState.inCarInstructorObject.iciGLicenseNum}
     //     ${inCarInstructorState.inCarInstructorObject.isICIGLicenseExpDateError}
@@ -42,7 +42,7 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
       !inCarInstructorState.inCarInstructorObject.isICIFirstNameError &&
       !inCarInstructorState.inCarInstructorObject.isICILastNameError &&
       !inCarInstructorState.inCarInstructorObject.isICIDriversLicenseNumError &&
-      !inCarInstructorState.inCarInstructorObject.isICIDriversLicenseExpDate &&
+      !inCarInstructorState.inCarInstructorObject.isICIDriversLicenseExpDateError &&
       !inCarInstructorState.inCarInstructorObject.isICIGLicenseNumError &&
       !inCarInstructorState.inCarInstructorObject.isICIGLicenseExpDateError
     ) {
@@ -62,7 +62,7 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
       !inCarInstructorState.inCarInstructorObject.isICIFirstNameError &&
       !inCarInstructorState.inCarInstructorObject.isICILastNameError &&
       !inCarInstructorState.inCarInstructorObject.isICIDriversLicenseNumError &&
-      !inCarInstructorState.inCarInstructorObject.isICIDriversLicenseExpDate &&
+      !inCarInstructorState.inCarInstructorObject.isICIDriversLicenseExpDateError &&
       !inCarInstructorState.inCarInstructorObject.isICIGLicenseNumError &&
       !inCarInstructorState.inCarInstructorObject.isICIGLicenseExpDateError
     ) {

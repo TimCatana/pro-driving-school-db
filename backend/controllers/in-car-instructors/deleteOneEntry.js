@@ -1,3 +1,4 @@
+const { inCarInstTableHeadings } = require("../../constants/dbConstants");
 const makeDb = require("../../util/makeDb");
 
 /**
@@ -6,7 +7,12 @@ const makeDb = require("../../util/makeDb");
  * @param {*} res
  */
 const deleteOneEntry = async (req, res) => {
-  const sql = `DELETE FROM in_car_inst WHERE id = ?;`;
+  const sql = `
+  DELETE FROM 
+    ${inCarInstTableHeadings.tableName} 
+  WHERE 
+    ${inCarInstTableHeadings.id} = ?;`;
+
   let returnVal;
 
   const db = makeDb();

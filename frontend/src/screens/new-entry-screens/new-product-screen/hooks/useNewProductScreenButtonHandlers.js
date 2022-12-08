@@ -9,20 +9,19 @@ const useNewProductScreenButtonHandlers = (productState) => {
    * Updates the subscript to mailing list option.
    */
   const handleAddNewProductEntry = async () => {
-    // TODO - axios call to node backend that adds new course entry
-    console.log(`axios call to backend, not implemented yet but button works!
-    values:
-    ${productState.isLoading}
-    pid ${productState.productObject.productId}
-    ${typeof productState.productObject.productId}
-    ${productState.productObject.isProductIdError}
-    pn ${productState.productObject.productName}
-    ${typeof productState.productObject.productName}
-    ${productState.productObject.isProductNameError}
-    pp ${productState.productObject.productPrice}
-    ${typeof productState.productObject.productPrice}
-    ${productState.productObject.isProductPriceError}
-    `);
+    // console.log(`axios call to backend, not implemented yet but button works!
+    // values:
+    // ${productState.isLoading}
+    // pid ${productState.productObject.productId}
+    // ${typeof productState.productObject.productId}
+    // ${productState.productObject.isProductIdError}
+    // pn ${productState.productObject.productName}
+    // ${typeof productState.productObject.productName}
+    // ${productState.productObject.isProductNameError}
+    // pp ${productState.productObject.productPrice}
+    // ${typeof productState.productObject.productPrice}
+    // ${productState.productObject.isProductPriceError}
+    // `);
 
     productState.setIsLoading(true);
     if (

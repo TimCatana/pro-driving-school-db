@@ -6,6 +6,7 @@ import {
   THHome,
   TRHome,
 } from "../../../../components";
+import { studentTableHeadings } from "../../../../domain/constants/dbConstants";
 
 const HomeScreenStudentTable = (props) => {
   return (
@@ -17,12 +18,15 @@ const HomeScreenStudentTable = (props) => {
           <THHome>Last Name</THHome>
           <THHome>Date Of Birth</THHome>
           <THHome>Gender</THHome>
+          <THHome>Height</THHome>
           <THHome>Cell Phone</THHome>
           <THHome>Home Phone</THHome>
           <THHome>Address</THHome>
+          <THHome>Apt. No.</THHome>
           <THHome>City</THHome>
           <THHome>Postal Code</THHome>
           <THHome>License Number</THHome>
+          <THHome>License Class</THHome>
           <THHome>License Issued Date</THHome>
           <THHome>License Expiry Date</THHome>
           <THHome>Registered Course</THHome>
@@ -33,29 +37,36 @@ const HomeScreenStudentTable = (props) => {
       </thead>
       <tbody>
         {props.homeState.displayData.map((data) => (
-          <TRHome key={data.id}>
-            <TDHome>{data.first_name}</TDHome>
-            <TDHome>{data.middle_name}</TDHome>
-            <TDHome>{data.last_name}</TDHome>
-            <TDHome>{data.date_of_birth}</TDHome>
-            <TDHome>{data.gender}</TDHome>
-            <TDHome>{data.cell_phone_number}</TDHome>
-            <TDHome>{data.home_phone_number}</TDHome>
-            <TDHome>{data.address}</TDHome>
-            <TDHome>{data.address_city}</TDHome>
-            <TDHome>{data.address_postal_code}</TDHome>
-            <TDHome>{data.drivers_license_id}</TDHome>
-            <TDHome>{data.drivers_license_date_issued}</TDHome>
-            <TDHome>{data.drivers_license_exp_date}</TDHome>
-            <TDHome>{data.registered_course}</TDHome>
-            <TDHome>{data.purchased_product}</TDHome>
+          <TRHome key={data[studentTableHeadings.id]}>
+            <TDHome>{data[studentTableHeadings.firstName]}</TDHome>
+            <TDHome>{data[studentTableHeadings.middleName]}</TDHome>
+            <TDHome>{data[studentTableHeadings.lastName]}</TDHome>
+            <TDHome>{data[studentTableHeadings.dateOfBirth]}</TDHome>
+            <TDHome>{data[studentTableHeadings.gender]}</TDHome>
+            <TDHome>{data[studentTableHeadings.height]}</TDHome>
+            <TDHome>{data[studentTableHeadings.cellPhoneNumber]}</TDHome>
+            <TDHome>{data[studentTableHeadings.homePhoneNumber]}</TDHome>
+            <TDHome>{data[studentTableHeadings.address]}</TDHome>
+            <TDHome>{data[studentTableHeadings.addressAptNum]}</TDHome>
+            <TDHome>{data[studentTableHeadings.addressCity]}</TDHome>
+            <TDHome>{data[studentTableHeadings.addressPostalCode]}</TDHome>
+            <TDHome>{data[studentTableHeadings.driversLicenseId]}</TDHome>
+            <TDHome>{data[studentTableHeadings.driversLicenseClass]}</TDHome>
+            <TDHome>
+              {data[studentTableHeadings.driversLicenseIssuedDate]}
+            </TDHome>
+            <TDHome>{data[studentTableHeadings.driversLicenseExpDate]}</TDHome>
+            <TDHome>{data[studentTableHeadings.registeredCourse]}</TDHome>
+            <TDHome>{data[studentTableHeadings.purchasedProduct]}</TDHome>
             <TDHome>
               <Button
                 height="2rem"
                 padding="0 0.5rem"
                 backgroundColor="green"
                 onClick={() => {
-                  props.homeButtonHandlers.navToStudent(data.id);
+                  props.homeButtonHandlers.navToStudent(
+                    data[studentTableHeadings.id]
+                  );
                 }}
               >
                 edit
@@ -67,7 +78,9 @@ const HomeScreenStudentTable = (props) => {
                 padding="0 0.5rem"
                 backgroundColor="red"
                 onClick={() => {
-                  props.homeButtonHandlers.handleDeleteStudent(data.id);
+                  props.homeButtonHandlers.handleDeleteStudent(
+                    data[studentTableHeadings.id]
+                  );
                 }}
               >
                 delete

@@ -1,17 +1,30 @@
+const { inCarInstTableHeadings } = require("../../constants/dbConstants");
 const makeDb = require("../../util/makeDb");
 
 const editOneEntry = async (req, res) => {
-  const sql = `UPDATE in_car_inst SET inst_drivers_license_id=?, inst_drivers_license_exp_date=?, first_name=?, last_name=?, g_drivers_license_id=?, g_drivers_license_exp_date=? WHERE id = ?`;
+  const sql = `
+  UPDATE 
+    ${inCarInstTableHeadings.tableName} 
+  SET 
+    ${inCarInstTableHeadings.firstName} = ?, 
+    ${inCarInstTableHeadings.lastName} = ?, 
+    ${inCarInstTableHeadings.driversLicenseId} = ?, 
+    ${inCarInstTableHeadings.driversLicenseExpDate} = ?, 
+    ${inCarInstTableHeadings.driversLicenseId} = ?, 
+    ${inCarInstTableHeadings.gDriversLicenseExpDate} = ?
+  WHERE 
+    ${inCarInstTableHeadings.id} = ?;`;
+
   let returnVal;
 
   const db = makeDb();
 
   try {
     const rows = await db.query(sql, [
-      req.body.iciDriversLicenseNum,
-      req.body.iciDriversLicenseExpDate,
       req.body.iciFirstName,
       req.body.iciLastName,
+      req.body.iciDriversLicenseNum,
+      req.body.iciDriversLicenseExpDate,
       req.body.iciGLicenseNum,
       req.body.iciGLicenseExpDate,
       req.params.primary_key,
