@@ -8,16 +8,20 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
    *
    */
   const onRender = async () => {
-    courseState.setIsLoading(true);
+    courseState.uiModifiersObject.setIsLoading(true);
     await handleGetInClassInstructors();
 
     if (courseState.primary_key != 0) {
-      await handleGetSpecificCourse();
-      courseState.setAreFieldsEditable(false);
-      courseState.setIsNewEntry(false);
+      await _handleGetSpecificCourse();
+      courseState.uiModifiersObject.setIsNewEntry(false);
+      courseState.uiModifiersObject.setAreFieldsEditable(false);
+    } else {
+      courseState.uiModifiersObject.setIsNewEntry(true);
+      courseState.uiModifiersObject.setAreFieldsEditable(true);
     }
 
-    courseState.setIsLoading(false);
+
+    courseState.uiModifiersObject.setIsLoading(false);
   };
 
   /**
@@ -27,47 +31,53 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
     const result = await getAllInClassInstructorsUC();
 
     if (result.data.status == 200) {
-      courseState.setInClassInstructors(result.data.query);
+      courseState.dropdownMenuOptionsObject.setInClassInstructors(result.data.query);
     } else {
-      courseState.setInClassInstructors([]);
+      courseState.dropdownMenuOptionsObject.setInClassInstructors(result.data.query);
+      courseState.dropdownMenuOptionsObject.setFailedToGetInClassInstructors(true);
     }
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
-  const handleGetSpecificCourse = async () => {
+  const _handleGetSpecificCourse = async () => {
     const result = await getOneCourseUC(courseState.primary_key);
 
     if (result.data.status == 200) {
-      courseState.setCourseObject({
-        ...courseState.courseObject,
-        courseId: result.data.query[0][courseTableHeadings.courseId],
-        isCourseIdError: false,
-        courseCapacity: result.data.query[0][courseTableHeadings.capacity],
-        isCourseCapacityError: false,
-        courseStartDate: result.data.query[0][courseTableHeadings.startDate],
-        isCourseStartDateError: false,
-        courseEndDate: result.data.query[0][courseTableHeadings.endDate],
-        isCourseEndDateError: false,
-        courseIsDigital: result.data.query[0][courseTableHeadings.isDigital],
-        isCourseIsDigitalError: false,
-        courseInClassInstructor:
-          result.data.query[0][courseTableHeadings.inClassInstructorId],
-        isCourseInClassInstructorError: false,
-      });
+      courseState.courseObject.setCourseId(result.data.query[0][courseTableHeadings.courseId]);
+      courseState.courseObject.setIsCourseIdError(false);
 
-      courseState.setSelectedCourseType(
-        result.data.query[0][courseTableHeadings.isDigital]
-      );
-      courseState.setSelectedInstructor(
+      courseState.courseObject.setCourseCapacity(result.data.query[0][courseTableHeadings.capacity]);
+      courseState.courseObject.setIsCourseCapacityError(false);
+
+      courseState.courseObject.setCourseStartDate(result.data.query[0][courseTableHeadings.startDate]);
+      courseState.courseObject.setIsCourseStartDateError(false);
+
+      courseState.courseObject.setCourseEndDate(result.data.query[0][courseTableHeadings.endDate]);
+      courseState.courseObject.setIsCourseEndDateError(false);
+
+      courseState.courseObject.setCourseIsDigital(result.data.query[0][courseTableHeadings.isDigital]);
+      courseState.courseObject.setIsCourseIsDigitalError(false);
+
+      courseState.courseObject.setCourseInClassInstructor(
         result.data.query[0][courseTableHeadings.inClassInstructorId]
       );
+      courseState.courseObject.setIsCourseInClassInstructorError(false);
 
-      console.log(result.data.query[0]);
+   
+
+      courseState.uiModifiersObject.setFailedToGetData(false);
     } else {
-      console.log(result.data);
+      courseState.uiModifiersObject.setFailedToGetData(true);
     }
+  };
+
+  /**
+   *
+   */
+  const navigateAfterSave = async () => {
+    courseState.navigation("/?initial_selection=courses");
   };
 
   /**
@@ -75,6 +85,7 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
    */
   const courseUseEffectHelpers = {
     onRender,
+    navigateAfterSave,
   };
   /*******************/
   /***** RETURNS *****/

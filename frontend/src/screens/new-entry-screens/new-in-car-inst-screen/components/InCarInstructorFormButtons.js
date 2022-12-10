@@ -23,6 +23,7 @@ const InCarInstructorFormButtons = (props) => {
           Save
         </Button>
       )}
+
       {!inCarInstructorState.uiModifiersObject.isNewEntry && (
         <>
           {!inCarInstructorState.uiModifiersObject.areFieldsEditable && (
@@ -52,6 +53,7 @@ const InCarInstructorFormButtons = (props) => {
           )}
         </>
       )}
+      
       <Button
         disabled={inCarInstructorState.uiModifiersObject.isLoading}
         onClick={() => inCarInstructorState.navigation("/?initial_selection=in-car-instructors")}

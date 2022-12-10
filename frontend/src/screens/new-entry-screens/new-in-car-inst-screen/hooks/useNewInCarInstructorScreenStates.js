@@ -58,12 +58,8 @@ const useNewInCarInstructorScreenStates = () => {
    * Date Selection Focus (used to only show date picker when text input is selected)
    */
 
-  /**
-   * Date Selection Focus (used to only show date picker when text input is selected)
-   */
-
-  const [isInstDriversLicenseFocus, setIsInstDriversLicenseFocus] = useState();
-  const [isGDriversLicenseFocus, setIsGDriversLicenseFocus] = useState();
+  const [isInstDriversLicenseFocus, setIsInstDriversLicenseFocus] = useState(false);
+  const [isGDriversLicenseFocus, setIsGDriversLicenseFocus] = useState(false);
 
   const dateTextInputFocusesObject = {
     isInstDriversLicenseFocus,

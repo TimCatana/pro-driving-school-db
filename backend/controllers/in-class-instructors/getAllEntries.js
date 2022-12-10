@@ -11,7 +11,9 @@ const getAllEntries = async (req, res) => {
   SELECT 
     * 
   FROM 
-    ${inClassInstTableHeadings.tableName};`;
+    ${inClassInstTableHeadings.tableName}
+  ORDER BY
+    ${inClassInstTableHeadings.id} DESC;`;
 
   let returnVal;
 

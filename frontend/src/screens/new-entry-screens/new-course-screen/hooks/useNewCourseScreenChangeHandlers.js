@@ -5,11 +5,7 @@ const useNewCourseScreenChangeHandlers = (courseState) => {
    */
   const handleCourseIdChange = (e) => {
     e.preventDefault();
-    console.log(courseState.courseObject.courseId);
-    courseState.setCourseObject({
-      ...courseState.courseObject,
-      courseId: e.target.value,
-    });
+    courseState.courseObject.setCourseId(e.target.value);
   };
 
   /**
@@ -18,10 +14,7 @@ const useNewCourseScreenChangeHandlers = (courseState) => {
    */
   const handleCourseCapacityChange = (e) => {
     e.preventDefault();
-    courseState.setCourseObject({
-      ...courseState.courseObject,
-      courseCapacity: e.target.value,
-    });
+    courseState.courseObject.setCourseCapacity(e.target.value);
   };
 
   /**
@@ -30,10 +23,7 @@ const useNewCourseScreenChangeHandlers = (courseState) => {
    */
   const handleCourseStartDateChange = (e) => {
     e.preventDefault();
-    courseState.setCourseObject({
-      ...courseState.courseObject,
-      courseStartDate: e.target.value,
-    });
+    courseState.courseObject.setCourseStartDate(e.target.value);
   };
 
   /**
@@ -42,10 +32,7 @@ const useNewCourseScreenChangeHandlers = (courseState) => {
    */
   const handleCourseEndDateChange = (e) => {
     e.preventDefault();
-    courseState.setCourseObject({
-      ...courseState.courseObject,
-      courseEndDate: e.target.value,
-    });
+    courseState.courseObject.setCourseEndDate(e.target.value);
   };
 
   /**
@@ -54,10 +41,7 @@ const useNewCourseScreenChangeHandlers = (courseState) => {
    */
   const handleIsCourseDigitalChange = (e) => {
     e.preventDefault();
-    courseState.setCourseObject({
-      ...courseState.courseObject,
-      courseIsDigital: e.target.value,
-    });
+    courseState.courseObject.setCourseIsDigital(e.target.value);
   };
 
   /**
@@ -66,10 +50,7 @@ const useNewCourseScreenChangeHandlers = (courseState) => {
    */
   const handleInClassInstructorChange = (e) => {
     e.preventDefault();
-    courseState.setCourseObject({
-      ...courseState.courseObject,
-      courseInClassInstructor: e.target.value,
-    });
+    courseState.courseObject.setCourseInClassInstructor(e.target.value);
   };
 
   /**
@@ -77,7 +58,7 @@ const useNewCourseScreenChangeHandlers = (courseState) => {
    * @param {*} isFocused
    */
   const handleStartDateFocusAndBlurHandler = (isFocused) => {
-    courseState.setIsStartDateFocus(isFocused);
+    courseState.dateTextInputFocusesObject.setIsStartDateFocus(isFocused);
   };
 
   /**
@@ -85,7 +66,7 @@ const useNewCourseScreenChangeHandlers = (courseState) => {
    * @param {*} isFocused
    */
   const handleEndDateFocusAndBlurHandler = (isFocused) => {
-    courseState.setIsEndDateFocus(isFocused);
+    courseState.dateTextInputFocusesObject.setIsEndDateFocus(isFocused);
   };
 
   /**

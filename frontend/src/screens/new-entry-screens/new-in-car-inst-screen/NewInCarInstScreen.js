@@ -9,6 +9,7 @@ import {
   SingleRowTextInputDiv,
   Title,
   CustomAlert,
+  LoadingSpinner,
 } from "../../../components";
 import { WrapperDiv, ContainerDiv, FormDiv, ButtonsDiv } from "../common/components/styled";
 import { InCarInstructorFormButtons, InCarInstructorFormInputs } from "./components";
@@ -20,7 +21,11 @@ const NewInCarInstScreen = () => {
   return (
     <WrapperDiv>
       <ContainerDiv>
-        <Title>NewInCarInstScreen</Title>
+        {inCarInstructorState.uiModifiersObject.isNewEntry && <Title>Add New In Car Instructor</Title>}
+
+        {!inCarInstructorState.uiModifiersObject.isNewEntry && <Title>Edit In Car Instructor</Title>}
+
+        {inCarInstructorState.uiModifiersObject.isLoading && <LoadingSpinner />}
 
         {!inCarInstructorState.isLoading && (
           <>

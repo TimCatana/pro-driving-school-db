@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import AlertVariants from "../../../../domain/constants/AlertVariants";
 
 const useNewCourseScreenStates = () => {
   /******************/
@@ -22,73 +23,130 @@ const useNewCourseScreenStates = () => {
    * Parameters that change the UI based on their value
    */
 
-  const [uiModifiers, setUiModifiers] = useState({
-    isLoading: true,
-    isNewEntry: true,
-    areFieldsEditable: true,
-    failedToGetData: true,
-    dataSaved: false,
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [isNewEntry, setIsNewEntry] = useState(true);
+  const [areFieldsEditable, setAreFieldsEditable] = useState(true);
+  const [failedToGetData, setFailedToGetData] = useState(true);
+  const [dataSaved, setDataSaved] = useState(false);
+
+  const uiModifiersObject = {
+    isLoading,
+    setIsLoading,
+
+    isNewEntry,
+    setIsNewEntry,
+
+    areFieldsEditable,
+    setAreFieldsEditable,
+
+    failedToGetData,
+    setFailedToGetData,
+
+    dataSaved,
+    setDataSaved,
+  };
 
   /**
    * For error messages
    */
 
-  const [errorVariables, setErrorVariables] = useState({
-    showError: false,
-    errorMessage: "",
-  });
+  const [showMessage, setShowMessage] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageColor, setMessageColor] = useState(AlertVariants.DANGER);
+
+  const messageObject = {
+    showMessage,
+    setShowMessage,
+    message,
+    setMessage,
+    messageColor,
+    setMessageColor,
+  };
 
   /**
    * The items used to fill dropdown menus when dropdown menus options are dependant on  dynamic data
    */
 
-  const [dropdownMenuOptions, setDropdownMenuOptions] = useState({
-    inClassInstructors: [],
-    failedToGetInClassInstructors: false,
-  });
+  const [inClassInstructors, setInClassInstructors] = useState([]);
+  const [failedToGetInClassInstructors, setFailedToGetInClassInstructors] = useState(false);
+
+  const dropdownMenuOptionsObject = {
+    inClassInstructors,
+    setInClassInstructors,
+    failedToGetInClassInstructors,
+    setFailedToGetInClassInstructors,
+  };
 
   /**
    * Date Selection Focus (used to only show date picker when text input is selected)
    */
 
-  const [dateTextInputFocus, setDateTextInputFocus] = useState({
-    isStartDateFocus: false,
-    isEndDateFocus: false,
-  });
+  const [isStartDateFocus, setIsStartDateFocus] = useState(false);
+  const [isEndDateFocus, setIsEndDateFocus] = useState(false);
 
-  /**
-   * Variables to determine which option is preselected in dropdown menues
-   */
+  const dateTextInputFocusesObject = {
+    isStartDateFocus,
+    setIsStartDateFocus,
 
-  const [preSelectedDropdownOptions, setPreSelectedDropdownOptions] = useState({
-    selectedCourseType: "label",
-    selectedInstructor: "label",
-  });
+    isEndDateFocus,
+    setIsEndDateFocus,
+  };
+
+ 
 
   /**
    * The object representing an entry in the database
    */
 
-  const [courseObject, setCourseObject] = useState({
-    courseId: "",
-    isCourseIdError: true,
+  const [courseId, setCourseId] = useState("");
+  const [isCourseIdError, setIsCourseIdError] = useState(true);
 
-    courseCapacity: "",
-    isCourseCapacityError: true,
+  const [courseCapacity, setCourseCapacity] = useState("");
+  const [isCourseCapacityError, setIsCourseCapacityError] = useState(true);
 
-    courseStartDate: "",
-    isCourseStartDateError: true,
+  const [courseStartDate, setCourseStartDate] = useState("");
+  const [isCourseStartDateError, setIsCourseStartDateError] = useState(true);
 
-    courseEndDate: "",
-    isCourseEndDateError: true,
+  const [courseEndDate, setCourseEndDate] = useState("");
+  const [isCourseEndDateError, setIsCourseEndDateError] = useState(true);
 
-    courseIsDigital: "",
-    isCourseIsDigitalError: true,
+  const [courseIsDigital, setCourseIsDigital] = useState("label");
+  const [isCourseIsDigitalError, setIsCourseIsDigitalError] = useState(true);
 
-    courseInClassInstructor: "",
-    isCourseInClassInstructorError: true,
-  });
+  const [courseInClassInstructor, setCourseInClassInstructor] = useState("label");
+  const [isCourseInClassInstructorError, setIsCourseInClassInstructorError] = useState(true);
+
+  const courseObject = {
+    courseId,
+    setCourseId,
+    isCourseIdError,
+    setIsCourseIdError,
+
+    courseCapacity,
+    setCourseCapacity,
+    isCourseCapacityError,
+    setIsCourseCapacityError,
+
+    courseStartDate,
+    setCourseStartDate,
+    isCourseStartDateError,
+    setIsCourseStartDateError,
+
+    courseEndDate,
+    setCourseEndDate,
+    isCourseEndDateError,
+    setIsCourseEndDateError,
+
+    courseIsDigital,
+    setCourseIsDigital,
+    isCourseIsDigitalError,
+    setIsCourseIsDigitalError,
+
+    courseInClassInstructor,
+    setCourseInClassInstructor,
+    isCourseInClassInstructorError,
+    setIsCourseInClassInstructorError,
+  };
 
   /**
    * The state object of the screen
@@ -100,23 +158,11 @@ const useNewCourseScreenStates = () => {
 
     CourseTypes,
 
-    uiModifiers,
-    setUiModifiers,
-
-    errorVariables,
-    setErrorVariables,
-
-    dropdownMenuOptions,
-    setDropdownMenuOptions,
-
-    dateTextInputFocus,
-    setDateTextInputFocus,
-
-    preSelectedDropdownOptions,
-    setPreSelectedDropdownOptions,
-
+    uiModifiersObject,
+    messageObject,
+    dropdownMenuOptionsObject,
+    dateTextInputFocusesObject,
     courseObject,
-    setCourseObject,
   };
 
   /*******************/

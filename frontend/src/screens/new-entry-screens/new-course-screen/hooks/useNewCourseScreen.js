@@ -1,10 +1,5 @@
 import { useEffect } from "react";
-import {
-  isDateFormatYYYYMMDD,
-  isNumber,
-  isEndDateFuture,
-  isValidDate,
-} from "../../../../domain/validators";
+import { isDateFormatYYYYMMDD, isNumber, isEndDateFuture, isValidDate } from "../../../../domain/validators";
 import {
   useNewCourseScreenUseEffectHelpers,
   useNewCourseScreenChangeHandlers,
@@ -20,12 +15,9 @@ const useNewCourseScreen = () => {
 
   const { courseState } = useNewCourseScreenStates();
 
-  const { courseChangeHandlers } =
-    useNewCourseScreenChangeHandlers(courseState);
-  const { courseButtonHandlers } =
-    useNewCourseScreenButtonHandlers(courseState);
-  const { courseUseEffectHelpers } =
-    useNewCourseScreenUseEffectHelpers(courseState);
+  const { courseChangeHandlers } = useNewCourseScreenChangeHandlers(courseState);
+  const { courseButtonHandlers } = useNewCourseScreenButtonHandlers(courseState);
+  const { courseUseEffectHelpers } = useNewCourseScreenUseEffectHelpers(courseState);
 
   /***********************/
   /***** USE EFFECTS *****/
@@ -43,10 +35,10 @@ const useNewCourseScreen = () => {
    *
    */
   useEffect(() => {
-    if (courseState.courseSaved && !courseState.isLoading) {
-      courseState.navigation("/");
+    if (courseState.uiModifiersObject.dataSaved) {
+      courseUseEffectHelpers.navigateAfterSave();
     }
-  }, [courseState.courseSaved]);
+  }, [courseState.uiModifiersObject.dataSaved]);
 
   /**
    * Validates newly inputted courseId
@@ -55,19 +47,10 @@ const useNewCourseScreen = () => {
   useEffect(() => {
     if (isNumber(courseState.courseObject.courseId)) {
       parseInt(courseState.courseObject.courseId) > -1
-        ? courseState.setCourseObject({
-            ...courseState.courseObject,
-            isCourseIdError: false,
-          })
-        : courseState.setCourseObject({
-            ...courseState.courseObject,
-            isCourseIdError: true,
-          });
+        ? courseState.courseObject.setIsCourseIdError(false)
+        : courseState.courseObject.setIsCourseIdError(true);
     } else {
-      courseState.setCourseObject({
-        ...courseState.courseObject,
-        isCourseIdError: true,
-      });
+      courseState.courseObject.setIsCourseIdError(true);
     }
   }, [courseState.courseObject.courseId]);
 
@@ -78,19 +61,10 @@ const useNewCourseScreen = () => {
   useEffect(() => {
     if (isNumber(courseState.courseObject.courseCapacity)) {
       parseInt(courseState.courseObject.courseCapacity) > -1
-        ? courseState.setCourseObject({
-            ...courseState.courseObject,
-            isCourseCapacityError: false,
-          })
-        : courseState.setCourseObject({
-            ...courseState.courseObject,
-            isCourseCapacityError: true,
-          });
+        ? courseState.courseObject.setIsCourseCapacityError(false)
+        : courseState.courseObject.setIsCourseCapacityError(true);
     } else {
-      courseState.setCourseObject({
-        ...courseState.courseObject,
-        isCourseCapacityError: true,
-      });
+      courseState.courseObject.setIsCourseCapacityError(true);
     }
   }, [courseState.courseObject.courseCapacity]);
 
@@ -100,25 +74,16 @@ const useNewCourseScreen = () => {
    */
   useEffect(() => {
     if (isDateFormatYYYYMMDD(courseState.courseObject.courseStartDate)) {
-      isEndDateFuture(
-        courseState.courseObject.courseStartDate,
-        courseState.courseObject.courseEndDate
-      ) // date validation is done within function therefore is end date isn't selected then should return false
-        ? courseState.setCourseObject({
-            ...courseState.courseObject,
-            isCourseStartDateError: false,
-            isCourseEndDateError: false,
-          })
-        : courseState.setCourseObject({
-            ...courseState.courseObject,
-            isCourseStartDateError: false,
-            isCourseEndDateError: true,
-          });
+      // date validation is done within function therefore is end date isn't selected then should return false
+      if (isEndDateFuture(courseState.courseObject.courseStartDate, courseState.courseObject.courseEndDate)) {
+        courseState.courseObject.setIsCourseStartDateError(false);
+        courseState.courseObject.setIsCourseEndDateError(false);
+      } else {
+        courseState.courseObject.setIsCourseStartDateError(false);
+        courseState.courseObject.setIsCourseEndDateError(true);
+      }
     } else {
-      courseState.setCourseObject({
-        ...courseState.courseObject,
-        isCourseStartDateError: true,
-      });
+      courseState.courseObject.setIsCourseStartDateError(true);
     }
   }, [courseState.courseObject.courseStartDate]);
 
@@ -129,29 +94,14 @@ const useNewCourseScreen = () => {
   useEffect(() => {
     if (isDateFormatYYYYMMDD(courseState.courseObject.courseEndDate)) {
       if (isValidDate(courseState.courseObject.courseStartDate)) {
-        isEndDateFuture(
-          courseState.courseObject.courseStartDate,
-          courseState.courseObject.courseEndDate
-        )
-          ? courseState.setCourseObject({
-              ...courseState.courseObject,
-              isCourseEndDateError: false,
-            })
-          : courseState.setCourseObject({
-              ...courseState.courseObject,
-              isCourseEndDateError: true,
-            });
+        isEndDateFuture(courseState.courseObject.courseStartDate, courseState.courseObject.courseEndDate)
+          ? courseState.courseObject.setIsCourseEndDateError(false)
+          : courseState.courseObject.setIsCourseEndDateError(true);
       } else {
-        courseState.setCourseObject({
-          ...courseState.courseObject,
-          isCourseEndDateError: false,
-        });
+        courseState.courseObject.setIsCourseEndDateError(false);
       }
     } else {
-      courseState.setCourseObject({
-        ...courseState.courseObject,
-        isCourseEndDateError: true,
-      });
+      courseState.courseObject.setIsCourseEndDateError(true);
     }
   }, [courseState.courseObject.courseEndDate]);
 
@@ -160,18 +110,10 @@ const useNewCourseScreen = () => {
    * @dependent isDigital
    */
   useEffect(() => {
-    courseState.courseObject.courseIsDigital ==
-      courseState.CourseTypes.DIGITAL ||
-    courseState.courseObject.courseIsDigital ==
-      courseState.CourseTypes.IN_PERSON
-      ? courseState.setCourseObject({
-          ...courseState.courseObject,
-          isCourseIsDigitalError: false,
-        })
-      : courseState.setCourseObject({
-          ...courseState.courseObject,
-          isCourseIsDigitalError: true,
-        });
+    courseState.courseObject.courseIsDigital == courseState.CourseTypes.DIGITAL ||
+    courseState.courseObject.courseIsDigital == courseState.CourseTypes.IN_PERSON
+      ? courseState.courseObject.setIsCourseIsDigitalError(false)
+      : courseState.courseObject.setIsCourseIsDigitalError(true);
   }, [courseState.courseObject.courseIsDigital]);
 
   /**
@@ -180,30 +122,16 @@ const useNewCourseScreen = () => {
    */
   useEffect(() => {
     if (courseState.courseObject.courseInClassInstructor.length > 0) {
-      courseState.inClassInstructors.some(
+      courseState.dropdownMenuOptionsObject.inClassInstructors.some(
         (element) =>
-          element[inClassInstTableHeadings.driversLicenseId] ==
-          courseState.courseObject.courseInClassInstructor
+          element[inClassInstTableHeadings.driversLicenseId] == courseState.courseObject.courseInClassInstructor
       )
-        ? courseState.setCourseObject({
-            ...courseState.courseObject,
-            isCourseInClassInstructorError: false,
-          })
-        : courseState.setCourseObject({
-            ...courseState.courseObject,
-            isCourseInClassInstructorError: true,
-          });
+        ? courseState.courseObject.setIsCourseInClassInstructorError(false)
+        : courseState.courseObject.setIsCourseInClassInstructorError(true);
     } else {
-      courseState.setCourseObject({
-        ...courseState.courseObject,
-        isCourseInClassInstructorError: true,
-      });
+      courseState.courseObject.setIsCourseInClassInstructorError(true);
     }
   }, [courseState.courseObject.courseInClassInstructor]);
-
-  /******************************/
-  /***** NAVIGATION HELPERS *****/
-  /******************************/
 
   /*******************/
   /***** RETURNS *****/

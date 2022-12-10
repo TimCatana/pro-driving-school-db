@@ -29,7 +29,7 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
       }
     }
 
-    inCarInstructorState.uiModifiersObject.setIsLoading(true);
+    inCarInstructorState.uiModifiersObject.setIsLoading(false);
   };
 
   /**

@@ -1,8 +1,6 @@
-import {
-  addOneCourseUC,
-  deleteOneCourseUC,
-  editOneCourseUC,
-} from "../../../../domain/db";
+import AlertVariants from "../../../../domain/constants/AlertVariants";
+import { Results } from "../../../../domain/constants/Results";
+import { addOneCourseUC, deleteOneCourseUC, editOneCourseUC } from "../../../../domain/db";
 import { getFilledCourseEnrollmentPdfUC } from "../../../../domain/pdf";
 
 const useNewCourseScreenButtonHandlers = (courseState) => {
@@ -10,29 +8,9 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
    *
    */
   const handleAddNewCourseEntry = async () => {
-    // console.log(`axios call to backend, not implemented yet but button works!
-    // values:
-    // il ${courseState.isLoading}
-    // cid ${courseState.courseObject.courseId}
-    // ${typeof courseState.courseObject.courseId}
-    // ${courseState.courseObject.isCourseIdError}
-    // cc ${courseState.courseObject.courseCapacity}
-    // ${typeof courseState.courseObject.courseCapacity}
-    // ${courseState.courseObject.isCourseCapacityError}
-    // csd ${courseState.courseObject.courseStartDate}
-    // ${typeof courseState.courseObject.courseStartDate}
-    // ${courseState.courseObject.isCourseStartDateError}
-    // ced ${courseState.courseObject.courseEndDate}
-    // ${typeof courseState.courseObject.courseEndDate}
-    // ${courseState.courseObject.isCourseEndDateError}
-    // cd ${courseState.courseObject.isCourseDigital}
-    // ${typeof courseState.courseObject.isCourseDigital}
-    // ${courseState.courseObject.isCourseDigitalError}
-    // cici ${courseState.courseObject.courseInClassInstructor}
-    // ${typeof courseState.courseObject.courseInClassInstructor}
-    // ${courseState.courseObject.isCourseInClassInstructorError}`);
+    // console.log(courseState.courseObject)
+    courseState.uiModifiersObject.setIsLoading(true);
 
-    courseState.setIsLoading(true);
     if (
       !courseState.courseObject.isCourseIdError &&
       !courseState.courseObject.isCourseCapacityError &&
@@ -41,17 +19,24 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
       !courseState.courseObject.isCourseIsDigitalError &&
       !courseState.courseObject.isCourseInClassInstructorError
     ) {
-      await addOneCourseUC(courseState.courseObject);
+      const result = await addOneCourseUC(courseState.courseObject);
+
+      if (result.data.status == Results.SUCCESS) {
+        courseState.uiModifiersObject.setDataSaved(true);
+      } else {
+        courseState.messageObject.setMessage("ERROR - Failed to add course to database");
+        courseState.messageObject.setMessageColor(AlertVariants.DANGER);
+        courseState.messageObject.setShowMessage(true);
+      }
     }
-    courseState.setIsLoading(false);
-    courseState.setCourseSaved(true);
+    courseState.uiModifiersObject.setIsLoading(false);
   };
 
   /**
    *
    */
   const handleEditCourseEntry = async () => {
-    courseState.setIsLoading(true);
+    courseState.uiModifiersObject.setIsLoading(true);
     if (
       !courseState.courseObject.isCourseIdError &&
       !courseState.courseObject.isCourseCapacityError &&
@@ -60,9 +45,35 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
       !courseState.courseObject.isCourseIsDigitalError &&
       !courseState.courseObject.isCourseInClassInstructorError
     ) {
-      await editOneCourseUC(courseState.courseObject, courseState.primary_key);
+      const result = await editOneCourseUC(courseState.courseObject, courseState.primary_key);
+
+      if (result.data.status == Results.SUCCESS) {
+        courseState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
+        courseState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+        courseState.messageObject.setShowMessage(true);
+        courseState.uiModifiersObject.setAreFieldsEditable(false);
+      } else {
+        courseState.messageObject.setMessage("ERROR - Failed to update item in database");
+        courseState.messageObject.setMessageColor(AlertVariants.DANGER);
+        courseState.messageObject.setShowMessage(true);
+        courseState.uiModifiersObject.setAreFieldsEditable(false);
+      }
     }
-    courseState.setIsLoading(false);
+    courseState.uiModifiersObject.setIsLoading(false);
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleChangeToEditableForm = async () => {
+    courseState.uiModifiersObject.setAreFieldsEditable(true);
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleDismissErrorAlert = async () => {
+    courseState.messageObject.setShowMessage(false);
   };
 
   /**
@@ -84,6 +95,8 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
   const courseButtonHandlers = {
     handleAddNewCourseEntry,
     handleEditCourseEntry,
+    handleChangeToEditableForm,
+    handleDismissErrorAlert,
     handleDeleteCourse,
     handleGetFilledCoursePdf,
   };

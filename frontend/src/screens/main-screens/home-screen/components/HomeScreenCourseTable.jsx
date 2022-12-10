@@ -18,7 +18,7 @@ const HomeScreenCourseTable = (props) => {
           <THHome>Start Date</THHome>
           <THHome>End Date</THHome>
           <THHome>Digital / In Person</THHome>
-          <THHome>In Class Instructor</THHome>
+          <THHome>In Class Instructor License</THHome>
           <THHome>Edit</THHome>
           <THHome>Delete</THHome>
         </TRHome>

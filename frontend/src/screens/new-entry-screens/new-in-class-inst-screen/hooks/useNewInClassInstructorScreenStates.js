@@ -58,7 +58,7 @@ const useNewInClassInstructorScreenStates = () => {
    * Date Selection Focus (used to only show date picker when text input is selected)
    */
 
-  const [isInstDriversLicenseFocus, setIsInstDriversLicenseFocus] = useState();
+  const [isInstDriversLicenseFocus, setIsInstDriversLicenseFocus] = useState(false);
 
   const dateTextInputFocusesObject = {
     isInstDriversLicenseFocus,

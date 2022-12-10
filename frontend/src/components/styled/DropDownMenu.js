@@ -35,6 +35,15 @@ const DropDownMenu = styled.select`
   select:invalid {
     color: gray;
   }
+
+  &:disabled {
+    border: none;
+    /* border: 0.1rem solid black; */
+    background: #d9d9d9;
+    color: black;
+    outline: none;
+    border-color: var(--input-border-focus);
+  }
 `;
 
 export default DropDownMenu;
