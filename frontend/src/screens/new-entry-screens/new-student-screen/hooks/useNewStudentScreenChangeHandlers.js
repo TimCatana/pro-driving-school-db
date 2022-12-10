@@ -5,10 +5,7 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    */
   const handleStudentFirstNameChange = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentFirstName: e.target.value,
-    });
+    studentState.studentObject.setStudentFirstName(e.target.value);
   };
 
   /**
@@ -17,10 +14,7 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    */
   const handleStudentMiddleNameChange = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentMiddleName: e.target.value,
-    });
+    studentState.studentObject.setStudentMiddleName(e.target.value);
   };
 
   /**
@@ -29,10 +23,7 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    */
   const handleStudentLastNameChange = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentLastName: e.target.value,
-    });
+    studentState.studentObject.setStudentLastName(e.target.value);
   };
 
   /**
@@ -41,10 +32,7 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    */
   const handleStudentDateOfBirthChange = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentDateOfBirth: e.target.value,
-    });
+    studentState.studentObject.setStudentDateOfBirth(e.target.value);
   };
 
   /**
@@ -53,10 +41,7 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    */
   const handleStudentGenderChange = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentGender: e.target.value,
-    });
+    studentState.studentObject.setStudentGender(e.target.value);
   };
 
   /**
@@ -65,34 +50,7 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    */
   const handleStudentHeightChange = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentHeight: e.target.value,
-    });
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentCellPhoneNumberChange = (e) => {
-    e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentCellPhoneNumber: e.target.value,
-    });
-  };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentHomePhoneNumberChange = (e) => {
-    e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentHomePhoneNumber: e.target.value,
-    });
+    studentState.studentObject.setStudentHeight(e.target.value);
   };
 
   /**
@@ -101,10 +59,7 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    */
   const handleStudentAddressChange = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentAddress: e.target.value,
-    });
+    studentState.studentObject.setStudentAddress(e.target.value);
   };
 
   /**
@@ -113,10 +68,7 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    */
   const handleStudentAddressApartmentNumberChange = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentAddressApartmentNumber: e.target.value,
-    });
+    studentState.studentObject.setStudentAddressApartmentNumber(e.target.value);
   };
 
   /**
@@ -125,10 +77,7 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    */
   const handleStudentAddressCityChange = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentAddressCity: e.target.value,
-    });
+    studentState.studentObject.setStudentAddressCity(e.target.value);
   };
 
   /**
@@ -137,58 +86,61 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    */
   const handleStudentAddressPostalCodeChange = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentAddressPostalCode: e.target.value,
-    });
+    studentState.studentObject.setStudentAddressPostalCode(e.target.value);
   };
 
   /**
    * Updates the courseId variable to contain the newly inputted value
    * @param value (string) The value inputted into the textInput
    */
-  const handleStudentDriversLicenseNumberChange = (e) => {
+  const handleStudentCellPhoneNumberChange = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentDriversLicenseNumber: e.target.value,
-    });
-  };
-
-    /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-     const handleStudentDriversLicenseClassChange = (e) => {
-      e.preventDefault();
-      studentState.setStudentObject({
-        ...studentState.studentObject,
-        studentDriversLicenseClass: e.target.value,
-      });
-    };
-
-  /**
-   * Updates the courseId variable to contain the newly inputted value
-   * @param value (string) The value inputted into the textInput
-   */
-  const handleStudentDriversLicenseNumberIssuedDateChange = (e) => {
-    e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentDriversLicenseNumberIssuedDate: e.target.value,
-    });
+    studentState.studentObject.setStudentCellPhoneNumber(e.target.value);
   };
 
   /**
    * Updates the courseId variable to contain the newly inputted value
    * @param value (string) The value inputted into the textInput
    */
-  const handleStudentDriversLicenseNumberExpDateChange = (e) => {
+  const handleStudentHomePhoneNumberChange = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentDriversLicenseNumberExpDate: e.target.value,
-    });
+    studentState.studentObject.setStudentHomePhoneNumber(e.target.value);
+  };
+
+  /**
+   * Updates the courseId variable to contain the newly inputted value
+   * @param value (string) The value inputted into the textInput
+   */
+  const handleStudentDriversLicenseIdChange = (e) => {
+    e.preventDefault();
+    studentState.studentObject.setStudentDriversLicenseId(e.target.value);
+  };
+
+  /**
+   * Updates the courseId variable to contain the newly inputted value
+   * @param value (string) The value inputted into the textInput
+   */
+  const handleStudentDriversLicenseClassChange = (e) => {
+    e.preventDefault();
+    studentState.studentObject.setStudentDriversLicenseClass(e.target.value);
+  };
+
+  /**
+   * Updates the courseId variable to contain the newly inputted value
+   * @param value (string) The value inputted into the textInput
+   */
+  const handleStudentDriversLicenseIssuedDateChange = (e) => {
+    e.preventDefault();
+    studentState.studentObject.setStudentDriversLicenseIssuedDate(e.target.value);
+  };
+
+  /**
+   * Updates the courseId variable to contain the newly inputted value
+   * @param value (string) The value inputted into the textInput
+   */
+  const handleStudentDriversLicenseExpDateChange = (e) => {
+    e.preventDefault();
+    studentState.studentObject.setStudentDriversLicenseExpDate(e.target.value);
   };
 
   /**
@@ -197,22 +149,16 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    */
   const handleStudentRegisteredCourseId = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentRegisteredCourseId: e.target.value,
-    });
+    studentState.studentObject.setStudentRegisteredCourseId(e.target.value);
   };
 
   /**
    * Updates the courseId variable to contain the newly inputted value
    * @param value (string) The value inputted into the textInput
    */
-  const handleStudentRegisteredProductId = (e) => {
+  const handleStudentPurchasedProductId = (e) => {
     e.preventDefault();
-    studentState.setStudentObject({
-      ...studentState.studentObject,
-      studentRegisteredProductId: e.target.value,
-    });
+    studentState.studentObject.setStudentPurchasedProductId(e.target.value);
   };
 
   /**
@@ -220,17 +166,15 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    * @param {*} isFocused
    */
   const handleStudentDateOfBirthFocusAndBlurHandler = (isFocused) => {
-    studentState.setIsDateOfBirthFocus(isFocused);
+    studentState.dateTextInputFocusesObject.setIsDateOfBirthFocus(isFocused);
   };
 
   /**
    *
    * @param {*} isFocused
    */
-  const handleStudentDriversLicenseIssuedDateFocusAndBlurHandler = (
-    isFocused
-  ) => {
-    studentState.setIsStudentDriversLicenseIssuedDateFocus(isFocused);
+  const handleStudentDriversLicenseIssuedDateFocusAndBlurHandler = (isFocused) => {
+    studentState.dateTextInputFocusesObject.setIsStudentDriversLicenseIssuedDateFocus(isFocused);
   };
 
   /**
@@ -250,12 +194,12 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
     handleStudentAddressApartmentNumberChange,
     handleStudentAddressCityChange,
     handleStudentAddressPostalCodeChange,
-    handleStudentDriversLicenseNumberChange,
+    handleStudentDriversLicenseIdChange,
     handleStudentDriversLicenseClassChange,
-    handleStudentDriversLicenseNumberIssuedDateChange,
-    handleStudentDriversLicenseNumberExpDateChange,
+    handleStudentDriversLicenseIssuedDateChange,
+    handleStudentDriversLicenseExpDateChange,
     handleStudentRegisteredCourseId,
-    handleStudentRegisteredProductId,
+    handleStudentPurchasedProductId,
     handleStudentDateOfBirthFocusAndBlurHandler,
     handleStudentDriversLicenseIssuedDateFocusAndBlurHandler,
   };

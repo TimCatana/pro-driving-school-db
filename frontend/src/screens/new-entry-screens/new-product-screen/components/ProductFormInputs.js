@@ -9,8 +9,8 @@ const ProductFormInputs = (props) => {
     <FormDiv>
       <SingleRowTextInputDiv>
         <TextInput
-          placeholder={"Product ID"}
-          disabled={productState.uiModifiersObject.isLoading || !productState.uiModifiersObject.areFieldsEditable}
+          placeholder={"Product ID (cannot be changed later)"}
+          disabled={productState.uiModifiersObject.isLoading || !productState.uiModifiersObject.isNewEntry}
           value={productState.productObject.productId}
           onChange={productChangeHandlers.handleProductIdChange}
           isError={productState.productObject.isProductIdError && productState.productObject.productId.length > 0}

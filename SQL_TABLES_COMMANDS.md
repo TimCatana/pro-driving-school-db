@@ -41,10 +41,10 @@ CREATE TABLE `pdsdb`.`courses` (
   `course_id` INT NOT NULL UNIQUE,
   `capacity` INT NOT NULL,
   `is_digital` VARCHAR(15) NOT NULL,
-   `start_date` DATE NOT NULL,
+`start_date` DATE NOT NULL,
   `end_date` DATE NOT NULL,
-  `in_class_instructor_id` VARCHAR(100) NOT NULL,
-  FOREIGN KEY(in_class_instructor_id) REFERENCES in_class_inst(inst_drivers_license_id)
+  `in_class_instructor_id` INT NOT NULL,
+  FOREIGN KEY(in_class_instructor_id) REFERENCES in_class_inst(id)
 );
 
 CREATE TABLE `pdsdb`.`students` (

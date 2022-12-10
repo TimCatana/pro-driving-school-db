@@ -7,20 +7,7 @@ const useNewProductScreenButtonHandlers = (productState) => {
    * Updates the subscript to mailing list option.
    */
   const handleAddNewProductEntry = async () => {
-    // console.log(`axios call to backend, not implemented yet but button works!
-    // values:
-    // ${productState.isLoading}
-    // pid ${productState.productObject.productId}
-    // ${typeof productState.productObject.productId}
-    // ${productState.productObject.isProductIdError}
-    // pn ${productState.productObject.productName}
-    // ${typeof productState.productObject.productName}
-    // ${productState.productObject.isProductNameError}
-    // pp ${productState.productObject.productPrice}
-    // ${typeof productState.productObject.productPrice}
-    // ${productState.productObject.isProductPriceError}
-    // `);
-
+    // console.log(productState.productObject)
     productState.uiModifiersObject.setIsLoading(true);
     if (
       !productState.productObject.isProductIdError &&
@@ -84,6 +71,19 @@ const useNewProductScreenButtonHandlers = (productState) => {
   };
 
   /**
+   *
+   */
+  const handleGoBack = async () => {
+    if (productState.uiModifiersObject.isNewEntry) {
+      await productState.navigation("/?initial_selection=products");
+    } else {
+      productState.uiModifiersObject.areFieldsEditable
+        ? await productState.uiModifiersObject.setAreFieldsEditable(false)
+        : await productState.navigation("/?initial_selection=products");
+    }
+  };
+
+  /**
    * Updates the subscript to mailing list option.
    */
   const handleDeleteProduct = async () => {
@@ -102,6 +102,7 @@ const useNewProductScreenButtonHandlers = (productState) => {
     handleChangeToEditableForm,
     handleDismissErrorAlert,
     handleDeleteProduct,
+    handleGoBack,
   };
 
   /*******************/

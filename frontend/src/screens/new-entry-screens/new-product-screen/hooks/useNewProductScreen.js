@@ -39,6 +39,15 @@ const useNewProductScreen = () => {
   }, [productState.uiModifiersObject.dataSaved]);
 
   /**
+   *
+   */
+  useEffect(() => {
+    if (!productState.uiModifiersObject.areFieldsEditable && !productState.initialRender.current) {
+      productUseEffectHelpers.handleGetSpecificProduct();
+    }
+  }, [productState.uiModifiersObject.areFieldsEditable]);
+
+  /**
    * Validates newly inputted productId
    * @dependent productId
    */

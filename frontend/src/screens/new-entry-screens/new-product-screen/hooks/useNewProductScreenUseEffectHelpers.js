@@ -10,7 +10,7 @@ const useNewProductScreenUseEffectHelpers = (productState) => {
     productState.uiModifiersObject.setIsLoading(true);
 
     if (productState.primary_key != 0) {
-      await _handleGetSpecificProduct();
+      await handleGetSpecificProduct();
       productState.uiModifiersObject.setIsNewEntry(false);
       productState.uiModifiersObject.setAreFieldsEditable(false);
     } else {
@@ -19,12 +19,13 @@ const useNewProductScreenUseEffectHelpers = (productState) => {
     }
 
     productState.uiModifiersObject.setIsLoading(false);
+    productState.initialRender.current = false;
   };
 
   /**
    *
    */
-  const _handleGetSpecificProduct = async () => {
+  const handleGetSpecificProduct = async () => {
     const result = await getOneProductUC(productState.primary_key);
 
     if (result.data.status == Results.SUCCESS) {
@@ -49,12 +50,13 @@ const useNewProductScreenUseEffectHelpers = (productState) => {
   const navigateAfterSave = async () => {
     productState.navigation("/?initial_selection=products");
   };
-  
+
   /**
    *
    */
   const productUseEffectHelpers = {
     onRender,
+    handleGetSpecificProduct,
     navigateAfterSave,
   };
   /*******************/

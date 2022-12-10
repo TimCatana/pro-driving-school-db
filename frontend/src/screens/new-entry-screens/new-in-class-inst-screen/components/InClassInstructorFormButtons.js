@@ -52,7 +52,7 @@ const InClassInstructorFormButtons = (props) => {
 
       <Button
         disabled={inClassInstructorState.uiModifiersObject.isLoading}
-        onClick={() => inClassInstructorState.navigation("/?initial_selection=in-class-instructors")}
+        onClick={inClassInstructorButtonHandlers.handleGoBack}
       >
         Go Back
       </Button>

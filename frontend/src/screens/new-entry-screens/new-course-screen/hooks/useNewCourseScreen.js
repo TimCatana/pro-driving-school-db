@@ -41,6 +41,15 @@ const useNewCourseScreen = () => {
   }, [courseState.uiModifiersObject.dataSaved]);
 
   /**
+   *
+   */
+  useEffect(() => {
+    if (!courseState.uiModifiersObject.areFieldsEditable && !courseState.initialRender.current) {
+      courseUseEffectHelpers.handleGetSpecificCourse();
+    }
+  }, [courseState.uiModifiersObject.areFieldsEditable]);
+
+  /**
    * Validates newly inputted courseId
    * @dependent courseId
    */
@@ -123,8 +132,7 @@ const useNewCourseScreen = () => {
   useEffect(() => {
     if (courseState.courseObject.courseInClassInstructor.length > 0) {
       courseState.dropdownMenuOptionsObject.inClassInstructors.some(
-        (element) =>
-          element[inClassInstTableHeadings.driversLicenseId] == courseState.courseObject.courseInClassInstructor
+        (element) => element[inClassInstTableHeadings.id] == courseState.courseObject.courseInClassInstructor
       )
         ? courseState.courseObject.setIsCourseInClassInstructorError(false)
         : courseState.courseObject.setIsCourseInClassInstructorError(true);

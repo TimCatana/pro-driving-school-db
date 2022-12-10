@@ -85,6 +85,19 @@ const useNewInClassInstructorScreenButtonHandlers = (inClassInstructorState) => 
   };
 
   /**
+   *
+   */
+  const handleGoBack = async () => {
+    if (inClassInstructorState.uiModifiersObject.isNewEntry) {
+      await inClassInstructorState.navigation("/?initial_selection=in-class-instructors");
+    } else {
+      inClassInstructorState.uiModifiersObject.areFieldsEditable
+        ? await inClassInstructorState.uiModifiersObject.setAreFieldsEditable(false)
+        : await inClassInstructorState.navigation("/?initial_selection=in-class-instructors");
+    }
+  };
+
+  /**
    * Updates the subscript to mailing list option.
    */
   const handleDeleteInClassInst = async () => {
@@ -103,6 +116,7 @@ const useNewInClassInstructorScreenButtonHandlers = (inClassInstructorState) => 
     handleChangeToEditableForm,
     handleDismissErrorAlert,
     handleDeleteInClassInst,
+    handleGoBack,
   };
 
   /*******************/

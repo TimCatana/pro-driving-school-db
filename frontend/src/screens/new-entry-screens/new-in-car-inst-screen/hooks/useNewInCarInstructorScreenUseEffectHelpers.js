@@ -9,7 +9,7 @@ const useNewInCarInstructorScreenUseEffectHelpers = (inCarInstructorState) => {
     inCarInstructorState.uiModifiersObject.setIsLoading(true);
 
     if (inCarInstructorState.primary_key != 0) {
-      await _handleGetSpecificInCarInstructor();
+      await handleGetSpecificInCarInstructor();
       inCarInstructorState.uiModifiersObject.setIsNewEntry(false);
       inCarInstructorState.uiModifiersObject.setAreFieldsEditable(false);
     } else {
@@ -18,12 +18,13 @@ const useNewInCarInstructorScreenUseEffectHelpers = (inCarInstructorState) => {
     }
 
     inCarInstructorState.uiModifiersObject.setIsLoading(false);
+    inCarInstructorState.initialRender.current = false;
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
-  const _handleGetSpecificInCarInstructor = async () => {
+  const handleGetSpecificInCarInstructor = async () => {
     const result = await getOneInCarInstructorUC(inCarInstructorState.primary_key);
 
     if (result.data.status == 200) {
@@ -71,6 +72,7 @@ const useNewInCarInstructorScreenUseEffectHelpers = (inCarInstructorState) => {
    */
   const inCarInstructorUseEffectHelpers = {
     onRender,
+    handleGetSpecificInCarInstructor,
     navigateAfterSave,
   };
   /*******************/

@@ -8,20 +8,18 @@ const addOneStudentUC = async (studentObject) => {
     studentDateOfBirth: studentObject.studentDateOfBirth,
     studentGender: studentObject.studentGender,
     studentHeight: studentObject.studentHeight,
-    studentCellPhoneNumber: studentObject.studentCellPhoneNumber,
-    studentHomePhoneNumber: studentObject.studentHomePhoneNumber,
     studentAddress: studentObject.studentAddress,
     studentAddressAptNumber: studentObject.studentAddressApartmentNumber,
     studentAddressCity: studentObject.studentAddressCity,
     studentAddressPostalCode: studentObject.studentAddressPostalCode,
-    studentDriversLicenseNumber: studentObject.studentDriversLicenseNumber,
+    studentCellPhoneNumber: studentObject.studentCellPhoneNumber,
+    studentHomePhoneNumber: studentObject.studentHomePhoneNumber,
+    studentDriversLicenseNumber: studentObject.studentDriversLicenseId,
     studentDriversLicenseClass: studentObject.studentDriversLicenseClass,
-    studentDriversLicenseNumberIssuedDate:
-      studentObject.studentDriversLicenseNumberIssuedDate,
-    studentDriversLicenseNumberExpDate:
-      studentObject.studentDriversLicenseNumberExpDate,
+    studentDriversLicenseNumberIssuedDate: studentObject.studentDriversLicenseIssuedDate,
+    studentDriversLicenseNumberExpDate: studentObject.studentDriversLicenseExpDate,
     studentRegisteredCourseId: studentObject.studentRegisteredCourseId,
-    studentRegisteredProductId: studentObject.studentRegisteredProductId,
+    studentRegisteredProductId: studentObject.studentPurchasedProductId,
   });
 };
 

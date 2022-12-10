@@ -40,6 +40,10 @@ const TextInput = styled.input`
     outline: none;
     border-color: var(--input-border-focus);
   }
+
+  &:disabled::placeholder {
+    color: black;
+  }
 `;
 
 export default TextInput;

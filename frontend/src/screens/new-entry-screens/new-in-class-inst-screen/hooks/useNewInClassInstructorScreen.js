@@ -42,6 +42,15 @@ const useNewInClassInstructorScreen = () => {
   }, [inClassInstructorState.uiModifiersObject.dataSaved]);
 
   /**
+   *
+   */
+  useEffect(() => {
+    if (!inClassInstructorState.uiModifiersObject.areFieldsEditable && !inClassInstructorState.initialRender.current) {
+      inClassInstructorUseEffectHelpers.handleGetSpecificInClassInst();
+    }
+  }, [inClassInstructorState.uiModifiersObject.areFieldsEditable]);
+
+  /**
    * Validates newly inputted inClassInstFirstName
    * @dependent inClassInstFirstName
    */

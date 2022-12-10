@@ -1,22 +1,22 @@
 import { studentTableHeadings } from "../../../../domain/constants/dbConstants";
-import {
-  getAllCoursesUC,
-  getAllProductsUC,
-  getOneStudentUC,
-} from "../../../../domain/db";
+import { getAllCoursesUC, getAllProductsUC, getOneStudentUC } from "../../../../domain/db";
 
 const useNewStudentScreenUseEffectHelpers = (studentState) => {
   const onRender = async () => {
-    studentState.setIsLoading(true);
-    await handleGetCoursesAndProducts();
-    // if no instructors, need to show message saying that instructors need to be added
+    studentState.uiModifiersObject.setIsLoading(true);
+    await _handleGetCoursesAndProducts();
 
     if (studentState.primary_key != 0) {
       await handleGetSpecificStudent();
-      studentState.setIsNewEntry(false);
+      studentState.uiModifiersObject.setIsNewEntry(false);
+      studentState.uiModifiersObject.setAreFieldsEditable(false);
+    } else {
+      studentState.uiModifiersObject.setIsNewEntry(true);
+      studentState.uiModifiersObject.setAreFieldsEditable(true);
     }
 
-    studentState.setIsLoading(false);
+    studentState.uiModifiersObject.setIsLoading(false);
+    studentState.initialRender.current = false;
   };
 
   /**
@@ -26,109 +26,120 @@ const useNewStudentScreenUseEffectHelpers = (studentState) => {
     const result = await getOneStudentUC(studentState.primary_key);
 
     if (result.data.status == 200) {
-      studentState.setStudentObject({
-        studentFirstName: result.data.query[0][studentTableHeadings.firstName],
-        isStudentFirstNameError: false,
-        studentMiddleName:
-          result.data.query[0][studentTableHeadings.middleName],
-        isStudentMiddleNameError: false,
-        studentLastName: result.data.query[0][studentTableHeadings.lastName],
-        isStudentLastNameError: false,
-        studentDateOfBirth:
-          result.data.query[0][studentTableHeadings.dateOfBirth],
-        isStudentDateOfBirthError: false,
-        studentGender: result.data.query[0][studentTableHeadings.gender],
-        isStudentGenderError: false,
-        studentHeight: result.data.query[0][studentTableHeadings.height],
-        isStudentHeightError: false,
-        studentCellPhoneNumber:
-          result.data.query[0][studentTableHeadings.cellPhoneNumber],
-        isStudentCellPhoneNumberError: false,
-        studentHomePhoneNumber:
-          result.data.query[0][studentTableHeadings.homePhoneNumber],
-        isStudentHomePhoneNumberError: false,
-        studentAddress: result.data.query[0][studentTableHeadings.address],
-        isStudentAddressError: false,
-        studentAddressApartmentNumber:
-          result.data.query[0][studentTableHeadings.addressAptNum],
-        isStudentAddressApartmentNumberError: false,
-        studentAddressCity:
-          result.data.query[0][studentTableHeadings.addressCity],
-        isStudentAddressCityError: false,
-        studentAddressPostalCode:
-          result.data.query[0][studentTableHeadings.addressPostalCode],
-        isStudentAddressPostalCodeError: false,
-        studentDriversLicenseNumber:
-          result.data.query[0][studentTableHeadings.driversLicenseId],
-        isStudentDriversLicenseNumberError: false,
-        studentDriversLicenseClass:
-          result.data.query[0][studentTableHeadings.driversLicenseClass],
-        isStudentDriversLicenseClassError: false,
-        studentDriversLicenseNumberIssuedDate:
-          result.data.query[0][studentTableHeadings.driversLicenseIssuedDate],
-        isStudentDriversLicenseNumberIssuedDateError: false,
-        studentDriversLicenseNumberExpDate:
-          result.data.query[0][studentTableHeadings.driversLicenseExpDate],
-        isStudentDriversLicenseNumberExpDateError: false,
-        studentRegisteredCourseId:
-          result.data.query[0][studentTableHeadings.registeredCourse],
-        isStudentRegisteredCourseIdError: false,
-        studentRegisteredProductId:
-          result.data.query[0][studentTableHeadings.purchasedProduct],
+      studentState.studentObject.setStudentFirstName(result.data.query[0][studentTableHeadings.firstName]);
+      studentState.studentObject.setIsStudentFirstNameError(false);
 
-        isStudentRegisteredProductIdError: false,
-      });
+      studentState.studentObject.setStudentMiddleName(result.data.query[0][studentTableHeadings.middleName]);
+      studentState.studentObject.setIsStudentMiddleNameError(false);
 
-      studentState.setSelectedGender(
-        result.data.query[0][studentTableHeadings.gender]
+      studentState.studentObject.setStudentLastName(result.data.query[0][studentTableHeadings.lastName]);
+      studentState.studentObject.setIsStudentLastNameError(false);
+
+      studentState.studentObject.setStudentDateOfBirth(result.data.query[0][studentTableHeadings.dateOfBirth]);
+      studentState.studentObject.setIsStudentDateOfBirthError(false);
+
+      studentState.studentObject.setStudentGender(result.data.query[0][studentTableHeadings.gender]);
+      studentState.studentObject.setIsStudentGenderError(false);
+
+      studentState.studentObject.setStudentHeight(result.data.query[0][studentTableHeadings.height]);
+      studentState.studentObject.setIsStudentHeightError(false);
+
+      studentState.studentObject.setStudentAddress(result.data.query[0][studentTableHeadings.address]);
+      studentState.studentObject.setIsStudentAddressError(false);
+
+      studentState.studentObject.setStudentAddressApartmentNumber(
+        result.data.query[0][studentTableHeadings.addressAptNum]
       );
-      studentState.setSelectedRegisteredCourse(
-        result.data.query[0][studentTableHeadings.registeredCourse]
+      studentState.studentObject.setIsStudentAddressApartmentNumberError(false);
+
+      studentState.studentObject.setStudentAddressCity(result.data.query[0][studentTableHeadings.addressCity]);
+      studentState.studentObject.setIsStudentAddressCityError(false);
+
+      studentState.studentObject.setStudentAddressPostalCode(
+        result.data.query[0][studentTableHeadings.addressPostalCode]
       );
-      studentState.setSelectedRegisteredProduct(
-        result.data.query[0][studentTableHeadings.purchasedProduct]
+      studentState.studentObject.setIsStudentAddressPostalCodeError(false);
+
+      studentState.studentObject.setStudentCellPhoneNumber(result.data.query[0][studentTableHeadings.cellPhoneNumber]);
+      studentState.studentObject.setIsStudentCellPhoneNumberError(false);
+
+      studentState.studentObject.setStudentHomePhoneNumber(result.data.query[0][studentTableHeadings.homePhoneNumber]);
+      studentState.studentObject.setIsStudentHomePhoneNumberError(false);
+
+      studentState.studentObject.setStudentDriversLicenseId(
+        result.data.query[0][studentTableHeadings.driversLicenseId]
       );
-      studentState.setSelectedLicenseClass(
+      studentState.studentObject.setIsStudentDriversLicenseNumberId(false);
+
+      studentState.studentObject.setStudentDriversLicenseClass(
         result.data.query[0][studentTableHeadings.driversLicenseClass]
       );
+      studentState.studentObject.setIsStudentDriversLicenseClassError(false);
 
-      console.log(result.data.query[0]);
+      studentState.studentObject.setStudentDriversLicenseIssuedDate(
+        result.data.query[0][studentTableHeadings.driversLicenseIssuedDate]
+      );
+      studentState.studentObject.setIsStudentDriversLicenseIssuedDateError(false);
+
+      studentState.studentObject.setStudentDriversLicenseExpDate(
+        result.data.query[0][studentTableHeadings.driversLicenseExpDate]
+      );
+      studentState.studentObject.setIsStudentDriversLicenseExpDateError(false);
+
+      studentState.studentObject.setStudentRegisteredCourseId(
+        result.data.query[0][studentTableHeadings.registeredCourse]
+      );
+      studentState.studentObject.setIsStudentRegisteredCourseIdError(false);
+
+      studentState.studentObject.setStudentPurchasedProductId(
+        result.data.query[0][studentTableHeadings.purchasedProduct]
+      );
+      studentState.studentObject.setIsStudentPurchasedProductIdError(false);
+
+      studentState.uiModifiersObject.setFailedToGetData(false);
     } else {
-      console.log(result.data);
+      studentState.uiModifiersObject.setFailedToGetData(true);
     }
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
-  const handleGetCourses = async () => {
+  const _handleGetCourses = async () => {
     const result = await getAllCoursesUC();
 
     if (result.data.status == 200) {
-      studentState.setCourses(result.data.query);
-      console.log(result.data.query);
+      studentState.dropdownMenuOptionsObject.setCourses(result.data.query);
     } else {
-      console.log(result.data);
+      studentState.dropdownMenuOptionsObject.setCourses([]);
+      studentState.dropdownMenuOptionsObject.setFailedToGetCourses(true);
     }
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
-  const handleGetProducts = async () => {
+  const _handleGetProducts = async () => {
     const result = await getAllProductsUC();
 
     if (result.data.status == 200) {
-      studentState.setProducts(result.data.query);
-      console.log(result.data.query);
+      studentState.dropdownMenuOptionsObject.setProducts(result.data.query);
     } else {
-      console.log(result.data);
+      studentState.dropdownMenuOptionsObject.setProducts([]);
+      studentState.dropdownMenuOptionsObject.setFailedToGetProducts(true);
     }
   };
 
-  const handleGetCoursesAndProducts = async () => {
-    await handleGetCourses();
-    await handleGetProducts();
+  const _handleGetCoursesAndProducts = async () => {
+    await _handleGetCourses();
+    await _handleGetProducts();
+  };
+
+  /**
+   *
+   */
+  const navigateAfterSave = async () => {
+    studentState.navigation("/?initial_selection=students");
   };
 
   /**
@@ -136,6 +147,8 @@ const useNewStudentScreenUseEffectHelpers = (studentState) => {
    */
   const studentUseEffectHelpers = {
     onRender,
+    handleGetSpecificStudent,
+    navigateAfterSave,
   };
   /*******************/
   /***** RETURNS *****/

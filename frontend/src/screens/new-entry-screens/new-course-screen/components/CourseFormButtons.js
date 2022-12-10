@@ -10,6 +10,7 @@ const CourseFormButtons = (props) => {
       {courseState.uiModifiersObject.isNewEntry && (
         <Button
           disabled={
+            courseState.courseObject.isLoading ||
             courseState.courseObject.isCourseIdError ||
             courseState.courseObject.isCourseCapacityError ||
             courseState.courseObject.isCourseStartDateError ||
@@ -37,6 +38,7 @@ const CourseFormButtons = (props) => {
           {courseState.uiModifiersObject.areFieldsEditable && (
             <Button
               disabled={
+                courseState.courseObject.isLoading ||
                 courseState.courseObject.isCourseIdError ||
                 courseState.courseObject.isCourseCapacityError ||
                 courseState.courseObject.isCourseStartDateError ||
@@ -62,10 +64,7 @@ const CourseFormButtons = (props) => {
         </Button>
       )}
 
-      <Button
-        disabled={courseState.uiModifiersObject.isLoading}
-        onClick={() => courseState.navigation("/?initial_selection=courses")}
-      >
+      <Button disabled={courseState.uiModifiersObject.isLoading} onClick={courseButtonHandlers.handleGoBack}>
         Go Back
       </Button>
     </ButtonsDiv>

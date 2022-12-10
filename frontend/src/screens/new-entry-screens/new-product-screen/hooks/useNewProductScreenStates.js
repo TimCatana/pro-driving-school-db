@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AlertVariants from "../../../../domain/constants/AlertVariants";
 
@@ -9,6 +9,7 @@ const useNewProductScreenStates = () => {
 
   const navigation = useNavigate();
   const { primary_key } = useParams();
+  const initialRender = useRef(true);
 
   /**
    * Parameters that change the UI based on their value
@@ -91,6 +92,7 @@ const useNewProductScreenStates = () => {
   const productState = {
     navigation,
     primary_key,
+    initialRender,
 
     uiModifiersObject,
     messageObject,

@@ -79,6 +79,19 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
   /**
    *
    */
+  const handleGoBack = async () => {
+    if (courseState.uiModifiersObject.isNewEntry) {
+      await courseState.navigation("/?initial_selection=courses");
+    } else {
+      courseState.uiModifiersObject.areFieldsEditable
+        ? await courseState.uiModifiersObject.setAreFieldsEditable(false)
+        : await courseState.navigation("/?initial_selection=courses");
+    }
+  };
+
+  /**
+   *
+   */
   const handleDeleteCourse = async () => {
     courseState.setIsLoading(true);
     await deleteOneCourseUC(courseState.primary_key);
@@ -99,6 +112,7 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
     handleDismissErrorAlert,
     handleDeleteCourse,
     handleGetFilledCoursePdf,
+    handleGoBack
   };
 
   /*******************/

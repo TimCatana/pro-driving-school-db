@@ -82,6 +82,19 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
   };
 
   /**
+   *
+   */
+  const handleGoBack = async () => {
+    if (inCarInstructorState.uiModifiersObject.isNewEntry) {
+      await inCarInstructorState.navigation("/?initial_selection=in-car-instructors");
+    } else {
+      inCarInstructorState.uiModifiersObject.areFieldsEditable
+        ? await inCarInstructorState.uiModifiersObject.setAreFieldsEditable(false)
+        : await inCarInstructorState.navigation("/?initial_selection=in-car-instructors");
+    }
+  };
+
+  /**
    * Updates the subscript to mailing list option.
    */
   const handleDeleteInCarInstructor = async () => {
@@ -100,6 +113,7 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
     handleChangeToEditableForm,
     handleDismissErrorAlert,
     handleDeleteInCarInstructor,
+    handleGoBack,
   };
 
   /*******************/

@@ -31,7 +31,7 @@ const useHomeScreen = () => {
    * @dependent courseEndDate
    */
   useEffect(() => {
-    homeState.setIsLoading(true)
+    homeState.uiModifiersObject.setIsLoading(true);
     if (homeState.query.initialSelection == "courses") {
       homeButtonHandlers.handleGetCourses();
     } else if (homeState.query.initialSelection == "products") {
@@ -45,8 +45,7 @@ const useHomeScreen = () => {
     } else {
       homeButtonHandlers.handleGetCourses();
     }
-    homeState.setIsLoading(false)
-
+    homeState.uiModifiersObject.setIsLoading(false);
   }, []);
 
   /*******************/

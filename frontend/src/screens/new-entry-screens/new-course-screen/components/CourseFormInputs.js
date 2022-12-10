@@ -16,8 +16,8 @@ const CourseFormInputs = (props) => {
     <FormDiv>
       <SideBySideTextInputsDiv>
         <TextInput
-          placeholder={"Course ID"}
-          disabled={courseState.uiModifiersObject.isLoading || !courseState.uiModifiersObject.areFieldsEditable}
+          placeholder={"Course ID (cannot be changed later)"}
+          disabled={courseState.uiModifiersObject.isLoading || !courseState.uiModifiersObject.isNewEntry}
           value={courseState.courseObject.courseId}
           onChange={courseChangeHandlers.handleCourseIdChange}
           isError={courseState.courseObject.isCourseIdError && courseState.courseObject.courseId.length > 0}
@@ -113,7 +113,7 @@ const CourseFormInputs = (props) => {
             Please Select Instructor
           </ListOption>
           {courseState.dropdownMenuOptionsObject.inClassInstructors.map((data) => (
-            <ListOption key={data[inClassInstTableHeadings.id]} value={data[inClassInstTableHeadings.driversLicenseId]}>
+            <ListOption key={data[inClassInstTableHeadings.id]} value={data[inClassInstTableHeadings.id]}>
               {data[inClassInstTableHeadings.firstName]} {data[inClassInstTableHeadings.lastName]}
             </ListOption>
           ))}

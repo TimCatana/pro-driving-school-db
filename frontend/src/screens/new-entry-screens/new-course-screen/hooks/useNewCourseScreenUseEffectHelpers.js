@@ -12,7 +12,7 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
     await handleGetInClassInstructors();
 
     if (courseState.primary_key != 0) {
-      await _handleGetSpecificCourse();
+      await handleGetSpecificCourse();
       courseState.uiModifiersObject.setIsNewEntry(false);
       courseState.uiModifiersObject.setAreFieldsEditable(false);
     } else {
@@ -20,8 +20,8 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
       courseState.uiModifiersObject.setAreFieldsEditable(true);
     }
 
-
     courseState.uiModifiersObject.setIsLoading(false);
+    courseState.initialRender.current = false;
   };
 
   /**
@@ -33,7 +33,7 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
     if (result.data.status == 200) {
       courseState.dropdownMenuOptionsObject.setInClassInstructors(result.data.query);
     } else {
-      courseState.dropdownMenuOptionsObject.setInClassInstructors(result.data.query);
+      courseState.dropdownMenuOptionsObject.setInClassInstructors([]);
       courseState.dropdownMenuOptionsObject.setFailedToGetInClassInstructors(true);
     }
   };
@@ -41,7 +41,7 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
   /**
    * Updates the subscript to mailing list option.
    */
-  const _handleGetSpecificCourse = async () => {
+  const handleGetSpecificCourse = async () => {
     const result = await getOneCourseUC(courseState.primary_key);
 
     if (result.data.status == 200) {
@@ -65,8 +65,6 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
       );
       courseState.courseObject.setIsCourseInClassInstructorError(false);
 
-   
-
       courseState.uiModifiersObject.setFailedToGetData(false);
     } else {
       courseState.uiModifiersObject.setFailedToGetData(true);
@@ -85,6 +83,7 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
    */
   const courseUseEffectHelpers = {
     onRender,
+    handleGetSpecificCourse,
     navigateAfterSave,
   };
   /*******************/

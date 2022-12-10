@@ -47,10 +47,7 @@ const ProductFormButtons = (props) => {
           )}
         </>
       )}
-      <Button
-        disabled={productState.uiModifiersObject.isLoading}
-        onClick={() => productState.navigation("/?initial_selection=products")}
-      >
+      <Button disabled={productState.uiModifiersObject.isLoading} onClick={productButtonHandlers.handleGoBack}>
         Go Back
       </Button>
     </ButtonsDiv>

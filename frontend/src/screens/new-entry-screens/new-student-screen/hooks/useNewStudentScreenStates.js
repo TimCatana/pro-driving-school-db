@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import AlertVariants from "../../../../domain/constants/AlertVariants";
 
 const useNewStudentScreenStates = () => {
   /******************/
@@ -8,6 +9,7 @@ const useNewStudentScreenStates = () => {
 
   const navigation = useNavigate();
   const { primary_key } = useParams();
+  const initialRender = useRef(true);
 
   /**
    * ENUMS
@@ -31,115 +33,236 @@ const useNewStudentScreenStates = () => {
    * Parameters that change the UI based on their value
    */
 
-  const [uiModifiers, setUiModifiers] = useState({
-    isLoading: true,
-    isNewEntry: true,
-    areFieldsEditable: true,
-    failedToGetData: true,
-    dataSaved: false,
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [isNewEntry, setIsNewEntry] = useState(true);
+  const [areFieldsEditable, setAreFieldsEditable] = useState(true);
+  const [failedToGetData, setFailedToGetData] = useState(true);
+  const [dataSaved, setDataSaved] = useState(false);
+
+  const uiModifiersObject = {
+    isLoading,
+    setIsLoading,
+
+    isNewEntry,
+    setIsNewEntry,
+
+    areFieldsEditable,
+    setAreFieldsEditable,
+
+    failedToGetData,
+    setFailedToGetData,
+
+    dataSaved,
+    setDataSaved,
+  };
 
   /**
    * For error messages
    */
 
-  const [errorVariables, setErrorVariables] = useState({
-    showError: false,
-    errorMessage: "",
-  });
+  const [showMessage, setShowMessage] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageColor, setMessageColor] = useState(AlertVariants.DANGER);
+
+  const messageObject = {
+    showMessage,
+    setShowMessage,
+    message,
+    setMessage,
+    messageColor,
+    setMessageColor,
+  };
 
   /**
    * The items used to fill dropdown menus when dropdown menus options are dependant on  dynamic data
    */
 
-  const [dropdownMenuOptions, setDropdownMenuOptions] = useState({
-    courses: [],
-    failedToGetCourses: false,
+  const [courses, setCourses] = useState([]);
+  const [failedToGetCourses, setFailedToGetCourses] = useState(false);
 
-    products: [],
-    failedToGetProducts: false,
-  });
+  const [products, setProducts] = useState([]);
+  const [failedToGetProducts, setFailedToGetProducts] = useState(false);
+
+  const dropdownMenuOptionsObject = {
+    courses,
+    setCourses,
+    failedToGetCourses,
+    setFailedToGetCourses,
+
+    products,
+    setProducts,
+    failedToGetProducts,
+    setFailedToGetProducts,
+  };
 
   /**
    * Date Selection Focus (used to only show date picker when text input is selected)
    */
 
-  const [dateTextInputFocus, setDateTextInputFocus] = useState({
-    isDateOfBirthFocus: false,
-    isStudentDriversLicenseIssuedDateFocus: false,
-  });
+  const [isDateOfBirthFocus, setIsDateOfBirthFocus] = useState(false);
+  const [isStudentDriversLicenseIssuedDateFocus, setIsStudentDriversLicenseIssuedDateFocus] = useState(false);
 
-  /**
-   * Variables to determine which option is preselected in dropdown menues
-   */
+  const dateTextInputFocusesObject = {
+    isDateOfBirthFocus,
+    setIsDateOfBirthFocus,
 
-  const [preSelectedDropdownOptions, setPreSelectedDropdownOptions] = useState({
-    selectedGender: "label",
-    selectedLicenseClass: "label",
-    selectedRegisteredCourse: "label",
-    selectedRegisteredProduct: "label",
-  });
+    isStudentDriversLicenseIssuedDateFocus,
+    setIsStudentDriversLicenseIssuedDateFocus,
+  };
 
   /**
    * The object representing an entry in the database
    */
 
-  const [studentObject, setStudentObject] = useState({
-    studentFirstName: "",
-    isStudentFirstNameError: true,
+  const [studentFirstName, setStudentFirstName] = useState("");
+  const [isStudentFirstNameError, setIsStudentFirstNameError] = useState(true);
 
-    studentMiddleName: "",
-    isStudentMiddleNameError: false,
+  const [studentMiddleName, setStudentMiddleName] = useState("");
+  const [isStudentMiddleNameError, setIsStudentMiddleNameError] = useState(true);
 
-    studentLastName: "",
-    isStudentLastNameError: true,
+  const [studentLastName, setStudentLastName] = useState("");
+  const [isStudentLastNameError, setIsStudentLastNameError] = useState(true);
 
-    studentDateOfBirth: "",
-    isStudentDateOfBirthError: true,
+  const [studentDateOfBirth, setStudentDateOfBirth] = useState("");
+  const [isStudentDateOfBirthError, setIsStudentDateOfBirthError] = useState(true);
 
-    studentGender: "",
-    isStudentGenderError: true,
+  const [studentGender, setStudentGender] = useState("label");
+  const [isStudentGenderError, setIsStudentGenderError] = useState(true);
 
-    studentHeight: "",
-    isStudentHeightError: false,
+  const [studentHeight, setStudentHeight] = useState("");
+  const [isStudentHeightError, setIsStudentHeightError] = useState(true);
 
-    studentCellPhoneNumber: "",
-    isStudentCellPhoneNumberError: true,
+  const [studentAddress, setStudentAddress] = useState("");
+  const [isStudentAddressError, setIsStudentAddressError] = useState(true);
 
-    studentHomePhoneNumber: "",
-    isStudentHomePhoneNumberError: true,
+  const [studentAddressApartmentNumber, setStudentAddressApartmentNumber] = useState("");
+  const [isStudentAddressApartmentNumberError, setIsStudentAddressApartmentNumberError] = useState(true);
 
-    studentAddress: "",
-    isStudentAddressError: true,
+  const [studentAddressCity, setStudentAddressCity] = useState("");
+  const [isStudentAddressCityError, setIsStudentAddressCityError] = useState(true);
 
-    studentAddressApartmentNumber: "",
-    isStudentAddressApartmentNumberError: false,
+  const [studentAddressPostalCode, setStudentAddressPostalCode] = useState("");
+  const [isStudentAddressPostalCodeError, setIsStudentAddressPostalCodeError] = useState(true);
 
-    studentAddressCity: "",
-    isStudentAddressCityError: true,
+  const [studentCellPhoneNumber, setStudentCellPhoneNumber] = useState("");
+  const [isStudentCellPhoneNumberError, setIsStudentCellPhoneNumberError] = useState(true);
 
-    studentAddressPostalCode: "",
-    isStudentAddressPostalCodeError: true,
+  const [studentHomePhoneNumber, setStudentHomePhoneNumber] = useState("");
+  const [isStudentHomePhoneNumberError, setIsStudentHomePhoneNumberError] = useState(true);
 
-    studentDriversLicenseNumber: "",
-    isStudentDriversLicenseNumberError: true,
+  const [studentDriversLicenseId, setStudentDriversLicenseId] = useState("");
+  const [isStudentDriversLicenseIdError, setIsStudentDriversLicenseNumberId] = useState(true);
 
-    studentDriversLicenseClass: "",
-    isStudentDriversLicenseClassError: true,
+  const [studentDriversLicenseClass, setStudentDriversLicenseClass] = useState("label");
+  const [isStudentDriversLicenseClassError, setIsStudentDriversLicenseClassError] = useState(true);
 
-    studentDriversLicenseNumberIssuedDate: "",
-    isStudentDriversLicenseNumberIssuedDateError: true,
+  const [studentDriversLicenseIssuedDate, setStudentDriversLicenseIssuedDate] = useState("");
+  const [isStudentDriversLicenseIssuedDateError, setIsStudentDriversLicenseIssuedDateError] = useState(true);
 
-    studentDriversLicenseNumberExpDate: "",
-    isStudentDriversLicenseNumberExpDateError: true,
+  const [studentDriversLicenseExpDate, setStudentDriversLicenseExpDate] = useState("");
+  const [isStudentDriversLicenseExpDateError, setIsStudentDriversLicenseExpDateError] = useState(true);
 
-    studentRegisteredCourseId: "",
-    isStudentRegisteredCourseIdError: true,
+  const [studentRegisteredCourseId, setStudentRegisteredCourseId] = useState("label");
+  const [isStudentRegisteredCourseIdError, setIsStudentRegisteredCourseIdError] = useState(true);
 
-    studentRegisteredProductId: "",
-    isStudentRegisteredProductIdError: true,
-  });
+  const [studentPurchasedProductId, setStudentPurchasedProductId] = useState("label");
+  const [isStudentPurchasedProductIdError, setIsStudentPurchasedProductIdError] = useState(true);
 
+  /**
+   * The object representing an entry in the database
+   */
+
+  const studentObject = {
+    studentFirstName,
+    setStudentFirstName,
+    isStudentFirstNameError,
+    setIsStudentFirstNameError,
+
+    studentMiddleName,
+    setStudentMiddleName,
+    isStudentMiddleNameError,
+    setIsStudentMiddleNameError,
+
+    studentLastName,
+    setStudentLastName,
+    isStudentLastNameError,
+    setIsStudentLastNameError,
+
+    studentDateOfBirth,
+    setStudentDateOfBirth,
+    isStudentDateOfBirthError,
+    setIsStudentDateOfBirthError,
+
+    studentGender,
+    setStudentGender,
+    isStudentGenderError,
+    setIsStudentGenderError,
+
+    studentHeight,
+    setStudentHeight,
+    isStudentHeightError,
+    setIsStudentHeightError,
+
+    studentAddress,
+    setStudentAddress,
+    isStudentAddressError,
+    setIsStudentAddressError,
+
+    studentAddressApartmentNumber,
+    setStudentAddressApartmentNumber,
+    isStudentAddressApartmentNumberError,
+    setIsStudentAddressApartmentNumberError,
+
+    studentAddressCity,
+    setStudentAddressCity,
+    isStudentAddressCityError,
+    setIsStudentAddressCityError,
+
+    studentAddressPostalCode,
+    setStudentAddressPostalCode,
+    isStudentAddressPostalCodeError,
+    setIsStudentAddressPostalCodeError,
+
+    studentCellPhoneNumber,
+    setStudentCellPhoneNumber,
+    isStudentCellPhoneNumberError,
+    setIsStudentCellPhoneNumberError,
+
+    studentHomePhoneNumber,
+    setStudentHomePhoneNumber,
+    isStudentHomePhoneNumberError,
+    setIsStudentHomePhoneNumberError,
+
+    studentDriversLicenseId,
+    setStudentDriversLicenseId,
+    isStudentDriversLicenseIdError,
+    setIsStudentDriversLicenseNumberId,
+
+    studentDriversLicenseClass,
+    setStudentDriversLicenseClass,
+    isStudentDriversLicenseClassError,
+    setIsStudentDriversLicenseClassError,
+
+    studentDriversLicenseIssuedDate,
+    setStudentDriversLicenseIssuedDate,
+    isStudentDriversLicenseIssuedDateError,
+    setIsStudentDriversLicenseIssuedDateError,
+
+    studentDriversLicenseExpDate,
+    setStudentDriversLicenseExpDate,
+    isStudentDriversLicenseExpDateError,
+    setIsStudentDriversLicenseExpDateError,
+
+    studentRegisteredCourseId,
+    setStudentRegisteredCourseId,
+    isStudentRegisteredCourseIdError,
+    setIsStudentRegisteredCourseIdError,
+
+    studentPurchasedProductId,
+    setStudentPurchasedProductId,
+    isStudentPurchasedProductIdError,
+    setIsStudentPurchasedProductIdError,
+  };
   /**
    * The state object of the screen
    */
@@ -147,27 +270,16 @@ const useNewStudentScreenStates = () => {
   const studentState = {
     navigation,
     primary_key,
+    initialRender,
 
     Genders,
     LicenseClasses,
 
-    uiModifiers,
-    setUiModifiers,
-
-    errorVariables,
-    setErrorVariables,
-
-    dropdownMenuOptions,
-    setDropdownMenuOptions,
-
-    dateTextInputFocus,
-    setDateTextInputFocus,
-
-    preSelectedDropdownOptions,
-    setPreSelectedDropdownOptions,
-
+    uiModifiersObject,
+    messageObject,
+    dropdownMenuOptionsObject,
+    dateTextInputFocusesObject,
     studentObject,
-    setStudentObject,
   };
 
   /*******************/

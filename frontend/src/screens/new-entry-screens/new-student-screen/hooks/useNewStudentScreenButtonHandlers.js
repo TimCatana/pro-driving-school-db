@@ -1,94 +1,51 @@
-import {
-  addOneStudentUC,
-  deleteOneStudentUC,
-  editOneStudentUC,
-} from "../../../../domain/db";
+import AlertVariants from "../../../../domain/constants/AlertVariants";
+import { Results } from "../../../../domain/constants/Results";
+import { addOneStudentUC, deleteOneStudentUC, editOneStudentUC } from "../../../../domain/db";
 import {
   getFilledStudentApplicationFormPdfUC,
   getFilledStudentInCarEvaluationPdfUC,
   getFilledStudentInCarRecordPdfUC,
   getFilledStudentInvoicePdfUC,
   getFilledStudentRecordPdfUC,
-F} from "../../../../domain/pdf";
+  F,
+} from "../../../../domain/pdf";
 
 const useNewStudentScreenButtonHandlers = (studentState) => {
   /**
    * Updates the subscript to mailing list option.
    */
   const handleAddNewStudentEntry = async () => {
-    // console.log(`axios call to backend, not implemented yet but button works!
-    // values:
-    // il ${studentState.isLoading}
-    // sfn ${studentState.studentObject.studentFirstName}
-    // ${typeof studentState.studentObject.studentFirstName}
-    // ${studentState.studentObject.isStudentFirstNameError}
-    // smn ${studentState.studentObject.studentMiddleName}
-    // ${typeof studentState.studentObject.studentMiddleName}
-    // ${studentState.studentObject.isStudentMiddleNameError}
-    // sln ${studentState.studentObject.studentLastName}
-    // ${typeof studentState.studentObject.studentLastName}
-    // ${studentState.studentObject.isStudentLastNameError}
-    // sdob ${studentState.studentObject.studentDateOfBirth}
-    // ${typeof studentState.studentObject.studentDateOfBirth}
-    // ${studentState.studentObject.isStudentDateOfBirthError}
-    // sg ${studentState.studentObject.studentGender}
-    // ${typeof studentState.studentObject.studentGender}
-    // ${studentState.studentObject.isStudentGenderError}
-    // scp ${studentState.studentObject.studentCellPhoneNumber}
-    // ${typeof studentState.studentObject.studentCellPhoneNumber}
-    // ${studentState.studentObject.isStudentCellPhoneNumberError}
-    // shp ${studentState.studentObject.studentHomePhoneNumber}
-    // ${typeof studentState.studentObject.studentHomePhoneNumber}
-    // ${studentState.studentObject.isStudentHomePhoneNumberError}
-    // sa ${studentState.studentObject.studentAddress}
-    // ${typeof studentState.studentObject.studentAddress}
-    // ${studentState.studentObject.isStudentAddressError}
-    // sac ${studentState.studentObject.studentAddressCity}
-    // ${typeof studentState.studentObject.studentAddressCity}
-    // ${studentState.studentObject.isStudentAddressCityError}
-    // sapc ${studentState.studentObject.studentAddressPostalCode}
-    // ${typeof studentState.studentObject.studentAddressPostalCode}
-    // ${studentState.studentObject.isStudentAddressPostalCodeError}
-    // sdln ${studentState.studentObject.studentDriversLicenseNumber}
-    // ${typeof studentState.studentObject.studentDriversLicenseNumber}
-    // ${studentState.studentObject.isStudentDriversLicenseNumberError}
-    // sdlid ${studentState.studentObject.studentDriversLicenseNumberIssuedDate}
-    // ${typeof studentState.studentObject.studentDriversLicenseNumberIssuedDate}
-    // ${studentState.studentObject.isStudentDriversLicenseNumberIssuedDateError}
-    // sdled ${studentState.studentObject.studentDriversLicenseNumberExpDate}
-    // ${typeof studentState.studentObject.studentDriversLicenseNumberExpDate}
-    // ${studentState.studentObject.isStudentDriversLicenseNumberExpDateError}
-    // src ${studentState.studentObject.studentRegisteredCourseId}
-    // ${typeof studentState.studentObject.studentRegisteredCourseId}
-    // ${studentState.studentObject.isStudentRegisteredCourseIdError}
-    // srp ${studentState.studentObject.studentRegisteredProductId}
-    // ${typeof studentState.studentObject.studentRegisteredProductId}
-    // ${studentState.studentObject.isStudentRegisteredProductIdError}
-    // `);
+    // console.log(studentState.studentObject)
 
-    studentState.setIsLoading(true);
+    studentState.uiModifiersObject.setIsLoading(true);
     if (
       !studentState.studentObject.isStudentFirstNameError &&
       !studentState.studentObject.isStudentMiddleNameError &&
       !studentState.studentObject.isStudentLastNameError &&
       !studentState.studentObject.isStudentDateOfBirthError &&
       !studentState.studentObject.isStudentGenderError &&
-      !studentState.studentObject.isStudentCellPhoneNumberError &&
-      !studentState.studentObject.isStudentHomePhoneNumberError &&
       !studentState.studentObject.isStudentAddressError &&
       !studentState.studentObject.isStudentAddressCityError &&
       !studentState.studentObject.isStudentAddressPostalCodeError &&
-      !studentState.studentObject.isStudentDriversLicenseNumberError &&
-      !studentState.studentObject
-        .isStudentDriversLicenseNumberIssuedDateError &&
-      !studentState.studentObject.isStudentDriversLicenseNumberExpDateError &&
+      !studentState.studentObject.isStudentCellPhoneNumberError &&
+      !studentState.studentObject.isStudentHomePhoneNumberError &&
+      !studentState.studentObject.isStudentDriversLicenseIdError &&
+      !studentState.studentObject.isStudentDriversLicenseIssuedDateError &&
+      !studentState.studentObject.isStudentDriversLicenseExpDateError &&
       !studentState.studentObject.isStudentRegisteredCourseIdError &&
-      !studentState.studentObject.isStudentRegisteredProductIdError
+      !studentState.studentObject.isStudentPurchasedProductIdError
     ) {
-      await addOneStudentUC(studentState.studentObject);
+      const result = await addOneStudentUC(studentState.studentObject);
+
+      if (result.data.status == Results.SUCCESS) {
+        studentState.uiModifiersObject.setDataSaved(true);
+      } else {
+        studentState.messageObject.setMessage("ERROR - Failed to add student to database");
+        studentState.messageObject.setMessageColor(AlertVariants.DANGER);
+        studentState.messageObject.setShowMessage(true);
+      }
     }
-    studentState.setIsLoading(false);
-    studentState.setStudentSaved(true);
+    studentState.uiModifiersObject.setIsLoading(false);
   };
 
   /**
@@ -101,22 +58,57 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
       !studentState.studentObject.isStudentLastNameError &&
       !studentState.studentObject.isStudentDateOfBirthError &&
       !studentState.studentObject.isStudentGenderError &&
-      !studentState.studentObject.isStudentCellPhoneNumberError &&
-      !studentState.studentObject.isStudentHomePhoneNumberError &&
       !studentState.studentObject.isStudentAddressError &&
       !studentState.studentObject.isStudentAddressCityError &&
       !studentState.studentObject.isStudentAddressPostalCodeError &&
-      !studentState.studentObject.isStudentDriversLicenseNumberError &&
-      !studentState.studentObject
-        .isStudentDriversLicenseNumberIssuedDateError &&
-      !studentState.studentObject.isStudentDriversLicenseNumberExpDateError &&
+      !studentState.studentObject.isStudentCellPhoneNumberError &&
+      !studentState.studentObject.isStudentHomePhoneNumberError &&
+      !studentState.studentObject.isStudentDriversLicenseIdError &&
+      !studentState.studentObject.isStudentDriversLicenseIssuedDateError &&
+      !studentState.studentObject.isStudentDriversLicenseExpDateError &&
       !studentState.studentObject.isStudentRegisteredCourseIdError &&
-      !studentState.studentObject.isStudentRegisteredProductIdError
+      !studentState.studentObject.isStudentPurchasedProductIdError
     ) {
-      await editOneStudentUC(
-        studentState.studentObject,
-        studentState.primary_key
-      );
+      const result = await editOneStudentUC(studentState.studentObject, studentState.primary_key);
+
+      if (result.data.status == Results.SUCCESS) {
+        studentState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
+        studentState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+        studentState.messageObject.setShowMessage(true);
+        studentState.uiModifiersObject.setAreFieldsEditable(false);
+      } else {
+        studentState.messageObject.setMessage("ERROR - Failed to update item in database");
+        studentState.messageObject.setMessageColor(AlertVariants.DANGER);
+        studentState.messageObject.setShowMessage(true);
+        studentState.uiModifiersObject.setAreFieldsEditable(false);
+      }
+    }
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleChangeToEditableForm = async () => {
+    studentState.uiModifiersObject.setAreFieldsEditable(true);
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleDismissErrorAlert = async () => {
+    studentState.messageObject.setShowMessage(false);
+  };
+
+  /**
+   *
+   */
+  const handleGoBack = async () => {
+    if (studentState.uiModifiersObject.isNewEntry) {
+      await studentState.navigation("/?initial_selection=students");
+    } else {
+      studentState.uiModifiersObject.areFieldsEditable
+        ? await studentState.uiModifiersObject.setAreFieldsEditable(false)
+        : await studentState.navigation("/?initial_selection=students");
     }
   };
 
@@ -169,12 +161,15 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
   const studentButtonHandlers = {
     handleAddNewStudentEntry,
     handleEditStudentEntry,
+    handleChangeToEditableForm,
+    handleDismissErrorAlert,
     handleDeleteStudent,
     handleGetFilledStudentApplicationFormPdf,
     handleGetFilledStudentInCarEvaluationPdf,
     handleGetFilledStudentInCarRecordPdf,
     handleGetFilledStudentInvoicePdfUC,
     handleGetFilledStudentRecordPdf,
+    handleGoBack,
   };
 
   /*******************/

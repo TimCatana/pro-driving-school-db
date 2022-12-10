@@ -38,6 +38,15 @@ const useNewInCarInstructorScreen = () => {
   }, [inCarInstructorState.uiModifiersObject.dataSaved]);
 
   /**
+   *
+   */
+  useEffect(() => {
+    if (!inCarInstructorState.uiModifiersObject.areFieldsEditable && !inCarInstructorState.initialRender.current) {
+      inCarInstructorUseEffectHelpers.handleGetSpecificInCarInstructor();
+    }
+  }, [inCarInstructorState.uiModifiersObject.areFieldsEditable]);
+
+  /**
    * Validates newly inputted inCarInstFirstName
    * @dependent inCarInstFirstName
    */

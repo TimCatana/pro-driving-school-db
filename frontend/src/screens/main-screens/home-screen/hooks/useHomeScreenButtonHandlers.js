@@ -1,3 +1,5 @@
+import AlertVariants from "../../../../domain/constants/AlertVariants";
+import { Results } from "../../../../domain/constants/Results";
 import {
   deleteOneCourseUC,
   deleteOneInCarInstructorUC,
@@ -20,86 +22,97 @@ const useHomeScreenButtonHandlers = (homeState) => {
    * Updates the subscript to mailing list option.
    */
   const handleGetCourses = async () => {
-    homeState.setIsLoading(true);
+    homeState.uiModifiersObject.setIsLoading(true);
+    homeState.uiModifiersObject.setDisplaying(homeState.Data.COURSES);
 
     const result = await getAllCoursesUC();
 
-    if (result.data.status == 200) {
-      homeState.setDisplaying(homeState.Data.COURSES);
-      homeState.setDisplayData(result.data.query);
+    if (result.data.status == Results.SUCCESS) {
+      homeState.uiModifiersObject.setDisplayData(result.data.query);
+      homeState.uiModifiersObject.setFailedToGetData(false);
     } else {
-      console.log("failed");
+      homeState.uiModifiersObject.setDisplayData([]);
+      homeState.uiModifiersObject.setFailedToGetData(true);
     }
 
-    homeState.setIsLoading(false);
+    homeState.uiModifiersObject.setIsLoading(false);
   };
+
   /**
    * Updates the subscript to mailing list option.
    */
   const handleGetProducts = async () => {
-    homeState.setIsLoading(true);
+    homeState.uiModifiersObject.setIsLoading(true);
+    homeState.uiModifiersObject.setDisplaying(homeState.Data.PRODUCTS);
 
     const result = await getAllProductsUC();
 
-    if (result.data.status == 200) {
-      homeState.setDisplaying(homeState.Data.PRODUCTS);
-      homeState.setDisplayData(result.data.query);
+    if (result.data.status == Results.SUCCESS) {
+      homeState.uiModifiersObject.setDisplayData(result.data.query);
+      homeState.uiModifiersObject.setFailedToGetData(false);
     } else {
-      console.log("failed");
+      homeState.uiModifiersObject.setDisplayData([]);
+      homeState.uiModifiersObject.setFailedToGetData(true);
     }
 
-    homeState.setIsLoading(false);
+    homeState.uiModifiersObject.setIsLoading(false);
   };
   /**
    * Updates the subscript to mailing list option.
    */
   const handleGetStudents = async () => {
-    homeState.setIsLoading(true);
+    homeState.uiModifiersObject.setIsLoading(true);
+    homeState.uiModifiersObject.setDisplaying(homeState.Data.STUDENTS);
 
     const result = await getAllStudentsUC();
 
-    if (result.data.status == 200) {
-      homeState.setDisplaying(homeState.Data.STUDENTS);
-      homeState.setDisplayData(result.data.query);
+    if (result.data.status == Results.SUCCESS) {
+      homeState.uiModifiersObject.setDisplayData(result.data.query);
+      homeState.uiModifiersObject.setFailedToGetData(false);
     } else {
-      console.log("failed");
+      homeState.uiModifiersObject.setDisplayData([]);
+      homeState.uiModifiersObject.setFailedToGetData(true);
     }
 
-    homeState.setIsLoading(false);
+    homeState.uiModifiersObject.setIsLoading(false);
   };
   /**
    * Updates the subscript to mailing list option.
    */
   const handleGetInClassInstructors = async () => {
-    homeState.setIsLoading(true);
+    homeState.uiModifiersObject.setIsLoading(true);
+    homeState.uiModifiersObject.setDisplaying(homeState.Data.IN_CLASS_INST);
 
     const result = await getAllInClassInstructorsUC();
 
-    if (result.data.status == 200) {
-      homeState.setDisplaying(homeState.Data.IN_CLASS_INST);
-      homeState.setDisplayData(result.data.query);
+    if (result.data.status == Results.SUCCESS) {
+      homeState.uiModifiersObject.setDisplayData(result.data.query);
+      homeState.uiModifiersObject.setFailedToGetData(false);
     } else {
-      console.log("failed");
+      homeState.uiModifiersObject.setDisplayData([]);
+      homeState.uiModifiersObject.setFailedToGetData(true);
     }
 
-    homeState.setIsLoading(false);
+    homeState.uiModifiersObject.setIsLoading(false);
   };
   /**
    * Updates the subscript to mailing list option.
    */
   const handleGetInCarInstructors = async () => {
-    homeState.setIsLoading(true);
+    homeState.uiModifiersObject.setIsLoading(true);
+    homeState.uiModifiersObject.setDisplaying(homeState.Data.IN_CAR_INST);
 
     const result = await getAllInCarInstructorsUC();
 
-    if (result.data.status == 200) {
-      homeState.setDisplaying(homeState.Data.IN_CAR_INST);
-      homeState.setDisplayData(result.data.query);
+    if (result.data.status == Results.SUCCESS) {
+      homeState.uiModifiersObject.setDisplayData(result.data.query);
+      homeState.uiModifiersObject.setFailedToGetData(false);
     } else {
-      console.log("failed");
+      homeState.uiModifiersObject.setDisplayData([]);
+      homeState.uiModifiersObject.setFailedToGetData(true);
     }
 
-    homeState.setIsLoading(false);
+    homeState.uiModifiersObject.setIsLoading(false);
   };
 
   /******************/
@@ -110,86 +123,110 @@ const useHomeScreenButtonHandlers = (homeState) => {
    * Updates the subscript to mailing list option.
    */
   const handleDeleteCourse = async (primaryKey) => {
-    homeState.setIsLoading(true);
+    homeState.uiModifiersObject.setIsLoading(true);
 
     const result = await deleteOneCourseUC(primaryKey);
 
-    if (result.data.status == 200) {
-      console.log("successfully deleted item");
+    if (result.data.status == Results.SUCCESS) {
+      homeState.messageObject.setMessage("SUCCESS - Successfully delete course");
+      homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+      homeState.messageObject.setShowMessage(true);
       handleGetCourses();
     } else {
-      console.log("failed to delete item");
+      homeState.messageObject.setMessage("ERROR - Failed to delete course");
+      homeState.messageObject.setMessageColor(AlertVariants.DANGER);
+      homeState.messageObject.setShowMessage(true);
     }
 
-    homeState.setIsLoading(false);
+    homeState.uiModifiersObject.setIsLoading(false);
   };
+
   /**
    * Updates the subscript to mailing list option.
    */
   const handleDeleteProduct = async (primaryKey) => {
-    homeState.setIsLoading(true);
+    homeState.uiModifiersObject.setIsLoading(true);
 
     const result = await deleteOneProductUC(primaryKey);
 
-    if (result.data.status == 200) {
-      console.log("successfully deleted item");
+    if (result.data.status == Results.SUCCESS) {
+      homeState.messageObject.setMessage("SUCCESS - Successfully delete product");
+      homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+      homeState.messageObject.setShowMessage(true);
       handleGetProducts();
     } else {
-      console.log("failed to delete item");
+      homeState.messageObject.setMessage("ERROR - Failed to delete product");
+      homeState.messageObject.setMessageColor(AlertVariants.DANGER);
+      homeState.messageObject.setShowMessage(true);
     }
 
-    homeState.setIsLoading(false);
+    homeState.uiModifiersObject.setIsLoading(false);
   };
+
   /**
    * Updates the subscript to mailing list option.
    */
   const handleDeleteStudent = async (primaryKey) => {
-    homeState.setIsLoading(true);
+    homeState.uiModifiersObject.setIsLoading(true);
 
     const result = await deleteOneStudentUC(primaryKey);
 
-    if (result.data.status == 200) {
-      console.log("successfully deleted item");
+    if (result.data.status == Results.SUCCESS) {
+      homeState.messageObject.setMessage("SUCCESS - Successfully delete student");
+      homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+      homeState.messageObject.setShowMessage(true);
       handleGetStudents();
     } else {
-      console.log("failed to delete item");
+      homeState.messageObject.setMessage("ERROR - Failed to delete student");
+      homeState.messageObject.setMessageColor(AlertVariants.DANGER);
+      homeState.messageObject.setShowMessage(true);
     }
 
-    homeState.setIsLoading(false);
+    homeState.uiModifiersObject.setIsLoading(false);
   };
+
   /**
    * Updates the subscript to mailing list option.
    */
   const handleDeleteInCarInst = async (primaryKey) => {
-    homeState.setIsLoading(true);
+    homeState.uiModifiersObject.setIsLoading(true);
 
     const result = await deleteOneInCarInstructorUC(primaryKey);
 
-    if (result.data.status == 200) {
-      console.log("successfully deleted item");
+    if (result.data.status == Results.SUCCESS) {
+      homeState.messageObject.setMessage("SUCCESS - Successfully delete in car instructor");
+      homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+      homeState.messageObject.setShowMessage(true);
       handleGetInCarInstructors();
     } else {
-      console.log("failed to delete item");
+      homeState.messageObject.setMessage("ERROR - Failed to delete in car instructor");
+      homeState.messageObject.setMessageColor(AlertVariants.DANGER);
+      homeState.messageObject.setShowMessage(true);
     }
 
-    homeState.setIsLoading(false);
+    homeState.uiModifiersObject.setIsLoading(false);
   };
+
   /**
    * Updates the subscript to mailing list option.
    */
   const handleDeleteInClassInst = async (primaryKey) => {
-    homeState.setIsLoading(true);
+    homeState.uiModifiersObject.setIsLoading(true);
 
     const result = await deleteOneInClassInstructorUC(primaryKey);
 
-    if (result.data.status == 200) {
-      console.log("successfully deleted item");
+    if (result.data.status == Results.SUCCESS) {
+      homeState.messageObject.setMessage("SUCCESS - Successfully delete in class instructor");
+      homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+      homeState.messageObject.setShowMessage(true);
       handleGetInClassInstructors();
     } else {
-      console.log("failed to delete item");
+      homeState.messageObject.setMessage("ERROR - Failed to delete in class instructor");
+      homeState.messageObject.setMessageColor(AlertVariants.DANGER);
+      homeState.messageObject.setShowMessage(true);
     }
 
-    homeState.setIsLoading(false);
+    homeState.uiModifiersObject.setIsLoading(false);
   };
 
   /**********************/
@@ -200,7 +237,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
    *  Navigates back to the login screen if no process is currently running.
    */
   const navToCourse = (primaryKey) => {
-    if (!homeState.isLoading) {
+    if (!homeState.uiModifiersObject.isLoading) {
       homeState.navigation(`/course/${primaryKey}`);
     }
   };
@@ -208,7 +245,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
    *  Navigates back to the login screen if no process is currently running.
    */
   const navToProduct = (primaryKey) => {
-    if (!homeState.isLoading) {
+    if (!homeState.uiModifiersObject.isLoading) {
       homeState.navigation(`/product/${primaryKey}`);
     }
   };
@@ -216,7 +253,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
    *  Navigates back to the login screen if no process is currently running.
    */
   const navToStudent = (primaryKey) => {
-    if (!homeState.isLoading) {
+    if (!homeState.uiModifiersObject.isLoading) {
       homeState.navigation(`/student/${primaryKey}`);
     }
   };
@@ -224,7 +261,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
    *  Navigates back to the login screen if no process is currently running.
    */
   const navToInClassInst = (primaryKey) => {
-    if (!homeState.isLoading) {
+    if (!homeState.uiModifiersObject.isLoading) {
       homeState.navigation(`/in-class-inst/${primaryKey}`);
     }
   };
@@ -232,9 +269,16 @@ const useHomeScreenButtonHandlers = (homeState) => {
    *  Navigates back to the login screen if no process is currently running.
    */
   const navToInCarInst = (primaryKey) => {
-    if (!homeState.isLoading) {
+    if (!homeState.uiModifiersObject.isLoading) {
       homeState.navigation(`/in-car-inst/${primaryKey}`);
     }
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleDismissErrorAlert = async () => {
+    homeState.messageObject.setShowMessage(false);
   };
 
   const homeButtonHandlers = {
@@ -255,6 +299,8 @@ const useHomeScreenButtonHandlers = (homeState) => {
     navToStudent,
     navToInCarInst,
     navToInClassInst,
+
+    handleDismissErrorAlert,
   };
 
   /*******************/

@@ -53,10 +53,10 @@ const InCarInstructorFormButtons = (props) => {
           )}
         </>
       )}
-      
+
       <Button
         disabled={inCarInstructorState.uiModifiersObject.isLoading}
-        onClick={() => inCarInstructorState.navigation("/?initial_selection=in-car-instructors")}
+        onClick={inCarInstructorButtonHandlers.handleGoBack}
       >
         Go Back
       </Button>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AlertVariants from "../../../../domain/constants/AlertVariants";
 
@@ -9,6 +9,7 @@ const useNewCourseScreenStates = () => {
 
   const navigation = useNavigate();
   const { primary_key } = useParams();
+  const initialRender = useRef(true);
 
   /**
    * ENUMS
@@ -92,8 +93,6 @@ const useNewCourseScreenStates = () => {
     setIsEndDateFocus,
   };
 
- 
-
   /**
    * The object representing an entry in the database
    */
@@ -155,6 +154,7 @@ const useNewCourseScreenStates = () => {
   const courseState = {
     navigation,
     primary_key,
+    initialRender,
 
     CourseTypes,
 
