@@ -21,7 +21,7 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
     ) {
       const result = await addOneCourseUC(courseState.courseObject);
 
-      if (result.data.status == Results.SUCCESS) {
+      if (result.status == Results.SUCCESS) {
         courseState.uiModifiersObject.setDataSaved(true);
       } else {
         courseState.messageObject.setMessage("ERROR - Failed to add course to database");
@@ -47,18 +47,18 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
     ) {
       const result = await editOneCourseUC(courseState.courseObject, courseState.primary_key);
 
-      if (result.data.status == Results.SUCCESS) {
+      if (result.status == Results.SUCCESS) {
         courseState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
         courseState.messageObject.setMessageColor(AlertVariants.SUCCESS);
         courseState.messageObject.setShowMessage(true);
-        courseState.uiModifiersObject.setAreFieldsEditable(false);
       } else {
         courseState.messageObject.setMessage("ERROR - Failed to update item in database");
         courseState.messageObject.setMessageColor(AlertVariants.DANGER);
         courseState.messageObject.setShowMessage(true);
-        courseState.uiModifiersObject.setAreFieldsEditable(false);
       }
     }
+
+    courseState.uiModifiersObject.setAreFieldsEditable(false);
     courseState.uiModifiersObject.setIsLoading(false);
   };
 
@@ -112,7 +112,7 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
     handleDismissErrorAlert,
     handleDeleteCourse,
     handleGetFilledCoursePdf,
-    handleGoBack
+    handleGoBack,
   };
 
   /*******************/

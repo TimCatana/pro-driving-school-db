@@ -13,28 +13,22 @@ const editOneEntry = async (req, res) => {
   WHERE  
     ${inClassInstTableHeadings.id} = ?;`;
 
-  let returnVal;
-
   const db = makeDb();
 
   try {
-    const rows = await db.query(sql, [
+    await db.query(sql, [
       req.body.iciFirstName,
       req.body.iciLastName,
       req.body.iciDriversLicenseNum,
       req.body.iciDriversLicenseExpDate,
       req.params.primary_key,
     ]);
-
-    returnVal = { status: 200, query: rows };
+    res.sendStatus(200);
   } catch (e) {
-    console.log(
-      `ERROR - Failed to edit in class instructor with id of ${req.params.primary_key} -- ${e}`
-    );
-    returnVal = { status: 500, query: null };
+    console.log(`ERROR - Failed to edit in class instructor with id of ${req.params.primary_key} -- ${e}`);
+    res.sendStatus(500);
   } finally {
     await db.close();
-    res.send(returnVal);
   }
 };
 

@@ -26,12 +26,11 @@ const editOneEntry = async (req, res) => {
     ${studentTableHeadings.purchasedProduct} = ?
   WHERE 
     ${studentTableHeadings.id} = ?;`;
-  let returnVal;
 
   const db = makeDb();
 
   try {
-    const rows = await db.query(sql, [
+    await db.query(sql, [
       req.body.studentFirstName,
       req.body.studentMiddleName,
       req.body.studentLastName,
@@ -52,16 +51,12 @@ const editOneEntry = async (req, res) => {
       parseInt(req.body.studentRegisteredProductId),
       req.params.primary_key,
     ]);
-
-    returnVal = { status: 200, query: rows };
+    res.sendStatus(200);
   } catch (e) {
-    console.log(
-      `ERROR - Failed to edit student with id of ${req.params.primary_key} -- ${e}`
-    );
-    returnVal = { status: 500, query: null };
+    console.log(`ERROR - Failed to edit student with id of ${req.params.primary_key} -- ${e}`);
+    res.sendStatus(500);
   } finally {
     await db.close();
-    res.send(returnVal);
   }
 };
 

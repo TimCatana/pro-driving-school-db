@@ -27,30 +27,30 @@ const useNewInCarInstructorScreenUseEffectHelpers = (inCarInstructorState) => {
   const handleGetSpecificInCarInstructor = async () => {
     const result = await getOneInCarInstructorUC(inCarInstructorState.primary_key);
 
-    if (result.data.status == 200) {
-      inCarInstructorState.inCarInstructorObject.setFirstName(result.data.query[0][inCarInstTableHeadings.firstName]);
+    if (result.status == 200) {
+      inCarInstructorState.inCarInstructorObject.setFirstName(result.data[0][inCarInstTableHeadings.firstName]);
       inCarInstructorState.inCarInstructorObject.setIsFirstNameError(false);
 
-      inCarInstructorState.inCarInstructorObject.setLastName(result.data.query[0][inCarInstTableHeadings.lastName]);
+      inCarInstructorState.inCarInstructorObject.setLastName(result.data[0][inCarInstTableHeadings.lastName]);
       inCarInstructorState.inCarInstructorObject.setIsLastNameError(false);
 
       inCarInstructorState.inCarInstructorObject.setInstDriversLicenseId(
-        result.data.query[0][inCarInstTableHeadings.driversLicenseId]
+        result.data[0][inCarInstTableHeadings.driversLicenseId]
       );
       inCarInstructorState.inCarInstructorObject.setIsInstDriversLicenseIdError(false);
 
       inCarInstructorState.inCarInstructorObject.setInstDriversLicenseExpDate(
-        result.data.query[0][inCarInstTableHeadings.driversLicenseExpDate]
+        result.data[0][inCarInstTableHeadings.driversLicenseExpDate]
       );
       inCarInstructorState.inCarInstructorObject.setIsInstDriversLicenseExpDateError(false);
 
       inCarInstructorState.inCarInstructorObject.setGDriversLicenseId(
-        result.data.query[0][inCarInstTableHeadings.gDriversLicenseId]
+        result.data[0][inCarInstTableHeadings.gDriversLicenseId]
       );
       inCarInstructorState.inCarInstructorObject.setIsGDriversLicenseIdError(false);
 
       inCarInstructorState.inCarInstructorObject.setGDriversLicenseExpDate(
-        result.data.query[0][inCarInstTableHeadings.gDriversLicenseExpDate]
+        result.data[0][inCarInstTableHeadings.gDriversLicenseExpDate]
       );
       inCarInstructorState.inCarInstructorObject.setIsGDriversLicenseExpDateError(false);
 

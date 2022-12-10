@@ -15,12 +15,11 @@ const addOneEntry = async (req, res) => {
   (${courseTableHeadings.courseId},  ${courseTableHeadings.capacity}, ${courseTableHeadings.isDigital}, ${courseTableHeadings.startDate}, ${courseTableHeadings.endDate}, ${courseTableHeadings.inClassInstructorId}
   ) 
   VALUES (?, ?, ?, ?, ?, ?);`;
-  let returnVal;
 
   const db = makeDb();
 
   try {
-    const rows = await db.query(sql, [
+    await db.query(sql, [
       parseInt(req.body.courseId),
       parseInt(req.body.courseCapacity),
       req.body.courseIsDigital,
@@ -28,14 +27,12 @@ const addOneEntry = async (req, res) => {
       req.body.courseEndDate,
       req.body.courseInClassInstructor,
     ]);
-
-    returnVal = { status: 200, query: rows };
+    res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to add course to database -- ${e}`);
-    returnVal = { status: 500, query: null };
+    res.sendStatus(500);
   } finally {
     await db.close();
-    res.send(returnVal);
   }
 };
 

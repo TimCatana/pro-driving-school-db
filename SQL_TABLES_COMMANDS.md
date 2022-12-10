@@ -72,3 +72,17 @@ FOREIGN KEY(purchased_product) REFERENCES products(product_id)
 );
 
 ```
+
+BELOW FOR PDF
+FIELDS PDF-LIB
+
+```
+
+  // const pdfFields = pdfDoc
+  //   .getForm()
+  //   .getFields()
+  //   .map((f) => f.getName());
+
+  // console.log({ pdfFields });
+
+```

@@ -37,7 +37,7 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
     ) {
       const result = await addOneStudentUC(studentState.studentObject);
 
-      if (result.data.status == Results.SUCCESS) {
+      if (result.status == Results.SUCCESS) {
         studentState.uiModifiersObject.setDataSaved(true);
       } else {
         studentState.messageObject.setMessage("ERROR - Failed to add student to database");
@@ -71,7 +71,7 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
     ) {
       const result = await editOneStudentUC(studentState.studentObject, studentState.primary_key);
 
-      if (result.data.status == Results.SUCCESS) {
+      if (result.status == Results.SUCCESS) {
         studentState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
         studentState.messageObject.setMessageColor(AlertVariants.SUCCESS);
         studentState.messageObject.setShowMessage(true);
@@ -129,7 +129,13 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
    * Updates the subscript to mailing list option.
    */
   const handleGetFilledStudentApplicationFormPdf = async () => {
-    const result = await getFilledStudentApplicationFormPdfUC();
+    const result = await getFilledStudentApplicationFormPdfUC(studentState.primary_key);
+
+    if (result.status == Results.SUCCESS) {
+      console.log(result);
+    } else {
+      console.log(result);
+    }
   };
   /**
    * Updates the subscript to mailing list option.

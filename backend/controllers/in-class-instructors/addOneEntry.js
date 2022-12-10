@@ -25,27 +25,21 @@ const addOneEntry = async (req, res) => {
   ) 
   VALUES (?, ?, ?, ?);`;
 
-  let returnVal;
-
   const db = makeDb();
 
   try {
-    const rows = await db.query(sql, [
+    await db.query(sql, [
       req.body.iciFirstName,
       req.body.iciLastName,
       req.body.iciDriversLicenseNum,
       req.body.iciDriversLicenseExpDate,
     ]);
-
-    returnVal = { status: 200, query: rows };
+    res.sendStatus(200);
   } catch (e) {
-    console.log(
-      `ERROR - Failed to add in class instructor to database -- ${e}`
-    );
-    returnVal = { status: 500, query: null };
+    console.log(`ERROR - Failed to add in class instructor to database -- ${e}`);
+    res.sendStatus(500);
   } finally {
     await db.close();
-    res.send(returnVal);
   }
 };
 

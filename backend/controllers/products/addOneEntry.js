@@ -18,25 +18,21 @@ const addOneEntry = async (req, res) => {
     ${productTableHeadings.price}
   ) 
   VALUES (?, ?, ?);`;
-  
-  let returnVal;
 
   const db = makeDb();
 
   try {
-    const rows = await db.query(sql, [
+    await db.query(sql, [
       parseInt(req.body.productId),
       req.body.productName,
       parseFloat(req.body.productPrice).toFixed(2),
     ]);
-
-    returnVal = { status: 200, query: rows };
+    res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to add product to database -- ${e}`);
-    returnVal = { status: 500, query: null };
+    res.sendStatus(500);
   } finally {
     await db.close();
-    res.send(returnVal);
   }
 };
 

@@ -20,7 +20,7 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
     ) {
       const result = await addOneInCarInstructorUC(inCarInstructorState.inCarInstructorObject);
 
-      if (result.data.status == Results.SUCCESS) {
+      if (result.status == Results.SUCCESS) {
         inCarInstructorState.uiModifiersObject.setDataSaved(true);
       } else {
         inCarInstructorState.messageObject.setMessage("ERROR - Failed to add in car instructor to database");
@@ -51,19 +51,18 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
         inCarInstructorState.primary_key
       );
 
-      if (result.data.status == Results.SUCCESS) {
+      if (result.status == Results.SUCCESS) {
         inCarInstructorState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
         inCarInstructorState.messageObject.setMessageColor(AlertVariants.SUCCESS);
         inCarInstructorState.messageObject.setShowMessage(true);
-        inCarInstructorState.uiModifiersObject.setAreFieldsEditable(false);
       } else {
         inCarInstructorState.messageObject.setMessage("ERROR - Failed to update item in database");
         inCarInstructorState.messageObject.setMessageColor(AlertVariants.DANGER);
         inCarInstructorState.messageObject.setShowMessage(true);
-        inCarInstructorState.uiModifiersObject.setAreFieldsEditable(false);
       }
     }
 
+    inCarInstructorState.uiModifiersObject.setAreFieldsEditable(false);
     inCarInstructorState.uiModifiersObject.setIsLoading(false);
   };
 

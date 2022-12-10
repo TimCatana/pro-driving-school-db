@@ -27,24 +27,24 @@ const useNewInClassInstructorScreenUseEffectHelpers = (inClassInstructorState) =
   const handleGetSpecificInClassInst = async () => {
     const result = await getOneInClassInstructorUC(inClassInstructorState.primary_key);
 
-    if (result.data.status == 200) {
+    if (result.status == 200) {
       inClassInstructorState.inClassInstructorObject.setFirstName(
-        result.data.query[0][inClassInstTableHeadings.firstName]
+        result.data[0][inClassInstTableHeadings.firstName]
       );
       inClassInstructorState.inClassInstructorObject.setIsFirstNameError(false);
 
       inClassInstructorState.inClassInstructorObject.setLastName(
-        result.data.query[0][inClassInstTableHeadings.lastName]
+        result.data[0][inClassInstTableHeadings.lastName]
       );
       inClassInstructorState.inClassInstructorObject.setIsLastNameError(false);
 
       inClassInstructorState.inClassInstructorObject.setDriversLicenseId(
-        result.data.query[0][inClassInstTableHeadings.driversLicenseId]
+        result.data[0][inClassInstTableHeadings.driversLicenseId]
       );
       inClassInstructorState.inClassInstructorObject.setIsDriversLicenseIdError(false);
 
       inClassInstructorState.inClassInstructorObject.setDriversLicenseExpDate(
-        result.data.query[0][inClassInstTableHeadings.driversLicenseExpDate]
+        result.data[0][inClassInstTableHeadings.driversLicenseExpDate]
       );
       inClassInstructorState.inClassInstructorObject.setIsDriversLicenseExpDateError(false);
 

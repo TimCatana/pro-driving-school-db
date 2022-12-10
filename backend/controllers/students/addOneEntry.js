@@ -39,11 +39,9 @@ const addOneEntry = async (req, res) => {
   )
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
-  let returnVal;
-
   const db = makeDb();
   try {
-    const rows = await db.query(sql, [
+    await db.query(sql, [
       req.body.studentFirstName,
       req.body.studentMiddleName,
       req.body.studentLastName,
@@ -63,14 +61,12 @@ const addOneEntry = async (req, res) => {
       parseInt(req.body.studentRegisteredCourseId),
       parseInt(req.body.studentRegisteredProductId),
     ]);
-
-    returnVal = { status: 200, query: rows };
+    res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to add student to database -- ${e}`);
-    returnVal = { status: 500, query: null };
+    res.sendStatus(500);
   } finally {
     await db.close();
-    res.send(returnVal);
   }
 };
 

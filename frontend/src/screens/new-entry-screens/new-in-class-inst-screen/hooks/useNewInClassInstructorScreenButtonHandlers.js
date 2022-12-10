@@ -25,7 +25,7 @@ const useNewInClassInstructorScreenButtonHandlers = (inClassInstructorState) => 
     ) {
       const result = await addOneInClassInstructorUC(inClassInstructorState.inClassInstructorObject);
 
-      if (result.data.status == Results.SUCCESS) {
+      if (result.status == Results.SUCCESS) {
         inClassInstructorState.uiModifiersObject.setDataSaved(true);
       } else {
         inClassInstructorState.messageObject.setMessage("ERROR - Failed to add in class instructor to database");
@@ -54,19 +54,18 @@ const useNewInClassInstructorScreenButtonHandlers = (inClassInstructorState) => 
         inClassInstructorState.primary_key
       );
 
-      if (result.data.status == Results.SUCCESS) {
+      if (result.status == Results.SUCCESS) {
         inClassInstructorState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
         inClassInstructorState.messageObject.setMessageColor(AlertVariants.SUCCESS);
         inClassInstructorState.messageObject.setShowMessage(true);
-        inClassInstructorState.uiModifiersObject.setAreFieldsEditable(false);
       } else {
         inClassInstructorState.messageObject.setMessage("ERROR - Failed to update item in database");
         inClassInstructorState.messageObject.setMessageColor(AlertVariants.DANGER);
         inClassInstructorState.messageObject.setShowMessage(true);
-        inClassInstructorState.uiModifiersObject.setAreFieldsEditable(false);
       }
     }
 
+    inClassInstructorState.uiModifiersObject.setAreFieldsEditable(false);
     inClassInstructorState.uiModifiersObject.setIsLoading(false);
   };
 

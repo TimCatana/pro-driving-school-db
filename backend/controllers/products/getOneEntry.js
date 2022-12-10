@@ -15,21 +15,16 @@ const getOneEntry = async (req, res) => {
   WHERE 
     ${productTableHeadings.id} = ?;`;
 
-  let returnVal;
-
   const db = makeDb();
 
   try {
     const result = await db.query(sql, [req.params.primary_key]);
-    returnVal = { status: 200, query: result };
+    res.status(200).send(result);
   } catch (e) {
-    console.log(
-      `ERROR - Failed to get product with id of ${req.params.primary_key} -- ${e}`
-    );
-    returnVal = { status: 500, query: null };
+    console.log(`ERROR - Failed to get product with id of ${req.params.primary_key} -- ${e}`);
+    res.status(500).send([]);
   } finally {
     await db.close();
-    res.send(returnVal);
   }
 };
 

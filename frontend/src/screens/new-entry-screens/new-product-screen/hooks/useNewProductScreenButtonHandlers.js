@@ -16,7 +16,7 @@ const useNewProductScreenButtonHandlers = (productState) => {
     ) {
       const result = await addOneProductUC(productState.productObject);
 
-      if (result.data.status == Results.SUCCESS) {
+      if (result.status == Results.SUCCESS) {
         productState.uiModifiersObject.setDataSaved(true);
       } else {
         productState.messageObject.setMessage("ERROR - Failed to add product to database");
@@ -40,19 +40,18 @@ const useNewProductScreenButtonHandlers = (productState) => {
     ) {
       const result = await editOneProductUC(productState.productObject, productState.primary_key);
 
-      if (result.data.status == Results.SUCCESS) {
+      if (result.status == Results.SUCCESS) {
         productState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
         productState.messageObject.setMessageColor(AlertVariants.SUCCESS);
         productState.messageObject.setShowMessage(true);
-        productState.uiModifiersObject.setAreFieldsEditable(false);
       } else {
         productState.messageObject.setMessage("ERROR - Failed to update item in database");
         productState.messageObject.setMessageColor(AlertVariants.DANGER);
         productState.messageObject.setShowMessage(true);
-        productState.uiModifiersObject.setAreFieldsEditable(false);
       }
     }
 
+    productState.uiModifiersObject.setAreFieldsEditable(false);
     productState.uiModifiersObject.setIsLoading(false);
   };
 

@@ -26,14 +26,11 @@ const useHomeScreenButtonHandlers = (homeState) => {
     homeState.uiModifiersObject.setDisplaying(homeState.Data.COURSES);
 
     const result = await getAllCoursesUC();
+    homeState.uiModifiersObject.setDisplayData(result.data);
 
-    if (result.data.status == Results.SUCCESS) {
-      homeState.uiModifiersObject.setDisplayData(result.data.query);
-      homeState.uiModifiersObject.setFailedToGetData(false);
-    } else {
-      homeState.uiModifiersObject.setDisplayData([]);
-      homeState.uiModifiersObject.setFailedToGetData(true);
-    }
+    result.status == Results.SUCCESS
+      ? homeState.uiModifiersObject.setFailedToGetData(false)
+      : homeState.uiModifiersObject.setFailedToGetData(true);
 
     homeState.uiModifiersObject.setIsLoading(false);
   };
@@ -46,14 +43,11 @@ const useHomeScreenButtonHandlers = (homeState) => {
     homeState.uiModifiersObject.setDisplaying(homeState.Data.PRODUCTS);
 
     const result = await getAllProductsUC();
+    homeState.uiModifiersObject.setDisplayData(result.data);
 
-    if (result.data.status == Results.SUCCESS) {
-      homeState.uiModifiersObject.setDisplayData(result.data.query);
-      homeState.uiModifiersObject.setFailedToGetData(false);
-    } else {
-      homeState.uiModifiersObject.setDisplayData([]);
-      homeState.uiModifiersObject.setFailedToGetData(true);
-    }
+    result.status == Results.SUCCESS
+      ? homeState.uiModifiersObject.setFailedToGetData(false)
+      : homeState.uiModifiersObject.setFailedToGetData(true);
 
     homeState.uiModifiersObject.setIsLoading(false);
   };
@@ -65,14 +59,11 @@ const useHomeScreenButtonHandlers = (homeState) => {
     homeState.uiModifiersObject.setDisplaying(homeState.Data.STUDENTS);
 
     const result = await getAllStudentsUC();
+    homeState.uiModifiersObject.setDisplayData(result.data);
 
-    if (result.data.status == Results.SUCCESS) {
-      homeState.uiModifiersObject.setDisplayData(result.data.query);
-      homeState.uiModifiersObject.setFailedToGetData(false);
-    } else {
-      homeState.uiModifiersObject.setDisplayData([]);
-      homeState.uiModifiersObject.setFailedToGetData(true);
-    }
+    result.status == Results.SUCCESS
+      ? homeState.uiModifiersObject.setFailedToGetData(false)
+      : homeState.uiModifiersObject.setFailedToGetData(true);
 
     homeState.uiModifiersObject.setIsLoading(false);
   };
@@ -84,14 +75,11 @@ const useHomeScreenButtonHandlers = (homeState) => {
     homeState.uiModifiersObject.setDisplaying(homeState.Data.IN_CLASS_INST);
 
     const result = await getAllInClassInstructorsUC();
+    homeState.uiModifiersObject.setDisplayData(result.data);
 
-    if (result.data.status == Results.SUCCESS) {
-      homeState.uiModifiersObject.setDisplayData(result.data.query);
-      homeState.uiModifiersObject.setFailedToGetData(false);
-    } else {
-      homeState.uiModifiersObject.setDisplayData([]);
-      homeState.uiModifiersObject.setFailedToGetData(true);
-    }
+    result.status == Results.SUCCESS
+      ? homeState.uiModifiersObject.setFailedToGetData(false)
+      : homeState.uiModifiersObject.setFailedToGetData(true);
 
     homeState.uiModifiersObject.setIsLoading(false);
   };
@@ -103,14 +91,12 @@ const useHomeScreenButtonHandlers = (homeState) => {
     homeState.uiModifiersObject.setDisplaying(homeState.Data.IN_CAR_INST);
 
     const result = await getAllInCarInstructorsUC();
+    console.log(result);
+    homeState.uiModifiersObject.setDisplayData(result.data);
 
-    if (result.data.status == Results.SUCCESS) {
-      homeState.uiModifiersObject.setDisplayData(result.data.query);
-      homeState.uiModifiersObject.setFailedToGetData(false);
-    } else {
-      homeState.uiModifiersObject.setDisplayData([]);
-      homeState.uiModifiersObject.setFailedToGetData(true);
-    }
+    result.status == Results.SUCCESS
+      ? homeState.uiModifiersObject.setFailedToGetData(false)
+      : homeState.uiModifiersObject.setFailedToGetData(true);
 
     homeState.uiModifiersObject.setIsLoading(false);
   };
@@ -127,7 +113,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
 
     const result = await deleteOneCourseUC(primaryKey);
 
-    if (result.data.status == Results.SUCCESS) {
+    if (result.status == Results.SUCCESS) {
       homeState.messageObject.setMessage("SUCCESS - Successfully delete course");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
@@ -149,7 +135,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
 
     const result = await deleteOneProductUC(primaryKey);
 
-    if (result.data.status == Results.SUCCESS) {
+    if (result.status == Results.SUCCESS) {
       homeState.messageObject.setMessage("SUCCESS - Successfully delete product");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
@@ -171,7 +157,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
 
     const result = await deleteOneStudentUC(primaryKey);
 
-    if (result.data.status == Results.SUCCESS) {
+    if (result.status == Results.SUCCESS) {
       homeState.messageObject.setMessage("SUCCESS - Successfully delete student");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
@@ -193,7 +179,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
 
     const result = await deleteOneInCarInstructorUC(primaryKey);
 
-    if (result.data.status == Results.SUCCESS) {
+    if (result.status == Results.SUCCESS) {
       homeState.messageObject.setMessage("SUCCESS - Successfully delete in car instructor");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
@@ -215,7 +201,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
 
     const result = await deleteOneInClassInstructorUC(primaryKey);
 
-    if (result.data.status == Results.SUCCESS) {
+    if (result.status == Results.SUCCESS) {
       homeState.messageObject.setMessage("SUCCESS - Successfully delete in class instructor");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);

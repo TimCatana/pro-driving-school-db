@@ -15,19 +15,16 @@ const getAllEntries = async (req, res) => {
   ORDER BY
     ${inClassInstTableHeadings.id} DESC;`;
 
-  let returnVal;
-
   const db = makeDb();
 
   try {
     const result = await db.query(sql);
-    returnVal = { status: 200, query: result };
+    res.status(200).send(result);
   } catch (e) {
     console.log(`ERROR - Failed to get all in class instructors -- ${e}`);
-    returnVal = { status: 500, query: null };
+    res.status(500).send([]);
   } finally {
     await db.close();
-    res.send(returnVal);
   }
 };
 

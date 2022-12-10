@@ -1,4 +1,10 @@
+const { studentTableHeadings } = require("../../constants/dbConstants");
 const fillStudentApplicationFormPdf = require("./utils/pdf/FillStudentApplicationFormPdf");
+const makeDb = require("../../util/makeDb");
+const fs = require("fs");
+
+const path = require("path");
+const open = require("open");
 
 /**
  *
@@ -6,14 +12,36 @@ const fillStudentApplicationFormPdf = require("./utils/pdf/FillStudentApplicatio
  * @param {*} res
  */
 const getFilledStudentApplicationFormPdf = async (req, res) => {
-  // get student data from database
+  const sql = `
+  SELECT 
+    * 
+  FROM 
+    ${studentTableHeadings.tableName}  
+  WHERE 
+    ${studentTableHeadings.id} = ?;`;
 
-  await fillStudentApplicationFormPdf();
+  const db = makeDb();
 
-  // if error, need to do something (try catch individually, if one fails, the other can work)
+  let result;
 
-  // send result
-  res.send("");
+  try {
+    result = await db.query(sql, [req.params.primary_key]);
+  } catch (e) {
+    console.log(`ERROR - Failed to get student application form pdf -- ${e}`);
+    res.send({ status: 500, query: null });
+  } finally {
+    await db.close();
+  }
+
+  try {
+    await fillStudentApplicationFormPdf(result[0]);
+  } catch (e) {
+    console.log(`ERROR - Failed to get student application form pdf -- ${e}`);
+    res.send({ status: 500, query: null });
+  }
+
+  open(`./data/pdf/outputs/student_application_form_output.pdf`);
+  res.sendStatus(200);
 };
 
 module.exports = getFilledStudentApplicationFormPdf;

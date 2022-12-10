@@ -1,44 +1,39 @@
 const { PDFDocument } = require("pdf-lib");
 const { readFile, writeFile } = require("fs/promises");
+const { studentTableHeadings } = require("../../../../constants/dbConstants");
 
-const fillStudentApplicationFormPdf = async () => {
-  const pdfDoc = await PDFDocument.load(
-    await readFile("./data/pdf/inputs/student_application_form.pdf")
-  );
+const fillStudentApplicationFormPdf = async (studentObject) => {
+  const pdfDoc = await PDFDocument.load(await readFile("./data/pdf/inputs/student_application_form.pdf"));
   const pdfForm = pdfDoc.getForm();
 
-  pdfForm.getTextField("First_Name").setText("Tim");
-  pdfForm.getTextField("Last_Name").setText("Catana");
-  pdfForm.getTextField("Date_Of_Birth").setText("1234-56-78");
+  pdfForm
+    .getTextField("First_Name")
+    .setText(`${studentObject[studentTableHeadings.firstName]} ${studentObject[studentTableHeadings.middleName]}`);
+  pdfForm.getTextField("Last_Name").setText(studentObject[studentTableHeadings.lastName]);
+  pdfForm.getTextField("Date_Of_Birth").setText(studentObject[studentTableHeadings.dateOfBirth]);
 
   // ismale ? :
-  pdfForm.getCheckBox("Male_CB").check();
+  if (studentObject[studentTableHeadings.gender] == "Male") {
+    pdfForm.getCheckBox("Male_CB").check();
+  } else if (studentObject[studentTableHeadings.gender] == "Female") {
+    pdfForm.getCheckBox("Female_CB").check();
+  }
 
-  pdfForm.getTextField("Home_Phone_Number").setText("123-456-7890");
-  pdfForm.getTextField("Cell_Phone_Number").setText("098-765-4321");
-  pdfForm.getTextField("Address").setText("243 Main Street");
-  pdfForm.getTextField("Apartment").setText("135");
-  pdfForm.getTextField("City").setText("Kitchener");
+  pdfForm.getTextField("Home_Phone_Number").setText(studentObject[studentTableHeadings.homePhoneNumber]);
+  pdfForm.getTextField("Cell_Phone_Number").setText(studentObject[studentTableHeadings.cellPhoneNumber]);
+  pdfForm.getTextField("Address").setText(studentObject[studentTableHeadings.address]);
+  pdfForm.getTextField("Apartment").setText(studentObject[studentTableHeadings.addressAptNum]);
+  pdfForm.getTextField("City").setText(studentObject[studentTableHeadings.addressCity]);
   pdfForm.getTextField("Province").setText("ON");
-  pdfForm.getTextField("Postal_Code").setText("N2N2N2");
-  pdfForm.getTextField("Drivers_License_Number").setText("asdsd-q2qddq-dasd");
-  pdfForm.getTextField("License_Issued_Date").setText("1111-11-11");
-  pdfForm.getTextField("License_Class").setText("G1");
-  pdfForm.getTextField("License_Exp_Date").setText("5555-55-55");
-
-  // const pdfFields = pdfDoc
-  //   .getForm()
-  //   .getFields()
-  //   .map((f) => f.getName());
-
-  // console.log({ pdfFields });
+  pdfForm.getTextField("Postal_Code").setText(studentObject[studentTableHeadings.addressPostalCode]);
+  pdfForm.getTextField("Drivers_License_Number").setText(studentObject[studentTableHeadings.driversLicenseId]);
+  pdfForm.getTextField("License_Issued_Date").setText(studentObject[studentTableHeadings.driversLicenseIssuedDate]);
+  pdfForm.getTextField("License_Class").setText(studentObject[studentTableHeadings.driversLicenseClass]);
+  pdfForm.getTextField("License_Exp_Date").setText(studentObject[studentTableHeadings.driversLicenseExpDate]);
 
   const pdfBytes = await pdfDoc.save();
 
-  await writeFile(
-    "./data/pdf/outputs/student_application_form_output.pdf",
-    pdfBytes
-  );
+  await writeFile("./data/pdf/outputs/student_application_form_output.pdf", pdfBytes);
 };
 
 module.exports = fillStudentApplicationFormPdf;

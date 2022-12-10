@@ -25,12 +25,11 @@ const addOneEntry = async (req, res) => {
     ${inCarInstTableHeadings.gDriversLicenseId}, 
     ${inCarInstTableHeadings.gDriversLicenseExpDate}) 
   VALUES (?, ?, ?, ?, ?, ?);`;
-  let returnVal;
 
   const db = makeDb();
 
   try {
-    const rows = await db.query(sql, [
+    await db.query(sql, [
       req.body.iciFirstName,
       req.body.iciLastName,
       req.body.iciDriversLicenseNum,
@@ -38,14 +37,12 @@ const addOneEntry = async (req, res) => {
       req.body.iciGLicenseNum,
       req.body.iciGLicenseExpDate,
     ]);
-
-    returnVal = { status: 200, query: rows };
+    res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to add in car instructor to database -- ${e}`);
-    returnVal = { status: 500, query: null };
+    res.sendStatus(500);
   } finally {
     await db.close();
-    res.send(returnVal);
   }
 };
 

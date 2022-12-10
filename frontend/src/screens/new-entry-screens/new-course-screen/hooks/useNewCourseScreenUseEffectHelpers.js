@@ -30,8 +30,8 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
   const handleGetInClassInstructors = async () => {
     const result = await getAllInClassInstructorsUC();
 
-    if (result.data.status == 200) {
-      courseState.dropdownMenuOptionsObject.setInClassInstructors(result.data.query);
+    if (result.status == 200) {
+      courseState.dropdownMenuOptionsObject.setInClassInstructors(result.data);
     } else {
       courseState.dropdownMenuOptionsObject.setInClassInstructors([]);
       courseState.dropdownMenuOptionsObject.setFailedToGetInClassInstructors(true);
@@ -44,25 +44,23 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
   const handleGetSpecificCourse = async () => {
     const result = await getOneCourseUC(courseState.primary_key);
 
-    if (result.data.status == 200) {
-      courseState.courseObject.setCourseId(result.data.query[0][courseTableHeadings.courseId]);
+    if (result.status == 200) {
+      courseState.courseObject.setCourseId(result.data[0][courseTableHeadings.courseId]);
       courseState.courseObject.setIsCourseIdError(false);
 
-      courseState.courseObject.setCourseCapacity(result.data.query[0][courseTableHeadings.capacity]);
+      courseState.courseObject.setCourseCapacity(result.data[0][courseTableHeadings.capacity]);
       courseState.courseObject.setIsCourseCapacityError(false);
 
-      courseState.courseObject.setCourseStartDate(result.data.query[0][courseTableHeadings.startDate]);
+      courseState.courseObject.setCourseStartDate(result.data[0][courseTableHeadings.startDate]);
       courseState.courseObject.setIsCourseStartDateError(false);
 
-      courseState.courseObject.setCourseEndDate(result.data.query[0][courseTableHeadings.endDate]);
+      courseState.courseObject.setCourseEndDate(result.data[0][courseTableHeadings.endDate]);
       courseState.courseObject.setIsCourseEndDateError(false);
 
-      courseState.courseObject.setCourseIsDigital(result.data.query[0][courseTableHeadings.isDigital]);
+      courseState.courseObject.setCourseIsDigital(result.data[0][courseTableHeadings.isDigital]);
       courseState.courseObject.setIsCourseIsDigitalError(false);
 
-      courseState.courseObject.setCourseInClassInstructor(
-        result.data.query[0][courseTableHeadings.inClassInstructorId]
-      );
+      courseState.courseObject.setCourseInClassInstructor(result.data[0][courseTableHeadings.inClassInstructorId]);
       courseState.courseObject.setIsCourseInClassInstructorError(false);
 
       courseState.uiModifiersObject.setFailedToGetData(false);

@@ -28,14 +28,14 @@ const useNewProductScreenUseEffectHelpers = (productState) => {
   const handleGetSpecificProduct = async () => {
     const result = await getOneProductUC(productState.primary_key);
 
-    if (result.data.status == Results.SUCCESS) {
-      productState.productObject.setProductId(result.data.query[0][productTableHeadings.productId]);
+    if (result.status == Results.SUCCESS) {
+      productState.productObject.setProductId(result.data[0][productTableHeadings.productId]);
       productState.productObject.setIsProductIdError(false);
 
-      productState.productObject.setProductName(result.data.query[0][productTableHeadings.name]);
+      productState.productObject.setProductName(result.data[0][productTableHeadings.name]);
       productState.productObject.setIsProductNameError(false);
 
-      productState.productObject.setProductPrice(result.data.query[0][productTableHeadings.price]);
+      productState.productObject.setProductPrice(result.data[0][productTableHeadings.price]);
       productState.productObject.setIsProductPriceError(false);
 
       productState.uiModifiersObject.setFailedToGetData(false);
