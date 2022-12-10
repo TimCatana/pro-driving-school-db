@@ -1,8 +1,6 @@
-import {
-  addOneProductUC,
-  deleteOneProductUC,
-  editOneProductUC,
-} from "../../../../domain/db";
+import AlertVariants from "../../../../domain/constants/AlertVariants";
+import { Results } from "../../../../domain/constants/Results";
+import { addOneProductUC, deleteOneProductUC, editOneProductUC } from "../../../../domain/db";
 
 const useNewProductScreenButtonHandlers = (productState) => {
   /**
@@ -23,32 +21,66 @@ const useNewProductScreenButtonHandlers = (productState) => {
     // ${productState.productObject.isProductPriceError}
     // `);
 
-    productState.setIsLoading(true);
+    productState.uiModifiersObject.setIsLoading(true);
     if (
       !productState.productObject.isProductIdError &&
       !productState.productObject.isProductNameError &&
       !productState.productObject.isProductPriceError
     ) {
-      await addOneProductUC(productState.productObject);
+      const result = await addOneProductUC(productState.productObject);
+
+      if (result.data.status == Results.SUCCESS) {
+        productState.uiModifiersObject.setDataSaved(true);
+      } else {
+        productState.messageObject.setMessage("ERROR - Failed to add product to database");
+        productState.messageObject.setMessageColor(AlertVariants.DANGER);
+        productState.messageObject.setShowMessage(true);
+      }
     }
-    productState.setIsLoading(false);
-    productState.setProductSaved(true);
+    productState.uiModifiersObject.setIsLoading(false);
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
   const handleEditProductEntry = async () => {
+    productState.uiModifiersObject.setIsLoading(true);
+
     if (
       !productState.productObject.isProductIdError &&
       !productState.productObject.isProductNameError &&
       !productState.productObject.isProductPriceError
     ) {
-      await editOneProductUC(
-        productState.productObject,
-        productState.primary_key
-      );
+      const result = await editOneProductUC(productState.productObject, productState.primary_key);
+
+      if (result.data.status == Results.SUCCESS) {
+        productState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
+        productState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+        productState.messageObject.setShowMessage(true);
+        productState.uiModifiersObject.setAreFieldsEditable(false);
+      } else {
+        productState.messageObject.setMessage("ERROR - Failed to update item in database");
+        productState.messageObject.setMessageColor(AlertVariants.DANGER);
+        productState.messageObject.setShowMessage(true);
+        productState.uiModifiersObject.setAreFieldsEditable(false);
+      }
     }
+
+    productState.uiModifiersObject.setIsLoading(false);
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleChangeToEditableForm = async () => {
+    productState.uiModifiersObject.setAreFieldsEditable(true);
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleDismissErrorAlert = async () => {
+    productState.messageObject.setShowMessage(false);
   };
 
   /**
@@ -67,6 +99,8 @@ const useNewProductScreenButtonHandlers = (productState) => {
   const productButtonHandlers = {
     handleAddNewProductEntry,
     handleEditProductEntry,
+    handleChangeToEditableForm,
+    handleDismissErrorAlert,
     handleDeleteProduct,
   };
 

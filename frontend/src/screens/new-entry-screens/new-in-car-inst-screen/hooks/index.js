@@ -1,11 +1,11 @@
-import useNewInCarInstScreen from "./useNewInCarInstScreen";
+import useNewInCarInstructorScreen from "./useNewInCarInstructorScreen";
 import useNewInCarInstructorScreenStates from "./useNewInCarInstructorScreenStates";
 import useNewInCarInstructorScreenChangeHandlers from "./useNewInCarInstructorScreenChangeHandlers";
 import useNewInCarInstructorScreenButtonHandlers from "./useNewInCarInstructorScreenButtonHandlers";
 import useNewInCarInstructorScreenUseEffectHelpers from "./useNewInCarInstructorScreenUseEffectHelpers";
 
 export {
-  useNewInCarInstScreen,
+  useNewInCarInstructorScreen,
   useNewInCarInstructorScreenStates,
   useNewInCarInstructorScreenChangeHandlers,
   useNewInCarInstructorScreenButtonHandlers,

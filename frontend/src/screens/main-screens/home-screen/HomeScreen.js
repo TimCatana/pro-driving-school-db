@@ -35,7 +35,6 @@ const ButtonsDiv = styled.div`
 
 const HomeScreen = () => {
   const { homeState, homeButtonHandlers } = useHomeScreen();
-
   return (
     <WrapperDiv>
       <ContainerDiv>

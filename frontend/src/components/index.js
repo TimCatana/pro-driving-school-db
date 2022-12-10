@@ -9,6 +9,8 @@ import TDHome from "./styled/TDHome";
 import THHome from "./styled/THHome";
 import TableHome from "./styled/TableHome";
 import ListOption from "./styled/ListOption";
+import LoadingSpinner from "./styled/LoadingSpinner";
+import CustomAlert from "./created/CustomAlert";
 
 export {
   Button,
@@ -22,4 +24,6 @@ export {
   TRHome,
   TableHome,
   ListOption,
+  LoadingSpinner,
+  CustomAlert,
 };

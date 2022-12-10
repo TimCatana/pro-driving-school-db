@@ -1,3 +1,5 @@
+import AlertVariants from "../../../../domain/constants/AlertVariants";
+import { Results } from "../../../../domain/constants/Results";
 import {
   addOneCourseUC,
   addOneInClassInstructorUC,
@@ -7,79 +9,79 @@ import {
   editOneInClassInstructorUC,
 } from "../../../../domain/db";
 
-const useNewInClassInstructorScreenButtonHandlers = (
-  inClassInstructorState
-) => {
+const useNewInClassInstructorScreenButtonHandlers = (inClassInstructorState) => {
   /**
    * Updates the subscript to mailing list option.
    */
   const handleAddNewInClassInstructor = async () => {
-    // console.log(`axios call to backend, not implemented yet but button works!
-    //     values:
-    //     il ${isLoading}
-    //     ${_setIsLoading}
-    //     icifn  ${inClassInstructorState.inClassInstructorObject.iciFirstName}
-    //     ${typeof inClassInstructorState.inClassInstructorObject.iciFirstName}
-    //     ${inClassInstructorState.inClassInstructorObject.isICIFirstNameError}
-    //     iniln ${inClassInstructorState.inClassInstructorObject.iciLastName}
-    //     ${typeof inClassInstructorState.inClassInstructorObject.iciLastName}
-    //     ${inClassInstructorState.inClassInstructorObject.isICILastNameError}
-    //     icidl ${
-    //       inClassInstructorState.inClassInstructorObject.iciDriversLicenseNum
-    //     }
-    //     ${typeof inClassInstructorState.inClassInstructorObject
-    //       .iciDriversLicenseNum}
-    //     ${
-    //       inClassInstructorState.inClassInstructorObject
-    //         .isICIDriversLicenseNumError
-    //     }
-    //     icidled ${
-    //       inClassInstructorState.inClassInstructorObject
-    //         .iciDriversLicenseExpDate
-    //     }
-    //     ${typeof inClassInstructorState.inClassInstructorObject
-    //       .iciDriversLicenseExpDate}
-    //       ${
-    //         inClassInstructorState.inClassInstructorObject
-    //           .isICIDriversLicenseExpDateError
-    //       }
-    // `);
+    // console.log(inClassInstructorState.inClassInstructorObject)
 
-    inClassInstructorState.setIsLoading(true);
+    inClassInstructorState.uiModifiersObject.setIsLoading(true);
     if (
-      !inClassInstructorState.inClassInstructorObject.isICIFirstNameError &&
-      !inClassInstructorState.inClassInstructorObject.isICILastNameError &&
-      !inClassInstructorState.inClassInstructorObject
-        .isICIDriversLicenseNumError &&
-      !inClassInstructorState.inClassInstructorObject
-        .isICIDriversLicenseExpDateError
+      !inClassInstructorState.inClassInstructorObject.isFirstNameError &&
+      !inClassInstructorState.inClassInstructorObject.isLastNameError &&
+      !inClassInstructorState.inClassInstructorObject.isDriversLicenseIdError &&
+      !inClassInstructorState.inClassInstructorObject.isDriversLicenseExpDateError
     ) {
-      await addOneInClassInstructorUC(
-        inClassInstructorState.inClassInstructorObject
-      );
+      const result = await addOneInClassInstructorUC(inClassInstructorState.inClassInstructorObject);
+
+      if (result.data.status == Results.SUCCESS) {
+        inClassInstructorState.uiModifiersObject.setDataSaved(true);
+      } else {
+        inClassInstructorState.messageObject.setMessage("ERROR - Failed to add in class instructor to database");
+        inClassInstructorState.messageObject.setMessageColor(AlertVariants.DANGER);
+        inClassInstructorState.messageObject.setShowMessage(true);
+      }
     }
 
-    inClassInstructorState.setIsLoading(false);
-    inClassInstructorState.setInClassInstructorSaved(true);
+    inClassInstructorState.uiModifiersObject.setIsLoading(false);
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
   const handleEditInClassInstEntry = async () => {
+    inClassInstructorState.uiModifiersObject.setIsLoading(true);
+
     if (
-      !inClassInstructorState.inClassInstructorObject.isICIFirstNameError &&
-      !inClassInstructorState.inClassInstructorObject.isICILastNameError &&
-      !inClassInstructorState.inClassInstructorObject
-        .isICIDriversLicenseNumError &&
-      !inClassInstructorState.inClassInstructorObject
-        .isICIDriversLicenseExpDateError
+      !inClassInstructorState.inClassInstructorObject.isFirstNameError &&
+      !inClassInstructorState.inClassInstructorObject.isLastNameError &&
+      !inClassInstructorState.inClassInstructorObject.isDriversLicenseIdError &&
+      !inClassInstructorState.inClassInstructorObject.isDriversLicenseExpDateError
     ) {
-      await editOneInClassInstructorUC(
+      const result = await editOneInClassInstructorUC(
         inClassInstructorState.inClassInstructorObject,
         inClassInstructorState.primary_key
       );
+
+      if (result.data.status == Results.SUCCESS) {
+        inClassInstructorState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
+        inClassInstructorState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+        inClassInstructorState.messageObject.setShowMessage(true);
+        inClassInstructorState.uiModifiersObject.setAreFieldsEditable(false);
+      } else {
+        inClassInstructorState.messageObject.setMessage("ERROR - Failed to update item in database");
+        inClassInstructorState.messageObject.setMessageColor(AlertVariants.DANGER);
+        inClassInstructorState.messageObject.setShowMessage(true);
+        inClassInstructorState.uiModifiersObject.setAreFieldsEditable(false);
+      }
     }
+
+    inClassInstructorState.uiModifiersObject.setIsLoading(false);
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleChangeToEditableForm = async () => {
+    inClassInstructorState.uiModifiersObject.setAreFieldsEditable(true);
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleDismissErrorAlert = async () => {
+    inClassInstructorState.messageObject.setShowMessage(false);
   };
 
   /**
@@ -98,6 +100,8 @@ const useNewInClassInstructorScreenButtonHandlers = (
   const inClassInstructorButtonHandlers = {
     handleAddNewInClassInstructor,
     handleEditInClassInstEntry,
+    handleChangeToEditableForm,
+    handleDismissErrorAlert,
     handleDeleteInClassInst,
   };
 

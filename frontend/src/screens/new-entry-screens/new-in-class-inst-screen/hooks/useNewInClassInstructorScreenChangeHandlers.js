@@ -1,16 +1,11 @@
-const useNewInClassInstructorScreenChangeHandlers = (
-  inClassInstructorState
-) => {
+const useNewInClassInstructorScreenChangeHandlers = (inClassInstructorState) => {
   /**
    * Updates the courseId variable to contain the newly inputted value
    * @param value (string) The value inputted into the textInput
    */
   const handleInClassInstFirstNameChange = (e) => {
     e.preventDefault();
-    inClassInstructorState.setInClassInstructorObject({
-      ...inClassInstructorState.inClassInstructorObject,
-      iciFirstName: e.target.value,
-    });
+    inClassInstructorState.inClassInstructorObject.setFirstName(e.target.value);
   };
 
   /**
@@ -19,10 +14,7 @@ const useNewInClassInstructorScreenChangeHandlers = (
    */
   const handleInClassInstLastNameChange = (e) => {
     e.preventDefault();
-    inClassInstructorState.setInClassInstructorObject({
-      ...inClassInstructorState.inClassInstructorObject,
-      iciLastName: e.target.value,
-    });
+    inClassInstructorState.inClassInstructorObject.setLastName(e.target.value);
   };
 
   /**
@@ -31,10 +23,7 @@ const useNewInClassInstructorScreenChangeHandlers = (
    */
   const handleInClassInstDriversLicenseNumChange = (e) => {
     e.preventDefault();
-    inClassInstructorState.setInClassInstructorObject({
-      ...inClassInstructorState.inClassInstructorObject,
-      iciDriversLicenseNum: e.target.value,
-    });
+    inClassInstructorState.inClassInstructorObject.setDriversLicenseId(e.target.value);
   };
 
   /**
@@ -43,18 +32,15 @@ const useNewInClassInstructorScreenChangeHandlers = (
    */
   const handleInClassInstDriversLicenseExpDateChange = (e) => {
     e.preventDefault();
-    inClassInstructorState.setInClassInstructorObject({
-      ...inClassInstructorState.inClassInstructorObject,
-      iciDriversLicenseExpDate: e.target.value,
-    });
+    inClassInstructorState.inClassInstructorObject.setDriversLicenseExpDate(e.target.value);
   };
 
   /**
    *
    * @param {*} isFocused
    */
-  const handleICIDriversLicenseFocusAndBlurHandler = (isFocused) => {
-    inClassInstructorState.setIsICIDriversLicenseFocus(isFocused);
+  const handleDriversLicenseFocusAndBlurHandler = (isFocused) => {
+    inClassInstructorState.dateTextInputFocusesObject.setIsInstDriversLicenseFocus(isFocused);
   };
 
   /**
@@ -66,7 +52,8 @@ const useNewInClassInstructorScreenChangeHandlers = (
     handleInClassInstLastNameChange,
     handleInClassInstDriversLicenseNumChange,
     handleInClassInstDriversLicenseExpDateChange,
-    handleICIDriversLicenseFocusAndBlurHandler,
+
+    handleDriversLicenseFocusAndBlurHandler,
   };
 
   /*******************/

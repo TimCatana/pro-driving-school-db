@@ -3,17 +3,26 @@ const makeDb = require("../../util/makeDb");
 
 /**
  *
- * @param {*} req
+ * @param {
+
+ * } req
  * @param {*} res
  */
-const getAllEntries = async (req, res) => {
+const getMostRecentEntry = async (req, res) => {
   const sql = `
-  SELECT 
-    * 
+  SELECT
+    *
   FROM 
     ${productTableHeadings.tableName}
-  ORDER BY
-    ${productTableHeadings.id} DESC;`;
+  WHERE
+    ${productTableHeadings.id} = 
+      ( 
+        SELECT MAX
+          (${productTableHeadings.id}) 
+        FROM 
+          ${productTableHeadings.tableName}
+      );
+  `;
 
   let returnVal;
 
@@ -21,9 +30,11 @@ const getAllEntries = async (req, res) => {
 
   try {
     const result = await db.query(sql);
+    console.log(result);
+
     returnVal = { status: 200, query: result };
   } catch (e) {
-    console.log(`ERROR - Failed to get all products -- ${e}`);
+    console.log(`ERROR - Failed to add product to database -- ${e}`);
     returnVal = { status: 500, query: null };
   } finally {
     await db.close();
@@ -31,4 +42,4 @@ const getAllEntries = async (req, res) => {
   }
 };
 
-module.exports = getAllEntries;
+module.exports = getMostRecentEntry;

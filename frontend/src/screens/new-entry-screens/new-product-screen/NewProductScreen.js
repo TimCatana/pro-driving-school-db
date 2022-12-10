@@ -1,106 +1,36 @@
 import React from "react";
-import styled from "styled-components";
 import { useNewProductScreen } from "./hooks";
-import {
-  Button,
-  DropDownMenu,
-  TextInput,
-  SingleRowTextInputDiv,
-  Title,
-} from "../../../components";
-import {
-  WrapperDiv,
-  ContainerDiv,
-  FormDiv,
-  ButtonsDiv,
-} from "../common/components/styled";
+import { Title, LoadingSpinner, CustomAlert } from "../../../components";
+import { WrapperDiv, ContainerDiv } from "../common/components/styled";
+import { ProductFormInputs, ProductFormButtons } from "./components";
+import AlertVariants from "../../../domain/constants/AlertVariants";
 
 const NewProductScreen = () => {
-  const { productState, productChangeHandlers, productButtonHandlers } =
-    useNewProductScreen();
+  const { productState, productChangeHandlers, productButtonHandlers } = useNewProductScreen();
 
   return (
     <WrapperDiv>
       <ContainerDiv>
-        <Title>NewProductScreen</Title>
+        {productState.uiModifiersObject.isNewEntry && <Title>Add New Product</Title>}
 
-        {!productState.isLoading && (
-          <FormDiv>
-            <SingleRowTextInputDiv>
-              <TextInput
-                isError={
-                  productState.productObject.isProductIdError &&
-                  productState.productObject.productId.length > 0
-                }
-                isLast
-                type="number"
-                min="0"
-                value={productState.productObject.productId}
-                onChange={productChangeHandlers.handleProductIdChange}
-                placeholder={"Product ID"}
-              />
-            </SingleRowTextInputDiv>
-            {/* add min date field and use script to get todays date */}
-            <SingleRowTextInputDiv>
-              <TextInput
-                isError={
-                  productState.productObject.isProductNameError &&
-                  productState.productObject.productName.length > 0
-                }
-                isLast
-                type="text"
-                maxLength={245}
-                value={productState.productObject.productName}
-                onChange={productChangeHandlers.handleProductNameChange}
-                placeholder={"Product Name"}
-              />
-            </SingleRowTextInputDiv>
-            {/* - TODO need to limit how many characters can be inputted */}
-            <SingleRowTextInputDiv>
-              <TextInput
-                isError={
-                  productState.productObject.isProductPriceError &&
-                  productState.productObject.productPrice.length > 0
-                }
-                isLast
-                type="number"
-                value={productState.productObject.productPrice}
-                onChange={productChangeHandlers.handleProductPriceChange}
-                placeholder={"Product Price"}
-              />
-            </SingleRowTextInputDiv>
-            {/* should be a dropdown list of all available instructors*/}
-            <ButtonsDiv>
-              {productState.isNewEntry && (
-                <Button
-                  disabled={
-                    productState.productObject.isProductIdError ||
-                    productState.productObject.isProductNameError ||
-                    productState.productObject.isProductPriceError
-                  }
-                  onClick={productButtonHandlers.handleAddNewProductEntry}
-                >
-                  Save
-                </Button>
-              )}
+        {!productState.uiModifiersObject.isNewEntry && <Title>Edit Product</Title>}
 
-              {!productState.isNewEntry && (
-                <Button
-                  disabled={
-                    productState.productObject.isProductIdError ||
-                    productState.productObject.isProductNameError ||
-                    productState.productObject.isProductPriceError
-                  }
-                  onClick={productButtonHandlers.handleEditProductEntry}
-                >
-                  Modify
-                </Button>
-              )}
-              <Button onClick={() => productState.navigation("/")}>
-                Go Back
-              </Button>
-            </ButtonsDiv>
-          </FormDiv>
+        {productState.uiModifiersObject.isLoading && <LoadingSpinner />}
+
+        {!productState.uiModifiersObject.isLoading && (
+          <>
+            {productState.messageObject.showMessage && (
+              <CustomAlert
+                variant={productState.messageObject.messageColor}
+                message={productState.messageObject.message}
+                handleClose={productButtonHandlers.handleDismissErrorAlert}
+              />
+            )}
+
+            <ProductFormInputs productState={productState} productChangeHandlers={productChangeHandlers} />
+
+            <ProductFormButtons productState={productState} productButtonHandlers={productButtonHandlers} />
+          </>
         )}
       </ContainerDiv>
     </WrapperDiv>

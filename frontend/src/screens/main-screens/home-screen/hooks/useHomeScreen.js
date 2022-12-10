@@ -12,6 +12,7 @@ import {
 } from "../../../../domain/db";
 import useHomeScreenStates from "./useHomeScreenStates";
 import useHomeScreenButtonHandlers from "./useHomeScreenButtonHandlers";
+import { useSearchParams } from "react-router-dom";
 
 const useHomeScreen = () => {
   /******************/
@@ -30,7 +31,22 @@ const useHomeScreen = () => {
    * @dependent courseEndDate
    */
   useEffect(() => {
-    homeButtonHandlers.handleGetCourses();
+    homeState.setIsLoading(true)
+    if (homeState.query.initialSelection == "courses") {
+      homeButtonHandlers.handleGetCourses();
+    } else if (homeState.query.initialSelection == "products") {
+      homeButtonHandlers.handleGetProducts();
+    } else if (homeState.query.initialSelection == "students") {
+      homeButtonHandlers.handleGetStudents();
+    } else if (homeState.query.initialSelection == "in-class-instructors") {
+      homeButtonHandlers.handleGetInClassInstructors();
+    } else if (homeState.query.initialSelection == "in-car-instructors") {
+      homeButtonHandlers.handleGetInCarInstructors();
+    } else {
+      homeButtonHandlers.handleGetCourses();
+    }
+    homeState.setIsLoading(false)
+
   }, []);
 
   /*******************/

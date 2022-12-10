@@ -1,86 +1,91 @@
-import {
-  addOneInCarInstructorUC,
-  deleteOneInCarInstructorUC,
-  editOneInCarInstructorUC,
-} from "../../../../domain/db";
+import AlertVariants from "../../../../domain/constants/AlertVariants";
+import { Results } from "../../../../domain/constants/Results";
+import { addOneInCarInstructorUC, deleteOneInCarInstructorUC, editOneInCarInstructorUC } from "../../../../domain/db";
 
 const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
   /**
    * Updates the subscript to mailing list option.
    */
   const handleAddNewInCarInstructor = async () => {
-    // TODO - axios call to node backend that adds new course entry
-    //     console.log(`axios call to backend, not implemented yet but button works!
-    //     values:
-    //     il ${isLoading}
-    //     ${_setIsLoading}
-    //     icifn  ${inCarInstructorState.inCarInstructorObject.iciFirstName}
-    //     ${typeof inCarInstructorState.inCarInstructorObject.iciFirstName}
-    //     ${inCarInstructorState.inCarInstructorObject.isICIFirstNameError}
-    //     iniln ${inCarInstructorState.inCarInstructorObject.iciLastName}
-    //     ${typeof inCarInstructorState.inCarInstructorObject.iciLastName}
-    //     ${inCarInstructorState.inCarInstructorObject.isICILastNameError}
-    //     icidl ${inCarInstructorState.inCarInstructorObject.iciDriversLicenseNum}
-    //     ${typeof inCarInstructorState.inCarInstructorObject.iciDriversLicenseNum}
-    //     ${inCarInstructorState.inCarInstructorObject.isICIDriversLicenseNumError}
-    //     icidled ${
-    //       inCarInstructorState.inCarInstructorObject.iciDriversLicenseExpDate
-    //     }
-    //     ${typeof inCarInstructorState.inCarInstructorObject
-    //       .iciDriversLicenseExpDate}
-    //     ${inCarInstructorState.inCarInstructorObject.isICIDriversLicenseExpDateError}
-    //     icigl ${inCarInstructorState.inCarInstructorObject.iciGLicenseNum}
-    //     ${typeof inCarInstructorState.inCarInstructorObject.iciGLicenseNum}
-    //     ${inCarInstructorState.inCarInstructorObject.isICIGLicenseExpDateError}
-    //     icigled ${inCarInstructorState.inCarInstructorObject.iciGLicenseExpDate}
-    //     ${typeof inCarInstructorState.inCarInstructorObject.iciGLicenseExpDate}
-    //     ${inCarInstructorState.inCarInstructorObject.iciGLicenseExpDate}
-    // `);
+    // console.log(inCarInstructorState.inCarInstructorObject)
+    inCarInstructorState.uiModifiersObject.setIsLoading(true);
 
-    inCarInstructorState.setIsLoading(true);
     if (
-      !inCarInstructorState.inCarInstructorObject.isICIFirstNameError &&
-      !inCarInstructorState.inCarInstructorObject.isICILastNameError &&
-      !inCarInstructorState.inCarInstructorObject.isICIDriversLicenseNumError &&
-      !inCarInstructorState.inCarInstructorObject.isICIDriversLicenseExpDateError &&
-      !inCarInstructorState.inCarInstructorObject.isICIGLicenseNumError &&
-      !inCarInstructorState.inCarInstructorObject.isICIGLicenseExpDateError
+      !inCarInstructorState.inCarInstructorObject.isFirstNameError &&
+      !inCarInstructorState.inCarInstructorObject.isLastNameError &&
+      !inCarInstructorState.inCarInstructorObject.isInstDriversLicenseIdError &&
+      !inCarInstructorState.inCarInstructorObject.isInstDriversLicenseExpDateError &&
+      !inCarInstructorState.inCarInstructorObject.isGDriversLicenseIdError &&
+      !inCarInstructorState.inCarInstructorObject.isGDriversLicenseExpDateError
     ) {
-      await addOneInCarInstructorUC(inCarInstructorState.inCarInstructorObject);
+      const result = await addOneInCarInstructorUC(inCarInstructorState.inCarInstructorObject);
+
+      if (result.data.status == Results.SUCCESS) {
+        inCarInstructorState.uiModifiersObject.setDataSaved(true);
+      } else {
+        inCarInstructorState.messageObject.setMessage("ERROR - Failed to add in car instructor to database");
+        inCarInstructorState.messageObject.setMessageColor(AlertVariants.DANGER);
+        inCarInstructorState.messageObject.setShowMessage(true);
+      }
     }
-    inCarInstructorState.setIsLoading(false);
-    inCarInstructorState.setInCarInstructorSaved(true);
+
+    inCarInstructorState.uiModifiersObject.setIsLoading(true);
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
   const handleEditInCarInstructor = async () => {
-    inCarInstructorState.setIsLoading(true);
+    inCarInstructorState.uiModifiersObject.setIsLoading(true);
 
     if (
-      !inCarInstructorState.inCarInstructorObject.isICIFirstNameError &&
-      !inCarInstructorState.inCarInstructorObject.isICILastNameError &&
-      !inCarInstructorState.inCarInstructorObject.isICIDriversLicenseNumError &&
-      !inCarInstructorState.inCarInstructorObject.isICIDriversLicenseExpDateError &&
-      !inCarInstructorState.inCarInstructorObject.isICIGLicenseNumError &&
-      !inCarInstructorState.inCarInstructorObject.isICIGLicenseExpDateError
+      !inCarInstructorState.inCarInstructorObject.isFirstNameError &&
+      !inCarInstructorState.inCarInstructorObject.isLastNameError &&
+      !inCarInstructorState.inCarInstructorObject.isInstDriversLicenseIdError &&
+      !inCarInstructorState.inCarInstructorObject.isInstDriversLicenseExpDateError &&
+      !inCarInstructorState.inCarInstructorObject.isGDriversLicenseIdError &&
+      !inCarInstructorState.inCarInstructorObject.isGDriversLicenseExpDateError
     ) {
-      await editOneInCarInstructorUC(
+      const result = await editOneInCarInstructorUC(
         inCarInstructorState.inCarInstructorObject,
         inCarInstructorState.primary_key
       );
+
+      if (result.data.status == Results.SUCCESS) {
+        inCarInstructorState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
+        inCarInstructorState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+        inCarInstructorState.messageObject.setShowMessage(true);
+        inCarInstructorState.uiModifiersObject.setAreFieldsEditable(false);
+      } else {
+        inCarInstructorState.messageObject.setMessage("ERROR - Failed to update item in database");
+        inCarInstructorState.messageObject.setMessageColor(AlertVariants.DANGER);
+        inCarInstructorState.messageObject.setShowMessage(true);
+        inCarInstructorState.uiModifiersObject.setAreFieldsEditable(false);
+      }
     }
-    inCarInstructorState.setIsLoading(false);
+
+    inCarInstructorState.uiModifiersObject.setIsLoading(false);
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleChangeToEditableForm = async () => {
+    inCarInstructorState.uiModifiersObject.setAreFieldsEditable(true);
+  };
+
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const handleDismissErrorAlert = async () => {
+    inCarInstructorState.messageObject.setShowMessage(false);
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
   const handleDeleteInCarInstructor = async () => {
-    const result = await deleteOneInCarInstructorUC(
-      inCarInstructorState.primary_key
-    );
+    const result = await deleteOneInCarInstructorUC(inCarInstructorState.primary_key);
 
     if (result.data.status != 200) {
       console.log("failed to delete item");
@@ -92,6 +97,8 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
   const inCarInstructorButtonHandlers = {
     handleAddNewInCarInstructor,
     handleEditInCarInstructor,
+    handleChangeToEditableForm,
+    handleDismissErrorAlert,
     handleDeleteInCarInstructor,
   };
 

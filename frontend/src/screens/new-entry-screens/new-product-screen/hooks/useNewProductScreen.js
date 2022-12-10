@@ -6,6 +6,7 @@ import {
   useNewProductScreenStates,
   useNewProductScreenUseEffectHelpers,
 } from ".";
+import getMostRecentProductUC from "../../../../domain/db/getMostRecentEntry/getMostRecentProductUC";
 
 const useNewProductScreen = () => {
   /******************/
@@ -13,12 +14,9 @@ const useNewProductScreen = () => {
   /******************/
   const { productState } = useNewProductScreenStates();
 
-  const { productChangeHandlers } =
-    useNewProductScreenChangeHandlers(productState);
-  const { productButtonHandlers } =
-    useNewProductScreenButtonHandlers(productState);
-  const { productUseEffectHelpers } =
-    useNewProductScreenUseEffectHelpers(productState);
+  const { productChangeHandlers } = useNewProductScreenChangeHandlers(productState);
+  const { productButtonHandlers } = useNewProductScreenButtonHandlers(productState);
+  const { productUseEffectHelpers } = useNewProductScreenUseEffectHelpers(productState);
 
   /***********************/
   /***** USE EFFECTS *****/
@@ -35,10 +33,11 @@ const useNewProductScreen = () => {
    *
    */
   useEffect(() => {
-    if (productState.productSaved && !productState.isLoading) {
-      productState.navigation("/");
+    if (productState.uiModifiersObject.dataSaved) {
+      productUseEffectHelpers.navigateAfterSave();
     }
-  }, [productState.productSaved]);
+  }, [productState.uiModifiersObject.dataSaved]);
+
   /**
    * Validates newly inputted productId
    * @dependent productId
@@ -46,19 +45,10 @@ const useNewProductScreen = () => {
   useEffect(() => {
     if (isNumber(productState.productObject.productId)) {
       parseInt(productState.productObject.productId) > -1
-        ? productState.setProductObject({
-            ...productState.productObject,
-            isProductIdError: false,
-          })
-        : productState.setProductObject({
-            ...productState.productObject,
-            isProductIdError: true,
-          });
+        ? productState.productObject.setIsProductIdError(false)
+        : productState.productObject.setIsProductIdError(true);
     } else {
-      productState.setProductObject({
-        ...productState.productObject,
-        isProductIdError: true,
-      });
+      productState.productObject.setIsProductIdError(true);
     }
   }, [productState.productObject.productId]);
 
@@ -67,16 +57,9 @@ const useNewProductScreen = () => {
    * @dependent productName
    */
   useEffect(() => {
-    productState.productObject.productName.length > 0 &&
-    productState.productObject.productName.length < 250
-      ? productState.setProductObject({
-          ...productState.productObject,
-          isProductNameError: false,
-        })
-      : productState.setProductObject({
-          ...productState.productObject,
-          isProductNameError: true,
-        });
+    productState.productObject.productName.length > 0 && productState.productObject.productName.length < 250
+      ? productState.productObject.setIsProductNameError(false)
+      : productState.productObject.setIsProductNameError(true);
   }, [productState.productObject.productName]);
 
   /**
@@ -86,22 +69,12 @@ const useNewProductScreen = () => {
   useEffect(() => {
     if (isNumber(productState.productObject.productPrice)) {
       parseInt(productState.productObject.productPrice) > -1
-        ? productState.setProductObject({
-            ...productState.productObject,
-            isProductPriceError: false,
-          })
-        : productState.setProductObject({
-            ...productState.productObject,
-            isProductPriceError: true,
-          });
+        ? productState.productObject.setIsProductPriceError(false)
+        : productState.productObject.setIsProductPriceError(true);
     } else {
-      productState.setProductObject({
-        ...productState.productObject,
-        isProductPriceError: true,
-      });
+      productState.productObject.setIsProductPriceError(true);
     }
   }, [productState.productObject.productPrice]);
-
 
   /*******************/
   /***** RETURNS *****/

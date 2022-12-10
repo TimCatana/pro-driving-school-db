@@ -1,4 +1,5 @@
 import { productTableHeadings } from "../../../../domain/constants/dbConstants";
+import { Results } from "../../../../domain/constants/Results";
 import { getOneProductUC } from "../../../../domain/db";
 
 const useNewProductScreenUseEffectHelpers = (productState) => {
@@ -6,44 +7,55 @@ const useNewProductScreenUseEffectHelpers = (productState) => {
    *
    */
   const onRender = async () => {
-    productState.setIsLoading(true);
+    productState.uiModifiersObject.setIsLoading(true);
 
     if (productState.primary_key != 0) {
-      await handleGetSpecificProduct();
-      productState.setIsNewEntry(false);
+      await _handleGetSpecificProduct();
+      productState.uiModifiersObject.setIsNewEntry(false);
+      productState.uiModifiersObject.setAreFieldsEditable(false);
+    } else {
+      productState.uiModifiersObject.setIsNewEntry(true);
+      productState.uiModifiersObject.setAreFieldsEditable(true);
     }
 
-    productState.setIsLoading(false);
+    productState.uiModifiersObject.setIsLoading(false);
   };
 
   /**
    *
    */
-  const handleGetSpecificProduct = async () => {
+  const _handleGetSpecificProduct = async () => {
     const result = await getOneProductUC(productState.primary_key);
 
-    if (result.data.status == 200) {
-      productState.setProductObject({
-        ...productState.productObject,
-        productId: result.data.query[0][productTableHeadings.productId],
-        isProductIdError: false,
+    if (result.data.status == Results.SUCCESS) {
+      productState.productObject.setProductId(result.data.query[0][productTableHeadings.productId]);
+      productState.productObject.setIsProductIdError(false);
 
-        productName: result.data.query[0][productTableHeadings.name],
-        isProductNameError: false,
+      productState.productObject.setProductName(result.data.query[0][productTableHeadings.name]);
+      productState.productObject.setIsProductNameError(false);
 
-        productPrice: result.data.query[0][productTableHeadings.price],
-        isProductPriceError: false,
-      });
+      productState.productObject.setProductPrice(result.data.query[0][productTableHeadings.price]);
+      productState.productObject.setIsProductPriceError(false);
+
+      productState.uiModifiersObject.setFailedToGetData(false);
     } else {
-      console.log(result.data);
+      productState.uiModifiersObject.setFailedToGetData(true);
     }
   };
 
+  /**
+   *
+   */
+  const navigateAfterSave = async () => {
+    productState.navigation("/?initial_selection=products");
+  };
+  
   /**
    *
    */
   const productUseEffectHelpers = {
     onRender,
+    navigateAfterSave,
   };
   /*******************/
   /***** RETURNS *****/

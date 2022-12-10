@@ -5,10 +5,7 @@ const useNewProductScreenChangeHandlers = (productState) => {
    */
   const handleProductIdChange = (e) => {
     e.preventDefault();
-    productState.setProductObject({
-      ...productState.productObject,
-      productId: e.target.value,
-    });
+    productState.productObject.setProductId(e.target.value);
   };
 
   /**
@@ -17,10 +14,7 @@ const useNewProductScreenChangeHandlers = (productState) => {
    */
   const handleProductNameChange = (e) => {
     e.preventDefault();
-    productState.setProductObject({
-      ...productState.productObject,
-      productName: e.target.value,
-    });
+    productState.productObject.setProductName(e.target.value);
   };
 
   /**
@@ -29,14 +23,11 @@ const useNewProductScreenChangeHandlers = (productState) => {
    */
   const handleProductPriceChange = (e) => {
     e.preventDefault();
-    productState.setProductObject({
-      ...productState.productObject,
-      productPrice: e.target.value,
-    });
+    productState.productObject.setProductPrice(e.target.value);
   };
 
   /**
-   * return object
+   * the change handlers of the screen
    */
 
   const productChangeHandlers = {

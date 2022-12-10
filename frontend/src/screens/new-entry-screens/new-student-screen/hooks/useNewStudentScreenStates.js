@@ -9,25 +9,9 @@ const useNewStudentScreenStates = () => {
   const navigation = useNavigate();
   const { primary_key } = useParams();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [isNewEntry, setIsNewEntry] = useState(true);
-  const [courses, setCourses] = useState(false);
-  const [products, setProducts] = useState(false);
-
-  const [studentSaved, setStudentSaved] = useState(false);
-
-  const [isDateOfBirthFocus, setIsDateOfBirthFocus] = useState(false);
-  const [
-    isStudentDriversLicenseIssuedDateFocus,
-    setIsStudentDriversLicenseIssuedDateFocus,
-  ] = useState(false);
-
-  const [selectedGender, setSelectedGender] = useState("label");
-  const [selectedLicenseClass, setSelectedLicenseClass] = useState("label");
-  const [selectedRegisteredCourse, setSelectedRegisteredCourse] =
-    useState("label");
-  const [selectedRegisteredProduct, setSelectedRegisteredProduct] =
-    useState("label");
+  /**
+   * ENUMS
+   */
 
   const Genders = {
     MALE: "Male",
@@ -42,6 +26,63 @@ const useNewStudentScreenStates = () => {
     M1: "M1",
     M2: "M2",
   };
+
+  /**
+   * Parameters that change the UI based on their value
+   */
+
+  const [uiModifiers, setUiModifiers] = useState({
+    isLoading: true,
+    isNewEntry: true,
+    areFieldsEditable: true,
+    failedToGetData: true,
+    dataSaved: false,
+  });
+
+  /**
+   * For error messages
+   */
+
+  const [errorVariables, setErrorVariables] = useState({
+    showError: false,
+    errorMessage: "",
+  });
+
+  /**
+   * The items used to fill dropdown menus when dropdown menus options are dependant on  dynamic data
+   */
+
+  const [dropdownMenuOptions, setDropdownMenuOptions] = useState({
+    courses: [],
+    failedToGetCourses: false,
+
+    products: [],
+    failedToGetProducts: false,
+  });
+
+  /**
+   * Date Selection Focus (used to only show date picker when text input is selected)
+   */
+
+  const [dateTextInputFocus, setDateTextInputFocus] = useState({
+    isDateOfBirthFocus: false,
+    isStudentDriversLicenseIssuedDateFocus: false,
+  });
+
+  /**
+   * Variables to determine which option is preselected in dropdown menues
+   */
+
+  const [preSelectedDropdownOptions, setPreSelectedDropdownOptions] = useState({
+    selectedGender: "label",
+    selectedLicenseClass: "label",
+    selectedRegisteredCourse: "label",
+    selectedRegisteredProduct: "label",
+  });
+
+  /**
+   * The object representing an entry in the database
+   */
 
   const [studentObject, setStudentObject] = useState({
     studentFirstName: "",
@@ -99,40 +140,31 @@ const useNewStudentScreenStates = () => {
     isStudentRegisteredProductIdError: true,
   });
 
-  //////////////
+  /**
+   * The state object of the screen
+   */
 
   const studentState = {
     navigation,
     primary_key,
 
-    isLoading,
-    setIsLoading,
-    isNewEntry,
-    setIsNewEntry,
-    courses,
-    setCourses,
-    products,
-    setProducts,
-
-    studentSaved,
-    setStudentSaved,
-
-    isDateOfBirthFocus,
-    setIsDateOfBirthFocus,
-    isStudentDriversLicenseIssuedDateFocus,
-    setIsStudentDriversLicenseIssuedDateFocus,
-
-    selectedGender,
-    setSelectedGender,
-    selectedLicenseClass,
-    setSelectedLicenseClass,
-    selectedRegisteredCourse,
-    setSelectedRegisteredCourse,
-    selectedRegisteredProduct,
-    setSelectedRegisteredProduct,
-
     Genders,
     LicenseClasses,
+
+    uiModifiers,
+    setUiModifiers,
+
+    errorVariables,
+    setErrorVariables,
+
+    dropdownMenuOptions,
+    setDropdownMenuOptions,
+
+    dateTextInputFocus,
+    setDateTextInputFocus,
+
+    preSelectedDropdownOptions,
+    setPreSelectedDropdownOptions,
 
     studentObject,
     setStudentObject,

@@ -1,11 +1,11 @@
-import useNewInClassInstScreen from "./useNewInClassInstScreen";
+import useNewInClassInstructorScreen from "./useNewInClassInstructorScreen";
 import useNewInClassInstructorScreenStates from "./useNewInClassInstructorScreenStates";
 import useNewInClassInstructorScreenChangeHandlers from "./useNewInClassInstructorScreenChangeHandlers";
 import useNewInClassInstructorScreenButtonHandlers from "./useNewInClassInstructorScreenButtonHandlers";
 import useNewInClassInstructorScreenUseEffectHelpers from "./useNewInClassInstructorScreenUseEffectHelpers";
 
 export {
-  useNewInClassInstScreen,
+  useNewInClassInstructorScreen,
   useNewInClassInstructorScreenStates,
   useNewInClassInstructorScreenChangeHandlers,
   useNewInClassInstructorScreenButtonHandlers,

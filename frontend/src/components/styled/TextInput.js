@@ -6,7 +6,7 @@ const TextInput = styled.input`
   height: 1.6rem;
 
   padding: 0.5rem 1rem;
-  margin:  ${(props) => (props.isLast ? "0.1rem 0" : "0.1rem 0.4rem 0.1rem 0")};
+  margin: ${(props) => (props.isLast ? "0.1rem 0" : "0.1rem 0.4rem 0.1rem 0")};
 
   display: block;
 
@@ -18,7 +18,7 @@ const TextInput = styled.input`
   background: var(--input-background);
   color: var(--input-color);
 
-  border:   ${(props) => (props.isError ? "0.1rem solid var(--input-border-error)" : "0.1rem solid var(--input-border)")}; 
+  border: ${(props) => (props.isError ? "0.1rem solid var(--input-border-error)" : "0.1rem solid var(--input-border)")};
   border-radius: 0.4rem;
 
   transition: border 0.3s ease;
@@ -29,6 +29,14 @@ const TextInput = styled.input`
     color: var(--input-placeholder);
   }
   &:focus {
+    outline: none;
+    border-color: var(--input-border-focus);
+  }
+  &:disabled {
+    border: none;
+    /* border: 0.1rem solid black; */
+    background: #d9d9d9;
+    color: black;
     outline: none;
     border-color: var(--input-border-focus);
   }

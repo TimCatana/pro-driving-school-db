@@ -1,26 +1,37 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const useHomeScreenStates = () => {
   /******************/
   /***** STATES *****/
   /******************/
   const Data = {
-    COURSES: 0,
-    PRODUCTS: 1,
-    STUDENTS: 2,
-    IN_CLASS_INST: 3,
-    IN_CAR_INST: 4,
+    COURSES: 'courses',
+    PRODUCTS: 'products',
+    STUDENTS: 'students',
+    IN_CLASS_INST: 'in-class-instructors',
+    IN_CAR_INST: 'in-car-instructors',
   };
 
   const navigation = useNavigate();
+  const [_searchParams, _setSearchParams] = useSearchParams();
+
+  const query = {
+    initialSelection: _searchParams.get("initial_selection"),
+  };
+  
   const [isLoading, setIsLoading] = useState(true);
+
+
+
+
 
   const [displaying, setDisplaying] = useState(Data.COURSES);
   const [displayData, setDisplayData] = useState([]);
 
   const homeState = {
     navigation,
+    query,
 
     Data,
 

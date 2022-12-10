@@ -10,10 +10,10 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
   const onRender = async () => {
     courseState.setIsLoading(true);
     await handleGetInClassInstructors();
-    // if no instructors, need to show message saying that instructors need to be added
 
     if (courseState.primary_key != 0) {
       await handleGetSpecificCourse();
+      courseState.setAreFieldsEditable(false);
       courseState.setIsNewEntry(false);
     }
 
@@ -29,7 +29,7 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
     if (result.data.status == 200) {
       courseState.setInClassInstructors(result.data.query);
     } else {
-      console.log(result.data);
+      courseState.setInClassInstructors([]);
     }
   };
 

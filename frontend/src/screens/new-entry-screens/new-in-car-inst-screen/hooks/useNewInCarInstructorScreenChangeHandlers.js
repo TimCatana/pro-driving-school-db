@@ -5,10 +5,7 @@ const useNewInCarInstructorScreenChangeHandlers = (inCarInstructorState) => {
    */
   const handleInCarInstFirstNameChange = (e) => {
     e.preventDefault();
-    inCarInstructorState.setInCarInstructorObject({
-      ...inCarInstructorState.inCarInstructorObject,
-      iciFirstName: e.target.value,
-    });
+    inCarInstructorState.inCarInstructorObject.setFirstName(e.target.value);
   };
 
   /**
@@ -17,10 +14,7 @@ const useNewInCarInstructorScreenChangeHandlers = (inCarInstructorState) => {
    */
   const handleInCarInstLastNameChange = (e) => {
     e.preventDefault();
-    inCarInstructorState.setInCarInstructorObject({
-      ...inCarInstructorState.inCarInstructorObject,
-      iciLastName: e.target.value,
-    });
+    inCarInstructorState.inCarInstructorObject.setLastName(e.target.value);
   };
 
   /**
@@ -29,10 +23,7 @@ const useNewInCarInstructorScreenChangeHandlers = (inCarInstructorState) => {
    */
   const handleInCarInstDriversLicenseNumChange = (e) => {
     e.preventDefault();
-    inCarInstructorState.setInCarInstructorObject({
-      ...inCarInstructorState.inCarInstructorObject,
-      iciDriversLicenseNum: e.target.value,
-    });
+    inCarInstructorState.inCarInstructorObject.setInstDriversLicenseId(e.target.value);
   };
 
   /**
@@ -41,10 +32,7 @@ const useNewInCarInstructorScreenChangeHandlers = (inCarInstructorState) => {
    */
   const handleInCarInstDriversLicenseExpDateChange = (e) => {
     e.preventDefault();
-    inCarInstructorState.setInCarInstructorObject({
-      ...inCarInstructorState.inCarInstructorObject,
-      iciDriversLicenseExpDate: e.target.value,
-    });
+    inCarInstructorState.inCarInstructorObject.setInstDriversLicenseExpDate(e.target.value);
   };
 
   /**
@@ -53,10 +41,7 @@ const useNewInCarInstructorScreenChangeHandlers = (inCarInstructorState) => {
    */
   const handleInCarInstGLicenseNumChange = (e) => {
     e.preventDefault();
-    inCarInstructorState.setInCarInstructorObject({
-      ...inCarInstructorState.inCarInstructorObject,
-      iciGLicenseNum: e.target.value,
-    });
+    inCarInstructorState.inCarInstructorObject.setGDriversLicenseId(e.target.value);
   };
 
   /**
@@ -65,26 +50,23 @@ const useNewInCarInstructorScreenChangeHandlers = (inCarInstructorState) => {
    */
   const handleInCarInstGLicenseExpDateChange = (e) => {
     e.preventDefault();
-    inCarInstructorState.setInCarInstructorObject({
-      ...inCarInstructorState.inCarInstructorObject,
-      iciGLicenseExpDate: e.target.value,
-    });
+    inCarInstructorState.inCarInstructorObject.setGDriversLicenseExpDate(e.target.value);
   };
 
   /**
    *
    * @param {*} isFocused
    */
-  const handleICIDriversLicenseFocusAndBlurHandler = (isFocused) => {
-    inCarInstructorState.setIsICIInstDriversLicenseFocus(isFocused);
+  const handleInstDriversLicenseFocusAndBlurHandler = (isFocused) => {
+    inCarInstructorState.dateTextInputFocusesObject.setIsInstDriversLicenseFocus(isFocused);
   };
 
   /**
    *
    * @param {*} isFocused
    */
-  const handleICIGDriversLicenseFocusAndBlurHandler = (isFocused) => {
-    inCarInstructorState.setICIGDriversLicenseFocus(isFocused);
+  const handleGDriversLicenseFocusAndBlurHandler = (isFocused) => {
+    inCarInstructorState.dateTextInputFocusesObject.setIsGDriversLicenseFocus(isFocused);
   };
 
   /**
@@ -98,8 +80,9 @@ const useNewInCarInstructorScreenChangeHandlers = (inCarInstructorState) => {
     handleInCarInstDriversLicenseExpDateChange,
     handleInCarInstGLicenseNumChange,
     handleInCarInstGLicenseExpDateChange,
-    handleICIDriversLicenseFocusAndBlurHandler,
-    handleICIGDriversLicenseFocusAndBlurHandler,
+
+    handleInstDriversLicenseFocusAndBlurHandler,
+    handleGDriversLicenseFocusAndBlurHandler,
   };
 
   /*******************/

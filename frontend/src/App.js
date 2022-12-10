@@ -9,7 +9,6 @@ import NewInClassInstScreen from "./screens/new-entry-screens/new-in-class-inst-
 import NewProductScreen from "./screens/new-entry-screens/new-product-screen/NewProductScreen";
 import NewStudentScreen from "./screens/new-entry-screens/new-student-screen/NewStudentScreen";
 
-
 const App = () => {
   return (
     <div>
