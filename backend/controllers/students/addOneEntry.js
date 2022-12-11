@@ -27,6 +27,7 @@ const addOneEntry = async (req, res) => {
     ${studentTableHeadings.address}, 
     ${studentTableHeadings.addressAptNum}, 
     ${studentTableHeadings.addressCity}, 
+    ${studentTableHeadings.addressState}, 
     ${studentTableHeadings.addressPostalCode}, 
     ${studentTableHeadings.cellPhoneNumber}, 
     ${studentTableHeadings.homePhoneNumber}, 
@@ -37,7 +38,7 @@ const addOneEntry = async (req, res) => {
     ${studentTableHeadings.registeredCourse}, 
     ${studentTableHeadings.purchasedProduct}
   )
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
   const db = makeDb();
   try {
@@ -51,6 +52,7 @@ const addOneEntry = async (req, res) => {
       req.body.studentAddress,
       req.body.studentAddressAptNumber,
       req.body.studentAddressCity,
+      req.body.studentAddressState,
       req.body.studentAddressPostalCode,
       req.body.studentCellPhoneNumber,
       req.body.studentHomePhoneNumber,

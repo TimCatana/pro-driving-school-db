@@ -49,6 +49,7 @@ const studentTableHeadings = {
   address: "address",
   addressAptNum: "address_apt_num",
   addressCity: "address_city",
+  addressState: "address_state",
   addressPostalCode: "address_postal_code",
   cellPhoneNumber: "cell_phone_number",
   homePhoneNumber: "home_phone_number",

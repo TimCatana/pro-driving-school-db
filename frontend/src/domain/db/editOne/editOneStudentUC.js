@@ -11,6 +11,7 @@ const editOneStudentUC = async (studentObject, primary_key) => {
     studentAddress: studentObject.studentAddress,
     studentAddressAptNumber: studentObject.studentAddressApartmentNumber,
     studentAddressCity: studentObject.studentAddressCity,
+    studentAddressState: studentObject.studentAddressState,
     studentAddressPostalCode: studentObject.studentAddressPostalCode,
     studentCellPhoneNumber: studentObject.studentCellPhoneNumber,
     studentHomePhoneNumber: studentObject.studentHomePhoneNumber,

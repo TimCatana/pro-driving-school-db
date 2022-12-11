@@ -84,6 +84,15 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    * Updates the courseId variable to contain the newly inputted value
    * @param value (string) The value inputted into the textInput
    */
+  const handleStudentAddressStateChange = (e) => {
+    e.preventDefault();
+    studentState.studentObject.setStudentAddressState(e.target.value);
+  };
+
+  /**
+   * Updates the courseId variable to contain the newly inputted value
+   * @param value (string) The value inputted into the textInput
+   */
   const handleStudentAddressPostalCodeChange = (e) => {
     e.preventDefault();
     studentState.studentObject.setStudentAddressPostalCode(e.target.value);
@@ -193,6 +202,7 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
     handleStudentAddressChange,
     handleStudentAddressApartmentNumberChange,
     handleStudentAddressCityChange,
+    handleStudentAddressStateChange,
     handleStudentAddressPostalCodeChange,
     handleStudentDriversLicenseIdChange,
     handleStudentDriversLicenseClassChange,

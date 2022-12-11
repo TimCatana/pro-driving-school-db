@@ -125,7 +125,6 @@ const HomeScreen = () => {
                 homeButtonHandlers={homeButtonHandlers}
                 headings={[
                   "ID",
-                  ,
                   "First Name",
                   "Middle Name",
                   "Last Name",
@@ -137,6 +136,7 @@ const HomeScreen = () => {
                   "Address",
                   "Apt. No.",
                   "City",
+                  "Province",
                   "Postal Code",
                   "License Number",
                   "License Class",
@@ -161,6 +161,7 @@ const HomeScreen = () => {
                   studentTableHeadings.address,
                   studentTableHeadings.addressAptNum,
                   studentTableHeadings.addressCity,
+                  studentTableHeadings.addressState,
                   studentTableHeadings.addressPostalCode,
                   studentTableHeadings.driversLicenseId,
                   studentTableHeadings.driversLicenseClass,

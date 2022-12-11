@@ -54,6 +54,9 @@ const useNewStudentScreenUseEffectHelpers = (studentState) => {
 
       studentState.studentObject.setStudentAddressCity(result.data[0][studentTableHeadings.addressCity]);
       studentState.studentObject.setIsStudentAddressCityError(false);
+      
+      studentState.studentObject.setStudentAddressState(result.data[0][studentTableHeadings.addressState]);
+      studentState.studentObject.setIsStudentAddressStateError(false);
 
       studentState.studentObject.setStudentAddressPostalCode(
         result.data[0][studentTableHeadings.addressPostalCode]

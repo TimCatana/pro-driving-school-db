@@ -15,6 +15,22 @@ const useNewStudentScreenStates = () => {
    * ENUMS
    */
 
+  const CanadaProvinces = {
+    NL: "NL",
+    PE: "PE",
+    NS: "NS",
+    NB: "NB",
+    QC: "QC",
+    ON: "ON",
+    MB: "MB",
+    SK: "SK",
+    AB: "AB",
+    BC: "BC",
+    YT: "YT",
+    NT: "NT",
+    NU: "NU",
+  };
+
   const Genders = {
     MALE: "Male",
     FEMALE: "Female",
@@ -141,6 +157,9 @@ const useNewStudentScreenStates = () => {
   const [studentAddressCity, setStudentAddressCity] = useState("");
   const [isStudentAddressCityError, setIsStudentAddressCityError] = useState(true);
 
+  const [studentAddressState, setStudentAddressState] = useState("label");
+  const [isStudentAddressStateError, setIsStudentAddressStateError] = useState(true);
+
   const [studentAddressPostalCode, setStudentAddressPostalCode] = useState("");
   const [isStudentAddressPostalCodeError, setIsStudentAddressPostalCodeError] = useState(true);
 
@@ -218,6 +237,11 @@ const useNewStudentScreenStates = () => {
     isStudentAddressCityError,
     setIsStudentAddressCityError,
 
+    studentAddressState,
+    setStudentAddressState,
+    isStudentAddressStateError,
+    setIsStudentAddressStateError,
+
     studentAddressPostalCode,
     setStudentAddressPostalCode,
     isStudentAddressPostalCodeError,
@@ -274,6 +298,7 @@ const useNewStudentScreenStates = () => {
 
     Genders,
     LicenseClasses,
+    CanadaProvinces,
 
     uiModifiersObject,
     messageObject,

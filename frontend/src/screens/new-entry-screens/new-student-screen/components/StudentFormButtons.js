@@ -18,6 +18,7 @@ const StudentFormButtons = (props) => {
             studentState.studentObject.isStudentGenderError ||
             studentState.studentObject.isStudentAddressError ||
             studentState.studentObject.isStudentAddressCityError ||
+            studentState.studentObject.isStudentAddressStateError ||
             studentState.studentObject.isStudentAddressPostalCodeError ||
             studentState.studentObject.isStudentCellPhoneNumberError ||
             studentState.studentObject.isStudentHomePhoneNumberError ||
@@ -55,6 +56,7 @@ const StudentFormButtons = (props) => {
                 studentState.studentObject.isStudentGenderError ||
                 studentState.studentObject.isStudentAddressError ||
                 studentState.studentObject.isStudentAddressCityError ||
+                studentState.studentObject.isStudentAddressStateError ||
                 studentState.studentObject.isStudentAddressPostalCodeError ||
                 studentState.studentObject.isStudentCellPhoneNumberError ||
                 studentState.studentObject.isStudentHomePhoneNumberError ||

@@ -24,7 +24,7 @@ const fillStudentApplicationFormPdf = async (studentObject) => {
   pdfForm.getTextField("Address").setText(studentObject[studentTableHeadings.address]);
   pdfForm.getTextField("Apartment").setText(studentObject[studentTableHeadings.addressAptNum]);
   pdfForm.getTextField("City").setText(studentObject[studentTableHeadings.addressCity]);
-  pdfForm.getTextField("Province").setText("ON");
+  pdfForm.getTextField("Province").setText(studentObject[studentTableHeadings.addressState]);
   pdfForm.getTextField("Postal_Code").setText(studentObject[studentTableHeadings.addressPostalCode]);
   pdfForm.getTextField("Drivers_License_Number").setText(studentObject[studentTableHeadings.driversLicenseId]);
   pdfForm.getTextField("License_Issued_Date").setText(studentObject[studentTableHeadings.driversLicenseIssuedDate]);

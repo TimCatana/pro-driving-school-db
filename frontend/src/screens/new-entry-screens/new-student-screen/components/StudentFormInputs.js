@@ -102,10 +102,10 @@ const StudentFormInputs = (props) => {
         >
           <ListOption value={"label"} disabled hidden>
             Please Select Gender
-          </ListOption>
-          <ListOption value={studentState.Genders.MALE}>Male</ListOption>
-          <ListOption value={studentState.Genders.FEMALE}>Female</ListOption>
-          <ListOption value={studentState.Genders.NOT_DECLARED}>Not Declared</ListOption>
+          </ListOption>{" "}
+          {Object.keys(studentState.Genders).map((key) => (
+            <ListOption value={studentState.Genders[key]}>{studentState.Genders[key]}</ListOption>
+          ))}
         </DropDownMenu>
       </SideBySideTextInputsDiv>
 
@@ -176,6 +176,23 @@ const StudentFormInputs = (props) => {
           type="text"
           maxLength={145}
         />
+        <DropDownMenu
+          name="stateList"
+          disabled={studentState.uiModifiersObject.isLoading || !studentState.uiModifiersObject.areFieldsEditable}
+          value={studentState.studentObject.studentAddressState}
+          onChange={studentChangeHandlers.handleStudentAddressStateChange}
+          isError={
+            studentState.studentObject.isStudentAddressStateError &&
+            studentState.studentObject.studentAddressState != "label"
+          }
+        >
+          <ListOption value={"label"} disabled hidden>
+            Province/State
+          </ListOption>
+          {Object.keys(studentState.CanadaProvinces).map((key) => (
+            <ListOption value={studentState.CanadaProvinces[key]}>{studentState.CanadaProvinces[key]}</ListOption>
+          ))}
+        </DropDownMenu>
         <TextInput
           placeholder={"Postal Code"}
           disabled={studentState.uiModifiersObject.isLoading || !studentState.uiModifiersObject.areFieldsEditable}
@@ -217,11 +234,9 @@ const StudentFormInputs = (props) => {
           <ListOption value={"label"} disabled hidden>
             Please Select License Class
           </ListOption>
-          <ListOption value={studentState.LicenseClasses.G1}>G1</ListOption>
-          <ListOption value={studentState.LicenseClasses.G2}>G2</ListOption>
-          <ListOption value={studentState.LicenseClasses.G}>G</ListOption>
-          <ListOption value={studentState.LicenseClasses.M1}>M1</ListOption>
-          <ListOption value={studentState.LicenseClasses.M2}>M2</ListOption>
+          {Object.keys(studentState.LicenseClasses).map((key) => (
+            <ListOption value={studentState.LicenseClasses[key]}>{studentState.LicenseClasses[key]}</ListOption>
+          ))}
         </DropDownMenu>
       </SideBySideTextInputsDiv>
 

@@ -99,9 +99,7 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    studentState.studentObject.studentGender == studentState.Genders.MALE ||
-    studentState.studentObject.studentGender == studentState.Genders.FEMALE ||
-    studentState.studentObject.studentGender == studentState.Genders.NOT_DECLARED
+    Object.values(studentState.Genders).includes(studentState.studentObject.studentGender)
       ? studentState.studentObject.setIsStudentGenderError(false)
       : studentState.studentObject.setIsStudentGenderError(true);
   }, [studentState.studentObject.studentGender]);
@@ -152,6 +150,29 @@ const useNewStudentScreen = () => {
       studentState.studentObject.setIsStudentAddressApartmentNumberError(false);
     }
   }, [studentState.studentObject.studentAddressApartmentNumber]);
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   * 3 options M F Not-Declaring
+   */
+  useEffect(() => {
+    studentState.studentObject.studentAddressCity.length > 0 &&
+    studentState.studentObject.studentAddressCity.length < 150
+      ? studentState.studentObject.setIsStudentAddressCityError(false)
+      : studentState.studentObject.setIsStudentAddressCityError(true);
+  }, [studentState.studentObject.studentAddressCity]);
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   * 3 options M F Not-Declaring
+   */
+  useEffect(() => {
+    Object.values(studentState.CanadaProvinces).includes(studentState.studentObject.studentAddressState)
+      ? studentState.studentObject.setIsStudentAddressStateError(false)
+      : studentState.studentObject.setIsStudentAddressStateError(true);
+  }, [studentState.studentObject.studentAddressState]);
 
   /**
    * Validates newly inputted courseId
