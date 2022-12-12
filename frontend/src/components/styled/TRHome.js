@@ -5,8 +5,11 @@ const TRHome = styled.tr`
   border: 1px solid #dddddd;
   text-align: center;
 
+  &:nth-child(odd) {
+    background-color: #fff;
+  }
   &:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #f2f2f2;
   }
 `;
 

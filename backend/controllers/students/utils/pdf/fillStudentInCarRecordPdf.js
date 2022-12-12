@@ -6,8 +6,6 @@ const fillStudentInCarRecordPdf = async (studentObject, productObject) => {
   const pdfDoc = await PDFDocument.load(await readFile("./data/pdf/inputs/student_in_car_record.pdf"));
   const pdfForm = pdfDoc.getForm();
 
-  console.log("aaaaaaaaaaaaa");
-
   pdfForm
     .getTextField("Student_Name")
     .setText(

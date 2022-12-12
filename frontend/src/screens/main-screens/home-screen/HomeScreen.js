@@ -41,6 +41,8 @@ const ButtonsDiv = styled.div`
   margin-bottom: 50px;
 `;
 
+
+
 const HomeScreen = () => {
   const { homeState, homeButtonHandlers } = useHomeScreen();
   return (
@@ -77,7 +79,7 @@ const HomeScreen = () => {
                   "Start Date",
                   "End Date",
                   "Digital / In Person",
-                  "In Class Instructor License",
+                  "In Class Instructor Id",
                   "Edit",
                   "Delete",
                 ]}

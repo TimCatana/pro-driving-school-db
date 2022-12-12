@@ -110,11 +110,18 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
    * Updates the subscript to mailing list option.
    */
   const handleGetFilledCoursePdf = async () => {
+    courseState.uiModifiersObject.setIsLoading(true);
     try {
       await getFilledCourseEnrollmentPdfUC(courseState.primary_key);
+      courseState.messageObject.setMessage("SUCCESS - PDF file should be opened as 'course_enrollment_output_{number}.pdf'");
+      courseState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+      courseState.messageObject.setShowMessage(true);
     } catch (e) {
-      console.log(e);
+      courseState.messageObject.setMessage("ERROR - please close all instances of 'course_enrollment_output_{number}.pdf'");
+      courseState.messageObject.setMessageColor(AlertVariants.DANGER);
+      courseState.messageObject.setShowMessage(true);
     }
+    courseState.uiModifiersObject.setIsLoading(false);
   };
 
   const courseButtonHandlers = {

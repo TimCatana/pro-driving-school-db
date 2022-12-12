@@ -11,8 +11,6 @@ const fillCourseEnrollmentPdf = async (studentObject) => {
     const pdfDoc = await PDFDocument.load(await readFile(`./data/pdf/inputs/course_enrollment.pdf`));
     const pdfForm = pdfDoc.getForm();
 
-    console.log(`${i + 1} == ${pages}`);
-
     if (i + 1 == pages) {
       maxLines = studentObject.length % 10;
     } else {
@@ -21,7 +19,6 @@ const fillCourseEnrollmentPdf = async (studentObject) => {
 
     for (j = 0; j < maxLines; j++) {
       lineNumber = j + 1;
-      console.log(lineNumber);
 
       pdfForm.getTextField(`Line_${lineNumber}_Number`).setText(`${lineNumber + i * 10}`);
       pdfForm
@@ -66,7 +63,7 @@ const fillCourseEnrollmentPdf = async (studentObject) => {
             studentObject[student][studentTableHeadings.driversLicenseExpDate]
           }`
         );
-      // // pdfForm.getTextField(`Line_${lineNumber}_Start_Of_Training`).setText('');
+      // pdfForm.getTextField(`Line_${lineNumber}_Start_Of_Training`).setText('');
 
       student++;
     }

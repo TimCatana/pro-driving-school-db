@@ -25,12 +25,14 @@ const useHomeScreenButtonHandlers = (homeState) => {
     homeState.uiModifiersObject.setIsLoading(true);
     homeState.uiModifiersObject.setDisplaying(homeState.Data.COURSES);
 
-    const result = await getAllCoursesUC();
-    homeState.uiModifiersObject.setDisplayData(result.data);
-
-    result.status == Results.SUCCESS
-      ? homeState.uiModifiersObject.setFailedToGetData(false)
-      : homeState.uiModifiersObject.setFailedToGetData(true);
+    try {
+      const result = await getAllCoursesUC();
+      homeState.uiModifiersObject.setDisplayData(result.data);
+      homeState.uiModifiersObject.setFailedToGetData(true);
+    } catch (e) {
+      homeState.uiModifiersObject.setDisplayData([]);
+      homeState.uiModifiersObject.setFailedToGetData(false);
+    }
 
     homeState.uiModifiersObject.setIsLoading(false);
   };
@@ -42,12 +44,14 @@ const useHomeScreenButtonHandlers = (homeState) => {
     homeState.uiModifiersObject.setIsLoading(true);
     homeState.uiModifiersObject.setDisplaying(homeState.Data.PRODUCTS);
 
-    const result = await getAllProductsUC();
-    homeState.uiModifiersObject.setDisplayData(result.data);
-
-    result.status == Results.SUCCESS
-      ? homeState.uiModifiersObject.setFailedToGetData(false)
-      : homeState.uiModifiersObject.setFailedToGetData(true);
+    try {
+      const result = await getAllProductsUC();
+      homeState.uiModifiersObject.setDisplayData(result.data);
+      homeState.uiModifiersObject.setFailedToGetData(true);
+    } catch (e) {
+      homeState.uiModifiersObject.setDisplayData([]);
+      homeState.uiModifiersObject.setFailedToGetData(false);
+    }
 
     homeState.uiModifiersObject.setIsLoading(false);
   };
@@ -58,12 +62,14 @@ const useHomeScreenButtonHandlers = (homeState) => {
     homeState.uiModifiersObject.setIsLoading(true);
     homeState.uiModifiersObject.setDisplaying(homeState.Data.STUDENTS);
 
-    const result = await getAllStudentsUC();
-    homeState.uiModifiersObject.setDisplayData(result.data);
-
-    result.status == Results.SUCCESS
-      ? homeState.uiModifiersObject.setFailedToGetData(false)
-      : homeState.uiModifiersObject.setFailedToGetData(true);
+    try {
+      const result = await getAllStudentsUC();
+      homeState.uiModifiersObject.setDisplayData(result.data);
+      homeState.uiModifiersObject.setFailedToGetData(true);
+    } catch (e) {
+      homeState.uiModifiersObject.setDisplayData([]);
+      homeState.uiModifiersObject.setFailedToGetData(false);
+    }
 
     homeState.uiModifiersObject.setIsLoading(false);
   };
@@ -74,12 +80,14 @@ const useHomeScreenButtonHandlers = (homeState) => {
     homeState.uiModifiersObject.setIsLoading(true);
     homeState.uiModifiersObject.setDisplaying(homeState.Data.IN_CLASS_INST);
 
-    const result = await getAllInClassInstructorsUC();
-    homeState.uiModifiersObject.setDisplayData(result.data);
-
-    result.status == Results.SUCCESS
-      ? homeState.uiModifiersObject.setFailedToGetData(false)
-      : homeState.uiModifiersObject.setFailedToGetData(true);
+    try {
+      const result = await getAllInClassInstructorsUC();
+      homeState.uiModifiersObject.setDisplayData(result.data);
+      homeState.uiModifiersObject.setFailedToGetData(true);
+    } catch (e) {
+      homeState.uiModifiersObject.setDisplayData([]);
+      homeState.uiModifiersObject.setFailedToGetData(false);
+    }
 
     homeState.uiModifiersObject.setIsLoading(false);
   };
@@ -90,13 +98,14 @@ const useHomeScreenButtonHandlers = (homeState) => {
     homeState.uiModifiersObject.setIsLoading(true);
     homeState.uiModifiersObject.setDisplaying(homeState.Data.IN_CAR_INST);
 
-    const result = await getAllInCarInstructorsUC();
-    console.log(result);
-    homeState.uiModifiersObject.setDisplayData(result.data);
-
-    result.status == Results.SUCCESS
-      ? homeState.uiModifiersObject.setFailedToGetData(false)
-      : homeState.uiModifiersObject.setFailedToGetData(true);
+    try {
+      const result = await getAllInCarInstructorsUC();
+      homeState.uiModifiersObject.setDisplayData(result.data);
+      homeState.uiModifiersObject.setFailedToGetData(true);
+    } catch (e) {
+      homeState.uiModifiersObject.setDisplayData([]);
+      homeState.uiModifiersObject.setFailedToGetData(false);
+    }
 
     homeState.uiModifiersObject.setIsLoading(false);
   };
@@ -111,14 +120,13 @@ const useHomeScreenButtonHandlers = (homeState) => {
   const handleDeleteCourse = async (primaryKey) => {
     homeState.uiModifiersObject.setIsLoading(true);
 
-    const result = await deleteOneCourseUC(primaryKey);
-
-    if (result.status == Results.SUCCESS) {
+    try {
+      await deleteOneCourseUC(primaryKey);
       homeState.messageObject.setMessage("SUCCESS - Successfully delete course");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
       handleGetCourses();
-    } else {
+    } catch (e) {
       homeState.messageObject.setMessage("ERROR - Failed to delete course");
       homeState.messageObject.setMessageColor(AlertVariants.DANGER);
       homeState.messageObject.setShowMessage(true);
@@ -133,14 +141,13 @@ const useHomeScreenButtonHandlers = (homeState) => {
   const handleDeleteProduct = async (primaryKey) => {
     homeState.uiModifiersObject.setIsLoading(true);
 
-    const result = await deleteOneProductUC(primaryKey);
-
-    if (result.status == Results.SUCCESS) {
+    try {
+      await deleteOneProductUC(primaryKey);
       homeState.messageObject.setMessage("SUCCESS - Successfully delete product");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
       handleGetProducts();
-    } else {
+    } catch (e) {
       homeState.messageObject.setMessage("ERROR - Failed to delete product");
       homeState.messageObject.setMessageColor(AlertVariants.DANGER);
       homeState.messageObject.setShowMessage(true);
@@ -155,14 +162,13 @@ const useHomeScreenButtonHandlers = (homeState) => {
   const handleDeleteStudent = async (primaryKey) => {
     homeState.uiModifiersObject.setIsLoading(true);
 
-    const result = await deleteOneStudentUC(primaryKey);
-
-    if (result.status == Results.SUCCESS) {
+    try {
+      await deleteOneStudentUC(primaryKey);
       homeState.messageObject.setMessage("SUCCESS - Successfully delete student");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
       handleGetStudents();
-    } else {
+    } catch (e) {
       homeState.messageObject.setMessage("ERROR - Failed to delete student");
       homeState.messageObject.setMessageColor(AlertVariants.DANGER);
       homeState.messageObject.setShowMessage(true);
@@ -177,14 +183,13 @@ const useHomeScreenButtonHandlers = (homeState) => {
   const handleDeleteInCarInst = async (primaryKey) => {
     homeState.uiModifiersObject.setIsLoading(true);
 
-    const result = await deleteOneInCarInstructorUC(primaryKey);
-
-    if (result.status == Results.SUCCESS) {
+    try {
+      await deleteOneInCarInstructorUC(primaryKey);
       homeState.messageObject.setMessage("SUCCESS - Successfully delete in car instructor");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
       handleGetInCarInstructors();
-    } else {
+    } catch (e) {
       homeState.messageObject.setMessage("ERROR - Failed to delete in car instructor");
       homeState.messageObject.setMessageColor(AlertVariants.DANGER);
       homeState.messageObject.setShowMessage(true);
@@ -199,14 +204,13 @@ const useHomeScreenButtonHandlers = (homeState) => {
   const handleDeleteInClassInst = async (primaryKey) => {
     homeState.uiModifiersObject.setIsLoading(true);
 
-    const result = await deleteOneInClassInstructorUC(primaryKey);
-
-    if (result.status == Results.SUCCESS) {
+    try {
+      await deleteOneInClassInstructorUC(primaryKey);
       homeState.messageObject.setMessage("SUCCESS - Successfully delete in class instructor");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
       handleGetInClassInstructors();
-    } else {
+    } catch (e) {
       homeState.messageObject.setMessage("ERROR - Failed to delete in class instructor");
       homeState.messageObject.setMessageColor(AlertVariants.DANGER);
       homeState.messageObject.setShowMessage(true);
