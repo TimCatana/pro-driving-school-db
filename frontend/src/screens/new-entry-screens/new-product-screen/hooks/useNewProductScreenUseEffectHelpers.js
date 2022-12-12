@@ -26,9 +26,9 @@ const useNewProductScreenUseEffectHelpers = (productState) => {
    *
    */
   const handleGetSpecificProduct = async () => {
-    const result = await getOneProductUC(productState.primary_key);
+    try {
+      const result = await getOneProductUC(productState.primary_key);
 
-    if (result.status == Results.SUCCESS) {
       productState.productObject.setProductId(result.data[0][productTableHeadings.productId]);
       productState.productObject.setIsProductIdError(false);
 
@@ -39,7 +39,7 @@ const useNewProductScreenUseEffectHelpers = (productState) => {
       productState.productObject.setIsProductPriceError(false);
 
       productState.uiModifiersObject.setFailedToGetData(false);
-    } else {
+    } catch (e) {
       productState.uiModifiersObject.setFailedToGetData(true);
     }
   };

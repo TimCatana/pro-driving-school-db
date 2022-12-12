@@ -58,6 +58,7 @@ CREATE TABLE `pdsdb`.`students` (
 `address` VARCHAR(150) NOT NULL,
 `address_apt_num` VARCHAR(20) NULL,
 `address_city` VARCHAR(150) NOT NULL,
+`address_state` VARCHAR(10) NOT NULL,
 `address_postal_code` VARCHAR(20) NOT NULL,
 `cell_phone_number` VARCHAR(20) NOT NULL,
 `home_phone_number` VARCHAR(20) NOT NULL,

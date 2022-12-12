@@ -1,19 +1,52 @@
 const fillCourseEnrollmentPdf = require("./utils/pdf/fillCourseEnrollmentPdf");
+const makeDb = require("../../util/makeDb");
+const open = require("open");
+const { studentTableHeadings, courseTableHeadings } = require("../../constants/dbConstants");
+const fs = require("fs");
 /**
  *
  * @param {*} req
  * @param {*} res
  */
 const getFilledCourseEnrollmentPdf = async (req, res) => {
-  // get student data from database
+  const courseSql = `
+    SELECT 
+      *   
+    FROM 
+      ${courseTableHeadings.tableName}  
+    WHERE 
+      ${studentTableHeadings.id} = ?;`;
 
-  // pass student data to functions below
-  await fillCourseEnrollmentPdf();
+  const studentSql = `
+      SELECT 
+        *   
+      FROM 
+        ${studentTableHeadings.tableName}  
+      WHERE 
+        ${studentTableHeadings.registeredCourse} = ?;`;
 
-  // if error, need to do something (try catch individually, if one fails, the other can work)
+  const db = makeDb();
 
-  // send result
-  res.send("");
+  try {
+    const courseResult = await db.query(courseSql, [req.params.primary_key]);
+    const studentResult = await db.query(studentSql, [courseResult[0][courseTableHeadings.courseId]]);
+
+    await fillCourseEnrollmentPdf(studentResult);
+
+    const files = await fs.promises.readdir(`./data/pdf/outputs/course-enrollment-forms`);
+    for (const file of files) {
+      if (file != "README.txt") {
+        await open(`./data/pdf/outputs/course-enrollment-forms/${file}`);
+      }
+    }
+
+    res.sendStatus(200);
+  } catch (e) {
+    console.log(`ERROR - Failed to get course enrollment form pdf -- ${e}`);
+    res.sendStatus(500);
+  } finally {
+    await db.close();
+  }
 };
 
 module.exports = getFilledCourseEnrollmentPdf;

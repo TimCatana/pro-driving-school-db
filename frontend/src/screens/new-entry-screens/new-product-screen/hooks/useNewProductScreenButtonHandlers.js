@@ -14,11 +14,10 @@ const useNewProductScreenButtonHandlers = (productState) => {
       !productState.productObject.isProductNameError &&
       !productState.productObject.isProductPriceError
     ) {
-      const result = await addOneProductUC(productState.productObject);
-
-      if (result.status == Results.SUCCESS) {
+      try {
+        await addOneProductUC(productState.productObject);
         productState.uiModifiersObject.setDataSaved(true);
-      } else {
+      } catch (e) {
         productState.messageObject.setMessage("ERROR - Failed to add product to database");
         productState.messageObject.setMessageColor(AlertVariants.DANGER);
         productState.messageObject.setShowMessage(true);
@@ -38,13 +37,12 @@ const useNewProductScreenButtonHandlers = (productState) => {
       !productState.productObject.isProductNameError &&
       !productState.productObject.isProductPriceError
     ) {
-      const result = await editOneProductUC(productState.productObject, productState.primary_key);
-
-      if (result.status == Results.SUCCESS) {
+      try {
+        await editOneProductUC(productState.productObject, productState.primary_key);
         productState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
         productState.messageObject.setMessageColor(AlertVariants.SUCCESS);
         productState.messageObject.setShowMessage(true);
-      } else {
+      } catch (e) {
         productState.messageObject.setMessage("ERROR - Failed to update item in database");
         productState.messageObject.setMessageColor(AlertVariants.DANGER);
         productState.messageObject.setShowMessage(true);
@@ -86,13 +84,18 @@ const useNewProductScreenButtonHandlers = (productState) => {
    * Updates the subscript to mailing list option.
    */
   const handleDeleteProduct = async () => {
-    const result = await deleteOneProductUC(productState.primary_key);
+    productState.uiModifiersObject.setIsLoading(true);
 
-    if (result.data.status != 200) {
-      console.log("failed to delete item");
-    } else {
-      console.log("successfully deleted item");
+    try {
+      await deleteOneProductUC(productState.primary_key);
+      await handleGoBack();
+    } catch (e) {
+      productState.messageObject.setMessage("ERROR - Failed to delete item");
+      productState.messageObject.setMessageColor(AlertVariants.DANGER);
+      productState.messageObject.setShowMessage(true);
     }
+
+    productState.uiModifiersObject.setIsLoading(false);
   };
 
   const productButtonHandlers = {

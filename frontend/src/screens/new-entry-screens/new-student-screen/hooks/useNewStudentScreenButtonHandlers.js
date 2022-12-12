@@ -16,8 +16,8 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
    */
   const handleAddNewStudentEntry = async () => {
     // console.log(studentState.studentObject)
-
     studentState.uiModifiersObject.setIsLoading(true);
+
     if (
       !studentState.studentObject.isStudentFirstNameError &&
       !studentState.studentObject.isStudentMiddleNameError &&
@@ -36,16 +36,16 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
       !studentState.studentObject.isStudentRegisteredCourseIdError &&
       !studentState.studentObject.isStudentPurchasedProductIdError
     ) {
-      const result = await addOneStudentUC(studentState.studentObject);
-
-      if (result.status == Results.SUCCESS) {
+      try {
+        await addOneStudentUC(studentState.studentObject);
         studentState.uiModifiersObject.setDataSaved(true);
-      } else {
+      } catch (e) {
         studentState.messageObject.setMessage("ERROR - Failed to add student to database");
         studentState.messageObject.setMessageColor(AlertVariants.DANGER);
         studentState.messageObject.setShowMessage(true);
       }
     }
+
     studentState.uiModifiersObject.setIsLoading(false);
   };
 
@@ -53,6 +53,8 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
    * Updates the subscript to mailing list option.
    */
   const handleEditStudentEntry = async () => {
+    studentState.uiModifiersObject.setIsLoading(true);
+
     if (
       !studentState.studentObject.isStudentFirstNameError &&
       !studentState.studentObject.isStudentMiddleNameError &&
@@ -71,20 +73,20 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
       !studentState.studentObject.isStudentRegisteredCourseIdError &&
       !studentState.studentObject.isStudentPurchasedProductIdError
     ) {
-      const result = await editOneStudentUC(studentState.studentObject, studentState.primary_key);
-
-      if (result.status == Results.SUCCESS) {
+      try {
+        await editOneStudentUC(studentState.studentObject, studentState.primary_key);
         studentState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
         studentState.messageObject.setMessageColor(AlertVariants.SUCCESS);
         studentState.messageObject.setShowMessage(true);
-        studentState.uiModifiersObject.setAreFieldsEditable(false);
-      } else {
+      } catch (e) {
         studentState.messageObject.setMessage("ERROR - Failed to update item in database");
         studentState.messageObject.setMessageColor(AlertVariants.DANGER);
         studentState.messageObject.setShowMessage(true);
-        studentState.uiModifiersObject.setAreFieldsEditable(false);
       }
     }
+
+    studentState.uiModifiersObject.setAreFieldsEditable(false);
+    studentState.uiModifiersObject.setIsLoading(false);
   };
 
   /**
@@ -118,52 +120,119 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
    * Updates the subscript to mailing list option.
    */
   const handleDeleteStudent = async () => {
-    const result = await deleteOneStudentUC(studentState.primary_key);
+    studentState.uiModifiersObject.setIsLoading(true);
 
-    if (result.data.status != 200) {
-      console.log("failed to delete item");
-    } else {
-      console.log("successfully deleted item");
+    try {
+      await deleteOneStudentUC(studentState.primary_key);
+      await handleGoBack();
+    } catch (e) {
+      studentState.messageObject.setMessage("ERROR - Failed to delete item");
+      studentState.messageObject.setMessageColor(AlertVariants.DANGER);
+      studentState.messageObject.setShowMessage(true);
     }
+
+    studentState.uiModifiersObject.setIsLoading(false);
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
   const handleGetFilledStudentApplicationFormPdf = async () => {
-    const result = await getFilledStudentApplicationFormPdfUC(studentState.primary_key);
-
-    if (result.status == Results.SUCCESS) {
-      console.log(result);
-    } else {
-      console.log(result);
+    studentState.uiModifiersObject.setIsLoading(true);
+    try {
+      await getFilledStudentApplicationFormPdfUC(studentState.primary_key);
+      studentState.messageObject.setMessage(
+        "SUCCESS - PDF file should be opened as 'student_application_form_output.pdf'"
+      );
+      studentState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+      studentState.messageObject.setShowMessage(true);
+    } catch (e) {
+      studentState.messageObject.setMessage(
+        "ERROR - please close all instances of 'student_application_form_output.pdf'"
+      );
+      studentState.messageObject.setMessageColor(AlertVariants.DANGER);
+      studentState.messageObject.setShowMessage(true);
     }
+    studentState.uiModifiersObject.setIsLoading(false);
   };
   /**
    * Updates the subscript to mailing list option.
    */
   const handleGetFilledStudentInCarEvaluationPdf = async () => {
-    const result = await getFilledStudentInCarEvaluationPdfUC();
+    studentState.uiModifiersObject.setIsLoading(true);
+    try {
+      await getFilledStudentInCarEvaluationPdfUC(studentState.primary_key);
+      studentState.messageObject.setMessage(
+        "SUCCESS - PDF file should be opened as 'student_in_car_evaluation_output.pdf'"
+      );
+      studentState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+      studentState.messageObject.setShowMessage(true);
+    } catch (e) {
+      studentState.messageObject.setMessage(
+        "ERROR - please close all instances of 'student_in_car_evaluation_output.pdf'"
+      );
+      studentState.messageObject.setMessageColor(AlertVariants.DANGER);
+      studentState.messageObject.setShowMessage(true);
+    }
+    studentState.uiModifiersObject.setIsLoading(false);
   };
   /**
    * Updates the subscript to mailing list option.
    */
   const handleGetFilledStudentInCarRecordPdf = async () => {
-    const result = await getFilledStudentInCarRecordPdfUC();
+    studentState.uiModifiersObject.setIsLoading(true);
+    try {
+      await getFilledStudentInCarRecordPdfUC(studentState.primary_key);
+      studentState.messageObject.setMessage(
+        "SUCCESS - PDF file should be opened as 'student_in_car_record_output.pdf'"
+      );
+      studentState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+      studentState.messageObject.setShowMessage(true);
+    } catch (e) {
+      studentState.messageObject.setMessage("ERROR - please close all instances of 'student_in_car_record_output.pdf'");
+      studentState.messageObject.setMessageColor(AlertVariants.DANGER);
+      studentState.messageObject.setShowMessage(true);
+    }
+    studentState.uiModifiersObject.setIsLoading(false);
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
   const handleGetFilledStudentInvoicePdfUC = async () => {
-    const result = await getFilledStudentInvoicePdfUC();
+    studentState.uiModifiersObject.setIsLoading(true);
+    try {
+      await getFilledStudentInvoicePdfUC(studentState.primary_key);
+      studentState.messageObject.setMessage(
+        "SUCCESS - PDF file should be opened as 'student_invoice_output.pdf'"
+      );
+      studentState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+      studentState.messageObject.setShowMessage(true);
+    } catch (e) {
+      studentState.messageObject.setMessage("ERROR - please close all instances of 'student_invoice_output.pdf'");
+      studentState.messageObject.setMessageColor(AlertVariants.DANGER);
+      studentState.messageObject.setShowMessage(true);
+    }
+    studentState.uiModifiersObject.setIsLoading(false);
+
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
   const handleGetFilledStudentRecordPdf = async () => {
-    const result = await getFilledStudentRecordPdfUC();
+    studentState.uiModifiersObject.setIsLoading(true);
+    try {
+      await getFilledStudentRecordPdfUC(studentState.primary_key);
+      studentState.messageObject.setMessage("SUCCESS - PDF file should be opened as 'student_record_output.pdf'");
+      studentState.messageObject.setMessageColor(AlertVariants.SUCCESS);
+      studentState.messageObject.setShowMessage(true);
+    } catch (e) {
+      studentState.messageObject.setMessage("ERROR - please close all instances of 'student_record_output.pdf'");
+      studentState.messageObject.setMessageColor(AlertVariants.DANGER);
+      studentState.messageObject.setShowMessage(true);
+    }
+    studentState.uiModifiersObject.setIsLoading(false);
   };
 
   const studentButtonHandlers = {

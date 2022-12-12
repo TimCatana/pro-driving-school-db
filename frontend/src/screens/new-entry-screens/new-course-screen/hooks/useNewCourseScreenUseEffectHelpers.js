@@ -1,4 +1,5 @@
 import axios from "axios";
+import AlertVariants from "../../../../domain/constants/AlertVariants";
 import { courseTableHeadings } from "../../../../domain/constants/dbConstants";
 import { getOneCourseUC } from "../../../../domain/db";
 import getAllInClassInstructorsUC from "../../../../domain/db/getAll/getAllInClassInstructorsUC";
@@ -28,11 +29,10 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
    * Updates the subscript to mailing list option.
    */
   const handleGetInClassInstructors = async () => {
-    const result = await getAllInClassInstructorsUC();
-
-    if (result.status == 200) {
+    try {
+      const result = await getAllInClassInstructorsUC();
       courseState.dropdownMenuOptionsObject.setInClassInstructors(result.data);
-    } else {
+    } catch (e) {
       courseState.dropdownMenuOptionsObject.setInClassInstructors([]);
       courseState.dropdownMenuOptionsObject.setFailedToGetInClassInstructors(true);
     }
@@ -42,9 +42,9 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
    * Updates the subscript to mailing list option.
    */
   const handleGetSpecificCourse = async () => {
-    const result = await getOneCourseUC(courseState.primary_key);
+    try {
+      const result = await getOneCourseUC(courseState.primary_key);
 
-    if (result.status == 200) {
       courseState.courseObject.setCourseId(result.data[0][courseTableHeadings.courseId]);
       courseState.courseObject.setIsCourseIdError(false);
 
@@ -64,8 +64,11 @@ const useNewCourseScreenUseEffectHelpers = (courseState) => {
       courseState.courseObject.setIsCourseInClassInstructorError(false);
 
       courseState.uiModifiersObject.setFailedToGetData(false);
-    } else {
+    } catch (e) {
       courseState.uiModifiersObject.setFailedToGetData(true);
+      courseState.messageObject.setMessage("ERROR - Failed to get item");
+      courseState.messageObject.setMessageColor(AlertVariants.DANGER);
+      courseState.messageObject.setShowMessage(true);
     }
   };
 

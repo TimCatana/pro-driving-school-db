@@ -1,19 +1,30 @@
 const { PDFDocument } = require("pdf-lib");
 const { readFile, writeFile } = require("fs/promises");
+const { studentTableHeadings, inClassInstTableHeadings } = require("../../../../constants/dbConstants");
 
-const fillStudentRecordPdf = async () => {
-  const pdfDoc = await PDFDocument.load(
-    await readFile("./data/pdf/inputs/student_record.pdf")
-  );
+const fillStudentRecordPdf = async (studentObject, inClassInstObject) => {
+  const pdfDoc = await PDFDocument.load(await readFile("./data/pdf/inputs/student_record.pdf"));
   const pdfForm = pdfDoc.getForm();
 
-  pdfForm.getTextField("Student_Name").setText("Tim Catana");
-  pdfForm.getTextField("Student_Drivers_License_Num").setText("abc-123-456");
-  pdfForm.getTextField("Student_Address").setText("243 Red Clover Court");
-  pdfForm.getTextField("Student_Cell_Num").setText("2268087962");
-  pdfForm.getTextField("Instructor_Name").setText("Joe Biden");
-  pdfForm.getTextField("Instructor_Permit_Num").setText("fsdd-sdfsf-wfse-");
-  pdfForm.getTextField("Instructor_Permit_Exp_Date").setText("2023/01/12");
+  pdfForm
+    .getTextField("Student_Name")
+    .setText(
+      `${studentObject[studentTableHeadings.firstName]} ${studentObject[studentTableHeadings.middleName]} ${
+        studentObject[studentTableHeadings.lastName]
+      }`
+    );
+  pdfForm.getTextField("Student_Drivers_License_Num").setText(studentObject[studentTableHeadings.driversLicenseId]);
+  pdfForm.getTextField("Student_Address").setText(studentObject[studentTableHeadings.address]);
+  pdfForm.getTextField("Student_Cell_Num").setText(studentObject[studentTableHeadings.cellPhoneNumber]);
+  pdfForm
+    .getTextField("Instructor_Name")
+    .setText(
+      `${inClassInstObject[inClassInstTableHeadings.firstName]} ${inClassInstObject[inClassInstTableHeadings.lastName]}`
+    );
+  pdfForm.getTextField("Instructor_Permit_Num").setText(inClassInstObject[inClassInstTableHeadings.driversLicenseId]);
+  pdfForm
+    .getTextField("Instructor_Permit_Exp_Date")
+    .setText(inClassInstObject[inClassInstTableHeadings.driversLicenseExpDate]);
 
   // const pdfFields = pdfDoc
   //   .getForm()

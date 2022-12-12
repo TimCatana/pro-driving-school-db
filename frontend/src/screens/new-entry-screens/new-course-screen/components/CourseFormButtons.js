@@ -54,7 +54,7 @@ const CourseFormButtons = (props) => {
         </>
       )}
 
-      {!courseState.uiModifiersObject.isNewEntry && (
+      {!courseState.uiModifiersObject.isNewEntry && !courseState.uiModifiersObject.areFieldsEditable && (
         <Button
           disabled={courseState.uiModifiersObject.isLoading}
           backgroundColor="blue"

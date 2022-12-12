@@ -1,4 +1,7 @@
+const { studentTableHeadings, courseTableHeadings, inClassInstTableHeadings } = require("../../constants/dbConstants");
 const fillStudentRecordPdf = require("./utils/pdf/fillStudentRecordPdf");
+const makeDb = require("../../util/makeDb");
+const open = require("open");
 
 /**
  *
@@ -6,15 +9,48 @@ const fillStudentRecordPdf = require("./utils/pdf/fillStudentRecordPdf");
  * @param {*} res
  */
 const getFilledStudentRecordPdf = async (req, res) => {
-  // get student data from database
+  const studentSql = `
+    SELECT 
+      * 
+    FROM 
+      ${studentTableHeadings.tableName}  
+    WHERE 
+      ${studentTableHeadings.id} = ?;`;
 
-  // pass student data to functions below
-  await fillStudentRecordPdf();
+  const courseSql = `
+    SELECT 
+      * 
+    FROM 
+      ${courseTableHeadings.tableName}  
+    WHERE 
+      ${courseTableHeadings.courseId} = ?;`;
 
-  // if error, need to do something (try catch individually, if one fails, the other can work)
+  const inClassInstSql = `
+    SELECT 
+      * 
+    FROM 
+      ${inClassInstTableHeadings.tableName}  
+    WHERE 
+      ${inClassInstTableHeadings.id} = ?;`;
 
-  // send result
-  res.send("");
+  const db = makeDb();
+
+  try {
+    const studentResult = await db.query(studentSql, [req.params.primary_key]);
+    const courseResult = await db.query(courseSql, [studentResult[0][studentTableHeadings.registeredCourse]]);
+    const inClassInstResult = await db.query(inClassInstSql, [
+      courseResult[0][courseTableHeadings.inClassInstructorId],
+    ]);
+   
+    await fillStudentRecordPdf(studentResult[0], inClassInstResult[0]);
+    await open(`./data/pdf/outputs/student_record_output.pdf`);
+    res.sendStatus(200);
+  } catch (e) {
+    console.log(`ERROR - Failed to get student record in form pdf -- ${e}`);
+    res.sendStatus(400);
+  } finally {
+    await db.close();
+  }
 };
 
 module.exports = getFilledStudentRecordPdf;

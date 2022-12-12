@@ -18,11 +18,10 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
       !inCarInstructorState.inCarInstructorObject.isGDriversLicenseIdError &&
       !inCarInstructorState.inCarInstructorObject.isGDriversLicenseExpDateError
     ) {
-      const result = await addOneInCarInstructorUC(inCarInstructorState.inCarInstructorObject);
-
-      if (result.status == Results.SUCCESS) {
+      try {
+        await addOneInCarInstructorUC(inCarInstructorState.inCarInstructorObject);
         inCarInstructorState.uiModifiersObject.setDataSaved(true);
-      } else {
+      } catch (e) {
         inCarInstructorState.messageObject.setMessage("ERROR - Failed to add in car instructor to database");
         inCarInstructorState.messageObject.setMessageColor(AlertVariants.DANGER);
         inCarInstructorState.messageObject.setShowMessage(true);
@@ -46,16 +45,12 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
       !inCarInstructorState.inCarInstructorObject.isGDriversLicenseIdError &&
       !inCarInstructorState.inCarInstructorObject.isGDriversLicenseExpDateError
     ) {
-      const result = await editOneInCarInstructorUC(
-        inCarInstructorState.inCarInstructorObject,
-        inCarInstructorState.primary_key
-      );
-
-      if (result.status == Results.SUCCESS) {
+      try {
+        await editOneInCarInstructorUC(inCarInstructorState.inCarInstructorObject, inCarInstructorState.primary_key);
         inCarInstructorState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
         inCarInstructorState.messageObject.setMessageColor(AlertVariants.SUCCESS);
         inCarInstructorState.messageObject.setShowMessage(true);
-      } else {
+      } catch (e) {
         inCarInstructorState.messageObject.setMessage("ERROR - Failed to update item in database");
         inCarInstructorState.messageObject.setMessageColor(AlertVariants.DANGER);
         inCarInstructorState.messageObject.setShowMessage(true);
@@ -97,13 +92,18 @@ const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {
    * Updates the subscript to mailing list option.
    */
   const handleDeleteInCarInstructor = async () => {
-    const result = await deleteOneInCarInstructorUC(inCarInstructorState.primary_key);
+    inCarInstructorState.uiModifiersObject.setIsLoading(true);
 
-    if (result.data.status != 200) {
-      console.log("failed to delete item");
-    } else {
-      console.log("successfully deleted item");
+    try {
+      await deleteOneInCarInstructorUC(inCarInstructorState.primary_key);
+      await handleGoBack();
+    } catch (e) {
+      inCarInstructorState.messageObject.setMessage("ERROR - Failed to delete item");
+      inCarInstructorState.messageObject.setMessageColor(AlertVariants.DANGER);
+      inCarInstructorState.messageObject.setShowMessage(true);
     }
+
+    inCarInstructorState.uiModifiersObject.setIsLoading(false);
   };
 
   const inCarInstructorButtonHandlers = {

@@ -19,11 +19,10 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
       !courseState.courseObject.isCourseIsDigitalError &&
       !courseState.courseObject.isCourseInClassInstructorError
     ) {
-      const result = await addOneCourseUC(courseState.courseObject);
-
-      if (result.status == Results.SUCCESS) {
+      try {
+        await addOneCourseUC(courseState.courseObject);
         courseState.uiModifiersObject.setDataSaved(true);
-      } else {
+      } catch (e) {
         courseState.messageObject.setMessage("ERROR - Failed to add course to database");
         courseState.messageObject.setMessageColor(AlertVariants.DANGER);
         courseState.messageObject.setShowMessage(true);
@@ -37,6 +36,7 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
    */
   const handleEditCourseEntry = async () => {
     courseState.uiModifiersObject.setIsLoading(true);
+
     if (
       !courseState.courseObject.isCourseIdError &&
       !courseState.courseObject.isCourseCapacityError &&
@@ -45,13 +45,12 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
       !courseState.courseObject.isCourseIsDigitalError &&
       !courseState.courseObject.isCourseInClassInstructorError
     ) {
-      const result = await editOneCourseUC(courseState.courseObject, courseState.primary_key);
-
-      if (result.status == Results.SUCCESS) {
+      try {
+        await editOneCourseUC(courseState.courseObject, courseState.primary_key);
         courseState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
         courseState.messageObject.setMessageColor(AlertVariants.SUCCESS);
         courseState.messageObject.setShowMessage(true);
-      } else {
+      } catch (e) {
         courseState.messageObject.setMessage("ERROR - Failed to update item in database");
         courseState.messageObject.setMessageColor(AlertVariants.DANGER);
         courseState.messageObject.setShowMessage(true);
@@ -93,16 +92,29 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
    *
    */
   const handleDeleteCourse = async () => {
-    courseState.setIsLoading(true);
-    await deleteOneCourseUC(courseState.primary_key);
-    courseState.setIsLoading(false);
+    courseState.uiModifiersObject.setIsLoading(true);
+
+    try {
+      await deleteOneCourseUC(courseState.primary_key);
+      await handleGoBack();
+    } catch (e) {
+      courseState.messageObject.setMessage("ERROR - Failed to delete item");
+      courseState.messageObject.setMessageColor(AlertVariants.DANGER);
+      courseState.messageObject.setShowMessage(true);
+    }
+
+    courseState.uiModifiersObject.setIsLoading(false);
   };
 
   /**
    * Updates the subscript to mailing list option.
    */
   const handleGetFilledCoursePdf = async () => {
-    const result = await getFilledCourseEnrollmentPdfUC(courseState.primary_key);
+    try {
+      await getFilledCourseEnrollmentPdfUC(courseState.primary_key);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const courseButtonHandlers = {

@@ -25,17 +25,12 @@ const useNewInClassInstructorScreenUseEffectHelpers = (inClassInstructorState) =
    * Updates the subscript to mailing list option.
    */
   const handleGetSpecificInClassInst = async () => {
-    const result = await getOneInClassInstructorUC(inClassInstructorState.primary_key);
-
-    if (result.status == 200) {
-      inClassInstructorState.inClassInstructorObject.setFirstName(
-        result.data[0][inClassInstTableHeadings.firstName]
-      );
+    try {
+      const result = await getOneInClassInstructorUC(inClassInstructorState.primary_key);
+      inClassInstructorState.inClassInstructorObject.setFirstName(result.data[0][inClassInstTableHeadings.firstName]);
       inClassInstructorState.inClassInstructorObject.setIsFirstNameError(false);
 
-      inClassInstructorState.inClassInstructorObject.setLastName(
-        result.data[0][inClassInstTableHeadings.lastName]
-      );
+      inClassInstructorState.inClassInstructorObject.setLastName(result.data[0][inClassInstTableHeadings.lastName]);
       inClassInstructorState.inClassInstructorObject.setIsLastNameError(false);
 
       inClassInstructorState.inClassInstructorObject.setDriversLicenseId(
@@ -49,7 +44,7 @@ const useNewInClassInstructorScreenUseEffectHelpers = (inClassInstructorState) =
       inClassInstructorState.inClassInstructorObject.setIsDriversLicenseExpDateError(false);
 
       inClassInstructorState.uiModifiersObject.setFailedToGetData(false);
-    } else {
+    } catch (e) {
       inClassInstructorState.uiModifiersObject.setFailedToGetData(true);
     }
   };

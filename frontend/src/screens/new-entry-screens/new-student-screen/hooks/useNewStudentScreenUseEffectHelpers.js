@@ -1,3 +1,4 @@
+import AlertVariants from "../../../../domain/constants/AlertVariants";
 import { studentTableHeadings } from "../../../../domain/constants/dbConstants";
 import { getAllCoursesUC, getAllProductsUC, getOneStudentUC } from "../../../../domain/db";
 
@@ -23,9 +24,9 @@ const useNewStudentScreenUseEffectHelpers = (studentState) => {
    * Updates the subscript to mailing list option.
    */
   const handleGetSpecificStudent = async () => {
-    const result = await getOneStudentUC(studentState.primary_key);
+    try {
+      const result = await getOneStudentUC(studentState.primary_key);
 
-    if (result.status == 200) {
       studentState.studentObject.setStudentFirstName(result.data[0][studentTableHeadings.firstName]);
       studentState.studentObject.setIsStudentFirstNameError(false);
 
@@ -47,20 +48,16 @@ const useNewStudentScreenUseEffectHelpers = (studentState) => {
       studentState.studentObject.setStudentAddress(result.data[0][studentTableHeadings.address]);
       studentState.studentObject.setIsStudentAddressError(false);
 
-      studentState.studentObject.setStudentAddressApartmentNumber(
-        result.data[0][studentTableHeadings.addressAptNum]
-      );
+      studentState.studentObject.setStudentAddressApartmentNumber(result.data[0][studentTableHeadings.addressAptNum]);
       studentState.studentObject.setIsStudentAddressApartmentNumberError(false);
 
       studentState.studentObject.setStudentAddressCity(result.data[0][studentTableHeadings.addressCity]);
       studentState.studentObject.setIsStudentAddressCityError(false);
-      
+
       studentState.studentObject.setStudentAddressState(result.data[0][studentTableHeadings.addressState]);
       studentState.studentObject.setIsStudentAddressStateError(false);
 
-      studentState.studentObject.setStudentAddressPostalCode(
-        result.data[0][studentTableHeadings.addressPostalCode]
-      );
+      studentState.studentObject.setStudentAddressPostalCode(result.data[0][studentTableHeadings.addressPostalCode]);
       studentState.studentObject.setIsStudentAddressPostalCodeError(false);
 
       studentState.studentObject.setStudentCellPhoneNumber(result.data[0][studentTableHeadings.cellPhoneNumber]);
@@ -69,9 +66,7 @@ const useNewStudentScreenUseEffectHelpers = (studentState) => {
       studentState.studentObject.setStudentHomePhoneNumber(result.data[0][studentTableHeadings.homePhoneNumber]);
       studentState.studentObject.setIsStudentHomePhoneNumberError(false);
 
-      studentState.studentObject.setStudentDriversLicenseId(
-        result.data[0][studentTableHeadings.driversLicenseId]
-      );
+      studentState.studentObject.setStudentDriversLicenseId(result.data[0][studentTableHeadings.driversLicenseId]);
       studentState.studentObject.setIsStudentDriversLicenseNumberId(false);
 
       studentState.studentObject.setStudentDriversLicenseClass(
@@ -89,19 +84,18 @@ const useNewStudentScreenUseEffectHelpers = (studentState) => {
       );
       studentState.studentObject.setIsStudentDriversLicenseExpDateError(false);
 
-      studentState.studentObject.setStudentRegisteredCourseId(
-        result.data[0][studentTableHeadings.registeredCourse]
-      );
+      studentState.studentObject.setStudentRegisteredCourseId(result.data[0][studentTableHeadings.registeredCourse]);
       studentState.studentObject.setIsStudentRegisteredCourseIdError(false);
 
-      studentState.studentObject.setStudentPurchasedProductId(
-        result.data[0][studentTableHeadings.purchasedProduct]
-      );
+      studentState.studentObject.setStudentPurchasedProductId(result.data[0][studentTableHeadings.purchasedProduct]);
       studentState.studentObject.setIsStudentPurchasedProductIdError(false);
 
       studentState.uiModifiersObject.setFailedToGetData(false);
-    } else {
+    } catch (e) {
       studentState.uiModifiersObject.setFailedToGetData(true);
+      studentState.messageObject.setMessage("ERROR - Failed to get item");
+      studentState.messageObject.setMessageColor(AlertVariants.DANGER);
+      studentState.messageObject.setShowMessage(true);
     }
   };
 
@@ -109,11 +103,10 @@ const useNewStudentScreenUseEffectHelpers = (studentState) => {
    * Updates the subscript to mailing list option.
    */
   const _handleGetCourses = async () => {
-    const result = await getAllCoursesUC();
-
-    if (result.status == 200) {
+    try {
+      const result = await getAllCoursesUC();
       studentState.dropdownMenuOptionsObject.setCourses(result.data);
-    } else {
+    } catch (e) {
       studentState.dropdownMenuOptionsObject.setCourses([]);
       studentState.dropdownMenuOptionsObject.setFailedToGetCourses(true);
     }
@@ -123,11 +116,10 @@ const useNewStudentScreenUseEffectHelpers = (studentState) => {
    * Updates the subscript to mailing list option.
    */
   const _handleGetProducts = async () => {
-    const result = await getAllProductsUC();
-
-    if (result.status == 200) {
+    try {
+      const result = await getAllProductsUC();
       studentState.dropdownMenuOptionsObject.setProducts(result.data);
-    } else {
+    } catch (e) {
       studentState.dropdownMenuOptionsObject.setProducts([]);
       studentState.dropdownMenuOptionsObject.setFailedToGetProducts(true);
     }

@@ -1,20 +1,34 @@
+const { studentTableHeadings } = require("../../constants/dbConstants");
 const fillStudentInCarEvaluationPdf = require("./utils/pdf/fillStudentInCarEvaluationPdf");
-
+const makeDb = require("../../util/makeDb");
+const open = require("open");
 /**
  *
  * @param {*} req
  * @param {*} res
  */
 const getFilledStudentInCarEvaluationPdf = async (req, res) => {
-  // get student data from database
+  const sql = `
+  SELECT 
+    * 
+  FROM 
+    ${studentTableHeadings.tableName}  
+  WHERE 
+    ${studentTableHeadings.id} = ?;`;
 
-  // pass student data to functions below
-  await fillStudentInCarEvaluationPdf();
+  const db = makeDb();
 
-  // if error, need to do something (try catch individually, if one fails, the other can work)
-
-  // send result
-  res.send("");
+  try {
+    const result = await db.query(sql, [req.params.primary_key]);
+    await fillStudentInCarEvaluationPdf(result[0]);
+    await open(`./data/pdf/outputs/student_in_car_evaluation_output.pdf`);
+    res.sendStatus(200);
+  } catch (e) {
+    console.log(`ERROR - Failed to get student in car evaluation form pdf -- ${e}`);
+    res.sendStatus(400);
+  } finally {
+    await db.close();
+  }
 };
 
 module.exports = getFilledStudentInCarEvaluationPdf;

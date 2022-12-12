@@ -1,29 +1,33 @@
 const { PDFDocument } = require("pdf-lib");
 const { readFile, writeFile } = require("fs/promises");
+const { studentTableHeadings, productTableHeadings } = require("../../../../constants/dbConstants");
 
-const fillStudentInCarRecordPdf = async () => {
-  const pdfDoc = await PDFDocument.load(
-    await readFile("./data/pdf/inputs/student_in_car_record.pdf")
-  );
+const fillStudentInCarRecordPdf = async (studentObject, productObject) => {
+  const pdfDoc = await PDFDocument.load(await readFile("./data/pdf/inputs/student_in_car_record.pdf"));
   const pdfForm = pdfDoc.getForm();
 
-  pdfForm.getTextField("Student_Name").setText("Tim Catana");
-  pdfForm.getTextField("Student_Address").setText("243 Red Clover Crt");
-  pdfForm.getTextField("Student_Day_Time_Phone_Num").setText("2268087962");
-  pdfForm.getTextField("Student_Evening_Time_Phone_Num").setText("2268087962");
-  pdfForm.getTextField("Student_Evening_Time_Phone_Num").setText("2268087962");
-  pdfForm.getTextField("Student_Balance").setText("95.00");
-  pdfForm.getTextField("Student_Course").setText("1001");
-  pdfForm.getTextField("Student_Date_Of_Birth").setText("2001-11-11");
+  console.log("aaaaaaaaaaaaa");
+
   pdfForm
-    .getTextField("Student_Drivers_License_Num")
-    .setText("dsfdf-fw3f-sfw3f3fw-fw3ff");
+    .getTextField("Student_Name")
+    .setText(
+      `${studentObject[studentTableHeadings.firstName]} ${studentObject[studentTableHeadings.middleName]} ${
+        studentObject[studentTableHeadings.lastName]
+      }`
+    );
+  pdfForm.getTextField("Student_Address").setText(studentObject[studentTableHeadings.address]);
+  pdfForm.getTextField("Student_Day_Time_Phone_Num").setText(studentObject[studentTableHeadings.cellPhoneNumber]);
+  pdfForm.getTextField("Student_Evening_Time_Phone_Num").setText(studentObject[studentTableHeadings.cellPhoneNumber]);
+  // pdfForm.getTextField("Student_Balance").setText(`${productObject[productTableHeadings.price]}`);
+  pdfForm.getTextField("Student_Course").setText(`${studentObject[studentTableHeadings.registeredCourse]}`);
+  pdfForm.getTextField("Student_Date_Of_Birth").setText(studentObject[studentTableHeadings.dateOfBirth]);
+  pdfForm.getTextField("Student_Drivers_License_Num").setText(studentObject[studentTableHeadings.driversLicenseId]);
   pdfForm
     .getTextField("Student_Drivers_License_Issued_Date")
-    .setText("2001-11-11");
+    .setText(studentObject[studentTableHeadings.driversLicenseIssuedDate]);
   pdfForm
     .getTextField("Student_Drivers_License_Exp_Date")
-    .setText("2001-11-11");
+    .setText(studentObject[studentTableHeadings.driversLicenseExpDate]);
 
   // const pdfFields = pdfDoc
   //   .getForm()

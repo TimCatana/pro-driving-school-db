@@ -23,11 +23,10 @@ const useNewInClassInstructorScreenButtonHandlers = (inClassInstructorState) => 
       !inClassInstructorState.inClassInstructorObject.isDriversLicenseIdError &&
       !inClassInstructorState.inClassInstructorObject.isDriversLicenseExpDateError
     ) {
-      const result = await addOneInClassInstructorUC(inClassInstructorState.inClassInstructorObject);
-
-      if (result.status == Results.SUCCESS) {
+      try {
+        await addOneInClassInstructorUC(inClassInstructorState.inClassInstructorObject);
         inClassInstructorState.uiModifiersObject.setDataSaved(true);
-      } else {
+      } catch (e) {
         inClassInstructorState.messageObject.setMessage("ERROR - Failed to add in class instructor to database");
         inClassInstructorState.messageObject.setMessageColor(AlertVariants.DANGER);
         inClassInstructorState.messageObject.setShowMessage(true);
@@ -49,16 +48,15 @@ const useNewInClassInstructorScreenButtonHandlers = (inClassInstructorState) => 
       !inClassInstructorState.inClassInstructorObject.isDriversLicenseIdError &&
       !inClassInstructorState.inClassInstructorObject.isDriversLicenseExpDateError
     ) {
-      const result = await editOneInClassInstructorUC(
-        inClassInstructorState.inClassInstructorObject,
-        inClassInstructorState.primary_key
-      );
-
-      if (result.status == Results.SUCCESS) {
+      try {
+        await editOneInClassInstructorUC(
+          inClassInstructorState.inClassInstructorObject,
+          inClassInstructorState.primary_key
+        );
         inClassInstructorState.messageObject.setMessage("SUCCESS - Successfully updated item in database");
         inClassInstructorState.messageObject.setMessageColor(AlertVariants.SUCCESS);
         inClassInstructorState.messageObject.setShowMessage(true);
-      } else {
+      } catch (e) {
         inClassInstructorState.messageObject.setMessage("ERROR - Failed to update item in database");
         inClassInstructorState.messageObject.setMessageColor(AlertVariants.DANGER);
         inClassInstructorState.messageObject.setShowMessage(true);
@@ -100,13 +98,18 @@ const useNewInClassInstructorScreenButtonHandlers = (inClassInstructorState) => 
    * Updates the subscript to mailing list option.
    */
   const handleDeleteInClassInst = async () => {
-    const result = deleteOneInClassInstructorUC;
+    inClassInstructorState.uiModifiersObject.setIsLoading(true);
 
-    if (result.data.status != 200) {
-      console.log("failed to delete item");
-    } else {
-      console.log("successfully deleted item");
+    try {
+      await deleteOneInClassInstructorUC();
+      await handleGoBack();
+    } catch (e) {
+      inClassInstructorState.messageObject.setMessage("ERROR - Failed to delete item");
+      inClassInstructorState.messageObject.setMessageColor(AlertVariants.DANGER);
+      inClassInstructorState.messageObject.setShowMessage(true);
     }
+
+    inClassInstructorState.uiModifiersObject.setIsLoading(false);
   };
 
   const inClassInstructorButtonHandlers = {

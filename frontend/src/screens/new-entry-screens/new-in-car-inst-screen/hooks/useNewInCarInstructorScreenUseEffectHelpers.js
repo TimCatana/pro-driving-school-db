@@ -25,9 +25,9 @@ const useNewInCarInstructorScreenUseEffectHelpers = (inCarInstructorState) => {
    * Updates the subscript to mailing list option.
    */
   const handleGetSpecificInCarInstructor = async () => {
-    const result = await getOneInCarInstructorUC(inCarInstructorState.primary_key);
+    try {
+      const result = await getOneInCarInstructorUC(inCarInstructorState.primary_key);
 
-    if (result.status == 200) {
       inCarInstructorState.inCarInstructorObject.setFirstName(result.data[0][inCarInstTableHeadings.firstName]);
       inCarInstructorState.inCarInstructorObject.setIsFirstNameError(false);
 
@@ -55,7 +55,7 @@ const useNewInCarInstructorScreenUseEffectHelpers = (inCarInstructorState) => {
       inCarInstructorState.inCarInstructorObject.setIsGDriversLicenseExpDateError(false);
 
       inCarInstructorState.uiModifiersObject.setFailedToGetData(false);
-    } else {
+    } catch (e) {
       inCarInstructorState.uiModifiersObject.setFailedToGetData(true);
     }
   };
