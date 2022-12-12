@@ -6,9 +6,11 @@
   "scripts": {
     "backend": "cd backend && yarn run start",
     "frontend": "cd frontend && yarn run start",
+    "frontend:electron": "cd frontend && yarn run electron:serve",
     "devBackend": "cd backend && yarn run devStart",
     "start": "concurrently \"yarn run frontend\" \"yarn run backend\"",
-    "devStart": "concurrently \"yarn run frontend\" \"yarn run devBackend\""
+    "devStart": "concurrently \"yarn run frontend\" \"yarn run devBackend\"",
+    "electron-start": "concurrently \"yarn run frontend:electron\" \"yarn run backend\""
   },
   "dependencies": {
     "concurrently": "^7.5.0"

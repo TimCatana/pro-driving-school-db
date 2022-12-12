@@ -7,7 +7,6 @@ import {
   getFilledStudentInCarRecordPdfUC,
   getFilledStudentInvoicePdfUC,
   getFilledStudentRecordPdfUC,
-  F,
 } from "../../../../domain/pdf";
 
 const useNewStudentScreenButtonHandlers = (studentState) => {
