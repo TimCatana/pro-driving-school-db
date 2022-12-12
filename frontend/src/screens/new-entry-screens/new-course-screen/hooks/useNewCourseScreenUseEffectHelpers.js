@@ -1,4 +1,3 @@
-import axios from "axios";
 import AlertVariants from "../../../../domain/constants/AlertVariants";
 import { courseTableHeadings } from "../../../../domain/constants/dbConstants";
 import { getOneCourseUC } from "../../../../domain/db";

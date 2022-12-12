@@ -1,5 +1,4 @@
 import AlertVariants from "../../../../domain/constants/AlertVariants";
-import { Results } from "../../../../domain/constants/Results";
 import {
   deleteOneCourseUC,
   deleteOneInCarInstructorUC,
@@ -28,10 +27,10 @@ const useHomeScreenButtonHandlers = (homeState) => {
     try {
       const result = await getAllCoursesUC();
       homeState.uiModifiersObject.setDisplayData(result.data);
-      homeState.uiModifiersObject.setFailedToGetData(true);
+      homeState.uiModifiersObject.setFailedToGetData(false);
     } catch (e) {
       homeState.uiModifiersObject.setDisplayData([]);
-      homeState.uiModifiersObject.setFailedToGetData(false);
+      homeState.uiModifiersObject.setFailedToGetData(true);
     }
 
     homeState.uiModifiersObject.setIsLoading(false);
@@ -47,10 +46,10 @@ const useHomeScreenButtonHandlers = (homeState) => {
     try {
       const result = await getAllProductsUC();
       homeState.uiModifiersObject.setDisplayData(result.data);
-      homeState.uiModifiersObject.setFailedToGetData(true);
+      homeState.uiModifiersObject.setFailedToGetData(false);
     } catch (e) {
       homeState.uiModifiersObject.setDisplayData([]);
-      homeState.uiModifiersObject.setFailedToGetData(false);
+      homeState.uiModifiersObject.setFailedToGetData(true);
     }
 
     homeState.uiModifiersObject.setIsLoading(false);
@@ -65,10 +64,10 @@ const useHomeScreenButtonHandlers = (homeState) => {
     try {
       const result = await getAllStudentsUC();
       homeState.uiModifiersObject.setDisplayData(result.data);
-      homeState.uiModifiersObject.setFailedToGetData(true);
+      homeState.uiModifiersObject.setFailedToGetData(false);
     } catch (e) {
       homeState.uiModifiersObject.setDisplayData([]);
-      homeState.uiModifiersObject.setFailedToGetData(false);
+      homeState.uiModifiersObject.setFailedToGetData(true);
     }
 
     homeState.uiModifiersObject.setIsLoading(false);
@@ -83,10 +82,10 @@ const useHomeScreenButtonHandlers = (homeState) => {
     try {
       const result = await getAllInClassInstructorsUC();
       homeState.uiModifiersObject.setDisplayData(result.data);
-      homeState.uiModifiersObject.setFailedToGetData(true);
+      homeState.uiModifiersObject.setFailedToGetData(false);
     } catch (e) {
       homeState.uiModifiersObject.setDisplayData([]);
-      homeState.uiModifiersObject.setFailedToGetData(false);
+      homeState.uiModifiersObject.setFailedToGetData(true);
     }
 
     homeState.uiModifiersObject.setIsLoading(false);
@@ -101,10 +100,10 @@ const useHomeScreenButtonHandlers = (homeState) => {
     try {
       const result = await getAllInCarInstructorsUC();
       homeState.uiModifiersObject.setDisplayData(result.data);
-      homeState.uiModifiersObject.setFailedToGetData(true);
+      homeState.uiModifiersObject.setFailedToGetData(false);
     } catch (e) {
       homeState.uiModifiersObject.setDisplayData([]);
-      homeState.uiModifiersObject.setFailedToGetData(false);
+      homeState.uiModifiersObject.setFailedToGetData(true);
     }
 
     homeState.uiModifiersObject.setIsLoading(false);
@@ -122,7 +121,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
 
     try {
       await deleteOneCourseUC(primaryKey);
-      homeState.messageObject.setMessage("SUCCESS - Successfully delete course");
+      homeState.messageObject.setMessage("SUCCESS - Successfully deleted course");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
       handleGetCourses();
@@ -143,7 +142,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
 
     try {
       await deleteOneProductUC(primaryKey);
-      homeState.messageObject.setMessage("SUCCESS - Successfully delete product");
+      homeState.messageObject.setMessage("SUCCESS - Successfully deleted product");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
       handleGetProducts();
@@ -164,7 +163,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
 
     try {
       await deleteOneStudentUC(primaryKey);
-      homeState.messageObject.setMessage("SUCCESS - Successfully delete student");
+      homeState.messageObject.setMessage("SUCCESS - Successfully deleted student");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
       handleGetStudents();
@@ -185,7 +184,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
 
     try {
       await deleteOneInCarInstructorUC(primaryKey);
-      homeState.messageObject.setMessage("SUCCESS - Successfully delete in car instructor");
+      homeState.messageObject.setMessage("SUCCESS - Successfully deleted in car instructor");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
       handleGetInCarInstructors();
@@ -206,7 +205,7 @@ const useHomeScreenButtonHandlers = (homeState) => {
 
     try {
       await deleteOneInClassInstructorUC(primaryKey);
-      homeState.messageObject.setMessage("SUCCESS - Successfully delete in class instructor");
+      homeState.messageObject.setMessage("SUCCESS - Successfully deleted in class instructor");
       homeState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       homeState.messageObject.setShowMessage(true);
       handleGetInClassInstructors();

@@ -56,7 +56,7 @@ const editOneEntry = async (req, res) => {
     res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to edit student with id of ${req.params.primary_key} -- ${e}`);
-    res.sendStatus(500);
+    res.sendStatus(400);
   } finally {
     await db.close();
   }

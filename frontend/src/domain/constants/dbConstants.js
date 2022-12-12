@@ -56,10 +56,17 @@ const studentTableHeadings = {
   purchasedProduct: "purchased_product",
 };
 
+const invoiceTableHeadings = {
+  tableName: "invoice_number",
+  id: "id",
+  invoiceId: "invoice_id",
+};
+
 export {
   courseTableHeadings,
   productTableHeadings,
   inClassInstTableHeadings,
   inCarInstTableHeadings,
   studentTableHeadings,
+  invoiceTableHeadings,
 };

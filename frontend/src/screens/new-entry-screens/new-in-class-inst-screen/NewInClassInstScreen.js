@@ -1,10 +1,8 @@
 import React from "react";
 import { useNewInClassInstructorScreen } from "./hooks";
-
 import { InClassInstructorFormButtons, InClassInstructorFormInputs } from "./components";
-
-import { Button, TextInput, SideBySideTextInputsDiv, Title, CustomAlert, LoadingSpinner } from "../../../components";
-import { WrapperDiv, ContainerDiv, FormDiv, ButtonsDiv } from "../common/components/styled";
+import { Title, CustomAlert, LoadingSpinner } from "../../../components";
+import { WrapperDiv, ContainerDiv } from "../common/components/styled";
 
 const NewInClassInstScreen = () => {
   const { inClassInstructorState, InClassInstructorChangeHandlers, inClassInstructorButtonHandlers } =

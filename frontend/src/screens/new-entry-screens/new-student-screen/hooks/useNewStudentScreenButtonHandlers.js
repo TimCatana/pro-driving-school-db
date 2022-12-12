@@ -203,9 +203,7 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
     studentState.uiModifiersObject.setIsLoading(true);
     try {
       await getFilledStudentInvoicePdfUC(studentState.primary_key);
-      studentState.messageObject.setMessage(
-        "SUCCESS - PDF file should be opened as 'student_invoice_output.pdf'"
-      );
+      studentState.messageObject.setMessage("SUCCESS - PDF file should be opened as 'student_invoice_output.pdf'");
       studentState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       studentState.messageObject.setShowMessage(true);
     } catch (e) {
@@ -214,7 +212,6 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
       studentState.messageObject.setShowMessage(true);
     }
     studentState.uiModifiersObject.setIsLoading(false);
-
   };
 
   /**

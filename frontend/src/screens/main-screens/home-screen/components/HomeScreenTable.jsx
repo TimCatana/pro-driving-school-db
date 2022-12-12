@@ -5,6 +5,7 @@ import { courseTableHeadings } from "../../../../domain/constants/dbConstants";
 
 const TableDiv = styled.div`
   width: 98vw;
+  /* min-width: 750px; */
   overflow-x: auto;
   overflow-y: visible;
   padding: 0;

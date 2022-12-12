@@ -9,12 +9,12 @@ const open = require("open");
  */
 const getFilledStudentInvoicePdf = async (req, res) => {
   const studentSql = `
-  SELECT 
-    * 
-  FROM 
-    ${studentTableHeadings.tableName}  
-  WHERE 
-    ${studentTableHeadings.id} = ?;`;
+    SELECT 
+      * 
+    FROM 
+      ${studentTableHeadings.tableName}  
+    WHERE 
+      ${studentTableHeadings.id} = ?;`;
 
   const productSql = `
     SELECT 

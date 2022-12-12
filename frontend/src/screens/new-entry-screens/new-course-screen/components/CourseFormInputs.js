@@ -6,7 +6,7 @@ import {
   SingleRowTextInputDiv,
   TextInput,
 } from "../../../../components";
-import { courseTableHeadings, inClassInstTableHeadings } from "../../../../domain/constants/dbConstants";
+import { inClassInstTableHeadings } from "../../../../domain/constants/dbConstants";
 import { FormDiv } from "../../common/components/styled";
 
 const CourseFormInputs = (props) => {

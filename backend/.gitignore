@@ -1,3 +1,4 @@
 /node_modules
 .env
-/data/pdf/outputs/*.pdf
+./data/pdf/outputs/*.pdf
+./data/pdf/outputs/course-enrollment-forms/*.pdf

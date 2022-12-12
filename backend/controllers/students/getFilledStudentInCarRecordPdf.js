@@ -10,12 +10,12 @@ const open = require("open");
  */
 const getFilledStudentInCarRecordPdf = async (req, res) => {
   const studentSql = `
-  SELECT 
-    * 
-  FROM 
-    ${studentTableHeadings.tableName}  
-  WHERE 
-    ${studentTableHeadings.id} = ?;`;
+    SELECT 
+      * 
+    FROM 
+      ${studentTableHeadings.tableName}  
+    WHERE 
+      ${studentTableHeadings.id} = ?;`;
 
   const productSql = `
     SELECT 
@@ -42,4 +42,4 @@ const getFilledStudentInCarRecordPdf = async (req, res) => {
   }
 };
 
-module.exports = getFilledStudentInCarRecordPdf
+module.exports = getFilledStudentInCarRecordPdf;

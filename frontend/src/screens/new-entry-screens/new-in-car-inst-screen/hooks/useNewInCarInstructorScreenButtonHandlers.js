@@ -1,5 +1,4 @@
 import AlertVariants from "../../../../domain/constants/AlertVariants";
-import { Results } from "../../../../domain/constants/Results";
 import { addOneInCarInstructorUC, deleteOneInCarInstructorUC, editOneInCarInstructorUC } from "../../../../domain/db";
 
 const useNewInCarInstructorScreenButtonHandlers = (inCarInstructorState) => {

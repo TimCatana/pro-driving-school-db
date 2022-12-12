@@ -1,17 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { useHomeScreen } from "./hooks";
-import { Button, CustomAlert, Title } from "../../../components";
+import { CustomAlert } from "../../../components";
 import {
   HomeScreenAddNewButton,
-  HomeScreenButtons,
-  HomeScreenCourseTable,
-  HomeScreenInCarInstructorTable,
-  HomeScreenInClassInstructorTable,
   HomeScreenNothingToDisplayTitles,
-  HomeScreenProductTable,
   HomeScreenSelectButtons,
-  HomeScreenStudentTable,
   HomeScreenTable,
   HomeScreenTitles,
 } from "./components";
@@ -40,8 +34,6 @@ const ButtonsDiv = styled.div`
   justify-content: center;
   margin-bottom: 50px;
 `;
-
-
 
 const HomeScreen = () => {
   const { homeState, homeButtonHandlers } = useHomeScreen();

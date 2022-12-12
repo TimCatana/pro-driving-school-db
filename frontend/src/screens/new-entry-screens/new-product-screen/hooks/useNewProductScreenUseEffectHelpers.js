@@ -1,5 +1,4 @@
 import { productTableHeadings } from "../../../../domain/constants/dbConstants";
-import { Results } from "../../../../domain/constants/Results";
 import { getOneProductUC } from "../../../../domain/db";
 
 const useNewProductScreenUseEffectHelpers = (productState) => {

@@ -22,7 +22,7 @@ const getOneEntry = async (req, res) => {
     res.status(200).send(result);
   } catch (e) {
     console.log(`ERROR - Failed to get  in class instructor with id of ${req.params.primary_key} -- ${e}`);
-    res.status(500).send([]);
+    res.status(400).send([]);
   } finally {
     await db.close();
   }

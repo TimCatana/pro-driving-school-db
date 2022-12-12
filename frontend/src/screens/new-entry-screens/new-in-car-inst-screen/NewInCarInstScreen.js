@@ -1,17 +1,7 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React from "react";
 import { useNewInCarInstructorScreen } from "./hooks";
-import {
-  Button,
-  DropDownMenu,
-  TextInput,
-  SideBySideTextInputsDiv,
-  SingleRowTextInputDiv,
-  Title,
-  CustomAlert,
-  LoadingSpinner,
-} from "../../../components";
-import { WrapperDiv, ContainerDiv, FormDiv, ButtonsDiv } from "../common/components/styled";
+import { Title, CustomAlert, LoadingSpinner } from "../../../components";
+import { WrapperDiv, ContainerDiv } from "../common/components/styled";
 import { InCarInstructorFormButtons, InCarInstructorFormInputs } from "./components";
 
 const NewInCarInstScreen = () => {

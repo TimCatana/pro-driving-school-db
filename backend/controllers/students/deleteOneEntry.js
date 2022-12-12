@@ -15,7 +15,7 @@ const deleteOneEntry = async (req, res) => {
     res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to delete student with id of ${req.params.primary_key} -- ${e}`);
-    res.sendStatus(500);
+    res.sendStatus(400);
   } finally {
     await db.close();
   }

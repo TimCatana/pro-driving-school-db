@@ -3,7 +3,6 @@ import { useNewProductScreen } from "./hooks";
 import { Title, LoadingSpinner, CustomAlert } from "../../../components";
 import { WrapperDiv, ContainerDiv } from "../common/components/styled";
 import { ProductFormInputs, ProductFormButtons } from "./components";
-import AlertVariants from "../../../domain/constants/AlertVariants";
 
 const NewProductScreen = () => {
   const { productState, productChangeHandlers, productButtonHandlers } = useNewProductScreen();

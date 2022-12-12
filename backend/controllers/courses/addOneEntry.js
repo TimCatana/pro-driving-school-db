@@ -30,7 +30,7 @@ const addOneEntry = async (req, res) => {
     res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to add course to database -- ${e}`);
-    res.sendStatus(500);
+    res.sendStatus(400);
   } finally {
     await db.close();
   }

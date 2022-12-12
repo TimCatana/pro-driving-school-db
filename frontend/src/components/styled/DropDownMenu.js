@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-// TODO - change px to rem
 const DropDownMenu = styled.select`
   width: 100%;
   height: 2.65rem;

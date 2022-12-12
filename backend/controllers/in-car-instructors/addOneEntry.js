@@ -4,12 +4,7 @@ const makeDb = require("../../util/makeDb");
 /**
  *
  * @param {
- *    courseId,
- *    courseStartDate,
- *    courseEndDate,
- *    _isCourseDigital,
- *    courseCapacity,
- *    courseInClassInstructor
+
  * } req
  * @param {*} res
  */
@@ -40,7 +35,7 @@ const addOneEntry = async (req, res) => {
     res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to add in car instructor to database -- ${e}`);
-    res.sendStatus(500);
+    res.sendStatus(400);
   } finally {
     await db.close();
   }

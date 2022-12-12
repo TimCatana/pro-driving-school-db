@@ -1,5 +1,4 @@
 import AlertVariants from "../../../../domain/constants/AlertVariants";
-import { Results } from "../../../../domain/constants/Results";
 import { addOneCourseUC, deleteOneCourseUC, editOneCourseUC } from "../../../../domain/db";
 import { getFilledCourseEnrollmentPdfUC } from "../../../../domain/pdf";
 
@@ -113,11 +112,15 @@ const useNewCourseScreenButtonHandlers = (courseState) => {
     courseState.uiModifiersObject.setIsLoading(true);
     try {
       await getFilledCourseEnrollmentPdfUC(courseState.primary_key);
-      courseState.messageObject.setMessage("SUCCESS - PDF file should be opened as 'course_enrollment_output_{number}.pdf'");
+      courseState.messageObject.setMessage(
+        "SUCCESS - PDF file should be opened as 'course_enrollment_output_{number}.pdf'"
+      );
       courseState.messageObject.setMessageColor(AlertVariants.SUCCESS);
       courseState.messageObject.setShowMessage(true);
     } catch (e) {
-      courseState.messageObject.setMessage("ERROR - please close all instances of 'course_enrollment_output_{number}.pdf'");
+      courseState.messageObject.setMessage(
+        "ERROR - please close all instances of 'course_enrollment_output_{number}.pdf'"
+      );
       courseState.messageObject.setMessageColor(AlertVariants.DANGER);
       courseState.messageObject.setShowMessage(true);
     }

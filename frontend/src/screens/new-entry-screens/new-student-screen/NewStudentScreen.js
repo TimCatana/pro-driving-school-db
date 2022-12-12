@@ -1,19 +1,7 @@
 import React from "react";
 import { useNewStudentScreen } from "./hooks";
-
-import {
-  Button,
-  DropDownMenu,
-  TextInput,
-  SideBySideTextInputsDiv,
-  SingleRowTextInputDiv,
-  ListOption,
-  Title,
-  LoadingSpinner,
-  CustomAlert,
-} from "../../../components";
-import { WrapperDiv, ContainerDiv, FormDiv, ButtonsDiv } from "../common/components/styled";
-import { courseTableHeadings, productTableHeadings } from "../../../domain/constants/dbConstants";
+import { Title, LoadingSpinner, CustomAlert } from "../../../components";
+import { WrapperDiv, ContainerDiv } from "../common/components/styled";
 import { StudentFormButtons, StudentFormInputs } from "./components";
 
 const NewStudentScreen = () => {

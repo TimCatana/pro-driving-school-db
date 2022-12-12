@@ -22,7 +22,7 @@ const getAllEntries = async (req, res) => {
     res.status(200).send(result);
   } catch (e) {
     console.log(`ERROR - Failed to get all students -- ${e}`);
-    res.status(500).send([]);
+    res.status(400).send([]);
   } finally {
     await db.close();
   }

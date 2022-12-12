@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-// TODO - change px to rem
 const TextInput = styled.input`
   width: 100%;
   height: 1.6rem;

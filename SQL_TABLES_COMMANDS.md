@@ -6,11 +6,15 @@ DROP TABLE products;
 DROP TABLE courses;
 DROP TABLE in_car_inst;
 DROP TABLE in_class_inst;
+DROP TABLE invoice_number;
 ```
 
 # create order
 
 ```
+CREATE DATABASE pdsdb;
+USE pdsdb;
+
 CREATE TABLE `pdsdb`.`in_class_inst` (
   `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
   `first_name` VARCHAR(75) NOT NULL,
@@ -72,7 +76,19 @@ FOREIGN KEY(registered_course) REFERENCES courses(course_id),
 FOREIGN KEY(purchased_product) REFERENCES products(product_id)
 );
 
+CREATE TABLE `pdsdb`.`invoice_number` (
+  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT UNIQUE,
+  `invoice_id` VARCHAR(20) NOT NULL
+);
+
+INSERT INTO invoice_number (invoice_id) VALUES (1);
 ```
+
+
+
+
+
+...
 
 BELOW FOR PDF
 FIELDS PDF-LIB

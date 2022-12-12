@@ -1,4 +1,4 @@
-const app = require('./app');
+const app = require("./app");
 // const domain = require( './domain'); For env vars later on
 
 app.listen(4400, () => {

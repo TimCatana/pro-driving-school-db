@@ -1,18 +1,6 @@
 import React from "react";
-import styled from "styled-components";
-import {
-  Button,
-  DropDownMenu,
-  TextInput,
-  SideBySideTextInputsDiv,
-  SingleRowTextInputDiv,
-  Title,
-  ListOption,
-  LoadingSpinner,
-  CustomAlert,
-} from "../../../components";
-import { inClassInstTableHeadings } from "../../../domain/constants/dbConstants";
-import { ContainerDiv, FormDiv, WrapperDiv, ButtonsDiv } from "../common/components/styled";
+import { Title, LoadingSpinner, CustomAlert } from "../../../components";
+import { ContainerDiv, WrapperDiv } from "../common/components/styled";
 import { CourseFormButtons, CourseFormInputs } from "./components";
 
 import { useNewCourseScreen } from "./hooks";

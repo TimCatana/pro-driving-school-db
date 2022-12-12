@@ -41,7 +41,7 @@ const getFilledStudentRecordPdf = async (req, res) => {
     const inClassInstResult = await db.query(inClassInstSql, [
       courseResult[0][courseTableHeadings.inClassInstructorId],
     ]);
-   
+
     await fillStudentRecordPdf(studentResult[0], inClassInstResult[0]);
     await open(`./data/pdf/outputs/student_record_output.pdf`);
     res.sendStatus(200);

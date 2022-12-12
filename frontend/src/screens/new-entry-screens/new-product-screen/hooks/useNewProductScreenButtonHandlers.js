@@ -1,5 +1,4 @@
 import AlertVariants from "../../../../domain/constants/AlertVariants";
-import { Results } from "../../../../domain/constants/Results";
 import { addOneProductUC, deleteOneProductUC, editOneProductUC } from "../../../../domain/db";
 
 const useNewProductScreenButtonHandlers = (productState) => {

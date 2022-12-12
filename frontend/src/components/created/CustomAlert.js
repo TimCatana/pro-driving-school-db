@@ -6,6 +6,7 @@ import AlertVariants from "../../domain/constants/AlertVariants";
 
 const AlertDiv = styled.div`
   width: 100%;
+  max-width: 850px;
   display: flex;
   align-items: center;
   /* border: 1px solid "fff"; */

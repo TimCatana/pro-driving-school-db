@@ -1,11 +1,7 @@
 import AlertVariants from "../../../../domain/constants/AlertVariants";
-import { Results } from "../../../../domain/constants/Results";
 import {
-  addOneCourseUC,
   addOneInClassInstructorUC,
-  deleteOneCourseUC,
   deleteOneInClassInstructorUC,
-  editOneCourseUC,
   editOneInClassInstructorUC,
 } from "../../../../domain/db";
 

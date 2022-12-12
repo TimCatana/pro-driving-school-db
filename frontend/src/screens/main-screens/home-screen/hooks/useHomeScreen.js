@@ -1,18 +1,6 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import isDateFormatYYYYMMDD from "../../../../domain/validators";
-import axios from "axios";
-import {
-  deleteOneCourseUC,
-  getAllCoursesUC,
-  getAllInCarInstructorsUC,
-  getAllInClassInstructorsUC,
-  getAllProductsUC,
-  getAllStudentsUC,
-} from "../../../../domain/db";
+import { useEffect } from "react";
 import useHomeScreenStates from "./useHomeScreenStates";
 import useHomeScreenButtonHandlers from "./useHomeScreenButtonHandlers";
-import { useSearchParams } from "react-router-dom";
 
 const useHomeScreen = () => {
   /******************/

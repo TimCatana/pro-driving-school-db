@@ -50,7 +50,7 @@ const getFilledCourseEnrollmentPdf = async (req, res) => {
     res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to get course enrollment form pdf -- ${e}`);
-    res.sendStatus(500);
+    res.sendStatus(400);
   } finally {
     await db.close();
   }

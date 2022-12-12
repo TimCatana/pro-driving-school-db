@@ -6,7 +6,6 @@ import {
   useNewProductScreenStates,
   useNewProductScreenUseEffectHelpers,
 } from ".";
-import getMostRecentProductUC from "../../../../domain/db/getMostRecentEntry/getMostRecentProductUC";
 
 const useNewProductScreen = () => {
   /******************/
