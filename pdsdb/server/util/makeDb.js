@@ -2,10 +2,10 @@ const util = require("util");
 const mysql = require("mysql");
 
 const config = {
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
+  host: process.env.REACT_APP_MYSQL_HOST,
+  user: process.env.REACT_APP_MYSQL_USER,
+  password: process.env.REACT_APP_MYSQL_PASSWORD,
+  database: process.env.REACT_APP_MYSQL_DATABASE,
   dateStrings: "date",
 };
 

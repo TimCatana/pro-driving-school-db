@@ -25,9 +25,17 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+
+    "server:start": "node ./server/index.js",
+    "server:devStart": "nodemon ./server/index.js",
+
     "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
-    "electron:build": "yarn build && electron-builder -c.extraMetadata.main=build/main.js",
     "electron:start": "wait-on http://127.0.0.1:3000 && electron .",
+    "electron:build": "yarn build && electron-builder -c.extraMetadata.main=build/main.js",
+
+    "app:devStart": "concurrently  \"yarn run start\" \"yarn run server:start\"",
+    "app:electronStart": "concurrently  \"yarn run server:start\" \"yarn run electron:serve\"",
+ 
     "dist": "electron-builder"
   },
   "eslintConfig": {

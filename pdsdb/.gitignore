@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+/server/data/pdf/outputs/*.pdf
+/server/data/pdf/outputs/course-enrollment-forms/*.pdf
+
+.ENV
