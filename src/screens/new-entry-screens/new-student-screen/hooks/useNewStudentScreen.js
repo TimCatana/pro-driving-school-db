@@ -275,7 +275,7 @@ const useNewStudentScreen = () => {
       studentState.LicenseClasses.M1 ||
     studentState.studentObject.studentDriversLicenseClass ==
       studentState.LicenseClasses.M2 ||
-    studentState.studentObject.studentDriversLicenseClass == "label"
+    studentState.studentObject.studentDriversLicenseClass == ""
       ? studentState.studentObject.setIsStudentDriversLicenseClassError(false)
       : studentState.studentObject.setIsStudentDriversLicenseClassError(true);
   }, [studentState.studentObject.studentDriversLicenseClass]);

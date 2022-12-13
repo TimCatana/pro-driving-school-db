@@ -172,7 +172,7 @@ const useNewStudentScreenStates = () => {
   const [studentDriversLicenseId, setStudentDriversLicenseId] = useState("");
   const [isStudentDriversLicenseIdError, setIsStudentDriversLicenseNumberId] = useState(true);
 
-  const [studentDriversLicenseClass, setStudentDriversLicenseClass] = useState("label");
+  const [studentDriversLicenseClass, setStudentDriversLicenseClass] = useState("");
   const [isStudentDriversLicenseClassError, setIsStudentDriversLicenseClassError] = useState(true);
 
   const [studentDriversLicenseIssuedDate, setStudentDriversLicenseIssuedDate] = useState("");

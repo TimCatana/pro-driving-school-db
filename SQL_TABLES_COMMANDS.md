@@ -75,7 +75,7 @@ CREATE TABLE `pdsdb`.`students` (
 `address_postal_code` VARCHAR(20) NOT NULL,
 `cell_phone_number` VARCHAR(20) NOT NULL,
 `home_phone_number` VARCHAR(20) NOT NULL,
-`drivers_license_id` VARCHAR(100) NULL UNIQUE,
+`drivers_license_id` VARCHAR(100) NULL,
 `drivers_license_class` VARCHAR(20) NULL,
 `drivers_license_issued_date` VARCHAR(20) NULL,
 `drivers_license_exp_date` VARCHAR(20) NULL,

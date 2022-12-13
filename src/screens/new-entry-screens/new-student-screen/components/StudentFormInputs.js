@@ -231,7 +231,7 @@ const StudentFormInputs = (props) => {
           }
           isLast
         >
-          <ListOption value={"label"} disabled hidden>
+          <ListOption value={""} disabled hidden>
             License Class (Oprional)
           </ListOption>
           {Object.keys(studentState.LicenseClasses).map((key) => (
