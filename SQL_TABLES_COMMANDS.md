@@ -12,8 +12,17 @@ DROP TABLE invoice_number;
 # create order
 
 ```
+ENABLE AUTHENTICATION IN MYSQL WORKBENCH: https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server
+
 CREATE DATABASE pdsdb;
 USE pdsdb;
+
+DROP TABLE students;
+DROP TABLE products;
+DROP TABLE courses;
+DROP TABLE in_car_inst;
+DROP TABLE in_class_inst;
+DROP TABLE invoice_number;
 
 CREATE TABLE `pdsdb`.`in_class_inst` (
   `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
@@ -66,10 +75,10 @@ CREATE TABLE `pdsdb`.`students` (
 `address_postal_code` VARCHAR(20) NOT NULL,
 `cell_phone_number` VARCHAR(20) NOT NULL,
 `home_phone_number` VARCHAR(20) NOT NULL,
-`drivers_license_id` VARCHAR(100) NOT NULL UNIQUE,
-`drivers_license_class` VARCHAR(20) NOT NULL,
-`drivers_license_issued_date` DATE NULL,
-`drivers_license_exp_date` DATE NULL,
+`drivers_license_id` VARCHAR(100) NULL UNIQUE,
+`drivers_license_class` VARCHAR(20) NULL,
+`drivers_license_issued_date` VARCHAR(20) NULL,
+`drivers_license_exp_date` VARCHAR(20) NULL,
 `registered_course` INT NOT NULL,
 `purchased_product` INT NOT NULL,
 FOREIGN KEY(registered_course) REFERENCES courses(course_id),

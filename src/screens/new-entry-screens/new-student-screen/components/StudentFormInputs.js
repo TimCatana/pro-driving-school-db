@@ -111,7 +111,7 @@ const StudentFormInputs = (props) => {
 
       <SideBySideTextInputsDiv>
         <TextInput
-          placeholder="Cell Phone (Format: 5194567890)"
+          placeholder="Cell Phone"
           disabled={studentState.uiModifiersObject.isLoading || !studentState.uiModifiersObject.areFieldsEditable}
           value={studentState.studentObject.studentCellPhoneNumber}
           onChange={studentChangeHandlers.handleStudentCellPhoneNumberChange}
@@ -123,7 +123,7 @@ const StudentFormInputs = (props) => {
           maxLength={18}
         />
         <TextInput
-          placeholder="Home Phone (Format: 5194567890)"
+          placeholder="Home Phone"
           disabled={studentState.uiModifiersObject.isLoading || !studentState.uiModifiersObject.areFieldsEditable}
           value={studentState.studentObject.studentHomePhoneNumber}
           onChange={studentChangeHandlers.handleStudentHomePhoneNumberChange}
@@ -210,7 +210,7 @@ const StudentFormInputs = (props) => {
 
       <SideBySideTextInputsDiv>
         <TextInput
-          placeholder={"Driver's License Number"}
+          placeholder={"Driver's License Number (Optional)"}
           disabled={studentState.uiModifiersObject.isLoading || !studentState.uiModifiersObject.areFieldsEditable}
           value={studentState.studentObject.studentDriversLicenseId}
           onChange={studentChangeHandlers.handleStudentDriversLicenseIdChange}
@@ -232,7 +232,7 @@ const StudentFormInputs = (props) => {
           isLast
         >
           <ListOption value={"label"} disabled hidden>
-            Please Select License Class
+            License Class (Oprional)
           </ListOption>
           {Object.keys(studentState.LicenseClasses).map((key) => (
             <ListOption value={studentState.LicenseClasses[key]}>{studentState.LicenseClasses[key]}</ListOption>
@@ -242,7 +242,7 @@ const StudentFormInputs = (props) => {
 
       <SideBySideTextInputsDiv>
         <TextInput
-          placeholder={"Driver's License Issued Date"}
+          placeholder={"Driver's License Issued Date (Optional)"}
           disabled={studentState.uiModifiersObject.isLoading || !studentState.uiModifiersObject.areFieldsEditable}
           value={studentState.studentObject.studentDriversLicenseIssuedDate}
           onChange={studentChangeHandlers.handleStudentDriversLicenseIssuedDateChange}
@@ -259,7 +259,7 @@ const StudentFormInputs = (props) => {
           type={studentState.dateTextInputFocusesObject.isStudentDriversLicenseIssuedDateFocus ? "date" : "text"}
         />
         <TextInput
-          placeholder={"Driver's License Expiry Date"}
+          placeholder={"Driver's License Expiry Date (Optional)"}
           disabled
           value={studentState.studentObject.studentDriversLicenseExpDate}
           onChange={studentChangeHandlers.handleStudentDriversLicenseExpDateChange}
