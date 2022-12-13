@@ -51,7 +51,7 @@ const getFilledStudentInvoicePdf = async (req, res) => {
 
     await db.query(incrementInvoiceIdSql, [parseInt(invoiceResult[0][invoiceTableHeadings.invoiceId]) + 1, 1]);
 
-    await open(`./data/pdf/outputs/student_invoice_output.pdf`);
+    await open(`${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/student_invoice_output.pdf`);
     res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to get student invoice form pdf -- ${e}`);

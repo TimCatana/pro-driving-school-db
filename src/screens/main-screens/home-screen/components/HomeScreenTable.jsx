@@ -1,6 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, TableHome, TDHome, THHome, TRHome } from "../../../../components";
+import {
+  Button,
+  TableHome,
+  TDHome,
+  THHome,
+  TRHome,
+} from "../../../../components";
 import { courseTableHeadings } from "../../../../domain/constants/dbConstants";
 
 const TableDiv = styled.div`
@@ -9,15 +15,47 @@ const TableDiv = styled.div`
   overflow-x: auto;
   overflow-y: visible;
   padding: 0;
-  /* display: flex; */
-  /* justify-content: center; */
+
+  display: flex;
+
+  @media only screen and (min-width: 1300px) {
+    justify-content: ${(props) =>
+      props.table == props.homeState.Data.IN_CAR_INST ? "center;" : ""};
+  }
+  @media only screen and (min-width: 975px) {
+    justify-content: ${(props) =>
+      props.table == props.homeState.Data.IN_CLASS_INST ? "center;" : ""};
+  }
+  @media only screen and (min-width: 975px) {
+    justify-content: ${(props) =>
+      props.table == props.homeState.Data.IN_CLASS_INST ? "center;" : ""};
+  }
+  @media only screen and (min-width: 440px) {
+    justify-content: ${(props) =>
+      props.table == props.homeState.Data.PRODUCTS ? "center;" : ""};
+  }
+  @media only screen and (min-width: 800px) {
+    justify-content: ${(props) =>
+      props.table == props.homeState.Data.COURSES ? "center;" : ""};
+  }
 `;
 
 const HomeScreenTable = (props) => {
-  const { homeState, homeButtonHandlers, headings, entryId, tableKeys, handleEdit, handleDelete } = props;
+  const {
+    homeState,
+    homeButtonHandlers,
+    headings,
+    entryId,
+    tableKeys,
+    handleEdit,
+    handleDelete,
+  } = props;
 
   return (
-    <TableDiv>
+    <TableDiv
+      table={homeState.uiModifiersObject.displaying}
+      homeState={homeState}
+    >
       <TableHome>
         <thead>
           <TRHome>

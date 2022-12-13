@@ -22,7 +22,7 @@ const getFilledStudentApplicationFormPdf = async (req, res) => {
   try {
     const result = await db.query(sql, [req.params.primary_key]);
     await fillStudentApplicationFormPdf(result[0]);
-    await open(`./data/pdf/outputs/student_application_form_output.pdf`);
+    await open(`${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/student_application_form_output.pdf`);
     res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to get student application form pdf -- ${e}`);

@@ -43,7 +43,7 @@ const getFilledStudentRecordPdf = async (req, res) => {
     ]);
 
     await fillStudentRecordPdf(studentResult[0], inClassInstResult[0]);
-    await open(`./data/pdf/outputs/student_record_output.pdf`);
+    await open(`${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/student_record_output.pdf`);
     res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to get student record in form pdf -- ${e}`);

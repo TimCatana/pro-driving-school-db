@@ -96,7 +96,6 @@ const CourseFormInputs = (props) => {
       </SingleRowTextInputDiv>
 
       {/*  */}
-
       <SingleRowTextInputDiv>
         <DropDownMenu
           name="inClassInstList"

@@ -17,16 +17,21 @@ import {
   studentTableHeadings,
 } from "../../../domain/constants/dbConstants";
 
+const ContainerDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const WrapperDiv = styled.div`
   display: flex;
   justify-content: center;
+  padding-top: 0rem;
 `;
-
-const ContainerDiv = styled.div``;
 
 const FormDiv = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const ButtonsDiv = styled.div`
@@ -43,25 +48,33 @@ const HomeScreen = () => {
         <HomeScreenTitles homeState={homeState} />
 
         <ButtonsDiv>
-          <HomeScreenSelectButtons homeState={homeState} homeButtonHandlers={homeButtonHandlers} />
+          <HomeScreenSelectButtons
+            homeState={homeState}
+            homeButtonHandlers={homeButtonHandlers}
+          />
         </ButtonsDiv>
 
         <ButtonsDiv>
-          <HomeScreenAddNewButton homeState={homeState} homeButtonHandlers={homeButtonHandlers} />
+          <HomeScreenAddNewButton
+            homeState={homeState}
+            homeButtonHandlers={homeButtonHandlers}
+          />
         </ButtonsDiv>
 
         <FormDiv>
-          {!homeState.uiModifiersObject.isLoading && homeState.messageObject.showMessage && (
-            <CustomAlert
-              variant={homeState.messageObject.messageColor}
-              message={homeState.messageObject.message}
-              handleClose={homeButtonHandlers.handleDismissErrorAlert}
-            />
-          )}
+          {!homeState.uiModifiersObject.isLoading &&
+            homeState.messageObject.showMessage && (
+              <CustomAlert
+                variant={homeState.messageObject.messageColor}
+                message={homeState.messageObject.message}
+                handleClose={homeButtonHandlers.handleDismissErrorAlert}
+              />
+            )}
 
           {!homeState.uiModifiersObject.isLoading &&
             homeState.uiModifiersObject.displayData.length > 0 &&
-            homeState.uiModifiersObject.displaying === homeState.Data.COURSES && (
+            homeState.uiModifiersObject.displaying ===
+              homeState.Data.COURSES && (
               <HomeScreenTable
                 homeState={homeState}
                 homeButtonHandlers={homeButtonHandlers}
@@ -95,13 +108,24 @@ const HomeScreen = () => {
 
           {!homeState.uiModifiersObject.isLoading &&
             homeState.uiModifiersObject.displayData.length > 0 &&
-            homeState.uiModifiersObject.displaying === homeState.Data.PRODUCTS && (
+            homeState.uiModifiersObject.displaying ===
+              homeState.Data.PRODUCTS && (
               <HomeScreenTable
                 homeState={homeState}
                 homeButtonHandlers={homeButtonHandlers}
-                headings={["Product ID", "Product Name", "Product Price", "Edit", "Delete"]}
+                headings={[
+                  "Product ID",
+                  "Product Name",
+                  "Product Price",
+                  "Edit",
+                  "Delete",
+                ]}
                 entryId={productTableHeadings.id}
-                tableKeys={[productTableHeadings.productId, productTableHeadings.name, productTableHeadings.price]}
+                tableKeys={[
+                  productTableHeadings.productId,
+                  productTableHeadings.name,
+                  productTableHeadings.price,
+                ]}
                 handleEdit={(primary_key) => {
                   homeButtonHandlers.navToProduct(primary_key);
                 }}
@@ -113,7 +137,8 @@ const HomeScreen = () => {
 
           {!homeState.uiModifiersObject.isLoading &&
             homeState.uiModifiersObject.displayData.length > 0 &&
-            homeState.uiModifiersObject.displaying === homeState.Data.STUDENTS && (
+            homeState.uiModifiersObject.displaying ===
+              homeState.Data.STUDENTS && (
               <HomeScreenTable
                 homeState={homeState}
                 homeButtonHandlers={homeButtonHandlers}
@@ -175,7 +200,8 @@ const HomeScreen = () => {
 
           {!homeState.uiModifiersObject.isLoading &&
             homeState.uiModifiersObject.displayData.length > 0 &&
-            homeState.uiModifiersObject.displaying === homeState.Data.IN_CLASS_INST && (
+            homeState.uiModifiersObject.displaying ===
+              homeState.Data.IN_CLASS_INST && (
               <HomeScreenTable
                 homeState={homeState}
                 homeButtonHandlers={homeButtonHandlers}
@@ -207,7 +233,8 @@ const HomeScreen = () => {
 
           {!homeState.uiModifiersObject.isLoading &&
             homeState.uiModifiersObject.displayData.length > 0 &&
-            homeState.uiModifiersObject.displaying === homeState.Data.IN_CAR_INST && (
+            homeState.uiModifiersObject.displaying ===
+              homeState.Data.IN_CAR_INST && (
               <HomeScreenTable
                 homeState={homeState}
                 homeButtonHandlers={homeButtonHandlers}

@@ -21,7 +21,7 @@ const getFilledStudentInCarEvaluationPdf = async (req, res) => {
   try {
     const result = await db.query(sql, [req.params.primary_key]);
     await fillStudentInCarEvaluationPdf(result[0]);
-    await open(`./data/pdf/outputs/student_in_car_evaluation_output.pdf`);
+    await open(`${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/student_in_car_evaluation_output.pdf`);
     res.sendStatus(200);
   } catch (e) {
     console.log(`ERROR - Failed to get student in car evaluation form pdf -- ${e}`);

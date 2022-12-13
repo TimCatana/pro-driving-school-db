@@ -3,7 +3,7 @@ const { readFile, writeFile } = require("fs/promises");
 const { studentTableHeadings, inClassInstTableHeadings } = require("../../../../constants/dbConstants");
 
 const fillStudentRecordPdf = async (studentObject, inClassInstObject) => {
-  const pdfDoc = await PDFDocument.load(await readFile("./data/pdf/inputs/student_record.pdf"));
+  const pdfDoc = await PDFDocument.load(await readFile(`${process.env.REACT_APP_PDF_INPUT_FOLDER}/student_record.pdf`));
   const pdfForm = pdfDoc.getForm();
 
   pdfForm
@@ -35,7 +35,7 @@ const fillStudentRecordPdf = async (studentObject, inClassInstObject) => {
 
   const pdfBytes = await pdfDoc.save();
 
-  await writeFile("./data/pdf/outputs/student_record_output.pdf", pdfBytes);
+  await writeFile(`${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/student_record_output.pdf`, pdfBytes);
 };
 
 module.exports = fillStudentRecordPdf;

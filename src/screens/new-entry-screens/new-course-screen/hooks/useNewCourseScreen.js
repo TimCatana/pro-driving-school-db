@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { isDateFormatYYYYMMDD, isNumber, isEndDateFuture, isValidDate } from "../../../../domain/validators";
+import {
+  isDateFormatYYYYMMDD,
+  isNumber,
+  isEndDateFuture,
+  isValidDate,
+} from "../../../../domain/validators";
 import {
   useNewCourseScreenUseEffectHelpers,
   useNewCourseScreenChangeHandlers,
@@ -15,9 +20,12 @@ const useNewCourseScreen = () => {
 
   const { courseState } = useNewCourseScreenStates();
 
-  const { courseChangeHandlers } = useNewCourseScreenChangeHandlers(courseState);
-  const { courseButtonHandlers } = useNewCourseScreenButtonHandlers(courseState);
-  const { courseUseEffectHelpers } = useNewCourseScreenUseEffectHelpers(courseState);
+  const { courseChangeHandlers } =
+    useNewCourseScreenChangeHandlers(courseState);
+  const { courseButtonHandlers } =
+    useNewCourseScreenButtonHandlers(courseState);
+  const { courseUseEffectHelpers } =
+    useNewCourseScreenUseEffectHelpers(courseState);
 
   /***********************/
   /***** USE EFFECTS *****/
@@ -44,7 +52,10 @@ const useNewCourseScreen = () => {
    *
    */
   useEffect(() => {
-    if (!courseState.uiModifiersObject.areFieldsEditable && !courseState.initialRender.current) {
+    if (
+      !courseState.uiModifiersObject.areFieldsEditable &&
+      !courseState.initialRender.current
+    ) {
       courseUseEffectHelpers.handleGetSpecificCourse();
     }
   }, [courseState.uiModifiersObject.areFieldsEditable]);
@@ -84,7 +95,12 @@ const useNewCourseScreen = () => {
   useEffect(() => {
     if (isDateFormatYYYYMMDD(courseState.courseObject.courseStartDate)) {
       // date validation is done within function therefore is end date isn't selected then should return false
-      if (isEndDateFuture(courseState.courseObject.courseStartDate, courseState.courseObject.courseEndDate)) {
+      if (
+        isEndDateFuture(
+          courseState.courseObject.courseStartDate,
+          courseState.courseObject.courseEndDate
+        )
+      ) {
         courseState.courseObject.setIsCourseStartDateError(false);
         courseState.courseObject.setIsCourseEndDateError(false);
       } else {
@@ -103,7 +119,10 @@ const useNewCourseScreen = () => {
   useEffect(() => {
     if (isDateFormatYYYYMMDD(courseState.courseObject.courseEndDate)) {
       if (isValidDate(courseState.courseObject.courseStartDate)) {
-        isEndDateFuture(courseState.courseObject.courseStartDate, courseState.courseObject.courseEndDate)
+        isEndDateFuture(
+          courseState.courseObject.courseStartDate,
+          courseState.courseObject.courseEndDate
+        )
           ? courseState.courseObject.setIsCourseEndDateError(false)
           : courseState.courseObject.setIsCourseEndDateError(true);
       } else {
@@ -119,8 +138,10 @@ const useNewCourseScreen = () => {
    * @dependent isDigital
    */
   useEffect(() => {
-    courseState.courseObject.courseIsDigital == courseState.CourseTypes.DIGITAL ||
-    courseState.courseObject.courseIsDigital == courseState.CourseTypes.IN_PERSON
+    courseState.courseObject.courseIsDigital ==
+      courseState.CourseTypes.DIGITAL ||
+    courseState.courseObject.courseIsDigital ==
+      courseState.CourseTypes.IN_PERSON
       ? courseState.courseObject.setIsCourseIsDigitalError(false)
       : courseState.courseObject.setIsCourseIsDigitalError(true);
   }, [courseState.courseObject.courseIsDigital]);
@@ -130,15 +151,13 @@ const useNewCourseScreen = () => {
    * @dependent inClassInstructor
    */
   useEffect(() => {
-    if (courseState.courseObject.courseInClassInstructor.length > 0) {
-      courseState.dropdownMenuOptionsObject.inClassInstructors.some(
-        (element) => element[inClassInstTableHeadings.id] == courseState.courseObject.courseInClassInstructor
-      )
-        ? courseState.courseObject.setIsCourseInClassInstructorError(false)
-        : courseState.courseObject.setIsCourseInClassInstructorError(true);
-    } else {
-      courseState.courseObject.setIsCourseInClassInstructorError(true);
-    }
+    courseState.dropdownMenuOptionsObject.inClassInstructors.some(
+      (element) =>
+        element[inClassInstTableHeadings.id] ==
+        courseState.courseObject.courseInClassInstructor
+    )
+      ? courseState.courseObject.setIsCourseInClassInstructorError(false)
+      : courseState.courseObject.setIsCourseInClassInstructorError(true);
   }, [courseState.courseObject.courseInClassInstructor]);
 
   /*******************/

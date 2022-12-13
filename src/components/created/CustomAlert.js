@@ -4,11 +4,16 @@ import styled from "styled-components";
 import { IoCloseSharp } from "react-icons/io5";
 import AlertVariants from "../../domain/constants/AlertVariants";
 
+const WrapperDiv = styled.div`
+
+`
+
 const AlertDiv = styled.div`
   width: 100%;
   max-width: 850px;
   display: flex;
   align-items: center;
+  margin-bottom: 0.5rem;
   /* border: 1px solid "fff"; */
   border-radius: 8px;
   background-color: ${(props) => {
