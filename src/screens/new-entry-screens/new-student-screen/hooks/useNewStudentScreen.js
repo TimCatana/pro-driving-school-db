@@ -1,9 +1,5 @@
 import { useEffect } from "react";
-import {
-  isDateFormatYYYYMMDD,
-  isNumber,
-  isDatePast,
-} from "../../../../domain/validators";
+import { isDateFormatYYYYMMDD, isNumber, isDatePast } from "../../../../domain/validators";
 import { addYearsToDate, formatDateToYYYYMMDD } from "../../../../domain/date";
 import {
   useNewStudentScreenButtonHandlers,
@@ -11,10 +7,7 @@ import {
   useNewStudentScreenStates,
   useNewStudentScreenUseEffectHelpers,
 } from ".";
-import {
-  courseTableHeadings,
-  productTableHeadings,
-} from "../../../../domain/constants/dbConstants";
+import { courseTableHeadings, productTableHeadings } from "../../../../domain/constants/dbConstants";
 
 const useNewStudentScreen = () => {
   /******************/
@@ -23,12 +16,9 @@ const useNewStudentScreen = () => {
 
   const { studentState } = useNewStudentScreenStates();
 
-  const { studentChangeHandlers } =
-    useNewStudentScreenChangeHandlers(studentState);
-  const { studentButtonHandlers } =
-    useNewStudentScreenButtonHandlers(studentState);
-  const { studentUseEffectHelpers } =
-    useNewStudentScreenUseEffectHelpers(studentState);
+  const { studentChangeHandlers } = useNewStudentScreenChangeHandlers(studentState);
+  const { studentButtonHandlers } = useNewStudentScreenButtonHandlers(studentState);
+  const { studentUseEffectHelpers } = useNewStudentScreenUseEffectHelpers(studentState);
 
   /***********************/
   /***** USE EFFECTS *****/
@@ -54,10 +44,7 @@ const useNewStudentScreen = () => {
    *
    */
   useEffect(() => {
-    if (
-      !studentState.uiModifiersObject.areFieldsEditable &&
-      !studentState.initialRender.current
-    ) {
+    if (!studentState.uiModifiersObject.areFieldsEditable && !studentState.initialRender.current) {
       studentUseEffectHelpers.handleGetSpecificStudent();
     }
   }, [studentState.uiModifiersObject.areFieldsEditable]);
@@ -67,8 +54,7 @@ const useNewStudentScreen = () => {
    * @dependent courseId
    */
   useEffect(() => {
-    studentState.studentObject.studentFirstName.length > 0 &&
-    studentState.studentObject.studentFirstName.length < 75
+    studentState.studentObject.studentFirstName.length > 0 && studentState.studentObject.studentFirstName.length < 75
       ? studentState.studentObject.setIsStudentFirstNameError(false)
       : studentState.studentObject.setIsStudentFirstNameError(true);
   }, [studentState.studentObject.studentFirstName]);
@@ -88,8 +74,7 @@ const useNewStudentScreen = () => {
    * @dependent courseId
    */
   useEffect(() => {
-    studentState.studentObject.studentLastName.length > 0 &&
-    studentState.studentObject.studentLastName.length < 75
+    studentState.studentObject.studentLastName.length > 0 && studentState.studentObject.studentLastName.length < 75
       ? studentState.studentObject.setIsStudentLastNameError(false)
       : studentState.studentObject.setIsStudentLastNameError(true);
   }, [studentState.studentObject.studentLastName]);
@@ -114,9 +99,7 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    Object.values(studentState.Genders).includes(
-      studentState.studentObject.studentGender
-    )
+    Object.values(studentState.Genders).includes(studentState.studentObject.studentGender)
       ? studentState.studentObject.setIsStudentGenderError(false)
       : studentState.studentObject.setIsStudentGenderError(true);
   }, [studentState.studentObject.studentGender]);
@@ -145,8 +128,7 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    studentState.studentObject.studentAddress.length > 0 &&
-    studentState.studentObject.studentAddress.length < 150
+    studentState.studentObject.studentAddress.length > 0 && studentState.studentObject.studentAddress.length < 150
       ? studentState.studentObject.setIsStudentAddressError(false)
       : studentState.studentObject.setIsStudentAddressError(true);
   }, [studentState.studentObject.studentAddress]);
@@ -159,16 +141,10 @@ const useNewStudentScreen = () => {
     if (studentState.studentObject.studentAddressApartmentNumber.length > 0) {
       if (isNumber(studentState.studentObject.studentAddressApartmentNumber)) {
         parseInt(studentState.studentObject.studentAddressApartmentNumber) > 0
-          ? studentState.studentObject.setIsStudentAddressApartmentNumberError(
-              false
-            )
-          : studentState.studentObject.setIsStudentAddressApartmentNumberError(
-              true
-            );
+          ? studentState.studentObject.setIsStudentAddressApartmentNumberError(false)
+          : studentState.studentObject.setIsStudentAddressApartmentNumberError(true);
       } else {
-        studentState.studentObject.setIsStudentAddressApartmentNumberError(
-          true
-        );
+        studentState.studentObject.setIsStudentAddressApartmentNumberError(true);
       }
     } else {
       studentState.studentObject.setIsStudentAddressApartmentNumberError(false);
@@ -193,9 +169,7 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    Object.values(studentState.CanadaProvinces).includes(
-      studentState.studentObject.studentAddressState
-    )
+    Object.values(studentState.CanadaProvinces).includes(studentState.studentObject.studentAddressState)
       ? studentState.studentObject.setIsStudentAddressStateError(false)
       : studentState.studentObject.setIsStudentAddressStateError(true);
   }, [studentState.studentObject.studentAddressState]);
@@ -265,16 +239,11 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    studentState.studentObject.studentDriversLicenseClass ==
-      studentState.LicenseClasses.G1 ||
-    studentState.studentObject.studentDriversLicenseClass ==
-      studentState.LicenseClasses.G2 ||
-    studentState.studentObject.studentDriversLicenseClass ==
-      studentState.LicenseClasses.G ||
-    studentState.studentObject.studentDriversLicenseClass ==
-      studentState.LicenseClasses.M1 ||
-    studentState.studentObject.studentDriversLicenseClass ==
-      studentState.LicenseClasses.M2 ||
+    studentState.studentObject.studentDriversLicenseClass == studentState.LicenseClasses.G1 ||
+    studentState.studentObject.studentDriversLicenseClass == studentState.LicenseClasses.G2 ||
+    studentState.studentObject.studentDriversLicenseClass == studentState.LicenseClasses.G ||
+    studentState.studentObject.studentDriversLicenseClass == studentState.LicenseClasses.M1 ||
+    studentState.studentObject.studentDriversLicenseClass == studentState.LicenseClasses.M2 ||
     studentState.studentObject.studentDriversLicenseClass == ""
       ? studentState.studentObject.setIsStudentDriversLicenseClassError(false)
       : studentState.studentObject.setIsStudentDriversLicenseClassError(true);
@@ -286,32 +255,17 @@ const useNewStudentScreen = () => {
    */
   useEffect(() => {
     if (studentState.studentObject.studentDriversLicenseExpDate > 0) {
-      if (
-        isDateFormatYYYYMMDD(
-          studentState.studentObject.studentDriversLicenseIssuedDate
-        )
-      ) {
-        studentState.studentObject.setIsStudentDriversLicenseIssuedDateError(
-          false
-        );
+      if (isDateFormatYYYYMMDD(studentState.studentObject.studentDriversLicenseIssuedDate)) {
+        studentState.studentObject.setIsStudentDriversLicenseIssuedDateError(false);
         studentState.studentObject.setStudentDriversLicenseExpDate(
-          formatDateToYYYYMMDD(
-            addYearsToDate(
-              studentState.studentObject.studentDriversLicenseIssuedDate,
-              5
-            )
-          )
+          formatDateToYYYYMMDD(addYearsToDate(studentState.studentObject.studentDriversLicenseIssuedDate, 5))
         );
       } else {
-        studentState.studentObject.setIsStudentDriversLicenseIssuedDateError(
-          true
-        );
+        studentState.studentObject.setIsStudentDriversLicenseIssuedDateError(true);
         studentState.studentObject.setStudentDriversLicenseExpDate("");
       }
     } else {
-      studentState.studentObject.setIsStudentDriversLicenseIssuedDateError(
-        false
-      );
+      studentState.studentObject.setIsStudentDriversLicenseIssuedDateError(false);
     }
   }, [studentState.studentObject.studentDriversLicenseIssuedDate]);
 
@@ -321,15 +275,9 @@ const useNewStudentScreen = () => {
    */
   useEffect(() => {
     if (studentState.studentObject.studentDriversLicenseExpDate > 0) {
-      isDateFormatYYYYMMDD(
-        studentState.studentObject.studentDriversLicenseExpDate
-      )
-        ? studentState.studentObject.setIsStudentDriversLicenseExpDateError(
-            false
-          )
-        : studentState.studentObject.setIsStudentDriversLicenseExpDateError(
-            true
-          );
+      isDateFormatYYYYMMDD(studentState.studentObject.studentDriversLicenseExpDate)
+        ? studentState.studentObject.setIsStudentDriversLicenseExpDateError(false)
+        : studentState.studentObject.setIsStudentDriversLicenseExpDateError(true);
     } else {
       studentState.studentObject.setIsStudentDriversLicenseExpDateError(false);
     }
@@ -343,9 +291,7 @@ const useNewStudentScreen = () => {
   useEffect(() => {
     if (isNumber(studentState.studentObject.studentRegisteredCourseId)) {
       studentState.dropdownMenuOptionsObject.courses.some(
-        (element) =>
-          element[courseTableHeadings.courseId] ==
-          studentState.studentObject.studentRegisteredCourseId
+        (element) => element[courseTableHeadings.courseId] == studentState.studentObject.studentRegisteredCourseId
       )
         ? studentState.studentObject.setIsStudentRegisteredCourseIdError(false)
         : studentState.studentObject.setIsStudentRegisteredCourseIdError(true);
@@ -362,9 +308,7 @@ const useNewStudentScreen = () => {
   useEffect(() => {
     if (isNumber(studentState.studentObject.studentPurchasedProductId)) {
       studentState.dropdownMenuOptionsObject.products.some(
-        (element) =>
-          element[productTableHeadings.productId] ==
-          studentState.studentObject.studentPurchasedProductId
+        (element) => element[productTableHeadings.productId] == studentState.studentObject.studentPurchasedProductId
       )
         ? studentState.studentObject.setIsStudentPurchasedProductIdError(false)
         : studentState.studentObject.setIsStudentPurchasedProductIdError(true);
