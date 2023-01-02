@@ -33,7 +33,8 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
       !studentState.studentObject.isStudentDriversLicenseIssuedDateError &&
       !studentState.studentObject.isStudentDriversLicenseExpDateError &&
       !studentState.studentObject.isStudentRegisteredCourseIdError &&
-      !studentState.studentObject.isStudentPurchasedProductIdError
+      !studentState.studentObject.isStudentPurchasedProductIdError &&
+      !studentState.studentObject.isStudentInCarInstIdError 
     ) {
       try {
         await addOneStudentUC(studentState.studentObject);
@@ -70,7 +71,8 @@ const useNewStudentScreenButtonHandlers = (studentState) => {
       !studentState.studentObject.isStudentDriversLicenseIssuedDateError &&
       !studentState.studentObject.isStudentDriversLicenseExpDateError &&
       !studentState.studentObject.isStudentRegisteredCourseIdError &&
-      !studentState.studentObject.isStudentPurchasedProductIdError
+      !studentState.studentObject.isStudentPurchasedProductIdError &&
+      !studentState.studentObject.isStudentInCarInstIdError 
     ) {
       try {
         await editOneStudentUC(studentState.studentObject, studentState.primary_key);

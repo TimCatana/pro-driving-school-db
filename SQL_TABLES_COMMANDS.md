@@ -112,3 +112,16 @@ FIELDS PDF-LIB
   // console.log({ pdfFields });
 
 ```
+
+
+# UPDATE V1.1.0
+
+
+// ADDING COLUMN TO STUDENT TABLE
+
+```
+ALTER TABLE students
+ ADD in_car_inst_id INT NOT NULL
+ DEFAULT (1),
+ADD CONSTRAINT FOREIGN KEY(in_car_inst_id) REFERENCES in_car_inst(id);
+```

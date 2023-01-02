@@ -163,6 +163,7 @@ const HomeScreen = () => {
                   "License Expiry Date",
                   "Registered Course",
                   "Registered Product",
+                  "In Car Instructor Id",
                   "Edit",
                   "Delete",
                 ]}
@@ -188,6 +189,7 @@ const HomeScreen = () => {
                   studentTableHeadings.driversLicenseExpDate,
                   studentTableHeadings.registeredCourse,
                   studentTableHeadings.purchasedProduct,
+                  studentTableHeadings.inCarInstId,
                 ]}
                 handleEdit={(primary_key) => {
                   homeButtonHandlers.navToStudent(primary_key);

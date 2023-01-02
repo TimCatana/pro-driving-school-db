@@ -26,7 +26,8 @@ const StudentFormButtons = (props) => {
             studentState.studentObject.isStudentDriversLicenseIssuedDateError ||
             studentState.studentObject.isStudentDriversLicenseExpDateError ||
             studentState.studentObject.isStudentRegisteredCourseIdError ||
-            studentState.studentObject.isStudentPurchasedProductIdError
+            studentState.studentObject.isStudentPurchasedProductIdError ||
+            studentState.studentObject.isStudentInCarInstIdError 
           }
           onClick={studentButtonHandlers.handleAddNewStudentEntry}
         >
@@ -64,7 +65,8 @@ const StudentFormButtons = (props) => {
                 studentState.studentObject.isStudentDriversLicenseIssuedDateError ||
                 studentState.studentObject.isStudentDriversLicenseExpDateError ||
                 studentState.studentObject.isStudentRegisteredCourseIdError ||
-                studentState.studentObject.isStudentPurchasedProductIdError
+                studentState.studentObject.isStudentPurchasedProductIdError ||
+                studentState.studentObject.isStudentInCarInstIdError 
               }
               onClick={studentButtonHandlers.handleEditStudentEntry}
             >

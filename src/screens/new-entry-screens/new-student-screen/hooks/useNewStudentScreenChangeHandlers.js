@@ -156,7 +156,7 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    * Updates the courseId variable to contain the newly inputted value
    * @param value (string) The value inputted into the textInput
    */
-  const handleStudentRegisteredCourseId = (e) => {
+  const handleStudentRegisteredCourseIdChange = (e) => {
     e.preventDefault();
     studentState.studentObject.setStudentRegisteredCourseId(e.target.value);
   };
@@ -165,9 +165,18 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
    * Updates the courseId variable to contain the newly inputted value
    * @param value (string) The value inputted into the textInput
    */
-  const handleStudentPurchasedProductId = (e) => {
+  const handleStudentPurchasedProductIdChange = (e) => {
     e.preventDefault();
     studentState.studentObject.setStudentPurchasedProductId(e.target.value);
+  };
+
+   /**
+   * Updates the courseId variable to contain the newly inputted value
+   * @param value (string) The value inputted into the textInput
+   */
+   const handleStudentInClassInstIdChange = (e) => {
+    e.preventDefault();
+    studentState.studentObject.setStudentInCarInstId(e.target.value);
   };
 
   /**
@@ -208,8 +217,9 @@ const useNewStudentScreenChangeHandlers = (studentState) => {
     handleStudentDriversLicenseClassChange,
     handleStudentDriversLicenseIssuedDateChange,
     handleStudentDriversLicenseExpDateChange,
-    handleStudentRegisteredCourseId,
-    handleStudentPurchasedProductId,
+    handleStudentRegisteredCourseIdChange,
+    handleStudentPurchasedProductIdChange,
+    handleStudentInClassInstIdChange,
     handleStudentDateOfBirthFocusAndBlurHandler,
     handleStudentDriversLicenseIssuedDateFocusAndBlurHandler,
   };

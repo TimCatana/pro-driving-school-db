@@ -8,6 +8,7 @@ import {
 } from "../../../../components";
 import {
   courseTableHeadings,
+  inCarInstTableHeadings,
   inClassInstTableHeadings,
   productTableHeadings,
 } from "../../../../domain/constants/dbConstants";
@@ -104,7 +105,7 @@ const StudentFormInputs = (props) => {
             Please Select Gender
           </ListOption>{" "}
           {Object.keys(studentState.Genders).map((key) => (
-            <ListOption value={studentState.Genders[key]}>{studentState.Genders[key]}</ListOption>
+            <ListOption key={key} value={studentState.Genders[key]}>{studentState.Genders[key]}</ListOption>
           ))}
         </DropDownMenu>
       </SideBySideTextInputsDiv>
@@ -190,7 +191,7 @@ const StudentFormInputs = (props) => {
             Province/State
           </ListOption>
           {Object.keys(studentState.CanadaProvinces).map((key) => (
-            <ListOption value={studentState.CanadaProvinces[key]}>{studentState.CanadaProvinces[key]}</ListOption>
+            <ListOption key={key} value={studentState.CanadaProvinces[key]}>{studentState.CanadaProvinces[key]}</ListOption>
           ))}
         </DropDownMenu>
         <TextInput
@@ -235,7 +236,7 @@ const StudentFormInputs = (props) => {
             License Class (Oprional)
           </ListOption>
           {Object.keys(studentState.LicenseClasses).map((key) => (
-            <ListOption value={studentState.LicenseClasses[key]}>{studentState.LicenseClasses[key]}</ListOption>
+            <ListOption key={key} value={studentState.LicenseClasses[key]}>{studentState.LicenseClasses[key]}</ListOption>
           ))}
         </DropDownMenu>
       </SideBySideTextInputsDiv>
@@ -277,7 +278,7 @@ const StudentFormInputs = (props) => {
           name="courseIdList"
           disabled={studentState.uiModifiersObject.isLoading || !studentState.uiModifiersObject.areFieldsEditable}
           value={studentState.studentObject.studentRegisteredCourseId}
-          onChange={studentChangeHandlers.handleStudentRegisteredCourseId}
+          onChange={studentChangeHandlers.handleStudentRegisteredCourseIdChange}
           isError={
             studentState.studentObject.isStudentRegisteredCourseIdError &&
             studentState.studentObject.studentRegisteredCourseId != "label"
@@ -300,7 +301,7 @@ const StudentFormInputs = (props) => {
           disabled={studentState.uiModifiersObject.isLoading || !studentState.uiModifiersObject.areFieldsEditable}
           name="productIdList"
           value={studentState.studentObject.studentPurchasedProductId}
-          onChange={studentChangeHandlers.handleStudentPurchasedProductId}
+          onChange={studentChangeHandlers.handleStudentPurchasedProductIdChange}
           isError={
             studentState.studentObject.isStudentPurchasedProductIdError &&
             studentState.studentObject.studentPurchasedProductId != "label"
@@ -313,6 +314,29 @@ const StudentFormInputs = (props) => {
           {studentState.dropdownMenuOptionsObject.products.map((data) => (
             <ListOption key={data[productTableHeadings.id]} value={data[productTableHeadings.productId]}>
               {data[productTableHeadings.productId]}
+            </ListOption>
+          ))}
+        </DropDownMenu>
+      </SingleRowTextInputDiv>
+
+      <SingleRowTextInputDiv>
+        <DropDownMenu
+          disabled={studentState.uiModifiersObject.isLoading || !studentState.uiModifiersObject.areFieldsEditable}
+          name="inCarInstIdList"
+          value={studentState.studentObject.studentInCarInstId}
+          onChange={studentChangeHandlers.handleStudentInClassInstIdChange}
+          isError={
+            studentState.studentObject.isStudentInCarInstIdError &&
+            studentState.studentObject.studentInCarInstId != "label"
+          }
+          isLast
+        >
+          <ListOption value={"label"} disabled hidden>
+            Who Is The Student's In Car Instructor (ID)?
+          </ListOption>
+          {studentState.dropdownMenuOptionsObject.inCarInst.map((data) => (
+            <ListOption key={data[inCarInstTableHeadings.id]} value={data[inCarInstTableHeadings.id]}>
+              {data[inCarInstTableHeadings.id]}
             </ListOption>
           ))}
         </DropDownMenu>

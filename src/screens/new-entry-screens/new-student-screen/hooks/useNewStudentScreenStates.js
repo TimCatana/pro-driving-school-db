@@ -99,6 +99,9 @@ const useNewStudentScreenStates = () => {
   const [products, setProducts] = useState([]);
   const [failedToGetProducts, setFailedToGetProducts] = useState(false);
 
+  const [inCarInst, setInCarInst] = useState([]);
+  const [failedToGetInCarInst, setFailedToGetInCarInst] = useState(false);
+
   const dropdownMenuOptionsObject = {
     courses,
     setCourses,
@@ -109,6 +112,11 @@ const useNewStudentScreenStates = () => {
     setProducts,
     failedToGetProducts,
     setFailedToGetProducts,
+
+    inCarInst,
+    setInCarInst,
+    failedToGetInCarInst,
+    setFailedToGetInCarInst,
   };
 
   /**
@@ -186,6 +194,9 @@ const useNewStudentScreenStates = () => {
 
   const [studentPurchasedProductId, setStudentPurchasedProductId] = useState("label");
   const [isStudentPurchasedProductIdError, setIsStudentPurchasedProductIdError] = useState(true);
+
+  const [studentInCarInstId, setStudentInCarInstId] = useState("label");
+  const [isStudentInCarInstIdError, setIsStudentInCarInstIdError] = useState(true);
 
   /**
    * The object representing an entry in the database
@@ -286,6 +297,11 @@ const useNewStudentScreenStates = () => {
     setStudentPurchasedProductId,
     isStudentPurchasedProductIdError,
     setIsStudentPurchasedProductIdError,
+
+    studentInCarInstId,
+    setStudentInCarInstId,
+    isStudentInCarInstIdError,
+    setIsStudentInCarInstIdError,
   };
   /**
    * The state object of the screen

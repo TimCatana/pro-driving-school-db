@@ -21,6 +21,7 @@ const addOneStudentUC = async (studentObject) => {
     studentDriversLicenseNumberExpDate: studentObject.studentDriversLicenseExpDate,
     studentRegisteredCourseId: studentObject.studentRegisteredCourseId,
     studentRegisteredProductId: studentObject.studentPurchasedProductId,
+    studentInCarInstructorId: studentObject.studentInCarInstId
   });
 };
 

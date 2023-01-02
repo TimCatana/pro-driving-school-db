@@ -30,9 +30,10 @@ const addOneEntry = async (req, res) => {
     ${studentTableHeadings.driversLicenseIssuedDate}, 
     ${studentTableHeadings.driversLicenseExpDate}, 
     ${studentTableHeadings.registeredCourse}, 
-    ${studentTableHeadings.purchasedProduct}
+    ${studentTableHeadings.purchasedProduct},
+    ${studentTableHeadings.inCarInstId}
   )
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
   const db = makeDb();
   try {
@@ -56,6 +57,7 @@ const addOneEntry = async (req, res) => {
       req.body.studentDriversLicenseNumberExpDate,
       parseInt(req.body.studentRegisteredCourseId),
       parseInt(req.body.studentRegisteredProductId),
+      parseInt(req.body.studentInCarInstructorId),
     ]);
     res.sendStatus(200);
   } catch (e) {

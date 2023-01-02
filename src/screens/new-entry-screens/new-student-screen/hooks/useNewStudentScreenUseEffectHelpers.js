@@ -1,11 +1,11 @@
 import AlertVariants from "../../../../domain/constants/AlertVariants";
 import { studentTableHeadings } from "../../../../domain/constants/dbConstants";
-import { getAllCoursesUC, getAllProductsUC, getOneStudentUC } from "../../../../domain/db";
+import { getAllCoursesUC, getAllProductsUC, getOneStudentUC, getAllInCarInstructorsUC } from "../../../../domain/db";
 
 const useNewStudentScreenUseEffectHelpers = (studentState) => {
   const onRender = async () => {
     studentState.uiModifiersObject.setIsLoading(true);
-    await _handleGetCoursesAndProducts();
+    await _handleGetDropdownOptions();
 
     if (studentState.primary_key != 0) {
       await handleGetSpecificStudent();
@@ -89,6 +89,9 @@ const useNewStudentScreenUseEffectHelpers = (studentState) => {
 
       studentState.studentObject.setStudentPurchasedProductId(result.data[0][studentTableHeadings.purchasedProduct]);
       studentState.studentObject.setIsStudentPurchasedProductIdError(false);
+      
+      studentState.studentObject.setStudentInCarInstId(result.data[0][studentTableHeadings.inCarInstId]);
+      studentState.studentObject.setIsStudentInCarInstIdError(false);
 
       studentState.uiModifiersObject.setFailedToGetData(false);
     } catch (e) {
@@ -125,9 +128,23 @@ const useNewStudentScreenUseEffectHelpers = (studentState) => {
     }
   };
 
-  const _handleGetCoursesAndProducts = async () => {
+  /**
+   * Updates the subscript to mailing list option.
+   */
+  const _handleGetInCarInstructors = async () => {
+    try {
+      const result = await getAllInCarInstructorsUC();
+      studentState.dropdownMenuOptionsObject.setInCarInst(result.data);
+    } catch (e) {
+      studentState.dropdownMenuOptionsObject.setInCarInst([]);
+      studentState.dropdownMenuOptionsObject.failedToGetInCarInst(true);
+    }
+  };
+
+  const _handleGetDropdownOptions = async () => {
     await _handleGetCourses();
     await _handleGetProducts();
+    await _handleGetInCarInstructors();
   };
 
   /**

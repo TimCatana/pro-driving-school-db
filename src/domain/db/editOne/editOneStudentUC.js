@@ -21,6 +21,7 @@ const editOneStudentUC = async (studentObject, primary_key) => {
     studentDriversLicenseNumberExpDate: studentObject.studentDriversLicenseExpDate,
     studentRegisteredCourseId: studentObject.studentRegisteredCourseId,
     studentRegisteredProductId: studentObject.studentPurchasedProductId,
+    studentInCarInstructorId: studentObject.studentInCarInstId
   });
 };
 

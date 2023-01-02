@@ -7,7 +7,11 @@ import {
   useNewStudentScreenStates,
   useNewStudentScreenUseEffectHelpers,
 } from ".";
-import { courseTableHeadings, productTableHeadings } from "../../../../domain/constants/dbConstants";
+import {
+  courseTableHeadings,
+  inCarInstTableHeadings,
+  productTableHeadings,
+} from "../../../../domain/constants/dbConstants";
 
 const useNewStudentScreen = () => {
   /******************/
@@ -254,7 +258,7 @@ const useNewStudentScreen = () => {
    * @dependent courseEndDate
    */
   useEffect(() => {
-    if (studentState.studentObject.studentDriversLicenseExpDate > 0) {
+    if (studentState.studentObject.studentDriversLicenseIssuedDate.length > 0) {
       if (isDateFormatYYYYMMDD(studentState.studentObject.studentDriversLicenseIssuedDate)) {
         studentState.studentObject.setIsStudentDriversLicenseIssuedDateError(false);
         studentState.studentObject.setStudentDriversLicenseExpDate(
@@ -266,6 +270,7 @@ const useNewStudentScreen = () => {
       }
     } else {
       studentState.studentObject.setIsStudentDriversLicenseIssuedDateError(false);
+      studentState.studentObject.setStudentDriversLicenseExpDate("");
     }
   }, [studentState.studentObject.studentDriversLicenseIssuedDate]);
 
@@ -274,7 +279,7 @@ const useNewStudentScreen = () => {
    * @dependent courseEndDate
    */
   useEffect(() => {
-    if (studentState.studentObject.studentDriversLicenseExpDate > 0) {
+    if (studentState.studentObject.studentDriversLicenseExpDate.length > 0) {
       isDateFormatYYYYMMDD(studentState.studentObject.studentDriversLicenseExpDate)
         ? studentState.studentObject.setIsStudentDriversLicenseExpDateError(false)
         : studentState.studentObject.setIsStudentDriversLicenseExpDateError(true);
@@ -316,6 +321,23 @@ const useNewStudentScreen = () => {
       studentState.studentObject.setIsStudentPurchasedProductIdError(true);
     }
   }, [studentState.studentObject.studentPurchasedProductId]);
+
+  /**
+   * Validates newly inputted courseId
+   * @dependent courseId
+   * 3 options M F Not-Declaring
+   */
+  useEffect(() => {
+    if (isNumber(studentState.studentObject.studentInCarInstId)) {
+      studentState.dropdownMenuOptionsObject.inCarInst.some(
+        (element) => element[inCarInstTableHeadings.id] == studentState.studentObject.studentInCarInstId
+      )
+        ? studentState.studentObject.setIsStudentInCarInstIdError(false)
+        : studentState.studentObject.setIsStudentInCarInstIdError(true);
+    } else {
+      studentState.studentObject.setIsStudentInCarInstIdError(true);
+    }
+  }, [studentState.studentObject.studentInCarInstId]);
 
   /*******************/
   /***** RETURNS *****/

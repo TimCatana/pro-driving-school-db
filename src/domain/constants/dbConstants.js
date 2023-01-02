@@ -54,6 +54,7 @@ const studentTableHeadings = {
   driversLicenseExpDate: "drivers_license_exp_date",
   registeredCourse: "registered_course",
   purchasedProduct: "purchased_product",
+  inCarInstId: "in_car_inst_id",
 };
 
 const invoiceTableHeadings = {

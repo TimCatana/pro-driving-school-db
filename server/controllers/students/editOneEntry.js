@@ -24,7 +24,8 @@ const editOneEntry = async (req, res) => {
     ${studentTableHeadings.driversLicenseIssuedDate} = ?, 
     ${studentTableHeadings.driversLicenseExpDate} = ?, 
     ${studentTableHeadings.registeredCourse} = ?, 
-    ${studentTableHeadings.purchasedProduct} = ?
+    ${studentTableHeadings.purchasedProduct} = ?,
+    ${studentTableHeadings.inCarInstId} = ?
   WHERE 
     ${studentTableHeadings.id} = ?;`;
 
@@ -51,6 +52,7 @@ const editOneEntry = async (req, res) => {
       req.body.studentDriversLicenseNumberExpDate,
       parseInt(req.body.studentRegisteredCourseId),
       parseInt(req.body.studentRegisteredProductId),
+      parseInt(req.body.studentInCarInstructorId),
       req.params.primary_key,
     ]);
     res.sendStatus(200);
