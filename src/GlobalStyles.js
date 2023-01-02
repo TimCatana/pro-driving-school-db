@@ -16,12 +16,12 @@ const GlobalStyle = createGlobalStyle`
   :root {
     font-size: 16px; 
 
-  --input-color: #99A3BA;
+  --input-color: #000;
 
 
-  --input-border: #CDD9ED;
+  --input-border: #a4adbd;
   --input-background: #fff;
-  --input-placeholder: #CBD1DC;
+  --input-placeholder: #a4adbd;
   
   --input-border-focus: #275EFE;
   --input-border-error: #ff9494;
