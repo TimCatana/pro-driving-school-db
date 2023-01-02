@@ -124,7 +124,7 @@ const StudentFormInputs = (props) => {
           maxLength={18}
         />
         <TextInput
-          placeholder="Home Phone"
+          placeholder="Home Phone (Optional)"
           disabled={studentState.uiModifiersObject.isLoading || !studentState.uiModifiersObject.areFieldsEditable}
           value={studentState.studentObject.studentHomePhoneNumber}
           onChange={studentChangeHandlers.handleStudentHomePhoneNumberChange}

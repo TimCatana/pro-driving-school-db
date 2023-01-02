@@ -1,9 +1,15 @@
 const { PDFDocument } = require("pdf-lib");
 const { readFile, writeFile } = require("fs/promises");
-const { studentTableHeadings, productTableHeadings } = require("../../../../constants/dbConstants");
+const {
+  studentTableHeadings,
+  productTableHeadings,
+  inCarInstTableHeadings,
+} = require("../../../../constants/dbConstants");
 
-const fillStudentInCarRecordPdf = async (studentObject, productObject) => {
-  const pdfDoc = await PDFDocument.load(await readFile(`${process.env.REACT_APP_PDF_INPUT_FOLDER}/student_in_car_record.pdf`));
+const fillStudentInCarRecordPdf = async (studentObject, productObject, inCarInstObject) => {
+  const pdfDoc = await PDFDocument.load(
+    await readFile(`${process.env.REACT_APP_PDF_INPUT_FOLDER}/student_in_car_record.pdf`)
+  );
   const pdfForm = pdfDoc.getForm();
 
   pdfForm
@@ -26,6 +32,22 @@ const fillStudentInCarRecordPdf = async (studentObject, productObject) => {
   pdfForm
     .getTextField("Student_Drivers_License_Exp_Date")
     .setText(studentObject[studentTableHeadings.driversLicenseExpDate]);
+
+  pdfForm
+    .getTextField("In_Car_Inst")
+    .setText(
+      `${inCarInstObject[inCarInstTableHeadings.firstName]} ${inCarInstObject[inCarInstTableHeadings.lastName]}`
+    );
+  pdfForm
+    .getTextField("In_Car_Inst_Instructor_Drivers_License_Number")
+    .setText(inCarInstObject[inCarInstTableHeadings.driversLicenseId]);
+  pdfForm
+    .getTextField("In_Car_Inst_Drivers_License_Exp_Date")
+    .setText(inCarInstObject[inCarInstTableHeadings.driversLicenseExpDate]);
+  pdfForm.getTextField("In_Car_Inst_G_License").setText(inCarInstObject[inCarInstTableHeadings.gDriversLicenseId]);
+  pdfForm
+    .getTextField("In_Car_Inst_G_License_Exp_Date")
+    .setText(inCarInstObject[inCarInstTableHeadings.gDriversLicenseExpDate]);
 
   // const pdfFields = pdfDoc
   //   .getForm()

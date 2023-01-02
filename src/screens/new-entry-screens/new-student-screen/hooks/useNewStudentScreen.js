@@ -220,7 +220,6 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    studentState.studentObject.studentHomePhoneNumber.length > 0 &&
     studentState.studentObject.studentHomePhoneNumber.length < 20
       ? studentState.studentObject.setIsStudentHomePhoneNumberError(false)
       : studentState.studentObject.setIsStudentHomePhoneNumberError(true);

@@ -1,4 +1,4 @@
-const { studentTableHeadings, productTableHeadings } = require("../../constants/dbConstants");
+const { studentTableHeadings, productTableHeadings, inCarInstTableHeadings } = require("../../constants/dbConstants");
 const fillStudentInCarRecordPdf = require("./utils/pdf/fillStudentInCarRecordPdf");
 const makeDb = require("../../util/makeDb");
 const open = require("open");
@@ -25,13 +25,22 @@ const getFilledStudentInCarRecordPdf = async (req, res) => {
     WHERE 
       ${productTableHeadings.productId} = ?;`;
 
+  const inCarInstSql = `
+      SELECT 
+        * 
+      FROM 
+        ${inCarInstTableHeadings.tableName}  
+      WHERE 
+        ${inCarInstTableHeadings.id} = ?;`;
+
   const db = makeDb();
 
   try {
     const studentResult = await db.query(studentSql, [req.params.primary_key]);
     const productResult = await db.query(productSql, [studentResult[0][studentTableHeadings.purchasedProduct]]);
+    const inCarInstResult = await db.query(inCarInstSql, [studentResult[0][studentTableHeadings.inCarInstId]]);
 
-    await fillStudentInCarRecordPdf(studentResult[0], productResult[0]);
+    await fillStudentInCarRecordPdf(studentResult[0], productResult[0], inCarInstResult[0]);
     await open(`${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/student_in_car_record_output.pdf`);
     res.sendStatus(200);
   } catch (e) {
