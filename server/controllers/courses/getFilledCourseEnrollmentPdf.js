@@ -1,10 +1,7 @@
 const fillCourseEnrollmentPdf = require("./utils/pdf/fillCourseEnrollmentPdf");
 const makeDb = require("../../util/makeDb");
 const open = require("open");
-const {
-  studentTableHeadings,
-  courseTableHeadings,
-} = require("../../constants/dbConstants");
+const { studentTableHeadings, courseTableHeadings } = require("../../constants/dbConstants");
 const fs = require("fs");
 /**
  *
@@ -32,33 +29,22 @@ const getFilledCourseEnrollmentPdf = async (req, res) => {
 
   try {
     const courseResult = await db.query(courseSql, [req.params.primary_key]);
-    const studentResult = await db.query(studentSql, [
-      courseResult[0][courseTableHeadings.courseId],
-    ]);
+    const studentResult = await db.query(studentSql, [courseResult[0][courseTableHeadings.courseId]]);
 
-    const oldFiles = await fs.promises.readdir(
-      `${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/course-enrollment-forms`
-    );
+    // DELETE OLD FILES
+    const oldFiles = await fs.promises.readdir(`${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/course-enrollment-forms`);
     for (const file of oldFiles) {
       if (file != "README.txt") {
-        await fs.promises.unlink(
-          `${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/course-enrollment-forms/${file}`
-        );
+        await fs.promises.unlink(`${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/course-enrollment-forms/${file}`);
       }
     }
 
+    // GET FILLED FORM
     await fillCourseEnrollmentPdf(studentResult);
 
-    const newFiles = await fs.promises.readdir(
-      `${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/course-enrollment-forms`
+    await open(
+      `${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/course-enrollment-forms/merged_course_enrollment_output.pdf`
     );
-    for (const file of newFiles) {
-      if (file != "README.txt") {
-        await open(
-          `${process.env.REACT_APP_PDF_OUTPUT_FOLDER}/course-enrollment-forms/${file}`
-        );
-      }
-    }
 
     res.sendStatus(200);
   } catch (e) {
