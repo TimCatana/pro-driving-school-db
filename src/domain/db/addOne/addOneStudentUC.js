@@ -1,6 +1,8 @@
 import axios from "axios";
 
 const addOneStudentUC = async (studentObject) => {
+  console.log(studentObject);
+
   return await axios.post(`http://localhost:4400/student/add`, {
     studentFirstName: studentObject.studentFirstName,
     studentMiddleName: studentObject.studentMiddleName,
@@ -21,7 +23,7 @@ const addOneStudentUC = async (studentObject) => {
     studentDriversLicenseNumberExpDate: studentObject.studentDriversLicenseExpDate,
     studentRegisteredCourseId: studentObject.studentRegisteredCourseId,
     studentRegisteredProductId: studentObject.studentPurchasedProductId,
-    studentInCarInstructorId: studentObject.studentInCarInstId
+    studentInCarInstructorId: studentObject.studentInCarInstId == "" ? null : studentObject.studentInCarInstId,
   });
 };
 

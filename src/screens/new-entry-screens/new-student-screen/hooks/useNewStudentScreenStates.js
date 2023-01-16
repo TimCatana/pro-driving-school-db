@@ -150,7 +150,7 @@ const useNewStudentScreenStates = () => {
   const [studentDateOfBirth, setStudentDateOfBirth] = useState("");
   const [isStudentDateOfBirthError, setIsStudentDateOfBirthError] = useState(true);
 
-  const [studentGender, setStudentGender] = useState("label");
+  const [studentGender, setStudentGender] = useState("");
   const [isStudentGenderError, setIsStudentGenderError] = useState(true);
 
   const [studentHeight, setStudentHeight] = useState("");
@@ -165,7 +165,7 @@ const useNewStudentScreenStates = () => {
   const [studentAddressCity, setStudentAddressCity] = useState("");
   const [isStudentAddressCityError, setIsStudentAddressCityError] = useState(true);
 
-  const [studentAddressState, setStudentAddressState] = useState("label");
+  const [studentAddressState, setStudentAddressState] = useState("");
   const [isStudentAddressStateError, setIsStudentAddressStateError] = useState(true);
 
   const [studentAddressPostalCode, setStudentAddressPostalCode] = useState("");
@@ -189,13 +189,13 @@ const useNewStudentScreenStates = () => {
   const [studentDriversLicenseExpDate, setStudentDriversLicenseExpDate] = useState("");
   const [isStudentDriversLicenseExpDateError, setIsStudentDriversLicenseExpDateError] = useState(true);
 
-  const [studentRegisteredCourseId, setStudentRegisteredCourseId] = useState("label");
+  const [studentRegisteredCourseId, setStudentRegisteredCourseId] = useState("");
   const [isStudentRegisteredCourseIdError, setIsStudentRegisteredCourseIdError] = useState(true);
 
-  const [studentPurchasedProductId, setStudentPurchasedProductId] = useState("label");
+  const [studentPurchasedProductId, setStudentPurchasedProductId] = useState("");
   const [isStudentPurchasedProductIdError, setIsStudentPurchasedProductIdError] = useState(true);
 
-  const [studentInCarInstId, setStudentInCarInstId] = useState("label");
+  const [studentInCarInstId, setStudentInCarInstId] = useState("");
   const [isStudentInCarInstIdError, setIsStudentInCarInstIdError] = useState(true);
 
   /**

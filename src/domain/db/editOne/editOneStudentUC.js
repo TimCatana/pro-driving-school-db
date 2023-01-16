@@ -1,6 +1,8 @@
 import axios from "axios";
 
 const editOneStudentUC = async (studentObject, primary_key) => {
+  console.log(studentObject);
+
   return await axios.put(`http://localhost:4400/student/edit/${primary_key}`, {
     studentFirstName: studentObject.studentFirstName,
     studentMiddleName: studentObject.studentMiddleName,
@@ -21,7 +23,7 @@ const editOneStudentUC = async (studentObject, primary_key) => {
     studentDriversLicenseNumberExpDate: studentObject.studentDriversLicenseExpDate,
     studentRegisteredCourseId: studentObject.studentRegisteredCourseId,
     studentRegisteredProductId: studentObject.studentPurchasedProductId,
-    studentInCarInstructorId: studentObject.studentInCarInstId
+    studentInCarInstructorId: studentObject.studentInCarInstId == "" ? null : studentObject.studentInCarInstId,
   });
 };
 

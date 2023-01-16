@@ -57,7 +57,7 @@ const addOneEntry = async (req, res) => {
       req.body.studentDriversLicenseNumberExpDate,
       parseInt(req.body.studentRegisteredCourseId),
       parseInt(req.body.studentRegisteredProductId),
-      parseInt(req.body.studentInCarInstructorId),
+      req.body.studentInCarInstructorId == null ? null : parseInt(req.body.studentInCarInstructorId),
     ]);
     res.sendStatus(200);
   } catch (e) {

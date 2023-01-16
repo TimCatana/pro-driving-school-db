@@ -173,9 +173,13 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    Object.values(studentState.CanadaProvinces).includes(studentState.studentObject.studentAddressState)
-      ? studentState.studentObject.setIsStudentAddressStateError(false)
-      : studentState.studentObject.setIsStudentAddressStateError(true);
+    if (studentState.studentObject.studentAddressState == "") {
+      studentState.studentObject.setIsStudentAddressStateError(false);
+    } else {
+      Object.values(studentState.CanadaProvinces).includes(studentState.studentObject.studentAddressState)
+        ? studentState.studentObject.setIsStudentAddressStateError(false)
+        : studentState.studentObject.setIsStudentAddressStateError(true);
+    }
   }, [studentState.studentObject.studentAddressState]);
 
   /**
@@ -327,14 +331,14 @@ const useNewStudentScreen = () => {
    * 3 options M F Not-Declaring
    */
   useEffect(() => {
-    if (isNumber(studentState.studentObject.studentInCarInstId)) {
+    if (studentState.studentObject.studentInCarInstId == "") {
+      studentState.studentObject.setIsStudentInCarInstIdError(false);
+    } else {
       studentState.dropdownMenuOptionsObject.inCarInst.some(
         (element) => element[inCarInstTableHeadings.id] == studentState.studentObject.studentInCarInstId
       )
         ? studentState.studentObject.setIsStudentInCarInstIdError(false)
         : studentState.studentObject.setIsStudentInCarInstIdError(true);
-    } else {
-      studentState.studentObject.setIsStudentInCarInstIdError(true);
     }
   }, [studentState.studentObject.studentInCarInstId]);
 

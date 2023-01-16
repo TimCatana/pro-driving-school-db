@@ -96,16 +96,16 @@ const StudentFormInputs = (props) => {
           disabled={studentState.uiModifiersObject.isLoading || !studentState.uiModifiersObject.areFieldsEditable}
           value={studentState.studentObject.studentGender}
           onChange={studentChangeHandlers.handleStudentGenderChange}
-          isError={
-            studentState.studentObject.isStudentGenderError && studentState.studentObject.studentGender != "label"
-          }
+          isError={studentState.studentObject.isStudentGenderError && studentState.studentObject.studentGender != ""}
           isLast
         >
-          <ListOption value={"label"} disabled hidden>
+          <ListOption value={""} disabled hidden>
             Please Select Gender
           </ListOption>{" "}
           {Object.keys(studentState.Genders).map((key) => (
-            <ListOption key={key} value={studentState.Genders[key]}>{studentState.Genders[key]}</ListOption>
+            <ListOption key={key} value={studentState.Genders[key]}>
+              {studentState.Genders[key]}
+            </ListOption>
           ))}
         </DropDownMenu>
       </SideBySideTextInputsDiv>
@@ -184,14 +184,17 @@ const StudentFormInputs = (props) => {
           onChange={studentChangeHandlers.handleStudentAddressStateChange}
           isError={
             studentState.studentObject.isStudentAddressStateError &&
-            studentState.studentObject.studentAddressState != "label"
+            studentState.studentObject.studentAddressState != ""
           }
         >
-          <ListOption value={"label"} disabled hidden>
-            Province/State
+          <ListOption value={""} disabled hidden>
+            Province/State (Optional)
           </ListOption>
+          <ListOption value={""}></ListOption>
           {Object.keys(studentState.CanadaProvinces).map((key) => (
-            <ListOption key={key} value={studentState.CanadaProvinces[key]}>{studentState.CanadaProvinces[key]}</ListOption>
+            <ListOption key={key} value={studentState.CanadaProvinces[key]}>
+              {studentState.CanadaProvinces[key]}
+            </ListOption>
           ))}
         </DropDownMenu>
         <TextInput
@@ -228,15 +231,18 @@ const StudentFormInputs = (props) => {
           onChange={studentChangeHandlers.handleStudentDriversLicenseClassChange}
           isError={
             studentState.studentObject.isStudentDriversLicenseClassError &&
-            studentState.studentObject.studentDriversLicenseClass != "label"
+            studentState.studentObject.studentDriversLicenseClass != ""
           }
           isLast
         >
           <ListOption value={""} disabled hidden>
-            License Class (Oprional)
+            License Class (Optional)
           </ListOption>
+          <ListOption value={""}></ListOption>
           {Object.keys(studentState.LicenseClasses).map((key) => (
-            <ListOption key={key} value={studentState.LicenseClasses[key]}>{studentState.LicenseClasses[key]}</ListOption>
+            <ListOption key={key} value={studentState.LicenseClasses[key]}>
+              {studentState.LicenseClasses[key]}
+            </ListOption>
           ))}
         </DropDownMenu>
       </SideBySideTextInputsDiv>
@@ -281,11 +287,11 @@ const StudentFormInputs = (props) => {
           onChange={studentChangeHandlers.handleStudentRegisteredCourseIdChange}
           isError={
             studentState.studentObject.isStudentRegisteredCourseIdError &&
-            studentState.studentObject.studentRegisteredCourseId != "label"
+            studentState.studentObject.studentRegisteredCourseId != ""
           }
           isLast
         >
-          <ListOption value={"label"} disabled hidden>
+          <ListOption value={""} disabled hidden>
             Which Course (ID) Is The Student Registered In?
           </ListOption>
           {studentState.dropdownMenuOptionsObject.courses.map((data) => (
@@ -304,16 +310,16 @@ const StudentFormInputs = (props) => {
           onChange={studentChangeHandlers.handleStudentPurchasedProductIdChange}
           isError={
             studentState.studentObject.isStudentPurchasedProductIdError &&
-            studentState.studentObject.studentPurchasedProductId != "label"
+            studentState.studentObject.studentPurchasedProductId != ""
           }
           isLast
         >
-          <ListOption value={"label"} disabled hidden>
+          <ListOption value={""} disabled hidden>
             Which Product (ID) Did The Student Purchase?
           </ListOption>
           {studentState.dropdownMenuOptionsObject.products.map((data) => (
             <ListOption key={data[productTableHeadings.id]} value={data[productTableHeadings.productId]}>
-              {data[productTableHeadings.productId]}
+              {data[productTableHeadings.productId]} (${data[productTableHeadings.price]})
             </ListOption>
           ))}
         </DropDownMenu>
@@ -326,17 +332,18 @@ const StudentFormInputs = (props) => {
           value={studentState.studentObject.studentInCarInstId}
           onChange={studentChangeHandlers.handleStudentInClassInstIdChange}
           isError={
-            studentState.studentObject.isStudentInCarInstIdError &&
-            studentState.studentObject.studentInCarInstId != "label"
+            studentState.studentObject.isStudentInCarInstIdError && studentState.studentObject.studentInCarInstId != ""
           }
           isLast
         >
-          <ListOption value={"label"} disabled hidden>
-            Who Is The Student's In Car Instructor (ID)?
+          <ListOption value={""} disabled hidden>
+            Who Is The Student's In Car Instructor (ID) (Optional)?
           </ListOption>
+          <ListOption value={""}></ListOption>
           {studentState.dropdownMenuOptionsObject.inCarInst.map((data) => (
             <ListOption key={data[inCarInstTableHeadings.id]} value={data[inCarInstTableHeadings.id]}>
-              {data[inCarInstTableHeadings.id]}
+              {data[inCarInstTableHeadings.id]} ({data[inCarInstTableHeadings.firstName]}{" "}
+              {data[inCarInstTableHeadings.lastName]})
             </ListOption>
           ))}
         </DropDownMenu>

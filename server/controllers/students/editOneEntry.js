@@ -52,7 +52,7 @@ const editOneEntry = async (req, res) => {
       req.body.studentDriversLicenseNumberExpDate,
       parseInt(req.body.studentRegisteredCourseId),
       parseInt(req.body.studentRegisteredProductId),
-      parseInt(req.body.studentInCarInstructorId),
+      req.body.studentInCarInstructorId == null ? null : parseInt(req.body.studentInCarInstructorId),
       req.params.primary_key,
     ]);
     res.sendStatus(200);

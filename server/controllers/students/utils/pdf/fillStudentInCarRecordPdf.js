@@ -33,21 +33,23 @@ const fillStudentInCarRecordPdf = async (studentObject, productObject, inCarInst
     .getTextField("Student_Drivers_License_Exp_Date")
     .setText(studentObject[studentTableHeadings.driversLicenseExpDate]);
 
-  pdfForm
-    .getTextField("In_Car_Inst")
-    .setText(
-      `${inCarInstObject[inCarInstTableHeadings.firstName]} ${inCarInstObject[inCarInstTableHeadings.lastName]}`
-    );
-  pdfForm
-    .getTextField("In_Car_Inst_Instructor_Drivers_License_Number")
-    .setText(inCarInstObject[inCarInstTableHeadings.driversLicenseId]);
-  pdfForm
-    .getTextField("In_Car_Inst_Drivers_License_Exp_Date")
-    .setText(inCarInstObject[inCarInstTableHeadings.driversLicenseExpDate]);
-  pdfForm.getTextField("In_Car_Inst_G_License").setText(inCarInstObject[inCarInstTableHeadings.gDriversLicenseId]);
-  pdfForm
-    .getTextField("In_Car_Inst_G_License_Exp_Date")
-    .setText(inCarInstObject[inCarInstTableHeadings.gDriversLicenseExpDate]);
+  if (inCarInstObject) {
+    pdfForm
+      .getTextField("In_Car_Inst")
+      .setText(
+        `${inCarInstObject[inCarInstTableHeadings.firstName]} ${inCarInstObject[inCarInstTableHeadings.lastName]}`
+      );
+    pdfForm
+      .getTextField("In_Car_Inst_Instructor_Drivers_License_Number")
+      .setText(inCarInstObject[inCarInstTableHeadings.driversLicenseId]);
+    pdfForm
+      .getTextField("In_Car_Inst_Drivers_License_Exp_Date")
+      .setText(inCarInstObject[inCarInstTableHeadings.driversLicenseExpDate]);
+    pdfForm.getTextField("In_Car_Inst_G_License").setText(inCarInstObject[inCarInstTableHeadings.gDriversLicenseId]);
+    pdfForm
+      .getTextField("In_Car_Inst_G_License_Exp_Date")
+      .setText(inCarInstObject[inCarInstTableHeadings.gDriversLicenseExpDate]);
+  }
 
   // const pdfFields = pdfDoc
   //   .getForm()

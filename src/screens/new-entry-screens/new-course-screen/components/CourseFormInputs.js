@@ -83,11 +83,11 @@ const CourseFormInputs = (props) => {
           value={courseState.courseObject.courseIsDigital}
           onChange={courseChangeHandlers.handleIsCourseDigitalChange}
           isError={
-            courseState.courseObject.isCourseIsDigitalError && courseState.courseObject.courseIsDigital != "label"
+            courseState.courseObject.isCourseIsDigitalError && courseState.courseObject.courseIsDigital != ""
           }
           isLast
         >
-          <ListOption value={"label"} disabled hidden>
+          <ListOption value={""} disabled hidden>
             Select Digital/In Person
           </ListOption>
           <ListOption value={courseState.CourseTypes.DIGITAL}>Digital</ListOption>
@@ -104,11 +104,11 @@ const CourseFormInputs = (props) => {
           onChange={courseChangeHandlers.handleInClassInstructorChange}
           isError={
             courseState.courseObject.isCourseInClassInstructorError &&
-            courseState.courseObject.courseInClassInstructor != "label"
+            courseState.courseObject.courseInClassInstructor != ""
           }
           isLast
         >
-          <ListOption value={"label"} disables hidden>
+          <ListOption value={""} disables hidden>
             Please Select Instructor
           </ListOption>
           {courseState.dropdownMenuOptionsObject.inClassInstructors.map((data) => (

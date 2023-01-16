@@ -109,10 +109,10 @@ const useNewCourseScreenStates = () => {
   const [courseEndDate, setCourseEndDate] = useState("");
   const [isCourseEndDateError, setIsCourseEndDateError] = useState(true);
 
-  const [courseIsDigital, setCourseIsDigital] = useState("label");
+  const [courseIsDigital, setCourseIsDigital] = useState("");
   const [isCourseIsDigitalError, setIsCourseIsDigitalError] = useState(true);
 
-  const [courseInClassInstructor, setCourseInClassInstructor] = useState("label");
+  const [courseInClassInstructor, setCourseInClassInstructor] = useState("");
   const [isCourseInClassInstructorError, setIsCourseInClassInstructorError] = useState(true);
 
   const courseObject = {
