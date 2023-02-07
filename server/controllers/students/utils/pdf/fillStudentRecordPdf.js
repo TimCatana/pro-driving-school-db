@@ -14,7 +14,7 @@ const fillStudentRecordPdf = async (studentObject, inClassInstObject) => {
       }`
     );
   pdfForm.getTextField("Student_Drivers_License_Num").setText(studentObject[studentTableHeadings.driversLicenseId]);
-  pdfForm.getTextField("Student_Address").setText(studentObject[studentTableHeadings.address]);
+  pdfForm.getTextField("Student_Address").setText(`${studentObject[studentTableHeadings.address]} ${studentObject[studentTableHeadings.addressCity]}`);
   pdfForm.getTextField("Student_Cell_Num").setText(studentObject[studentTableHeadings.cellPhoneNumber]);
   pdfForm
     .getTextField("Instructor_Name")

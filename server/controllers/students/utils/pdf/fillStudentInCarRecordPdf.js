@@ -19,7 +19,7 @@ const fillStudentInCarRecordPdf = async (studentObject, productObject, inCarInst
         studentObject[studentTableHeadings.lastName]
       }`
     );
-  pdfForm.getTextField("Student_Address").setText(studentObject[studentTableHeadings.address]);
+  pdfForm.getTextField("Student_Address").setText(`${studentObject[studentTableHeadings.address]} ${studentObject[studentTableHeadings.addressCity]}`);
   pdfForm.getTextField("Student_Day_Time_Phone_Num").setText(studentObject[studentTableHeadings.cellPhoneNumber]);
   pdfForm.getTextField("Student_Evening_Time_Phone_Num").setText(studentObject[studentTableHeadings.cellPhoneNumber]);
   // pdfForm.getTextField("Student_Balance").setText(`${productObject[productTableHeadings.price]}`);
